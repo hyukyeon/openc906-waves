@@ -1,0 +1,327 @@
+사용: pipeview.py <out/test 디렉토리> [--mark N] [--max-rows K]
+출력: <dir>/pipeview.txt  (mark 구간별 표 + 구간 요약)
+
+================================================================================================================================================================
+MARK 1   cycles 3007 .. 3050  (44 cycles)
+================================================================================================================================================================
+    cyc | IF (fetch)               | IP (pred)                |IB| ID                       | EX1                      | RETIRE                   | events
+----------------------------------------------------------------------------------------------------------------------------------------------------------------
+   3007 | 0344 sd a2,0(s8)         |                          | 0|                          |                          | 029c jal 340             | 
+   3008 | 0348 ld a4,0(s8)         | 0340 csrr s0,mcycle      | 0| >0340 csrr s0,mcycle     |                          |                          | 
+   3009 | 034c sd a2,0(s8)         | 0344 sd a2,0(s8)         | 0| >0344 sd a2,0(s8)        | 0340 csrr s0,mcycle  CP0 |                          | 
+   3010 | 0350 ld a4,0(s8)         | 0348 ld a4,0(s8)         | 0| >0348 ld a4,0(s8)        | 0344 sd a2,0(s8)     LSU | 0340 csrr s0,mcycle      | 
+   3011 | 0354 sd a2,0(s8)         | 034c sd a2,0(s8)         | 0| >034c sd a2,0(s8)        | 0348 ld a4,0(s8)     LSU | 0344 sd a2,0(s8)         | DC:ST hit
+   3012 | 0358 ld a4,0(s8)         | 0350 ld a4,0(s8)         | 0| >0350 ld a4,0(s8)        | 034c sd a2,0(s8)     LSU | 0348 ld a4,0(s8)         | DC:LD hit STB-fwd
+   3013 | 035c sd a2,0(s8)         | 0354 sd a2,0(s8)         | 0| >0354 sd a2,0(s8)        | 0350 ld a4,0(s8)     LSU | 034c sd a2,0(s8)         | DC:ST hit
+   3014 | 0360 ld a4,0(s8)         | 0358 ld a4,0(s8)         | 0| >0358 ld a4,0(s8)        | 0354 sd a2,0(s8)     LSU | 0350 ld a4,0(s8)         | DC:LD hit STB-fwd
+   3015 | 0364 sd a2,0(s8)         | 035c sd a2,0(s8)         | 0| >035c sd a2,0(s8)        | 0358 ld a4,0(s8)     LSU | 0354 sd a2,0(s8)         | DC:ST hit
+   3016 | 0368 ld a4,0(s8)         | 0360 ld a4,0(s8)         | 0| >0360 ld a4,0(s8)        | 035c sd a2,0(s8)     LSU | 0358 ld a4,0(s8)         | DC:LD hit STB-fwd
+   3017 | 036c sd a2,0(s8)         | 0364 sd a2,0(s8)         | 0| >0364 sd a2,0(s8)        | 0360 ld a4,0(s8)     LSU | 035c sd a2,0(s8)         | DC:ST hit
+   3018 | 0370 ld a4,0(s8)         | 0368 ld a4,0(s8)         | 0| >0368 ld a4,0(s8)        | 0364 sd a2,0(s8)     LSU | 0360 ld a4,0(s8)         | DC:LD hit STB-fwd
+   3019 | 0374 sd a2,0(s8)         | 036c sd a2,0(s8)         | 0| >036c sd a2,0(s8)        | 0368 ld a4,0(s8)     LSU | 0364 sd a2,0(s8)         | DC:ST hit
+   3020 | 0378 ld a4,0(s8)         | 0370 ld a4,0(s8)         | 0| >0370 ld a4,0(s8)        | 036c sd a2,0(s8)     LSU | 0368 ld a4,0(s8)         | DC:LD hit STB-fwd
+   3021 | 037c sd a2,0(s8)         | 0374 sd a2,0(s8)         | 0| >0374 sd a2,0(s8)        | 0370 ld a4,0(s8)     LSU | 036c sd a2,0(s8)         | DC:ST hit
+   3022 | 0380 ld a4,0(s8)         | 0378 ld a4,0(s8)         | 0| >0378 ld a4,0(s8)        | 0374 sd a2,0(s8)     LSU | 0370 ld a4,0(s8)         | DC:LD hit STB-fwd
+   3023 | 0384 sd a2,0(s8)         | 037c sd a2,0(s8)         | 0| >037c sd a2,0(s8)        | 0378 ld a4,0(s8)     LSU | 0374 sd a2,0(s8)         | DC:ST hit
+   3024 | 0388 ld a4,0(s8)         | 0380 ld a4,0(s8)         | 0| >0380 ld a4,0(s8)        | 037c sd a2,0(s8)     LSU | 0378 ld a4,0(s8)         | DC:LD hit STB-fwd
+   3025 | 038c sd a2,0(s8)         | 0384 sd a2,0(s8)         | 0| >0384 sd a2,0(s8)        | 0380 ld a4,0(s8)     LSU | 037c sd a2,0(s8)         | DC:ST hit
+   3026 | 0390 ld a4,0(s8)         | 0388 ld a4,0(s8)         | 0| >0388 ld a4,0(s8)        | 0384 sd a2,0(s8)     LSU | 0380 ld a4,0(s8)         | DC:LD hit STB-fwd
+   3027 | 0394 sd a2,0(s8)         | 038c sd a2,0(s8)         | 0| >038c sd a2,0(s8)        | 0388 ld a4,0(s8)     LSU | 0384 sd a2,0(s8)         | DC:ST hit
+   3028 | 0398 ld a4,0(s8)         | 0390 ld a4,0(s8)         | 0| >0390 ld a4,0(s8)        | 038c sd a2,0(s8)     LSU | 0388 ld a4,0(s8)         | DC:LD hit STB-fwd
+   3029 | 039c sd a2,0(s8)         | 0394 sd a2,0(s8)         | 0| >0394 sd a2,0(s8)        | 0390 ld a4,0(s8)     LSU | 038c sd a2,0(s8)         | DC:ST hit
+   3030 | 03a0 ld a4,0(s8)         | 0398 ld a4,0(s8)         | 0| >0398 ld a4,0(s8)        | 0394 sd a2,0(s8)     LSU | 0390 ld a4,0(s8)         | DC:LD hit STB-fwd
+   3031 | 03a4 sd a2,0(s8)         | 039c sd a2,0(s8)         | 0| >039c sd a2,0(s8)        | 0398 ld a4,0(s8)     LSU | 0394 sd a2,0(s8)         | DC:ST hit
+   3032 | 03a8 ld a4,0(s8)         | 03a0 ld a4,0(s8)         | 0| >03a0 ld a4,0(s8)        | 039c sd a2,0(s8)     LSU | 0398 ld a4,0(s8)         | DC:LD hit STB-fwd
+   3033 | 03ac sd a2,0(s8)         | 03a4 sd a2,0(s8)         | 0| >03a4 sd a2,0(s8)        | 03a0 ld a4,0(s8)     LSU | 039c sd a2,0(s8)         | DC:ST hit
+   3034 | 03b0 ld a4,0(s8)         | 03a8 ld a4,0(s8)         | 0| >03a8 ld a4,0(s8)        | 03a4 sd a2,0(s8)     LSU | 03a0 ld a4,0(s8)         | DC:LD hit STB-fwd
+   3035 | 03b4 sd a2,0(s8)         | 03ac sd a2,0(s8)         | 0| >03ac sd a2,0(s8)        | 03a8 ld a4,0(s8)     LSU | 03a4 sd a2,0(s8)         | DC:ST hit
+   3036 | 03b8 ld a4,0(s8)         | 03b0 ld a4,0(s8)         | 0| >03b0 ld a4,0(s8)        | 03ac sd a2,0(s8)     LSU | 03a8 ld a4,0(s8)         | DC:LD hit STB-fwd
+   3037 | 03bc sd a2,0(s8)         | 03b4 sd a2,0(s8)         | 0| >03b4 sd a2,0(s8)        | 03b0 ld a4,0(s8)     LSU | 03ac sd a2,0(s8)         | DC:ST hit
+   3038 | 03c0 ld a4,0(s8)         | 03b8 ld a4,0(s8)         | 0| >03b8 ld a4,0(s8)        | 03b4 sd a2,0(s8)     LSU | 03b0 ld a4,0(s8)         | DC:LD hit STB-fwd
+   3039 | 03c4 csrr t0,mcycle      | 03bc sd a2,0(s8)         | 0| >03bc sd a2,0(s8)        | 03b8 ld a4,0(s8)     LSU | 03b4 sd a2,0(s8)         | DC:ST hit
+   3040 | 03c8 sub s0,t0,s0        | 03c0 ld a4,0(s8)         | 0| >03c0 ld a4,0(s8)        | 03bc sd a2,0(s8)     LSU | 03b8 ld a4,0(s8)         | DC:LD hit STB-fwd
+   3041 | 03cc ret                 | 03c4 csrr t0,mcycle      | 0| .03c4 csrr t0,mcycle     | 03c0 ld a4,0(s8)     LSU | 03bc sd a2,0(s8)         | ID-stall:CP0/fence DC:ST hit
+   3042 | 03d0 nop                 | 03c8 sub s0,t0,s0        | 0| .03c4 csrr t0,mcycle     |                          | 03c0 ld a4,0(s8)         | ID-stall:CP0/fence DC:LD hit STB-fwd
+   3043 | 02a0 li t6,0             | 03cc ret                 | 2| .03c4 csrr t0,mcycle     |                          |                          | IP-curflw(RAS/delay) ID-stall:CP0/fence
+   3044 | 02a4 mv a1,s0            |                          | 4| >03c4 csrr t0,mcycle     |                          |                          | 
+   3045 | 02a8 auipc a0,0x0        | 02a0 li t6,0             | 2| .03c8 sub s0,t0,s0       | 03c4 csrr t0,mcycle  CP0 |                          | ID-stall:RAW
+   3046 | 02ac addi a0,a0,1214     | 02a4 mv a1,s0            | 4| >03c8 sub s0,t0,s0       |                          | 03c4 csrr t0,mcycle      | 
+   3047 | 02b0 jal 21e             | 02a8 auipc a0,0x0        | 4| >03cc ret                | 03c8 sub s0,t0,s0    ALU |                          | 
+   3048 | 02b4 jal 400             | 02ac addi a0,a0,1214     | 4| >02a0 li t6,0            | 03cc ret             BJU | 03c8 sub s0,t0,s0        | 
+   3049 | 02b8 li t6,2             | 02b0 jal 21e             | 4| >02a4 mv a1,s0           | 02a0 li t6,0         ALU | 03cc ret                 | IP-redirect->021e
+   3050 | 021e addi sp,sp,-16      |                          | 4| >0400 csrr s0,mcycle     | 02a4 mv a1,s0        ALU | 02a0 li t6,0             | 
+----------------------------------------------------------------------------------------------------------------------------------------------------------------
+summary: cycles=44 retired=38 IPC=0.864 | ip_curflw=1, ip_redirect=1, retired=38, stall_CP0/fence=3, stall_RAW=1, stb_fwd=16
+
+================================================================================================================================================================
+MARK 2   cycles 3628 .. 3672  (45 cycles)
+================================================================================================================================================================
+    cyc | IF (fetch)               | IP (pred)                |IB| ID                       | EX1                      | RETIRE                   | events
+----------------------------------------------------------------------------------------------------------------------------------------------------------------
+   3628 | 040c sd a2,0(s8)         | 0404 sd a2,0(s8)         | 0| .0400 csrr s0,mcycle     |                          | 02bc jal 400             | ID-stall:CP0/fence
+   3629 | 0410 ld a4,64(s8)        | 0408 ld a4,64(s8)        | 2| >0400 csrr s0,mcycle     |                          |                          | 
+   3630 | 0414 sd a2,0(s8)         | 040c sd a2,0(s8)         | 2| >0404 sd a2,0(s8)        | 0400 csrr s0,mcycle  CP0 |                          | 
+   3631 | 0418 ld a4,64(s8)        | 0410 ld a4,64(s8)        | 2| >0408 ld a4,64(s8)       | 0404 sd a2,0(s8)     LSU | 0400 csrr s0,mcycle      | 
+   3632 | 041c sd a2,0(s8)         | 0414 sd a2,0(s8)         | 2| >040c sd a2,0(s8)        | 0408 ld a4,64(s8)    LSU | 0404 sd a2,0(s8)         | DC:ST hit
+   3633 | 0420 ld a4,64(s8)        | 0418 ld a4,64(s8)        | 2| >0410 ld a4,64(s8)       | 040c sd a2,0(s8)     LSU | 0408 ld a4,64(s8)        | DC:LD hit
+   3634 | 0424 sd a2,0(s8)         | 041c sd a2,0(s8)         | 2| >0414 sd a2,0(s8)        | 0410 ld a4,64(s8)    LSU | 040c sd a2,0(s8)         | DC:ST hit
+   3635 | 0428 ld a4,64(s8)        | 0420 ld a4,64(s8)        | 2| >0418 ld a4,64(s8)       | 0414 sd a2,0(s8)     LSU | 0410 ld a4,64(s8)        | DC:LD hit
+   3636 | 042c sd a2,0(s8)         | 0424 sd a2,0(s8)         | 2| >041c sd a2,0(s8)        | 0418 ld a4,64(s8)    LSU | 0414 sd a2,0(s8)         | DC:ST hit
+   3637 | 0430 ld a4,64(s8)        | 0428 ld a4,64(s8)        | 2| >0420 ld a4,64(s8)       | 041c sd a2,0(s8)     LSU | 0418 ld a4,64(s8)        | DC:LD hit
+   3638 | 0434 sd a2,0(s8)         | 042c sd a2,0(s8)         | 2| >0424 sd a2,0(s8)        | 0420 ld a4,64(s8)    LSU | 041c sd a2,0(s8)         | DC:ST hit
+   3639 | 0438 ld a4,64(s8)        | 0430 ld a4,64(s8)        | 2| >0428 ld a4,64(s8)       | 0424 sd a2,0(s8)     LSU | 0420 ld a4,64(s8)        | DC:LD hit
+   3640 | 043c sd a2,0(s8)         | 0434 sd a2,0(s8)         | 2| >042c sd a2,0(s8)        | 0428 ld a4,64(s8)    LSU | 0424 sd a2,0(s8)         | DC:ST hit
+   3641 | 0440 ld a4,64(s8)        | 0438 ld a4,64(s8)        | 2| >0430 ld a4,64(s8)       | 042c sd a2,0(s8)     LSU | 0428 ld a4,64(s8)        | DC:LD hit
+   3642 | 0444 sd a2,0(s8)         | 043c sd a2,0(s8)         | 2| >0434 sd a2,0(s8)        | 0430 ld a4,64(s8)    LSU | 042c sd a2,0(s8)         | DC:ST hit
+   3643 | 0448 ld a4,64(s8)        | 0440 ld a4,64(s8)        | 2| >0438 ld a4,64(s8)       | 0434 sd a2,0(s8)     LSU | 0430 ld a4,64(s8)        | DC:LD hit
+   3644 | 044c sd a2,0(s8)         | 0444 sd a2,0(s8)         | 2| >043c sd a2,0(s8)        | 0438 ld a4,64(s8)    LSU | 0434 sd a2,0(s8)         | DC:ST hit
+   3645 | 0450 ld a4,64(s8)        | 0448 ld a4,64(s8)        | 2| >0440 ld a4,64(s8)       | 043c sd a2,0(s8)     LSU | 0438 ld a4,64(s8)        | DC:LD hit
+   3646 | 0454 sd a2,0(s8)         | 044c sd a2,0(s8)         | 2| >0444 sd a2,0(s8)        | 0440 ld a4,64(s8)    LSU | 043c sd a2,0(s8)         | DC:ST hit
+   3647 | 0458 ld a4,64(s8)        | 0450 ld a4,64(s8)        | 2| >0448 ld a4,64(s8)       | 0444 sd a2,0(s8)     LSU | 0440 ld a4,64(s8)        | DC:LD hit
+   3648 | 045c sd a2,0(s8)         | 0454 sd a2,0(s8)         | 2| >044c sd a2,0(s8)        | 0448 ld a4,64(s8)    LSU | 0444 sd a2,0(s8)         | DC:ST hit
+   3649 | 0460 ld a4,64(s8)        | 0458 ld a4,64(s8)        | 2| >0450 ld a4,64(s8)       | 044c sd a2,0(s8)     LSU | 0448 ld a4,64(s8)        | DC:LD hit
+   3650 | 0464 sd a2,0(s8)         | 045c sd a2,0(s8)         | 2| >0454 sd a2,0(s8)        | 0450 ld a4,64(s8)    LSU | 044c sd a2,0(s8)         | DC:ST hit
+   3651 | 0468 ld a4,64(s8)        | 0460 ld a4,64(s8)        | 2| >0458 ld a4,64(s8)       | 0454 sd a2,0(s8)     LSU | 0450 ld a4,64(s8)        | DC:LD hit
+   3652 | 046c sd a2,0(s8)         | 0464 sd a2,0(s8)         | 2| >045c sd a2,0(s8)        | 0458 ld a4,64(s8)    LSU | 0454 sd a2,0(s8)         | DC:ST hit
+   3653 | 0470 ld a4,64(s8)        | 0468 ld a4,64(s8)        | 2| >0460 ld a4,64(s8)       | 045c sd a2,0(s8)     LSU | 0458 ld a4,64(s8)        | DC:LD hit
+   3654 | 0474 sd a2,0(s8)         | 046c sd a2,0(s8)         | 2| >0464 sd a2,0(s8)        | 0460 ld a4,64(s8)    LSU | 045c sd a2,0(s8)         | DC:ST hit
+   3655 | 0478 ld a4,64(s8)        | 0470 ld a4,64(s8)        | 2| >0468 ld a4,64(s8)       | 0464 sd a2,0(s8)     LSU | 0460 ld a4,64(s8)        | DC:LD hit
+   3656 | 047c sd a2,0(s8)         | 0474 sd a2,0(s8)         | 2| >046c sd a2,0(s8)        | 0468 ld a4,64(s8)    LSU | 0464 sd a2,0(s8)         | DC:ST hit
+   3657 | 0480 ld a4,64(s8)        | 0478 ld a4,64(s8)        | 2| >0470 ld a4,64(s8)       | 046c sd a2,0(s8)     LSU | 0468 ld a4,64(s8)        | DC:LD hit
+   3658 | 0484 csrr t0,mcycle      | 047c sd a2,0(s8)         | 2| >0474 sd a2,0(s8)        | 0470 ld a4,64(s8)    LSU | 046c sd a2,0(s8)         | DC:ST hit
+   3659 | 0488 sub s0,t0,s0        | 0480 ld a4,64(s8)        | 2| >0478 ld a4,64(s8)       | 0474 sd a2,0(s8)     LSU | 0470 ld a4,64(s8)        | DC:LD hit
+   3660 | 048c ret                 | 0484 csrr t0,mcycle      | 2| >047c sd a2,0(s8)        | 0478 ld a4,64(s8)    LSU | 0474 sd a2,0(s8)         | DC:ST hit
+   3661 | 0490 nop                 | 0488 sub s0,t0,s0        | 2| >0480 ld a4,64(s8)       | 047c sd a2,0(s8)     LSU | 0478 ld a4,64(s8)        | DC:LD hit
+   3662 | 02c0 li t6,0             | 048c ret                 | 2| .0484 csrr t0,mcycle     | 0480 ld a4,64(s8)    LSU | 047c sd a2,0(s8)         | IP-curflw(RAS/delay) ID-stall:CP0/fence DC:ST hit
+   3663 |                          |                          | 4| .0484 csrr t0,mcycle     |                          | 0480 ld a4,64(s8)        | ID-stall:CP0/fence DC:LD hit
+   3664 |                          |                          | 4| .0484 csrr t0,mcycle     |                          |                          | ID-stall:CP0/fence I$-miss
+   3665 |                          |                          | 4| >0484 csrr t0,mcycle     |                          |                          | 
+   3666 |                          |                          | 2| .0488 sub s0,t0,s0       | 0484 csrr t0,mcycle  CP0 |                          | ID-stall:RAW
+   3667 |                          |                          | 2| >0488 sub s0,t0,s0       |                          | 0484 csrr t0,mcycle      | 
+   3668 |                          |                          | 0| >048c ret                | 0488 sub s0,t0,s0    ALU |                          | 
+   3669 |                          |                          | 0|                          | 048c ret             BJU | 0488 sub s0,t0,s0        | 
+   3670 |                          | 02c0 li t6,0             | 0| >02c0 li t6,0            |                          | 048c ret                 | 
+   3671 |                          |                          | 0|                          | 02c0 li t6,0         ALU |                          | 
+   3672 |                          |                          | 0|                          |                          | 02c0 li t6,0             | 
+----------------------------------------------------------------------------------------------------------------------------------------------------------------
+summary: cycles=45 retired=38 IPC=0.844 | icache_miss=1, ip_curflw=1, retired=38, stall_CP0/fence=4, stall_RAW=1
+
+================================================================================================================================================================
+MARK 3   cycles 4050 .. 4125  (76 cycles)
+================================================================================================================================================================
+    cyc | IF (fetch)               | IP (pred)                |IB| ID                       | EX1                      | RETIRE                   | events
+----------------------------------------------------------------------------------------------------------------------------------------------------------------
+   4050 | 04d4 sd a2,0(s8)         | 04cc sd a2,0(s8)         | 4| .04c0 csrr s0,mcycle     |                          | 02dc jal 4c0             | ID-stall:CP0/fence
+   4051 |                          | 04d0 lw a4,4(s8)         | 6| >04c0 csrr s0,mcycle     |                          |                          | 
+   4052 | 04d4 sd a2,0(s8)         | 04d0 lw a4,4(s8)         | 4| >04c4 sd a2,0(s8)        | 04c0 csrr s0,mcycle  CP0 |                          | 
+   4053 | 04d8 lw a4,4(s8)         |                          | 4| >04c8 lw a4,4(s8)        | 04c4 sd a2,0(s8)     LSU | 04c0 csrr s0,mcycle      | 
+   4054 | 04dc sd a2,0(s8)         | 04d4 sd a2,0(s8)         | 2| >04cc sd a2,0(s8)        | 04c8 lw a4,4(s8)     LSU | 04c4 sd a2,0(s8)         | DC:ST hit
+   4055 | 04e0 lw a4,4(s8)         | 04d8 lw a4,4(s8)         | 2| >04cc sd a2,0(s8)        | 04cc sd a2,0(s8)     LSU | 04c8 lw a4,4(s8)         | DC:LD hit STB-partial
+   4056 | 04e4 sd a2,0(s8)         | 04dc sd a2,0(s8)         | 2| .04d4 sd a2,0(s8)        | 04cc sd a2,0(s8)     LSU |                          | ID-stall:EX1-busy
+   4057 | 04e8 lw a4,4(s8)         | 04e0 lw a4,4(s8)         | 4| .04d4 sd a2,0(s8)        | 04cc sd a2,0(s8)     LSU |                          | ID-stall:EX1-busy DC:LD hit
+   4058 |                          | 04e4 sd a2,0(s8)         | 6| >04d4 sd a2,0(s8)        | 04d0 lw a4,4(s8)     LSU | 04cc sd a2,0(s8)         | DC:ST hit
+   4059 | 04e8 lw a4,4(s8)         | 04e4 sd a2,0(s8)         | 4| >04d4 sd a2,0(s8)        | 04d4 sd a2,0(s8)     LSU | 04d0 lw a4,4(s8)         | DC:LD hit STB-partial
+   4060 | 04ec sd a2,0(s8)         |                          | 4| .04dc sd a2,0(s8)        | 04d4 sd a2,0(s8)     LSU |                          | ID-stall:EX1-busy
+   4061 | 04f0 lw a4,4(s8)         | 04e8 lw a4,4(s8)         | 4| .04dc sd a2,0(s8)        | 04d4 sd a2,0(s8)     LSU |                          | ID-stall:EX1-busy DC:LD hit
+   4062 |                          | 04ec sd a2,0(s8)         | 6| >04dc sd a2,0(s8)        | 04d8 lw a4,4(s8)     LSU | 04d4 sd a2,0(s8)         | DC:ST hit
+   4063 | 04f0 lw a4,4(s8)         | 04ec sd a2,0(s8)         | 4| >04dc sd a2,0(s8)        | 04dc sd a2,0(s8)     LSU | 04d8 lw a4,4(s8)         | DC:LD hit STB-partial
+   4064 | 04f4 sd a2,0(s8)         |                          | 4| .04e4 sd a2,0(s8)        | 04dc sd a2,0(s8)     LSU |                          | ID-stall:EX1-busy
+   4065 | 04f8 lw a4,4(s8)         | 04f0 lw a4,4(s8)         | 4| .04e4 sd a2,0(s8)        | 04dc sd a2,0(s8)     LSU |                          | ID-stall:EX1-busy DC:LD hit
+   4066 |                          | 04f4 sd a2,0(s8)         | 6| >04e4 sd a2,0(s8)        | 04e0 lw a4,4(s8)     LSU | 04dc sd a2,0(s8)         | DC:ST hit
+   4067 | 04f8 lw a4,4(s8)         | 04f4 sd a2,0(s8)         | 4| >04e4 sd a2,0(s8)        | 04e4 sd a2,0(s8)     LSU | 04e0 lw a4,4(s8)         | DC:LD hit STB-partial
+   4068 | 04fc sd a2,0(s8)         |                          | 4| .04ec sd a2,0(s8)        | 04e4 sd a2,0(s8)     LSU |                          | ID-stall:EX1-busy
+   4069 | 0500 lw a4,4(s8)         | 04f8 lw a4,4(s8)         | 4| .04ec sd a2,0(s8)        | 04e4 sd a2,0(s8)     LSU |                          | ID-stall:EX1-busy DC:LD hit
+   4070 |                          | 04fc sd a2,0(s8)         | 6| >04ec sd a2,0(s8)        | 04e8 lw a4,4(s8)     LSU | 04e4 sd a2,0(s8)         | DC:ST hit
+   4071 | 0500 lw a4,4(s8)         | 04fc sd a2,0(s8)         | 4| >04ec sd a2,0(s8)        | 04ec sd a2,0(s8)     LSU | 04e8 lw a4,4(s8)         | DC:LD hit STB-partial
+   4072 | 0504 sd a2,0(s8)         |                          | 4| .04f4 sd a2,0(s8)        | 04ec sd a2,0(s8)     LSU |                          | ID-stall:EX1-busy
+   4073 | 0508 lw a4,4(s8)         | 0500 lw a4,4(s8)         | 4| .04f4 sd a2,0(s8)        | 04ec sd a2,0(s8)     LSU |                          | ID-stall:EX1-busy DC:LD hit
+   4074 |                          | 0504 sd a2,0(s8)         | 6| >04f4 sd a2,0(s8)        | 04f0 lw a4,4(s8)     LSU | 04ec sd a2,0(s8)         | DC:ST hit
+   4075 | 0508 lw a4,4(s8)         | 0504 sd a2,0(s8)         | 4| >04f4 sd a2,0(s8)        | 04f4 sd a2,0(s8)     LSU | 04f0 lw a4,4(s8)         | DC:LD hit STB-partial
+   4076 | 050c sd a2,0(s8)         |                          | 4| .04fc sd a2,0(s8)        | 04f4 sd a2,0(s8)     LSU |                          | ID-stall:EX1-busy
+   4077 | 0510 lw a4,4(s8)         | 0508 lw a4,4(s8)         | 4| .04fc sd a2,0(s8)        | 04f4 sd a2,0(s8)     LSU |                          | ID-stall:EX1-busy DC:LD hit
+   4078 |                          | 050c sd a2,0(s8)         | 6| >04fc sd a2,0(s8)        | 04f8 lw a4,4(s8)     LSU | 04f4 sd a2,0(s8)         | DC:ST hit
+   4079 | 0510 lw a4,4(s8)         | 050c sd a2,0(s8)         | 4| >04fc sd a2,0(s8)        | 04fc sd a2,0(s8)     LSU | 04f8 lw a4,4(s8)         | DC:LD hit STB-partial
+   4080 | 0514 sd a2,0(s8)         |                          | 4| .0504 sd a2,0(s8)        | 04fc sd a2,0(s8)     LSU |                          | ID-stall:EX1-busy
+   4081 | 0518 lw a4,4(s8)         | 0510 lw a4,4(s8)         | 4| .0504 sd a2,0(s8)        | 04fc sd a2,0(s8)     LSU |                          | ID-stall:EX1-busy DC:LD hit
+   4082 |                          | 0514 sd a2,0(s8)         | 6| >0504 sd a2,0(s8)        | 0500 lw a4,4(s8)     LSU | 04fc sd a2,0(s8)         | DC:ST hit
+   4083 | 0518 lw a4,4(s8)         | 0514 sd a2,0(s8)         | 4| >0504 sd a2,0(s8)        | 0504 sd a2,0(s8)     LSU | 0500 lw a4,4(s8)         | DC:LD hit STB-partial
+   4084 | 051c sd a2,0(s8)         |                          | 4| .050c sd a2,0(s8)        | 0504 sd a2,0(s8)     LSU |                          | ID-stall:EX1-busy
+   4085 | 0520 lw a4,4(s8)         | 0518 lw a4,4(s8)         | 4| .050c sd a2,0(s8)        | 0504 sd a2,0(s8)     LSU |                          | ID-stall:EX1-busy DC:LD hit
+   4086 |                          | 051c sd a2,0(s8)         | 6| >050c sd a2,0(s8)        | 0508 lw a4,4(s8)     LSU | 0504 sd a2,0(s8)         | DC:ST hit
+   4087 | 0520 lw a4,4(s8)         | 051c sd a2,0(s8)         | 4| >050c sd a2,0(s8)        | 050c sd a2,0(s8)     LSU | 0508 lw a4,4(s8)         | DC:LD hit STB-partial
+   4088 | 0524 sd a2,0(s8)         |                          | 4| .0514 sd a2,0(s8)        | 050c sd a2,0(s8)     LSU |                          | ID-stall:EX1-busy
+   4089 | 0528 lw a4,4(s8)         | 0520 lw a4,4(s8)         | 4| .0514 sd a2,0(s8)        | 050c sd a2,0(s8)     LSU |                          | ID-stall:EX1-busy DC:LD hit
+   4090 |                          | 0524 sd a2,0(s8)         | 6| >0514 sd a2,0(s8)        | 0510 lw a4,4(s8)     LSU | 050c sd a2,0(s8)         | DC:ST hit
+   4091 | 0528 lw a4,4(s8)         | 0524 sd a2,0(s8)         | 4| >0514 sd a2,0(s8)        | 0514 sd a2,0(s8)     LSU | 0510 lw a4,4(s8)         | DC:LD hit STB-partial
+   4092 | 052c sd a2,0(s8)         |                          | 4| .051c sd a2,0(s8)        | 0514 sd a2,0(s8)     LSU |                          | ID-stall:EX1-busy
+   4093 | 0530 lw a4,4(s8)         | 0528 lw a4,4(s8)         | 4| .051c sd a2,0(s8)        | 0514 sd a2,0(s8)     LSU |                          | ID-stall:EX1-busy DC:LD hit
+   4094 |                          | 052c sd a2,0(s8)         | 6| >051c sd a2,0(s8)        | 0518 lw a4,4(s8)     LSU | 0514 sd a2,0(s8)         | DC:ST hit
+   4095 | 0530 lw a4,4(s8)         | 052c sd a2,0(s8)         | 4| >051c sd a2,0(s8)        | 051c sd a2,0(s8)     LSU | 0518 lw a4,4(s8)         | DC:LD hit STB-partial
+   4096 | 0534 sd a2,0(s8)         |                          | 4| .0524 sd a2,0(s8)        | 051c sd a2,0(s8)     LSU |                          | ID-stall:EX1-busy
+   4097 | 0538 lw a4,4(s8)         | 0530 lw a4,4(s8)         | 4| .0524 sd a2,0(s8)        | 051c sd a2,0(s8)     LSU |                          | ID-stall:EX1-busy DC:LD hit
+   4098 |                          | 0534 sd a2,0(s8)         | 6| >0524 sd a2,0(s8)        | 0520 lw a4,4(s8)     LSU | 051c sd a2,0(s8)         | DC:ST hit
+   4099 | 0538 lw a4,4(s8)         | 0534 sd a2,0(s8)         | 4| >0524 sd a2,0(s8)        | 0524 sd a2,0(s8)     LSU | 0520 lw a4,4(s8)         | DC:LD hit STB-partial
+   4100 | 053c sd a2,0(s8)         |                          | 4| .052c sd a2,0(s8)        | 0524 sd a2,0(s8)     LSU |                          | ID-stall:EX1-busy
+   4101 | 0540 lw a4,4(s8)         | 0538 lw a4,4(s8)         | 4| .052c sd a2,0(s8)        | 0524 sd a2,0(s8)     LSU |                          | ID-stall:EX1-busy DC:LD hit
+   4102 |                          | 053c sd a2,0(s8)         | 6| >052c sd a2,0(s8)        | 0528 lw a4,4(s8)     LSU | 0524 sd a2,0(s8)         | DC:ST hit
+   4103 | 0540 lw a4,4(s8)         | 053c sd a2,0(s8)         | 4| >052c sd a2,0(s8)        | 052c sd a2,0(s8)     LSU | 0528 lw a4,4(s8)         | DC:LD hit STB-partial
+   4104 | 0544 csrr t0,mcycle      |                          | 4| .0534 sd a2,0(s8)        | 052c sd a2,0(s8)     LSU |                          | ID-stall:EX1-busy
+   4105 | 0548 sub s0,t0,s0        | 0540 lw a4,4(s8)         | 4| .0534 sd a2,0(s8)        | 052c sd a2,0(s8)     LSU |                          | ID-stall:EX1-busy DC:LD hit
+   4106 |                          | 0544 csrr t0,mcycle      | 6| >0534 sd a2,0(s8)        | 0530 lw a4,4(s8)     LSU | 052c sd a2,0(s8)         | DC:ST hit
+   4107 | 0548 sub s0,t0,s0        | 0544 csrr t0,mcycle      | 4| >0534 sd a2,0(s8)        | 0534 sd a2,0(s8)     LSU | 0530 lw a4,4(s8)         | DC:LD hit STB-partial
+   4108 | 054c ret                 |                          | 4| .053c sd a2,0(s8)        | 0534 sd a2,0(s8)     LSU |                          | ID-stall:EX1-busy
+   4109 | 0550 nop                 | 0548 sub s0,t0,s0        | 4| .053c sd a2,0(s8)        | 0534 sd a2,0(s8)     LSU |                          | ID-stall:EX1-busy DC:LD hit
+   4110 |                          | 054c ret                 | 6| >053c sd a2,0(s8)        | 0538 lw a4,4(s8)     LSU | 0534 sd a2,0(s8)         | IP-curflw(RAS/delay) DC:ST hit
+   4111 | 02e0 li t6,0             | 054c ret                 | 4| >053c sd a2,0(s8)        | 053c sd a2,0(s8)     LSU | 0538 lw a4,4(s8)         | IP-curflw(RAS/delay) DC:LD hit STB-partial
+   4112 | 02e4 mv a1,s0            |                          | 4| .0544 csrr t0,mcycle     | 053c sd a2,0(s8)     LSU |                          | ID-stall:EX1-busy,CP0/fence
+   4113 | 02e8 auipc a0,0x0        | 02e0 li t6,0             | 4| .0544 csrr t0,mcycle     | 053c sd a2,0(s8)     LSU |                          | ID-stall:EX1-busy,CP0/fence DC:LD hit
+   4114 |                          | 02e4 mv a1,s0            | 6| .0544 csrr t0,mcycle     | 0540 lw a4,4(s8)     LSU | 053c sd a2,0(s8)         | ID-stall:CP0/fence DC:ST hit
+   4115 |                          | 02e4 mv a1,s0            | 6| .0544 csrr t0,mcycle     |                          | 0540 lw a4,4(s8)         | ID-stall:CP0/fence DC:LD hit STB-partial
+   4116 |                          | 02e4 mv a1,s0            | 6| .0544 csrr t0,mcycle     |                          |                          | ID-stall:CP0/fence
+   4117 |                          | 02e4 mv a1,s0            | 6| .0544 csrr t0,mcycle     |                          |                          | ID-stall:CP0/fence DC:LD hit
+   4118 |                          | 02e4 mv a1,s0            | 6| .0544 csrr t0,mcycle     |                          |                          | ID-stall:CP0/fence
+   4119 |                          | 02e4 mv a1,s0            | 6| >0544 csrr t0,mcycle     |                          |                          | 
+   4120 | 02e8 auipc a0,0x0        | 02e4 mv a1,s0            | 4| .0548 sub s0,t0,s0       | 0544 csrr t0,mcycle  CP0 |                          | ID-stall:RAW
+   4121 | 02ec addi a0,a0,1173     |                          | 6| >0548 sub s0,t0,s0       |                          | 0544 csrr t0,mcycle      | 
+   4122 | 02f0 jal 21e             | 02e8 auipc a0,0x0        | 4| >054c ret                | 0548 sub s0,t0,s0    ALU |                          | 
+   4123 | 02f4 jal 580             | 02ec addi a0,a0,1173     | 4| >02e0 li t6,0            | 054c ret             BJU | 0548 sub s0,t0,s0        | 
+   4124 | 02f8 li t6,4             | 02f0 jal 21e             | 4| >02e4 mv a1,s0           | 02e0 li t6,0         ALU | 054c ret                 | IP-redirect->021e
+   4125 | 021e addi sp,sp,-16      |                          | 4| >0580 csrr s0,mcycle     | 02e4 mv a1,s0        ALU | 02e0 li t6,0             | 
+----------------------------------------------------------------------------------------------------------------------------------------------------------------
+summary: cycles=76 retired=38 IPC=0.500 | ip_curflw=2, ip_redirect=1, retired=38, stall_CP0/fence=8, stall_EX1-busy=30, stall_RAW=1, stb_partial=16
+
+================================================================================================================================================================
+MARK 4   cycles 4524 .. 4599  (76 cycles)
+================================================================================================================================================================
+    cyc | IF (fetch)               | IP (pred)                |IB| ID                       | EX1                      | RETIRE                   | events
+----------------------------------------------------------------------------------------------------------------------------------------------------------------
+   4524 | 0594 sw a2,0(s8)         | 058c sw a2,0(s8)         | 4| .0580 csrr s0,mcycle     |                          | 02fc jal 580             | ID-stall:CP0/fence
+   4525 |                          | 0590 ld a4,0(s8)         | 6| >0580 csrr s0,mcycle     |                          |                          | 
+   4526 | 0594 sw a2,0(s8)         | 0590 ld a4,0(s8)         | 4| >0584 sw a2,0(s8)        | 0580 csrr s0,mcycle  CP0 |                          | 
+   4527 | 0598 ld a4,0(s8)         |                          | 4| >0588 ld a4,0(s8)        | 0584 sw a2,0(s8)     LSU | 0580 csrr s0,mcycle      | 
+   4528 | 059c sw a2,0(s8)         | 0594 sw a2,0(s8)         | 2| >058c sw a2,0(s8)        | 0588 ld a4,0(s8)     LSU | 0584 sw a2,0(s8)         | DC:ST hit
+   4529 | 05a0 ld a4,0(s8)         | 0598 ld a4,0(s8)         | 2| >058c sw a2,0(s8)        | 058c sw a2,0(s8)     LSU | 0588 ld a4,0(s8)         | DC:LD hit STB-partial
+   4530 | 05a4 sw a2,0(s8)         | 059c sw a2,0(s8)         | 2| .0594 sw a2,0(s8)        | 058c sw a2,0(s8)     LSU |                          | ID-stall:EX1-busy
+   4531 | 05a8 ld a4,0(s8)         | 05a0 ld a4,0(s8)         | 4| .0594 sw a2,0(s8)        | 058c sw a2,0(s8)     LSU |                          | ID-stall:EX1-busy DC:LD hit
+   4532 |                          | 05a4 sw a2,0(s8)         | 6| >0594 sw a2,0(s8)        | 0590 ld a4,0(s8)     LSU | 058c sw a2,0(s8)         | DC:ST hit
+   4533 | 05a8 ld a4,0(s8)         | 05a4 sw a2,0(s8)         | 4| >0594 sw a2,0(s8)        | 0594 sw a2,0(s8)     LSU | 0590 ld a4,0(s8)         | DC:LD hit STB-partial
+   4534 | 05ac sw a2,0(s8)         |                          | 4| .059c sw a2,0(s8)        | 0594 sw a2,0(s8)     LSU |                          | ID-stall:EX1-busy
+   4535 | 05b0 ld a4,0(s8)         | 05a8 ld a4,0(s8)         | 4| .059c sw a2,0(s8)        | 0594 sw a2,0(s8)     LSU |                          | ID-stall:EX1-busy DC:LD hit
+   4536 |                          | 05ac sw a2,0(s8)         | 6| >059c sw a2,0(s8)        | 0598 ld a4,0(s8)     LSU | 0594 sw a2,0(s8)         | DC:ST hit
+   4537 | 05b0 ld a4,0(s8)         | 05ac sw a2,0(s8)         | 4| >059c sw a2,0(s8)        | 059c sw a2,0(s8)     LSU | 0598 ld a4,0(s8)         | DC:LD hit STB-partial
+   4538 | 05b4 sw a2,0(s8)         |                          | 4| .05a4 sw a2,0(s8)        | 059c sw a2,0(s8)     LSU |                          | ID-stall:EX1-busy
+   4539 | 05b8 ld a4,0(s8)         | 05b0 ld a4,0(s8)         | 4| .05a4 sw a2,0(s8)        | 059c sw a2,0(s8)     LSU |                          | ID-stall:EX1-busy DC:LD hit
+   4540 |                          | 05b4 sw a2,0(s8)         | 6| >05a4 sw a2,0(s8)        | 05a0 ld a4,0(s8)     LSU | 059c sw a2,0(s8)         | DC:ST hit
+   4541 | 05b8 ld a4,0(s8)         | 05b4 sw a2,0(s8)         | 4| >05a4 sw a2,0(s8)        | 05a4 sw a2,0(s8)     LSU | 05a0 ld a4,0(s8)         | DC:LD hit STB-partial
+   4542 | 05bc sw a2,0(s8)         |                          | 4| .05ac sw a2,0(s8)        | 05a4 sw a2,0(s8)     LSU |                          | ID-stall:EX1-busy
+   4543 | 05c0 ld a4,0(s8)         | 05b8 ld a4,0(s8)         | 4| .05ac sw a2,0(s8)        | 05a4 sw a2,0(s8)     LSU |                          | ID-stall:EX1-busy DC:LD hit
+   4544 |                          | 05bc sw a2,0(s8)         | 6| >05ac sw a2,0(s8)        | 05a8 ld a4,0(s8)     LSU | 05a4 sw a2,0(s8)         | DC:ST hit
+   4545 | 05c0 ld a4,0(s8)         | 05bc sw a2,0(s8)         | 4| >05ac sw a2,0(s8)        | 05ac sw a2,0(s8)     LSU | 05a8 ld a4,0(s8)         | DC:LD hit STB-partial
+   4546 | 05c4 sw a2,0(s8)         |                          | 4| .05b4 sw a2,0(s8)        | 05ac sw a2,0(s8)     LSU |                          | ID-stall:EX1-busy
+   4547 | 05c8 ld a4,0(s8)         | 05c0 ld a4,0(s8)         | 4| .05b4 sw a2,0(s8)        | 05ac sw a2,0(s8)     LSU |                          | ID-stall:EX1-busy DC:LD hit
+   4548 |                          | 05c4 sw a2,0(s8)         | 6| >05b4 sw a2,0(s8)        | 05b0 ld a4,0(s8)     LSU | 05ac sw a2,0(s8)         | DC:ST hit
+   4549 | 05c8 ld a4,0(s8)         | 05c4 sw a2,0(s8)         | 4| >05b4 sw a2,0(s8)        | 05b4 sw a2,0(s8)     LSU | 05b0 ld a4,0(s8)         | DC:LD hit STB-partial
+   4550 | 05cc sw a2,0(s8)         |                          | 4| .05bc sw a2,0(s8)        | 05b4 sw a2,0(s8)     LSU |                          | ID-stall:EX1-busy
+   4551 | 05d0 ld a4,0(s8)         | 05c8 ld a4,0(s8)         | 4| .05bc sw a2,0(s8)        | 05b4 sw a2,0(s8)     LSU |                          | ID-stall:EX1-busy DC:LD hit
+   4552 |                          | 05cc sw a2,0(s8)         | 6| >05bc sw a2,0(s8)        | 05b8 ld a4,0(s8)     LSU | 05b4 sw a2,0(s8)         | DC:ST hit
+   4553 | 05d0 ld a4,0(s8)         | 05cc sw a2,0(s8)         | 4| >05bc sw a2,0(s8)        | 05bc sw a2,0(s8)     LSU | 05b8 ld a4,0(s8)         | DC:LD hit STB-partial
+   4554 | 05d4 sw a2,0(s8)         |                          | 4| .05c4 sw a2,0(s8)        | 05bc sw a2,0(s8)     LSU |                          | ID-stall:EX1-busy
+   4555 | 05d8 ld a4,0(s8)         | 05d0 ld a4,0(s8)         | 4| .05c4 sw a2,0(s8)        | 05bc sw a2,0(s8)     LSU |                          | ID-stall:EX1-busy DC:LD hit
+   4556 |                          | 05d4 sw a2,0(s8)         | 6| >05c4 sw a2,0(s8)        | 05c0 ld a4,0(s8)     LSU | 05bc sw a2,0(s8)         | DC:ST hit
+   4557 | 05d8 ld a4,0(s8)         | 05d4 sw a2,0(s8)         | 4| >05c4 sw a2,0(s8)        | 05c4 sw a2,0(s8)     LSU | 05c0 ld a4,0(s8)         | DC:LD hit STB-partial
+   4558 | 05dc sw a2,0(s8)         |                          | 4| .05cc sw a2,0(s8)        | 05c4 sw a2,0(s8)     LSU |                          | ID-stall:EX1-busy
+   4559 | 05e0 ld a4,0(s8)         | 05d8 ld a4,0(s8)         | 4| .05cc sw a2,0(s8)        | 05c4 sw a2,0(s8)     LSU |                          | ID-stall:EX1-busy DC:LD hit
+   4560 |                          | 05dc sw a2,0(s8)         | 6| >05cc sw a2,0(s8)        | 05c8 ld a4,0(s8)     LSU | 05c4 sw a2,0(s8)         | DC:ST hit
+   4561 | 05e0 ld a4,0(s8)         | 05dc sw a2,0(s8)         | 4| >05cc sw a2,0(s8)        | 05cc sw a2,0(s8)     LSU | 05c8 ld a4,0(s8)         | DC:LD hit STB-partial
+   4562 | 05e4 sw a2,0(s8)         |                          | 4| .05d4 sw a2,0(s8)        | 05cc sw a2,0(s8)     LSU |                          | ID-stall:EX1-busy
+   4563 | 05e8 ld a4,0(s8)         | 05e0 ld a4,0(s8)         | 4| .05d4 sw a2,0(s8)        | 05cc sw a2,0(s8)     LSU |                          | ID-stall:EX1-busy DC:LD hit
+   4564 |                          | 05e4 sw a2,0(s8)         | 6| >05d4 sw a2,0(s8)        | 05d0 ld a4,0(s8)     LSU | 05cc sw a2,0(s8)         | DC:ST hit
+   4565 | 05e8 ld a4,0(s8)         | 05e4 sw a2,0(s8)         | 4| >05d4 sw a2,0(s8)        | 05d4 sw a2,0(s8)     LSU | 05d0 ld a4,0(s8)         | DC:LD hit STB-partial
+   4566 | 05ec sw a2,0(s8)         |                          | 4| .05dc sw a2,0(s8)        | 05d4 sw a2,0(s8)     LSU |                          | ID-stall:EX1-busy
+   4567 | 05f0 ld a4,0(s8)         | 05e8 ld a4,0(s8)         | 4| .05dc sw a2,0(s8)        | 05d4 sw a2,0(s8)     LSU |                          | ID-stall:EX1-busy DC:LD hit
+   4568 |                          | 05ec sw a2,0(s8)         | 6| >05dc sw a2,0(s8)        | 05d8 ld a4,0(s8)     LSU | 05d4 sw a2,0(s8)         | DC:ST hit
+   4569 | 05f0 ld a4,0(s8)         | 05ec sw a2,0(s8)         | 4| >05dc sw a2,0(s8)        | 05dc sw a2,0(s8)     LSU | 05d8 ld a4,0(s8)         | DC:LD hit STB-partial
+   4570 | 05f4 sw a2,0(s8)         |                          | 4| .05e4 sw a2,0(s8)        | 05dc sw a2,0(s8)     LSU |                          | ID-stall:EX1-busy
+   4571 | 05f8 ld a4,0(s8)         | 05f0 ld a4,0(s8)         | 4| .05e4 sw a2,0(s8)        | 05dc sw a2,0(s8)     LSU |                          | ID-stall:EX1-busy DC:LD hit
+   4572 |                          | 05f4 sw a2,0(s8)         | 6| >05e4 sw a2,0(s8)        | 05e0 ld a4,0(s8)     LSU | 05dc sw a2,0(s8)         | DC:ST hit
+   4573 | 05f8 ld a4,0(s8)         | 05f4 sw a2,0(s8)         | 4| >05e4 sw a2,0(s8)        | 05e4 sw a2,0(s8)     LSU | 05e0 ld a4,0(s8)         | DC:LD hit STB-partial
+   4574 | 05fc sw a2,0(s8)         |                          | 4| .05ec sw a2,0(s8)        | 05e4 sw a2,0(s8)     LSU |                          | ID-stall:EX1-busy
+   4575 | 0600 ld a4,0(s8)         | 05f8 ld a4,0(s8)         | 4| .05ec sw a2,0(s8)        | 05e4 sw a2,0(s8)     LSU |                          | ID-stall:EX1-busy DC:LD hit
+   4576 |                          | 05fc sw a2,0(s8)         | 6| >05ec sw a2,0(s8)        | 05e8 ld a4,0(s8)     LSU | 05e4 sw a2,0(s8)         | DC:ST hit
+   4577 | 0600 ld a4,0(s8)         | 05fc sw a2,0(s8)         | 4| >05ec sw a2,0(s8)        | 05ec sw a2,0(s8)     LSU | 05e8 ld a4,0(s8)         | DC:LD hit STB-partial
+   4578 | 0604 csrr t0,mcycle      |                          | 4| .05f4 sw a2,0(s8)        | 05ec sw a2,0(s8)     LSU |                          | ID-stall:EX1-busy
+   4579 | 0608 sub s0,t0,s0        | 0600 ld a4,0(s8)         | 4| .05f4 sw a2,0(s8)        | 05ec sw a2,0(s8)     LSU |                          | ID-stall:EX1-busy DC:LD hit
+   4580 |                          | 0604 csrr t0,mcycle      | 6| >05f4 sw a2,0(s8)        | 05f0 ld a4,0(s8)     LSU | 05ec sw a2,0(s8)         | DC:ST hit
+   4581 | 0608 sub s0,t0,s0        | 0604 csrr t0,mcycle      | 4| >05f4 sw a2,0(s8)        | 05f4 sw a2,0(s8)     LSU | 05f0 ld a4,0(s8)         | DC:LD hit STB-partial
+   4582 | 060c ret                 |                          | 4| .05fc sw a2,0(s8)        | 05f4 sw a2,0(s8)     LSU |                          | ID-stall:EX1-busy
+   4583 | 0610 nop                 | 0608 sub s0,t0,s0        | 4| .05fc sw a2,0(s8)        | 05f4 sw a2,0(s8)     LSU |                          | ID-stall:EX1-busy DC:LD hit
+   4584 |                          | 060c ret                 | 6| >05fc sw a2,0(s8)        | 05f8 ld a4,0(s8)     LSU | 05f4 sw a2,0(s8)         | IP-curflw(RAS/delay) DC:ST hit
+   4585 | 0300 li t6,0             | 060c ret                 | 4| >05fc sw a2,0(s8)        | 05fc sw a2,0(s8)     LSU | 05f8 ld a4,0(s8)         | IP-curflw(RAS/delay) DC:LD hit STB-partial
+   4586 |                          |                          | 4| .0604 csrr t0,mcycle     | 05fc sw a2,0(s8)     LSU |                          | ID-stall:EX1-busy,CP0/fence
+   4587 |                          |                          | 4| .0604 csrr t0,mcycle     | 05fc sw a2,0(s8)     LSU |                          | ID-stall:EX1-busy,CP0/fence DC:LD hit I$-miss
+   4588 |                          |                          | 4| .0604 csrr t0,mcycle     | 0600 ld a4,0(s8)     LSU | 05fc sw a2,0(s8)         | ID-stall:CP0/fence DC:ST hit
+   4589 |                          |                          | 4| .0604 csrr t0,mcycle     |                          | 0600 ld a4,0(s8)         | ID-stall:CP0/fence DC:LD hit STB-partial
+   4590 |                          |                          | 4| .0604 csrr t0,mcycle     |                          |                          | ID-stall:CP0/fence
+   4591 |                          |                          | 4| .0604 csrr t0,mcycle     |                          |                          | ID-stall:CP0/fence DC:LD hit
+   4592 |                          |                          | 4| .0604 csrr t0,mcycle     |                          |                          | ID-stall:CP0/fence
+   4593 |                          | 0300 li t6,0             | 4| >0604 csrr t0,mcycle     |                          |                          | 
+   4594 |                          |                          | 4| .0608 sub s0,t0,s0       | 0604 csrr t0,mcycle  CP0 |                          | ID-stall:RAW
+   4595 |                          |                          | 4| >0608 sub s0,t0,s0       |                          | 0604 csrr t0,mcycle      | 
+   4596 |                          |                          | 2| >060c ret                | 0608 sub s0,t0,s0    ALU |                          | 
+   4597 |                          |                          | 0| >0300 li t6,0            | 060c ret             BJU | 0608 sub s0,t0,s0        | 
+   4598 |                          |                          | 0|                          | 0300 li t6,0         ALU | 060c ret                 | 
+   4599 | 0304 mv a1,s0            |                          | 0|                          |                          | 0300 li t6,0             | 
+----------------------------------------------------------------------------------------------------------------------------------------------------------------
+summary: cycles=76 retired=38 IPC=0.500 | icache_miss=1, ip_curflw=2, retired=38, stall_CP0/fence=8, stall_EX1-busy=30, stall_RAW=1, stb_partial=16
+
+================================================================================================================================================================
+MARK 5   cycles 4987 .. 5030  (44 cycles)
+================================================================================================================================================================
+    cyc | IF (fetch)               | IP (pred)                |IB| ID                       | EX1                      | RETIRE                   | events
+----------------------------------------------------------------------------------------------------------------------------------------------------------------
+   4987 | 064c sb a2,0(s8)         | 0644 sb a2,0(s8)         | 0| .0640 csrr s0,mcycle     |                          | 031c jal 640             | ID-stall:CP0/fence
+   4988 | 0650 lbu a4,0(s8)        | 0648 lbu a4,0(s8)        | 2| >0640 csrr s0,mcycle     |                          |                          | 
+   4989 | 0654 sb a2,0(s8)         | 064c sb a2,0(s8)         | 2| >0644 sb a2,0(s8)        | 0640 csrr s0,mcycle  CP0 |                          | 
+   4990 | 0658 lbu a4,0(s8)        | 0650 lbu a4,0(s8)        | 2| >0648 lbu a4,0(s8)       | 0644 sb a2,0(s8)     LSU | 0640 csrr s0,mcycle      | 
+   4991 | 065c sb a2,0(s8)         | 0654 sb a2,0(s8)         | 2| >064c sb a2,0(s8)        | 0648 lbu a4,0(s8)    LSU | 0644 sb a2,0(s8)         | DC:ST hit
+   4992 | 0660 lbu a4,0(s8)        | 0658 lbu a4,0(s8)        | 2| >0650 lbu a4,0(s8)       | 064c sb a2,0(s8)     LSU | 0648 lbu a4,0(s8)        | DC:LD hit STB-fwd
+   4993 | 0664 sb a2,0(s8)         | 065c sb a2,0(s8)         | 2| >0654 sb a2,0(s8)        | 0650 lbu a4,0(s8)    LSU | 064c sb a2,0(s8)         | DC:ST hit
+   4994 | 0668 lbu a4,0(s8)        | 0660 lbu a4,0(s8)        | 2| >0658 lbu a4,0(s8)       | 0654 sb a2,0(s8)     LSU | 0650 lbu a4,0(s8)        | DC:LD hit STB-fwd
+   4995 | 066c sb a2,0(s8)         | 0664 sb a2,0(s8)         | 2| >065c sb a2,0(s8)        | 0658 lbu a4,0(s8)    LSU | 0654 sb a2,0(s8)         | DC:ST hit
+   4996 | 0670 lbu a4,0(s8)        | 0668 lbu a4,0(s8)        | 2| >0660 lbu a4,0(s8)       | 065c sb a2,0(s8)     LSU | 0658 lbu a4,0(s8)        | DC:LD hit STB-fwd
+   4997 | 0674 sb a2,0(s8)         | 066c sb a2,0(s8)         | 2| >0664 sb a2,0(s8)        | 0660 lbu a4,0(s8)    LSU | 065c sb a2,0(s8)         | DC:ST hit
+   4998 | 0678 lbu a4,0(s8)        | 0670 lbu a4,0(s8)        | 2| >0668 lbu a4,0(s8)       | 0664 sb a2,0(s8)     LSU | 0660 lbu a4,0(s8)        | DC:LD hit STB-fwd
+   4999 | 067c sb a2,0(s8)         | 0674 sb a2,0(s8)         | 2| >066c sb a2,0(s8)        | 0668 lbu a4,0(s8)    LSU | 0664 sb a2,0(s8)         | DC:ST hit
+   5000 | 0680 lbu a4,0(s8)        | 0678 lbu a4,0(s8)        | 2| >0670 lbu a4,0(s8)       | 066c sb a2,0(s8)     LSU | 0668 lbu a4,0(s8)        | DC:LD hit STB-fwd
+   5001 | 0684 sb a2,0(s8)         | 067c sb a2,0(s8)         | 2| >0674 sb a2,0(s8)        | 0670 lbu a4,0(s8)    LSU | 066c sb a2,0(s8)         | DC:ST hit
+   5002 | 0688 lbu a4,0(s8)        | 0680 lbu a4,0(s8)        | 2| >0678 lbu a4,0(s8)       | 0674 sb a2,0(s8)     LSU | 0670 lbu a4,0(s8)        | DC:LD hit STB-fwd
+   5003 | 068c sb a2,0(s8)         | 0684 sb a2,0(s8)         | 2| >067c sb a2,0(s8)        | 0678 lbu a4,0(s8)    LSU | 0674 sb a2,0(s8)         | DC:ST hit
+   5004 | 0690 lbu a4,0(s8)        | 0688 lbu a4,0(s8)        | 2| >0680 lbu a4,0(s8)       | 067c sb a2,0(s8)     LSU | 0678 lbu a4,0(s8)        | DC:LD hit STB-fwd
+   5005 | 0694 sb a2,0(s8)         | 068c sb a2,0(s8)         | 2| >0684 sb a2,0(s8)        | 0680 lbu a4,0(s8)    LSU | 067c sb a2,0(s8)         | DC:ST hit
+   5006 | 0698 lbu a4,0(s8)        | 0690 lbu a4,0(s8)        | 2| >0688 lbu a4,0(s8)       | 0684 sb a2,0(s8)     LSU | 0680 lbu a4,0(s8)        | DC:LD hit STB-fwd
+   5007 | 069c sb a2,0(s8)         | 0694 sb a2,0(s8)         | 2| >068c sb a2,0(s8)        | 0688 lbu a4,0(s8)    LSU | 0684 sb a2,0(s8)         | DC:ST hit
+   5008 | 06a0 lbu a4,0(s8)        | 0698 lbu a4,0(s8)        | 2| >0690 lbu a4,0(s8)       | 068c sb a2,0(s8)     LSU | 0688 lbu a4,0(s8)        | DC:LD hit STB-fwd
+   5009 | 06a4 sb a2,0(s8)         | 069c sb a2,0(s8)         | 2| >0694 sb a2,0(s8)        | 0690 lbu a4,0(s8)    LSU | 068c sb a2,0(s8)         | DC:ST hit
+   5010 | 06a8 lbu a4,0(s8)        | 06a0 lbu a4,0(s8)        | 2| >0698 lbu a4,0(s8)       | 0694 sb a2,0(s8)     LSU | 0690 lbu a4,0(s8)        | DC:LD hit STB-fwd
+   5011 | 06ac sb a2,0(s8)         | 06a4 sb a2,0(s8)         | 2| >069c sb a2,0(s8)        | 0698 lbu a4,0(s8)    LSU | 0694 sb a2,0(s8)         | DC:ST hit
+   5012 | 06b0 lbu a4,0(s8)        | 06a8 lbu a4,0(s8)        | 2| >06a0 lbu a4,0(s8)       | 069c sb a2,0(s8)     LSU | 0698 lbu a4,0(s8)        | DC:LD hit STB-fwd
+   5013 | 06b4 sb a2,0(s8)         | 06ac sb a2,0(s8)         | 2| >06a4 sb a2,0(s8)        | 06a0 lbu a4,0(s8)    LSU | 069c sb a2,0(s8)         | DC:ST hit
+   5014 | 06b8 lbu a4,0(s8)        | 06b0 lbu a4,0(s8)        | 2| >06a8 lbu a4,0(s8)       | 06a4 sb a2,0(s8)     LSU | 06a0 lbu a4,0(s8)        | DC:LD hit STB-fwd
+   5015 | 06bc sb a2,0(s8)         | 06b4 sb a2,0(s8)         | 2| >06ac sb a2,0(s8)        | 06a8 lbu a4,0(s8)    LSU | 06a4 sb a2,0(s8)         | DC:ST hit
+   5016 | 06c0 lbu a4,0(s8)        | 06b8 lbu a4,0(s8)        | 2| >06b0 lbu a4,0(s8)       | 06ac sb a2,0(s8)     LSU | 06a8 lbu a4,0(s8)        | DC:LD hit STB-fwd
+   5017 | 06c4 csrr t0,mcycle      | 06bc sb a2,0(s8)         | 2| >06b4 sb a2,0(s8)        | 06b0 lbu a4,0(s8)    LSU | 06ac sb a2,0(s8)         | DC:ST hit
+   5018 | 06c8 sub s0,t0,s0        | 06c0 lbu a4,0(s8)        | 2| >06b8 lbu a4,0(s8)       | 06b4 sb a2,0(s8)     LSU | 06b0 lbu a4,0(s8)        | DC:LD hit STB-fwd
+   5019 | 06cc ret                 | 06c4 csrr t0,mcycle      | 2| >06bc sb a2,0(s8)        | 06b8 lbu a4,0(s8)    LSU | 06b4 sb a2,0(s8)         | DC:ST hit
+   5020 | 06d0 ?                   | 06c8 sub s0,t0,s0        | 2| >06c0 lbu a4,0(s8)       | 06bc sb a2,0(s8)     LSU | 06b8 lbu a4,0(s8)        | DC:LD hit STB-fwd
+   5021 | 0320 li t6,0             | 06cc ret                 | 2| .06c4 csrr t0,mcycle     | 06c0 lbu a4,0(s8)    LSU | 06bc sb a2,0(s8)         | IP-curflw(RAS/delay) ID-stall:CP0/fence DC:ST hit
+   5022 | 0324 mv a1,s0            |                          | 4| .06c4 csrr t0,mcycle     |                          | 06c0 lbu a4,0(s8)        | ID-stall:CP0/fence DC:LD hit STB-fwd
+   5023 | 0328 auipc a0,0x0        | 0320 li t6,0             | 4| .06c4 csrr t0,mcycle     |                          |                          | ID-stall:CP0/fence
+   5024 |                          | 0324 mv a1,s0            | 6| >06c4 csrr t0,mcycle     |                          |                          | 
+   5025 | 0328 auipc a0,0x0        | 0324 mv a1,s0            | 4| .06c8 sub s0,t0,s0       | 06c4 csrr t0,mcycle  CP0 |                          | ID-stall:RAW
+   5026 | 032c addi a0,a0,1136     |                          | 6| >06c8 sub s0,t0,s0       |                          | 06c4 csrr t0,mcycle      | 
+   5027 | 0330 jal 21e             | 0328 auipc a0,0x0        | 4| >06cc ret                | 06c8 sub s0,t0,s0    ALU |                          | 
+   5028 | 0334 j 10a               | 032c addi a0,a0,1136     | 4| >0320 li t6,0            | 06cc ret             BJU | 06c8 sub s0,t0,s0        | 
+   5029 | 0338 nop                 | 0330 jal 21e             | 4| >0324 mv a1,s0           | 0320 li t6,0         ALU | 06cc ret                 | IP-redirect->021e
+   5030 | 021e addi sp,sp,-16      |                          | 4| >(flushed) auipc a0,0x0  | 0324 mv a1,s0        ALU | 0320 li t6,0             | 
+----------------------------------------------------------------------------------------------------------------------------------------------------------------
+summary: cycles=44 retired=38 IPC=0.864 | ip_curflw=1, ip_redirect=1, retired=38, stall_CP0/fence=4, stall_RAW=1, stb_fwd=16

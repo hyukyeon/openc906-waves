@@ -1,0 +1,1229 @@
+사용: pipeview.py <out/test 디렉토리> [--mark N] [--max-rows K]
+출력: <dir>/pipeview.txt  (mark 구간별 표 + 구간 요약)
+
+================================================================================================================================================================
+MARK 1   cycles 3706 .. 4631  (926 cycles)
+================================================================================================================================================================
+    cyc | IF (fetch)               | IP (pred)                |IB| ID                       | EX1                      | RETIRE                   | events
+----------------------------------------------------------------------------------------------------------------------------------------------------------------
+   3706 |                          |                          | 0|                          |                          | 02a0 jal 400             | I$-miss
+   3707 |                          |                          | 0|                          |                          |                          | 
+   3708 |                          |                          | 0|                          |                          |                          | 
+   3709 |                          |                          | 0|                          |                          |                          | 
+   3710 |                          |                          | 0|                          |                          |                          | 
+   3711 |                          |                          | 0|                          |                          |                          | 
+   3712 |                          | 0400 li s2,64            | 0| >0400 li s2,64           |                          |                          | 
+   3713 |                          |                          | 0|                          | 0400 li s2,64        ALU |                          | 
+   3714 |                          |                          | 0|                          |                          | 0400 li s2,64            | 
+   3715 |                          |                          | 0|                          |                          |                          | 
+   3716 |                          |                          | 0|                          |                          |                          | 
+   3717 |                          |                          | 0|                          |                          |                          | 
+   3718 | 0404 li a4,0             |                          | 0|                          |                          |                          | 
+   3719 | 0408 csrr s3,mhpmcounter |                          | 0|                          |                          |                          | 
+   3720 | 040c csrr s0,mcycle      | 0404 li a4,0             | 0| >0404 li a4,0            |                          |                          | 
+   3721 | 0410 addi a4,a4,1        | 0408 csrr s3,mhpmcounter | 0| .0408 csrr s3,mhpmcounte | 0404 li a4,0         ALU |                          | ID-stall:CP0/fence
+   3722 | 0414 addi a5,a4,2        | 040c csrr s0,mcycle      | 0| .0408 csrr s3,mhpmcounte |                          | 0404 li a4,0             | ID-stall:CP0/fence
+   3723 | 0418 addi a6,a4,3        | 0410 addi a4,a4,1        | 2| >0408 csrr s3,mhpmcounte |                          |                          | 
+   3724 | 041c addi a7,a4,4        | 0414 addi a5,a4,2        | 2| .040c csrr s0,mcycle     | 0408 csrr s3,mhpmcou CP0 |                          | ID-stall:CP0/fence
+   3725 | 0420 addi s2,s2,-1       | 0418 addi a6,a4,3        | 4| .040c csrr s0,mcycle     |                          | 0408 csrr s3,mhpmcounter | ID-stall:CP0/fence
+   3726 |                          | 041c addi a7,a4,4        | 6| >040c csrr s0,mcycle     |                          |                          | 
+   3727 | 0420 addi s2,s2,-1       | 041c addi a7,a4,4        | 4| >0410 addi a4,a4,1       | 040c csrr s0,mcycle  CP0 |                          | 
+   3728 | 0424 bnez s2,410         |                          | 4| >0414 addi a5,a4,2       | 0410 addi a4,a4,1    ALU | 040c csrr s0,mcycle      | 
+   3729 | 0428 csrr t0,mcycle      | 0420 addi s2,s2,-1       | 2| >0418 addi a6,a4,3       | 0414 addi a5,a4,2    ALU | 0410 addi a4,a4,1        | 
+   3730 | 042c sub s0,t0,s0        | 0424 bnez s2,410         | 2| >041c addi a7,a4,4       | 0418 addi a6,a4,3    ALU | 0414 addi a5,a4,2        | 
+   3731 | 0430 csrr s1,mhpmcounter | 0428 csrr t0,mcycle      | 2| >0420 addi s2,s2,-1      | 041c addi a7,a4,4    ALU | 0418 addi a6,a4,3        | 
+   3732 | 0434 sub s1,s1,s3        | 042c sub s0,t0,s0        | 2| >0424 bnez s2,410        | 0420 addi s2,s2,-1   ALU | 041c addi a7,a4,4        | 
+   3733 | 0438 ret                 | 0430 csrr s1,mhpmcounter | 2| .(flushed) csrr t0,mcycl | 0424 bnez s2,410     BJU | 0420 addi s2,s2,-1       | ID-stall:CP0/fence BR-resolve:T MISPRED(BHT) IU-redirect->0410
+   3734 | 0410 addi a4,a4,1        |                          | 0|                          |                          | 0424 bnez s2,410         | 
+   3735 | 0414 addi a5,a4,2        |                          | 0|                          |                          |                          | 
+   3736 | 0418 addi a6,a4,3        | 0410 addi a4,a4,1        | 0| >0410 addi a4,a4,1       |                          |                          | 
+   3737 | 041c addi a7,a4,4        | 0414 addi a5,a4,2        | 0| >0414 addi a5,a4,2       | 0410 addi a4,a4,1    ALU |                          | 
+   3738 | 0420 addi s2,s2,-1       | 0418 addi a6,a4,3        | 0| >0418 addi a6,a4,3       | 0414 addi a5,a4,2    ALU | 0410 addi a4,a4,1        | 
+   3739 | 0424 bnez s2,410         | 041c addi a7,a4,4        | 0| >041c addi a7,a4,4       | 0418 addi a6,a4,3    ALU | 0414 addi a5,a4,2        | 
+   3740 | 0428 csrr t0,mcycle      | 0420 addi s2,s2,-1       | 0| >0420 addi s2,s2,-1      | 041c addi a7,a4,4    ALU | 0418 addi a6,a4,3        | 
+   3741 | 042c sub s0,t0,s0        | 0424 bnez s2,410         | 0| >0424 bnez s2,410        | 0420 addi s2,s2,-1   ALU | 041c addi a7,a4,4        | 
+   3742 | 0430 csrr s1,mhpmcounter | 0428 csrr t0,mcycle      | 0| .(flushed) csrr t0,mcycl | 0424 bnez s2,410     BJU | 0420 addi s2,s2,-1       | ID-stall:CP0/fence BR-resolve:T MISPRED(BHT) IU-redirect->0410
+   3743 | 0410 addi a4,a4,1        |                          | 0|                          |                          | 0424 bnez s2,410         | 
+   3744 | 0414 addi a5,a4,2        |                          | 0|                          |                          |                          | 
+   3745 | 0418 addi a6,a4,3        | 0410 addi a4,a4,1        | 0| >0410 addi a4,a4,1       |                          |                          | 
+   3746 | 041c addi a7,a4,4        | 0414 addi a5,a4,2        | 0| >0414 addi a5,a4,2       | 0410 addi a4,a4,1    ALU |                          | 
+   3747 | 0420 addi s2,s2,-1       | 0418 addi a6,a4,3        | 0| >0418 addi a6,a4,3       | 0414 addi a5,a4,2    ALU | 0410 addi a4,a4,1        | 
+   3748 | 0424 bnez s2,410         | 041c addi a7,a4,4        | 0| >041c addi a7,a4,4       | 0418 addi a6,a4,3    ALU | 0414 addi a5,a4,2        | 
+   3749 | 0428 csrr t0,mcycle      | 0420 addi s2,s2,-1       | 0| >0420 addi s2,s2,-1      | 041c addi a7,a4,4    ALU | 0418 addi a6,a4,3        | 
+   3750 | 042c sub s0,t0,s0        | 0424 bnez s2,410         | 0| >0424 bnez s2,410        | 0420 addi s2,s2,-1   ALU | 041c addi a7,a4,4        | 
+   3751 | 0430 csrr s1,mhpmcounter | 0428 csrr t0,mcycle      | 0| .(flushed) csrr t0,mcycl | 0424 bnez s2,410     BJU | 0420 addi s2,s2,-1       | ID-stall:CP0/fence BR-resolve:T MISPRED(BHT) IU-redirect->0410
+   3752 | 0410 addi a4,a4,1        |                          | 0|                          |                          | 0424 bnez s2,410         | 
+   3753 | 0414 addi a5,a4,2        |                          | 0|                          |                          |                          | 
+   3754 | 0418 addi a6,a4,3        | 0410 addi a4,a4,1        | 0| >0410 addi a4,a4,1       |                          |                          | 
+   3755 | 041c addi a7,a4,4        | 0414 addi a5,a4,2        | 0| >0414 addi a5,a4,2       | 0410 addi a4,a4,1    ALU |                          | 
+   3756 | 0420 addi s2,s2,-1       | 0418 addi a6,a4,3        | 0| >0418 addi a6,a4,3       | 0414 addi a5,a4,2    ALU | 0410 addi a4,a4,1        | 
+   3757 | 0424 bnez s2,410         | 041c addi a7,a4,4        | 0| >041c addi a7,a4,4       | 0418 addi a6,a4,3    ALU | 0414 addi a5,a4,2        | 
+   3758 | 0428 csrr t0,mcycle      | 0420 addi s2,s2,-1       | 0| >0420 addi s2,s2,-1      | 041c addi a7,a4,4    ALU | 0418 addi a6,a4,3        | 
+   3759 | 042c sub s0,t0,s0        | 0424 bnez s2,410         | 0| >0424 bnez s2,410        | 0420 addi s2,s2,-1   ALU | 041c addi a7,a4,4        | 
+   3760 | 0430 csrr s1,mhpmcounter | 0428 csrr t0,mcycle      | 0| .(flushed) csrr t0,mcycl | 0424 bnez s2,410     BJU | 0420 addi s2,s2,-1       | ID-stall:CP0/fence BR-resolve:T MISPRED(BHT) IU-redirect->0410
+   3761 | 0410 addi a4,a4,1        |                          | 0|                          |                          | 0424 bnez s2,410         | 
+   3762 | 0414 addi a5,a4,2        |                          | 0|                          |                          |                          | 
+   3763 | 0418 addi a6,a4,3        | 0410 addi a4,a4,1        | 0| >0410 addi a4,a4,1       |                          |                          | 
+   3764 | 041c addi a7,a4,4        | 0414 addi a5,a4,2        | 0| >0414 addi a5,a4,2       | 0410 addi a4,a4,1    ALU |                          | 
+   3765 | 0420 addi s2,s2,-1       | 0418 addi a6,a4,3        | 0| >0418 addi a6,a4,3       | 0414 addi a5,a4,2    ALU | 0410 addi a4,a4,1        | 
+   3766 | 0424 bnez s2,410         | 041c addi a7,a4,4        | 0| >041c addi a7,a4,4       | 0418 addi a6,a4,3    ALU | 0414 addi a5,a4,2        | 
+   3767 | 0428 csrr t0,mcycle      | 0420 addi s2,s2,-1       | 0| >0420 addi s2,s2,-1      | 041c addi a7,a4,4    ALU | 0418 addi a6,a4,3        | 
+   3768 | 042c sub s0,t0,s0        | 0424 bnez s2,410         | 0| >0424 bnez s2,410        | 0420 addi s2,s2,-1   ALU | 041c addi a7,a4,4        | 
+   3769 | 0430 csrr s1,mhpmcounter | 0428 csrr t0,mcycle      | 0| .(flushed) csrr t0,mcycl | 0424 bnez s2,410     BJU | 0420 addi s2,s2,-1       | ID-stall:CP0/fence BR-resolve:T MISPRED(BHT) IU-redirect->0410
+   3770 | 0410 addi a4,a4,1        |                          | 0|                          |                          | 0424 bnez s2,410         | 
+   3771 | 0414 addi a5,a4,2        |                          | 0|                          |                          |                          | 
+   3772 | 0418 addi a6,a4,3        | 0410 addi a4,a4,1        | 0| >0410 addi a4,a4,1       |                          |                          | 
+   3773 | 041c addi a7,a4,4        | 0414 addi a5,a4,2        | 0| >0414 addi a5,a4,2       | 0410 addi a4,a4,1    ALU |                          | 
+   3774 | 0420 addi s2,s2,-1       | 0418 addi a6,a4,3        | 0| >0418 addi a6,a4,3       | 0414 addi a5,a4,2    ALU | 0410 addi a4,a4,1        | 
+   3775 | 0424 bnez s2,410         | 041c addi a7,a4,4        | 0| >041c addi a7,a4,4       | 0418 addi a6,a4,3    ALU | 0414 addi a5,a4,2        | 
+   3776 | 0428 csrr t0,mcycle      | 0420 addi s2,s2,-1       | 0| >0420 addi s2,s2,-1      | 041c addi a7,a4,4    ALU | 0418 addi a6,a4,3        | 
+   3777 | 042c sub s0,t0,s0        | 0424 bnez s2,410         | 0| >0424 bnez s2,410        | 0420 addi s2,s2,-1   ALU | 041c addi a7,a4,4        | 
+   3778 | 0430 csrr s1,mhpmcounter | 0428 csrr t0,mcycle      | 0| .(flushed) csrr t0,mcycl | 0424 bnez s2,410     BJU | 0420 addi s2,s2,-1       | ID-stall:CP0/fence BR-resolve:T MISPRED(BHT) IU-redirect->0410
+   3779 | 0410 addi a4,a4,1        |                          | 0|                          |                          | 0424 bnez s2,410         | 
+   3780 | 0414 addi a5,a4,2        |                          | 0|                          |                          |                          | 
+   3781 | 0418 addi a6,a4,3        | 0410 addi a4,a4,1        | 0| >0410 addi a4,a4,1       |                          |                          | 
+   3782 | 041c addi a7,a4,4        | 0414 addi a5,a4,2        | 0| >0414 addi a5,a4,2       | 0410 addi a4,a4,1    ALU |                          | 
+   3783 | 0420 addi s2,s2,-1       | 0418 addi a6,a4,3        | 0| >0418 addi a6,a4,3       | 0414 addi a5,a4,2    ALU | 0410 addi a4,a4,1        | 
+   3784 | 0424 bnez s2,410         | 041c addi a7,a4,4        | 0| >041c addi a7,a4,4       | 0418 addi a6,a4,3    ALU | 0414 addi a5,a4,2        | 
+   3785 | 0428 csrr t0,mcycle      | 0420 addi s2,s2,-1       | 0| >0420 addi s2,s2,-1      | 041c addi a7,a4,4    ALU | 0418 addi a6,a4,3        | 
+   3786 | 042c sub s0,t0,s0        | 0424 bnez s2,410         | 0| >0424 bnez s2,410        | 0420 addi s2,s2,-1   ALU | 041c addi a7,a4,4        | 
+   3787 | 0430 csrr s1,mhpmcounter | 0428 csrr t0,mcycle      | 0| .(flushed) csrr t0,mcycl | 0424 bnez s2,410     BJU | 0420 addi s2,s2,-1       | ID-stall:CP0/fence BR-resolve:T MISPRED(BHT) IU-redirect->0410
+   3788 | 0410 addi a4,a4,1        |                          | 0|                          |                          | 0424 bnez s2,410         | 
+   3789 | 0414 addi a5,a4,2        |                          | 0|                          |                          |                          | 
+   3790 | 0418 addi a6,a4,3        | 0410 addi a4,a4,1        | 0| >0410 addi a4,a4,1       |                          |                          | 
+   3791 | 041c addi a7,a4,4        | 0414 addi a5,a4,2        | 0| >0414 addi a5,a4,2       | 0410 addi a4,a4,1    ALU |                          | 
+   3792 | 0420 addi s2,s2,-1       | 0418 addi a6,a4,3        | 0| >0418 addi a6,a4,3       | 0414 addi a5,a4,2    ALU | 0410 addi a4,a4,1        | 
+   3793 | 0424 bnez s2,410         | 041c addi a7,a4,4        | 0| >041c addi a7,a4,4       | 0418 addi a6,a4,3    ALU | 0414 addi a5,a4,2        | 
+   3794 | 0428 csrr t0,mcycle      | 0420 addi s2,s2,-1       | 0| >0420 addi s2,s2,-1      | 041c addi a7,a4,4    ALU | 0418 addi a6,a4,3        | 
+   3795 | 042c sub s0,t0,s0        | 0424 bnez s2,410         | 0| >0424 bnez s2,410        | 0420 addi s2,s2,-1   ALU | 041c addi a7,a4,4        | 
+   3796 | 0430 csrr s1,mhpmcounter | 0428 csrr t0,mcycle      | 0| .(flushed) csrr t0,mcycl | 0424 bnez s2,410     BJU | 0420 addi s2,s2,-1       | ID-stall:CP0/fence BR-resolve:T MISPRED(BHT) IU-redirect->0410
+   3797 | 0410 addi a4,a4,1        |                          | 0|                          |                          | 0424 bnez s2,410         | 
+   3798 | 0414 addi a5,a4,2        |                          | 0|                          |                          |                          | 
+   3799 | 0418 addi a6,a4,3        | 0410 addi a4,a4,1        | 0| >0410 addi a4,a4,1       |                          |                          | 
+   3800 | 041c addi a7,a4,4        | 0414 addi a5,a4,2        | 0| >0414 addi a5,a4,2       | 0410 addi a4,a4,1    ALU |                          | 
+   3801 | 0420 addi s2,s2,-1       | 0418 addi a6,a4,3        | 0| >0418 addi a6,a4,3       | 0414 addi a5,a4,2    ALU | 0410 addi a4,a4,1        | 
+   3802 | 0424 bnez s2,410         | 041c addi a7,a4,4        | 0| >041c addi a7,a4,4       | 0418 addi a6,a4,3    ALU | 0414 addi a5,a4,2        | 
+   3803 | 0428 csrr t0,mcycle      | 0420 addi s2,s2,-1       | 0| >0420 addi s2,s2,-1      | 041c addi a7,a4,4    ALU | 0418 addi a6,a4,3        | 
+   3804 | 042c sub s0,t0,s0        | 0424 bnez s2,410         | 0| >0424 bnez s2,410        | 0420 addi s2,s2,-1   ALU | 041c addi a7,a4,4        | 
+   3805 | 0430 csrr s1,mhpmcounter | 0428 csrr t0,mcycle      | 0| .(flushed) csrr t0,mcycl | 0424 bnez s2,410     BJU | 0420 addi s2,s2,-1       | ID-stall:CP0/fence BR-resolve:T MISPRED(BHT) IU-redirect->0410
+   3806 | 0410 addi a4,a4,1        |                          | 0|                          |                          | 0424 bnez s2,410         | 
+   3807 | 0414 addi a5,a4,2        |                          | 0|                          |                          |                          | 
+   3808 | 0418 addi a6,a4,3        | 0410 addi a4,a4,1        | 0| >0410 addi a4,a4,1       |                          |                          | 
+   3809 | 041c addi a7,a4,4        | 0414 addi a5,a4,2        | 0| >0414 addi a5,a4,2       | 0410 addi a4,a4,1    ALU |                          | 
+   3810 | 0420 addi s2,s2,-1       | 0418 addi a6,a4,3        | 0| >0418 addi a6,a4,3       | 0414 addi a5,a4,2    ALU | 0410 addi a4,a4,1        | 
+   3811 | 0424 bnez s2,410         | 041c addi a7,a4,4        | 0| >041c addi a7,a4,4       | 0418 addi a6,a4,3    ALU | 0414 addi a5,a4,2        | 
+   3812 | 0428 csrr t0,mcycle      | 0420 addi s2,s2,-1       | 0| >0420 addi s2,s2,-1      | 041c addi a7,a4,4    ALU | 0418 addi a6,a4,3        | 
+   3813 | 042c sub s0,t0,s0        | 0424 bnez s2,410         | 0| >0424 bnez s2,410        | 0420 addi s2,s2,-1   ALU | 041c addi a7,a4,4        | 
+   3814 | 0430 csrr s1,mhpmcounter | 0428 csrr t0,mcycle      | 0| .(flushed) csrr t0,mcycl | 0424 bnez s2,410     BJU | 0420 addi s2,s2,-1       | ID-stall:CP0/fence BR-resolve:T MISPRED(BHT) IU-redirect->0410
+   3815 | 0410 addi a4,a4,1        |                          | 0|                          |                          | 0424 bnez s2,410         | 
+   3816 | 0414 addi a5,a4,2        |                          | 0|                          |                          |                          | 
+   3817 | 0418 addi a6,a4,3        | 0410 addi a4,a4,1        | 0| >0410 addi a4,a4,1       |                          |                          | 
+   3818 | 041c addi a7,a4,4        | 0414 addi a5,a4,2        | 0| >0414 addi a5,a4,2       | 0410 addi a4,a4,1    ALU |                          | 
+   3819 | 0420 addi s2,s2,-1       | 0418 addi a6,a4,3        | 0| >0418 addi a6,a4,3       | 0414 addi a5,a4,2    ALU | 0410 addi a4,a4,1        | 
+   3820 | 0424 bnez s2,410         | 041c addi a7,a4,4        | 0| >041c addi a7,a4,4       | 0418 addi a6,a4,3    ALU | 0414 addi a5,a4,2        | 
+   3821 | 0428 csrr t0,mcycle      | 0420 addi s2,s2,-1       | 0| >0420 addi s2,s2,-1      | 041c addi a7,a4,4    ALU | 0418 addi a6,a4,3        | 
+   3822 | 042c sub s0,t0,s0        | 0424 bnez s2,410         | 0| >0424 bnez s2,410        | 0420 addi s2,s2,-1   ALU | 041c addi a7,a4,4        | 
+   3823 | 0430 csrr s1,mhpmcounter | 0428 csrr t0,mcycle      | 0| .(flushed) csrr t0,mcycl | 0424 bnez s2,410     BJU | 0420 addi s2,s2,-1       | ID-stall:CP0/fence BR-resolve:T MISPRED(BHT) IU-redirect->0410
+   3824 | 0410 addi a4,a4,1        |                          | 0|                          |                          | 0424 bnez s2,410         | 
+   3825 | 0414 addi a5,a4,2        |                          | 0|                          |                          |                          | 
+   3826 | 0418 addi a6,a4,3        | 0410 addi a4,a4,1        | 0| >0410 addi a4,a4,1       |                          |                          | 
+   3827 | 041c addi a7,a4,4        | 0414 addi a5,a4,2        | 0| >0414 addi a5,a4,2       | 0410 addi a4,a4,1    ALU |                          | 
+   3828 | 0420 addi s2,s2,-1       | 0418 addi a6,a4,3        | 0| >0418 addi a6,a4,3       | 0414 addi a5,a4,2    ALU | 0410 addi a4,a4,1        | 
+   3829 | 0424 bnez s2,410         | 041c addi a7,a4,4        | 0| >041c addi a7,a4,4       | 0418 addi a6,a4,3    ALU | 0414 addi a5,a4,2        | 
+   3830 | 0428 csrr t0,mcycle      | 0420 addi s2,s2,-1       | 0| >0420 addi s2,s2,-1      | 041c addi a7,a4,4    ALU | 0418 addi a6,a4,3        | 
+   3831 | 042c sub s0,t0,s0        | 0424 bnez s2,410         | 0| >0424 bnez s2,410        | 0420 addi s2,s2,-1   ALU | 041c addi a7,a4,4        | 
+   3832 | 0430 csrr s1,mhpmcounter | 0428 csrr t0,mcycle      | 0| .(flushed) csrr t0,mcycl | 0424 bnez s2,410     BJU | 0420 addi s2,s2,-1       | ID-stall:CP0/fence BR-resolve:T MISPRED(BHT) IU-redirect->0410
+   3833 | 0410 addi a4,a4,1        |                          | 0|                          |                          | 0424 bnez s2,410         | 
+   3834 | 0414 addi a5,a4,2        |                          | 0|                          |                          |                          | 
+   3835 | 0418 addi a6,a4,3        | 0410 addi a4,a4,1        | 0| >0410 addi a4,a4,1       |                          |                          | 
+   3836 | 041c addi a7,a4,4        | 0414 addi a5,a4,2        | 0| >0414 addi a5,a4,2       | 0410 addi a4,a4,1    ALU |                          | 
+   3837 | 0420 addi s2,s2,-1       | 0418 addi a6,a4,3        | 0| >0418 addi a6,a4,3       | 0414 addi a5,a4,2    ALU | 0410 addi a4,a4,1        | 
+   3838 | 0424 bnez s2,410         | 041c addi a7,a4,4        | 0| >041c addi a7,a4,4       | 0418 addi a6,a4,3    ALU | 0414 addi a5,a4,2        | 
+   3839 | 0428 csrr t0,mcycle      | 0420 addi s2,s2,-1       | 0| >0420 addi s2,s2,-1      | 041c addi a7,a4,4    ALU | 0418 addi a6,a4,3        | 
+   3840 | 042c sub s0,t0,s0        | 0424 bnez s2,410         | 0| >0424 bnez s2,410        | 0420 addi s2,s2,-1   ALU | 041c addi a7,a4,4        | 
+   3841 | 0430 csrr s1,mhpmcounter | 0428 csrr t0,mcycle      | 0| .(flushed) csrr t0,mcycl | 0424 bnez s2,410     BJU | 0420 addi s2,s2,-1       | ID-stall:CP0/fence BR-resolve:T MISPRED(BHT) IU-redirect->0410
+   3842 | 0410 addi a4,a4,1        |                          | 0|                          |                          | 0424 bnez s2,410         | 
+   3843 | 0414 addi a5,a4,2        |                          | 0|                          |                          |                          | 
+   3844 | 0418 addi a6,a4,3        | 0410 addi a4,a4,1        | 0| >0410 addi a4,a4,1       |                          |                          | 
+   3845 | 041c addi a7,a4,4        | 0414 addi a5,a4,2        | 0| >0414 addi a5,a4,2       | 0410 addi a4,a4,1    ALU |                          | 
+   3846 | 0420 addi s2,s2,-1       | 0418 addi a6,a4,3        | 0| >0418 addi a6,a4,3       | 0414 addi a5,a4,2    ALU | 0410 addi a4,a4,1        | 
+   3847 | 0424 bnez s2,410         | 041c addi a7,a4,4        | 0| >041c addi a7,a4,4       | 0418 addi a6,a4,3    ALU | 0414 addi a5,a4,2        | 
+   3848 | 0428 csrr t0,mcycle      | 0420 addi s2,s2,-1       | 0| >0420 addi s2,s2,-1      | 041c addi a7,a4,4    ALU | 0418 addi a6,a4,3        | 
+   3849 | 042c sub s0,t0,s0        | 0424 bnez s2,410         | 0| >0424 bnez s2,410        | 0420 addi s2,s2,-1   ALU | 041c addi a7,a4,4        | 
+   3850 | 0430 csrr s1,mhpmcounter | 0428 csrr t0,mcycle      | 0| .(flushed) csrr t0,mcycl | 0424 bnez s2,410     BJU | 0420 addi s2,s2,-1       | ID-stall:CP0/fence BR-resolve:T MISPRED(BHT) IU-redirect->0410
+   3851 | 0410 addi a4,a4,1        |                          | 0|                          |                          | 0424 bnez s2,410         | 
+   3852 | 0414 addi a5,a4,2        |                          | 0|                          |                          |                          | 
+   3853 | 0418 addi a6,a4,3        | 0410 addi a4,a4,1        | 0| >0410 addi a4,a4,1       |                          |                          | 
+   3854 | 041c addi a7,a4,4        | 0414 addi a5,a4,2        | 0| >0414 addi a5,a4,2       | 0410 addi a4,a4,1    ALU |                          | 
+   3855 | 0420 addi s2,s2,-1       | 0418 addi a6,a4,3        | 0| >0418 addi a6,a4,3       | 0414 addi a5,a4,2    ALU | 0410 addi a4,a4,1        | 
+   3856 | 0424 bnez s2,410         | 041c addi a7,a4,4        | 0| >041c addi a7,a4,4       | 0418 addi a6,a4,3    ALU | 0414 addi a5,a4,2        | 
+   3857 | 0428 csrr t0,mcycle      | 0420 addi s2,s2,-1       | 0| >0420 addi s2,s2,-1      | 041c addi a7,a4,4    ALU | 0418 addi a6,a4,3        | 
+   3858 | 042c sub s0,t0,s0        | 0424 bnez s2,410         | 0| >0424 bnez s2,410        | 0420 addi s2,s2,-1   ALU | 041c addi a7,a4,4        | 
+   3859 | 0430 csrr s1,mhpmcounter | 0428 csrr t0,mcycle      | 0| .(flushed) csrr t0,mcycl | 0424 bnez s2,410     BJU | 0420 addi s2,s2,-1       | ID-stall:CP0/fence BR-resolve:T MISPRED(BHT) IU-redirect->0410
+   3860 | 0410 addi a4,a4,1        |                          | 0|                          |                          | 0424 bnez s2,410         | 
+   3861 | 0414 addi a5,a4,2        |                          | 0|                          |                          |                          | 
+   3862 | 0418 addi a6,a4,3        | 0410 addi a4,a4,1        | 0| >0410 addi a4,a4,1       |                          |                          | 
+   3863 | 041c addi a7,a4,4        | 0414 addi a5,a4,2        | 0| >0414 addi a5,a4,2       | 0410 addi a4,a4,1    ALU |                          | 
+   3864 | 0420 addi s2,s2,-1       | 0418 addi a6,a4,3        | 0| >0418 addi a6,a4,3       | 0414 addi a5,a4,2    ALU | 0410 addi a4,a4,1        | 
+   3865 | 0424 bnez s2,410         | 041c addi a7,a4,4        | 0| >041c addi a7,a4,4       | 0418 addi a6,a4,3    ALU | 0414 addi a5,a4,2        | 
+   3866 | 0428 csrr t0,mcycle      | 0420 addi s2,s2,-1       | 0| >0420 addi s2,s2,-1      | 041c addi a7,a4,4    ALU | 0418 addi a6,a4,3        | 
+   3867 | 042c sub s0,t0,s0        | 0424 bnez s2,410         | 0| >0424 bnez s2,410        | 0420 addi s2,s2,-1   ALU | 041c addi a7,a4,4        | 
+   3868 | 0430 csrr s1,mhpmcounter | 0428 csrr t0,mcycle      | 0| .(flushed) csrr t0,mcycl | 0424 bnez s2,410     BJU | 0420 addi s2,s2,-1       | ID-stall:CP0/fence BR-resolve:T MISPRED(BHT) IU-redirect->0410
+   3869 | 0410 addi a4,a4,1        |                          | 0|                          |                          | 0424 bnez s2,410         | 
+   3870 | 0414 addi a5,a4,2        |                          | 0|                          |                          |                          | 
+   3871 | 0418 addi a6,a4,3        | 0410 addi a4,a4,1        | 0| >0410 addi a4,a4,1       |                          |                          | 
+   3872 | 041c addi a7,a4,4        | 0414 addi a5,a4,2        | 0| >0414 addi a5,a4,2       | 0410 addi a4,a4,1    ALU |                          | 
+   3873 | 0420 addi s2,s2,-1       | 0418 addi a6,a4,3        | 0| >0418 addi a6,a4,3       | 0414 addi a5,a4,2    ALU | 0410 addi a4,a4,1        | 
+   3874 | 0424 bnez s2,410         | 041c addi a7,a4,4        | 0| >041c addi a7,a4,4       | 0418 addi a6,a4,3    ALU | 0414 addi a5,a4,2        | 
+   3875 | 0428 csrr t0,mcycle      | 0420 addi s2,s2,-1       | 0| >0420 addi s2,s2,-1      | 041c addi a7,a4,4    ALU | 0418 addi a6,a4,3        | 
+   3876 | 042c sub s0,t0,s0        | 0424 bnez s2,410         | 0| >0424 bnez s2,410        | 0420 addi s2,s2,-1   ALU | 041c addi a7,a4,4        | 
+   3877 | 0430 csrr s1,mhpmcounter | 0428 csrr t0,mcycle      | 0| .(flushed) csrr t0,mcycl | 0424 bnez s2,410     BJU | 0420 addi s2,s2,-1       | ID-stall:CP0/fence BR-resolve:T MISPRED(BHT) IU-redirect->0410
+   3878 | 0410 addi a4,a4,1        |                          | 0|                          |                          | 0424 bnez s2,410         | 
+   3879 | 0414 addi a5,a4,2        |                          | 0|                          |                          |                          | 
+   3880 | 0418 addi a6,a4,3        | 0410 addi a4,a4,1        | 0| >0410 addi a4,a4,1       |                          |                          | 
+   3881 | 041c addi a7,a4,4        | 0414 addi a5,a4,2        | 0| >0414 addi a5,a4,2       | 0410 addi a4,a4,1    ALU |                          | 
+   3882 | 0420 addi s2,s2,-1       | 0418 addi a6,a4,3        | 0| >0418 addi a6,a4,3       | 0414 addi a5,a4,2    ALU | 0410 addi a4,a4,1        | 
+   3883 | 0424 bnez s2,410         | 041c addi a7,a4,4        | 0| >041c addi a7,a4,4       | 0418 addi a6,a4,3    ALU | 0414 addi a5,a4,2        | 
+   3884 | 0428 csrr t0,mcycle      | 0420 addi s2,s2,-1       | 0| >0420 addi s2,s2,-1      | 041c addi a7,a4,4    ALU | 0418 addi a6,a4,3        | 
+   3885 | 042c sub s0,t0,s0        | 0424 bnez s2,410         | 0| >0424 bnez s2,410        | 0420 addi s2,s2,-1   ALU | 041c addi a7,a4,4        | 
+   3886 | 0430 csrr s1,mhpmcounter | 0428 csrr t0,mcycle      | 0| .(flushed) csrr t0,mcycl | 0424 bnez s2,410     BJU | 0420 addi s2,s2,-1       | ID-stall:CP0/fence BR-resolve:T MISPRED(BHT) IU-redirect->0410
+   3887 | 0410 addi a4,a4,1        |                          | 0|                          |                          | 0424 bnez s2,410         | 
+   3888 | 0414 addi a5,a4,2        |                          | 0|                          |                          |                          | 
+   3889 | 0418 addi a6,a4,3        | 0410 addi a4,a4,1        | 0| >0410 addi a4,a4,1       |                          |                          | 
+   3890 | 041c addi a7,a4,4        | 0414 addi a5,a4,2        | 0| >0414 addi a5,a4,2       | 0410 addi a4,a4,1    ALU |                          | 
+   3891 | 0420 addi s2,s2,-1       | 0418 addi a6,a4,3        | 0| >0418 addi a6,a4,3       | 0414 addi a5,a4,2    ALU | 0410 addi a4,a4,1        | 
+   3892 | 0424 bnez s2,410         | 041c addi a7,a4,4        | 0| >041c addi a7,a4,4       | 0418 addi a6,a4,3    ALU | 0414 addi a5,a4,2        | 
+   3893 | 0428 csrr t0,mcycle      | 0420 addi s2,s2,-1       | 0| >0420 addi s2,s2,-1      | 041c addi a7,a4,4    ALU | 0418 addi a6,a4,3        | 
+   3894 | 042c sub s0,t0,s0        | 0424 bnez s2,410         | 0| >0424 bnez s2,410        | 0420 addi s2,s2,-1   ALU | 041c addi a7,a4,4        | IP-redirect->0410
+   3895 | 0410 addi a4,a4,1        |                          | 0|                          | 0424 bnez s2,410     BJU | 0420 addi s2,s2,-1       | BR-resolve:T
+   3896 | 0414 addi a5,a4,2        |                          | 0|                          |                          | 0424 bnez s2,410         | 
+   3897 | 0418 addi a6,a4,3        | 0410 addi a4,a4,1        | 0| >0410 addi a4,a4,1       |                          |                          | 
+   3898 | 041c addi a7,a4,4        | 0414 addi a5,a4,2        | 0| >0414 addi a5,a4,2       | 0410 addi a4,a4,1    ALU |                          | 
+   3899 | 0420 addi s2,s2,-1       | 0418 addi a6,a4,3        | 0| >0418 addi a6,a4,3       | 0414 addi a5,a4,2    ALU | 0410 addi a4,a4,1        | 
+   3900 | 0424 bnez s2,410         | 041c addi a7,a4,4        | 0| >041c addi a7,a4,4       | 0418 addi a6,a4,3    ALU | 0414 addi a5,a4,2        | 
+   3901 | 0410 addi a4,a4,1        | 0420 addi s2,s2,-1       | 0| >0420 addi s2,s2,-1      | 041c addi a7,a4,4    ALU | 0418 addi a6,a4,3        | BTB-redirect
+   3902 | 0414 addi a5,a4,2        | 0424 bnez s2,410         | 0| >0424 bnez s2,410        | 0420 addi s2,s2,-1   ALU | 041c addi a7,a4,4        | 
+   3903 | 0418 addi a6,a4,3        | 0410 addi a4,a4,1        | 0| >0410 addi a4,a4,1       | 0424 bnez s2,410     BJU | 0420 addi s2,s2,-1       | BR-resolve:T
+   3904 | 041c addi a7,a4,4        | 0414 addi a5,a4,2        | 0| >0414 addi a5,a4,2       | 0410 addi a4,a4,1    ALU | 0424 bnez s2,410         | 
+   3905 | 0420 addi s2,s2,-1       | 0418 addi a6,a4,3        | 0| >0418 addi a6,a4,3       | 0414 addi a5,a4,2    ALU | 0410 addi a4,a4,1        | 
+   3906 | 0424 bnez s2,410         | 041c addi a7,a4,4        | 0| >041c addi a7,a4,4       | 0418 addi a6,a4,3    ALU | 0414 addi a5,a4,2        | 
+   3907 | 0410 addi a4,a4,1        | 0420 addi s2,s2,-1       | 0| >0420 addi s2,s2,-1      | 041c addi a7,a4,4    ALU | 0418 addi a6,a4,3        | BTB-redirect
+   3908 | 0414 addi a5,a4,2        | 0424 bnez s2,410         | 0| >0424 bnez s2,410        | 0420 addi s2,s2,-1   ALU | 041c addi a7,a4,4        | 
+   3909 | 0418 addi a6,a4,3        | 0410 addi a4,a4,1        | 0| >0410 addi a4,a4,1       | 0424 bnez s2,410     BJU | 0420 addi s2,s2,-1       | BR-resolve:T
+   3910 | 041c addi a7,a4,4        | 0414 addi a5,a4,2        | 0| >0414 addi a5,a4,2       | 0410 addi a4,a4,1    ALU | 0424 bnez s2,410         | 
+   3911 | 0420 addi s2,s2,-1       | 0418 addi a6,a4,3        | 0| >0418 addi a6,a4,3       | 0414 addi a5,a4,2    ALU | 0410 addi a4,a4,1        | 
+   3912 | 0424 bnez s2,410         | 041c addi a7,a4,4        | 0| >041c addi a7,a4,4       | 0418 addi a6,a4,3    ALU | 0414 addi a5,a4,2        | 
+   3913 | 0410 addi a4,a4,1        | 0420 addi s2,s2,-1       | 0| >0420 addi s2,s2,-1      | 041c addi a7,a4,4    ALU | 0418 addi a6,a4,3        | BTB-redirect
+   3914 | 0414 addi a5,a4,2        | 0424 bnez s2,410         | 0| >0424 bnez s2,410        | 0420 addi s2,s2,-1   ALU | 041c addi a7,a4,4        | 
+   3915 | 0418 addi a6,a4,3        | 0410 addi a4,a4,1        | 0| >0410 addi a4,a4,1       | 0424 bnez s2,410     BJU | 0420 addi s2,s2,-1       | BR-resolve:T
+   3916 | 041c addi a7,a4,4        | 0414 addi a5,a4,2        | 0| >0414 addi a5,a4,2       | 0410 addi a4,a4,1    ALU | 0424 bnez s2,410         | 
+   3917 | 0420 addi s2,s2,-1       | 0418 addi a6,a4,3        | 0| >0418 addi a6,a4,3       | 0414 addi a5,a4,2    ALU | 0410 addi a4,a4,1        | 
+   3918 | 0424 bnez s2,410         | 041c addi a7,a4,4        | 0| >041c addi a7,a4,4       | 0418 addi a6,a4,3    ALU | 0414 addi a5,a4,2        | 
+   3919 | 0410 addi a4,a4,1        | 0420 addi s2,s2,-1       | 0| >0420 addi s2,s2,-1      | 041c addi a7,a4,4    ALU | 0418 addi a6,a4,3        | BTB-redirect
+   3920 | 0414 addi a5,a4,2        | 0424 bnez s2,410         | 0| >0424 bnez s2,410        | 0420 addi s2,s2,-1   ALU | 041c addi a7,a4,4        | 
+   3921 | 0418 addi a6,a4,3        | 0410 addi a4,a4,1        | 0| >0410 addi a4,a4,1       | 0424 bnez s2,410     BJU | 0420 addi s2,s2,-1       | BR-resolve:T
+   3922 | 041c addi a7,a4,4        | 0414 addi a5,a4,2        | 0| >0414 addi a5,a4,2       | 0410 addi a4,a4,1    ALU | 0424 bnez s2,410         | 
+   3923 | 0420 addi s2,s2,-1       | 0418 addi a6,a4,3        | 0| >0418 addi a6,a4,3       | 0414 addi a5,a4,2    ALU | 0410 addi a4,a4,1        | 
+   3924 | 0424 bnez s2,410         | 041c addi a7,a4,4        | 0| >041c addi a7,a4,4       | 0418 addi a6,a4,3    ALU | 0414 addi a5,a4,2        | 
+   3925 | 0410 addi a4,a4,1        | 0420 addi s2,s2,-1       | 0| >0420 addi s2,s2,-1      | 041c addi a7,a4,4    ALU | 0418 addi a6,a4,3        | BTB-redirect
+   3926 | 0414 addi a5,a4,2        | 0424 bnez s2,410         | 0| >0424 bnez s2,410        | 0420 addi s2,s2,-1   ALU | 041c addi a7,a4,4        | 
+   3927 | 0418 addi a6,a4,3        | 0410 addi a4,a4,1        | 0| >0410 addi a4,a4,1       | 0424 bnez s2,410     BJU | 0420 addi s2,s2,-1       | BR-resolve:T
+   3928 | 041c addi a7,a4,4        | 0414 addi a5,a4,2        | 0| >0414 addi a5,a4,2       | 0410 addi a4,a4,1    ALU | 0424 bnez s2,410         | 
+   3929 | 0420 addi s2,s2,-1       | 0418 addi a6,a4,3        | 0| >0418 addi a6,a4,3       | 0414 addi a5,a4,2    ALU | 0410 addi a4,a4,1        | 
+   3930 | 0424 bnez s2,410         | 041c addi a7,a4,4        | 0| >041c addi a7,a4,4       | 0418 addi a6,a4,3    ALU | 0414 addi a5,a4,2        | 
+   3931 | 0410 addi a4,a4,1        | 0420 addi s2,s2,-1       | 0| >0420 addi s2,s2,-1      | 041c addi a7,a4,4    ALU | 0418 addi a6,a4,3        | BTB-redirect
+   3932 | 0414 addi a5,a4,2        | 0424 bnez s2,410         | 0| >0424 bnez s2,410        | 0420 addi s2,s2,-1   ALU | 041c addi a7,a4,4        | 
+   3933 | 0418 addi a6,a4,3        | 0410 addi a4,a4,1        | 0| >0410 addi a4,a4,1       | 0424 bnez s2,410     BJU | 0420 addi s2,s2,-1       | BR-resolve:T
+   3934 | 041c addi a7,a4,4        | 0414 addi a5,a4,2        | 0| >0414 addi a5,a4,2       | 0410 addi a4,a4,1    ALU | 0424 bnez s2,410         | 
+   3935 | 0420 addi s2,s2,-1       | 0418 addi a6,a4,3        | 0| >0418 addi a6,a4,3       | 0414 addi a5,a4,2    ALU | 0410 addi a4,a4,1        | 
+   3936 | 0424 bnez s2,410         | 041c addi a7,a4,4        | 0| >041c addi a7,a4,4       | 0418 addi a6,a4,3    ALU | 0414 addi a5,a4,2        | 
+   3937 | 0410 addi a4,a4,1        | 0420 addi s2,s2,-1       | 0| >0420 addi s2,s2,-1      | 041c addi a7,a4,4    ALU | 0418 addi a6,a4,3        | BTB-redirect
+   3938 | 0414 addi a5,a4,2        | 0424 bnez s2,410         | 0| >0424 bnez s2,410        | 0420 addi s2,s2,-1   ALU | 041c addi a7,a4,4        | 
+   3939 | 0418 addi a6,a4,3        | 0410 addi a4,a4,1        | 0| >0410 addi a4,a4,1       | 0424 bnez s2,410     BJU | 0420 addi s2,s2,-1       | BR-resolve:T
+   3940 | 041c addi a7,a4,4        | 0414 addi a5,a4,2        | 0| >0414 addi a5,a4,2       | 0410 addi a4,a4,1    ALU | 0424 bnez s2,410         | 
+   3941 | 0420 addi s2,s2,-1       | 0418 addi a6,a4,3        | 0| >0418 addi a6,a4,3       | 0414 addi a5,a4,2    ALU | 0410 addi a4,a4,1        | 
+   3942 | 0424 bnez s2,410         | 041c addi a7,a4,4        | 0| >041c addi a7,a4,4       | 0418 addi a6,a4,3    ALU | 0414 addi a5,a4,2        | 
+   3943 | 0410 addi a4,a4,1        | 0420 addi s2,s2,-1       | 0| >0420 addi s2,s2,-1      | 041c addi a7,a4,4    ALU | 0418 addi a6,a4,3        | BTB-redirect
+   3944 | 0414 addi a5,a4,2        | 0424 bnez s2,410         | 0| >0424 bnez s2,410        | 0420 addi s2,s2,-1   ALU | 041c addi a7,a4,4        | 
+   3945 | 0418 addi a6,a4,3        | 0410 addi a4,a4,1        | 0| >0410 addi a4,a4,1       | 0424 bnez s2,410     BJU | 0420 addi s2,s2,-1       | BR-resolve:T
+   3946 | 041c addi a7,a4,4        | 0414 addi a5,a4,2        | 0| >0414 addi a5,a4,2       | 0410 addi a4,a4,1    ALU | 0424 bnez s2,410         | 
+   3947 | 0420 addi s2,s2,-1       | 0418 addi a6,a4,3        | 0| >0418 addi a6,a4,3       | 0414 addi a5,a4,2    ALU | 0410 addi a4,a4,1        | 
+   3948 | 0424 bnez s2,410         | 041c addi a7,a4,4        | 0| >041c addi a7,a4,4       | 0418 addi a6,a4,3    ALU | 0414 addi a5,a4,2        | 
+   3949 | 0410 addi a4,a4,1        | 0420 addi s2,s2,-1       | 0| >0420 addi s2,s2,-1      | 041c addi a7,a4,4    ALU | 0418 addi a6,a4,3        | BTB-redirect
+   3950 | 0414 addi a5,a4,2        | 0424 bnez s2,410         | 0| >0424 bnez s2,410        | 0420 addi s2,s2,-1   ALU | 041c addi a7,a4,4        | 
+   3951 | 0418 addi a6,a4,3        | 0410 addi a4,a4,1        | 0| >0410 addi a4,a4,1       | 0424 bnez s2,410     BJU | 0420 addi s2,s2,-1       | BR-resolve:T
+   3952 | 041c addi a7,a4,4        | 0414 addi a5,a4,2        | 0| >0414 addi a5,a4,2       | 0410 addi a4,a4,1    ALU | 0424 bnez s2,410         | 
+   3953 | 0420 addi s2,s2,-1       | 0418 addi a6,a4,3        | 0| >0418 addi a6,a4,3       | 0414 addi a5,a4,2    ALU | 0410 addi a4,a4,1        | 
+   3954 | 0424 bnez s2,410         | 041c addi a7,a4,4        | 0| >041c addi a7,a4,4       | 0418 addi a6,a4,3    ALU | 0414 addi a5,a4,2        | 
+   3955 | 0410 addi a4,a4,1        | 0420 addi s2,s2,-1       | 0| >0420 addi s2,s2,-1      | 041c addi a7,a4,4    ALU | 0418 addi a6,a4,3        | BTB-redirect
+   3956 | 0414 addi a5,a4,2        | 0424 bnez s2,410         | 0| >0424 bnez s2,410        | 0420 addi s2,s2,-1   ALU | 041c addi a7,a4,4        | 
+   3957 | 0418 addi a6,a4,3        | 0410 addi a4,a4,1        | 0| >0410 addi a4,a4,1       | 0424 bnez s2,410     BJU | 0420 addi s2,s2,-1       | BR-resolve:T
+   3958 | 041c addi a7,a4,4        | 0414 addi a5,a4,2        | 0| >0414 addi a5,a4,2       | 0410 addi a4,a4,1    ALU | 0424 bnez s2,410         | 
+   3959 | 0420 addi s2,s2,-1       | 0418 addi a6,a4,3        | 0| >0418 addi a6,a4,3       | 0414 addi a5,a4,2    ALU | 0410 addi a4,a4,1        | 
+   3960 | 0424 bnez s2,410         | 041c addi a7,a4,4        | 0| >041c addi a7,a4,4       | 0418 addi a6,a4,3    ALU | 0414 addi a5,a4,2        | 
+   3961 | 0410 addi a4,a4,1        | 0420 addi s2,s2,-1       | 0| >0420 addi s2,s2,-1      | 041c addi a7,a4,4    ALU | 0418 addi a6,a4,3        | BTB-redirect
+   3962 | 0414 addi a5,a4,2        | 0424 bnez s2,410         | 0| >0424 bnez s2,410        | 0420 addi s2,s2,-1   ALU | 041c addi a7,a4,4        | 
+   3963 | 0418 addi a6,a4,3        | 0410 addi a4,a4,1        | 0| >0410 addi a4,a4,1       | 0424 bnez s2,410     BJU | 0420 addi s2,s2,-1       | BR-resolve:T
+   3964 | 041c addi a7,a4,4        | 0414 addi a5,a4,2        | 0| >0414 addi a5,a4,2       | 0410 addi a4,a4,1    ALU | 0424 bnez s2,410         | 
+   3965 | 0420 addi s2,s2,-1       | 0418 addi a6,a4,3        | 0| >0418 addi a6,a4,3       | 0414 addi a5,a4,2    ALU | 0410 addi a4,a4,1        | 
+   3966 | 0424 bnez s2,410         | 041c addi a7,a4,4        | 0| >041c addi a7,a4,4       | 0418 addi a6,a4,3    ALU | 0414 addi a5,a4,2        | 
+   3967 | 0410 addi a4,a4,1        | 0420 addi s2,s2,-1       | 0| >0420 addi s2,s2,-1      | 041c addi a7,a4,4    ALU | 0418 addi a6,a4,3        | BTB-redirect
+   3968 | 0414 addi a5,a4,2        | 0424 bnez s2,410         | 0| >0424 bnez s2,410        | 0420 addi s2,s2,-1   ALU | 041c addi a7,a4,4        | 
+   3969 | 0418 addi a6,a4,3        | 0410 addi a4,a4,1        | 0| >0410 addi a4,a4,1       | 0424 bnez s2,410     BJU | 0420 addi s2,s2,-1       | BR-resolve:T
+   3970 | 041c addi a7,a4,4        | 0414 addi a5,a4,2        | 0| >0414 addi a5,a4,2       | 0410 addi a4,a4,1    ALU | 0424 bnez s2,410         | 
+   3971 | 0420 addi s2,s2,-1       | 0418 addi a6,a4,3        | 0| >0418 addi a6,a4,3       | 0414 addi a5,a4,2    ALU | 0410 addi a4,a4,1        | 
+   3972 | 0424 bnez s2,410         | 041c addi a7,a4,4        | 0| >041c addi a7,a4,4       | 0418 addi a6,a4,3    ALU | 0414 addi a5,a4,2        | 
+   3973 | 0410 addi a4,a4,1        | 0420 addi s2,s2,-1       | 0| >0420 addi s2,s2,-1      | 041c addi a7,a4,4    ALU | 0418 addi a6,a4,3        | BTB-redirect
+   3974 | 0414 addi a5,a4,2        | 0424 bnez s2,410         | 0| >0424 bnez s2,410        | 0420 addi s2,s2,-1   ALU | 041c addi a7,a4,4        | 
+   3975 | 0418 addi a6,a4,3        | 0410 addi a4,a4,1        | 0| >0410 addi a4,a4,1       | 0424 bnez s2,410     BJU | 0420 addi s2,s2,-1       | BR-resolve:T
+   3976 | 041c addi a7,a4,4        | 0414 addi a5,a4,2        | 0| >0414 addi a5,a4,2       | 0410 addi a4,a4,1    ALU | 0424 bnez s2,410         | 
+   3977 | 0420 addi s2,s2,-1       | 0418 addi a6,a4,3        | 0| >0418 addi a6,a4,3       | 0414 addi a5,a4,2    ALU | 0410 addi a4,a4,1        | 
+   3978 | 0424 bnez s2,410         | 041c addi a7,a4,4        | 0| >041c addi a7,a4,4       | 0418 addi a6,a4,3    ALU | 0414 addi a5,a4,2        | 
+   3979 | 0410 addi a4,a4,1        | 0420 addi s2,s2,-1       | 0| >0420 addi s2,s2,-1      | 041c addi a7,a4,4    ALU | 0418 addi a6,a4,3        | BTB-redirect
+   3980 | 0414 addi a5,a4,2        | 0424 bnez s2,410         | 0| >0424 bnez s2,410        | 0420 addi s2,s2,-1   ALU | 041c addi a7,a4,4        | 
+   3981 | 0418 addi a6,a4,3        | 0410 addi a4,a4,1        | 0| >0410 addi a4,a4,1       | 0424 bnez s2,410     BJU | 0420 addi s2,s2,-1       | BR-resolve:T
+   3982 | 041c addi a7,a4,4        | 0414 addi a5,a4,2        | 0| >0414 addi a5,a4,2       | 0410 addi a4,a4,1    ALU | 0424 bnez s2,410         | 
+   3983 | 0420 addi s2,s2,-1       | 0418 addi a6,a4,3        | 0| >0418 addi a6,a4,3       | 0414 addi a5,a4,2    ALU | 0410 addi a4,a4,1        | 
+   3984 | 0424 bnez s2,410         | 041c addi a7,a4,4        | 0| >041c addi a7,a4,4       | 0418 addi a6,a4,3    ALU | 0414 addi a5,a4,2        | 
+   3985 | 0410 addi a4,a4,1        | 0420 addi s2,s2,-1       | 0| >0420 addi s2,s2,-1      | 041c addi a7,a4,4    ALU | 0418 addi a6,a4,3        | BTB-redirect
+   3986 | 0414 addi a5,a4,2        | 0424 bnez s2,410         | 0| >0424 bnez s2,410        | 0420 addi s2,s2,-1   ALU | 041c addi a7,a4,4        | 
+   3987 | 0418 addi a6,a4,3        | 0410 addi a4,a4,1        | 0| >0410 addi a4,a4,1       | 0424 bnez s2,410     BJU | 0420 addi s2,s2,-1       | BR-resolve:T
+   3988 | 041c addi a7,a4,4        | 0414 addi a5,a4,2        | 0| >0414 addi a5,a4,2       | 0410 addi a4,a4,1    ALU | 0424 bnez s2,410         | 
+   3989 | 0420 addi s2,s2,-1       | 0418 addi a6,a4,3        | 0| >0418 addi a6,a4,3       | 0414 addi a5,a4,2    ALU | 0410 addi a4,a4,1        | 
+   3990 | 0424 bnez s2,410         | 041c addi a7,a4,4        | 0| >041c addi a7,a4,4       | 0418 addi a6,a4,3    ALU | 0414 addi a5,a4,2        | 
+   3991 | 0410 addi a4,a4,1        | 0420 addi s2,s2,-1       | 0| >0420 addi s2,s2,-1      | 041c addi a7,a4,4    ALU | 0418 addi a6,a4,3        | BTB-redirect
+   3992 | 0414 addi a5,a4,2        | 0424 bnez s2,410         | 0| >0424 bnez s2,410        | 0420 addi s2,s2,-1   ALU | 041c addi a7,a4,4        | 
+   3993 | 0418 addi a6,a4,3        | 0410 addi a4,a4,1        | 0| >0410 addi a4,a4,1       | 0424 bnez s2,410     BJU | 0420 addi s2,s2,-1       | BR-resolve:T
+   3994 | 041c addi a7,a4,4        | 0414 addi a5,a4,2        | 0| >0414 addi a5,a4,2       | 0410 addi a4,a4,1    ALU | 0424 bnez s2,410         | 
+   3995 | 0420 addi s2,s2,-1       | 0418 addi a6,a4,3        | 0| >0418 addi a6,a4,3       | 0414 addi a5,a4,2    ALU | 0410 addi a4,a4,1        | 
+   3996 | 0424 bnez s2,410         | 041c addi a7,a4,4        | 0| >041c addi a7,a4,4       | 0418 addi a6,a4,3    ALU | 0414 addi a5,a4,2        | 
+   3997 | 0410 addi a4,a4,1        | 0420 addi s2,s2,-1       | 0| >0420 addi s2,s2,-1      | 041c addi a7,a4,4    ALU | 0418 addi a6,a4,3        | BTB-redirect
+   3998 | 0414 addi a5,a4,2        | 0424 bnez s2,410         | 0| >0424 bnez s2,410        | 0420 addi s2,s2,-1   ALU | 041c addi a7,a4,4        | 
+   3999 | 0418 addi a6,a4,3        | 0410 addi a4,a4,1        | 0| >0410 addi a4,a4,1       | 0424 bnez s2,410     BJU | 0420 addi s2,s2,-1       | BR-resolve:T
+   4000 | 041c addi a7,a4,4        | 0414 addi a5,a4,2        | 0| >0414 addi a5,a4,2       | 0410 addi a4,a4,1    ALU | 0424 bnez s2,410         | 
+   4001 | 0420 addi s2,s2,-1       | 0418 addi a6,a4,3        | 0| >0418 addi a6,a4,3       | 0414 addi a5,a4,2    ALU | 0410 addi a4,a4,1        | 
+   4002 | 0424 bnez s2,410         | 041c addi a7,a4,4        | 0| >041c addi a7,a4,4       | 0418 addi a6,a4,3    ALU | 0414 addi a5,a4,2        | 
+   4003 | 0410 addi a4,a4,1        | 0420 addi s2,s2,-1       | 0| >0420 addi s2,s2,-1      | 041c addi a7,a4,4    ALU | 0418 addi a6,a4,3        | BTB-redirect
+   4004 | 0414 addi a5,a4,2        | 0424 bnez s2,410         | 0| >0424 bnez s2,410        | 0420 addi s2,s2,-1   ALU | 041c addi a7,a4,4        | 
+   4005 | 0418 addi a6,a4,3        | 0410 addi a4,a4,1        | 0| >0410 addi a4,a4,1       | 0424 bnez s2,410     BJU | 0420 addi s2,s2,-1       | BR-resolve:T
+   4006 | 041c addi a7,a4,4        | 0414 addi a5,a4,2        | 0| >0414 addi a5,a4,2       | 0410 addi a4,a4,1    ALU | 0424 bnez s2,410         | 
+   4007 | 0420 addi s2,s2,-1       | 0418 addi a6,a4,3        | 0| >0418 addi a6,a4,3       | 0414 addi a5,a4,2    ALU | 0410 addi a4,a4,1        | 
+   4008 | 0424 bnez s2,410         | 041c addi a7,a4,4        | 0| >041c addi a7,a4,4       | 0418 addi a6,a4,3    ALU | 0414 addi a5,a4,2        | 
+   4009 | 0410 addi a4,a4,1        | 0420 addi s2,s2,-1       | 0| >0420 addi s2,s2,-1      | 041c addi a7,a4,4    ALU | 0418 addi a6,a4,3        | BTB-redirect
+   4010 | 0414 addi a5,a4,2        | 0424 bnez s2,410         | 0| >0424 bnez s2,410        | 0420 addi s2,s2,-1   ALU | 041c addi a7,a4,4        | 
+   4011 | 0418 addi a6,a4,3        | 0410 addi a4,a4,1        | 0| >0410 addi a4,a4,1       | 0424 bnez s2,410     BJU | 0420 addi s2,s2,-1       | BR-resolve:T
+   4012 | 041c addi a7,a4,4        | 0414 addi a5,a4,2        | 0| >0414 addi a5,a4,2       | 0410 addi a4,a4,1    ALU | 0424 bnez s2,410         | 
+   4013 | 0420 addi s2,s2,-1       | 0418 addi a6,a4,3        | 0| >0418 addi a6,a4,3       | 0414 addi a5,a4,2    ALU | 0410 addi a4,a4,1        | 
+   4014 | 0424 bnez s2,410         | 041c addi a7,a4,4        | 0| >041c addi a7,a4,4       | 0418 addi a6,a4,3    ALU | 0414 addi a5,a4,2        | 
+   4015 | 0410 addi a4,a4,1        | 0420 addi s2,s2,-1       | 0| >0420 addi s2,s2,-1      | 041c addi a7,a4,4    ALU | 0418 addi a6,a4,3        | BTB-redirect
+   4016 | 0414 addi a5,a4,2        | 0424 bnez s2,410         | 0| >0424 bnez s2,410        | 0420 addi s2,s2,-1   ALU | 041c addi a7,a4,4        | 
+   4017 | 0418 addi a6,a4,3        | 0410 addi a4,a4,1        | 0| >0410 addi a4,a4,1       | 0424 bnez s2,410     BJU | 0420 addi s2,s2,-1       | BR-resolve:T
+   4018 | 041c addi a7,a4,4        | 0414 addi a5,a4,2        | 0| >0414 addi a5,a4,2       | 0410 addi a4,a4,1    ALU | 0424 bnez s2,410         | 
+   4019 | 0420 addi s2,s2,-1       | 0418 addi a6,a4,3        | 0| >0418 addi a6,a4,3       | 0414 addi a5,a4,2    ALU | 0410 addi a4,a4,1        | 
+   4020 | 0424 bnez s2,410         | 041c addi a7,a4,4        | 0| >041c addi a7,a4,4       | 0418 addi a6,a4,3    ALU | 0414 addi a5,a4,2        | 
+   4021 | 0410 addi a4,a4,1        | 0420 addi s2,s2,-1       | 0| >0420 addi s2,s2,-1      | 041c addi a7,a4,4    ALU | 0418 addi a6,a4,3        | BTB-redirect
+   4022 | 0414 addi a5,a4,2        | 0424 bnez s2,410         | 0| >0424 bnez s2,410        | 0420 addi s2,s2,-1   ALU | 041c addi a7,a4,4        | 
+   4023 | 0418 addi a6,a4,3        | 0410 addi a4,a4,1        | 0| >0410 addi a4,a4,1       | 0424 bnez s2,410     BJU | 0420 addi s2,s2,-1       | BR-resolve:T
+   4024 | 041c addi a7,a4,4        | 0414 addi a5,a4,2        | 0| >0414 addi a5,a4,2       | 0410 addi a4,a4,1    ALU | 0424 bnez s2,410         | 
+   4025 | 0420 addi s2,s2,-1       | 0418 addi a6,a4,3        | 0| >0418 addi a6,a4,3       | 0414 addi a5,a4,2    ALU | 0410 addi a4,a4,1        | 
+   4026 | 0424 bnez s2,410         | 041c addi a7,a4,4        | 0| >041c addi a7,a4,4       | 0418 addi a6,a4,3    ALU | 0414 addi a5,a4,2        | 
+   4027 | 0410 addi a4,a4,1        | 0420 addi s2,s2,-1       | 0| >0420 addi s2,s2,-1      | 041c addi a7,a4,4    ALU | 0418 addi a6,a4,3        | BTB-redirect
+   4028 | 0414 addi a5,a4,2        | 0424 bnez s2,410         | 0| >0424 bnez s2,410        | 0420 addi s2,s2,-1   ALU | 041c addi a7,a4,4        | 
+   4029 | 0418 addi a6,a4,3        | 0410 addi a4,a4,1        | 0| >0410 addi a4,a4,1       | 0424 bnez s2,410     BJU | 0420 addi s2,s2,-1       | BR-resolve:T
+   4030 | 041c addi a7,a4,4        | 0414 addi a5,a4,2        | 0| >0414 addi a5,a4,2       | 0410 addi a4,a4,1    ALU | 0424 bnez s2,410         | 
+   4031 | 0420 addi s2,s2,-1       | 0418 addi a6,a4,3        | 0| >0418 addi a6,a4,3       | 0414 addi a5,a4,2    ALU | 0410 addi a4,a4,1        | 
+   4032 | 0424 bnez s2,410         | 041c addi a7,a4,4        | 0| >041c addi a7,a4,4       | 0418 addi a6,a4,3    ALU | 0414 addi a5,a4,2        | 
+   4033 | 0410 addi a4,a4,1        | 0420 addi s2,s2,-1       | 0| >0420 addi s2,s2,-1      | 041c addi a7,a4,4    ALU | 0418 addi a6,a4,3        | BTB-redirect
+   4034 | 0414 addi a5,a4,2        | 0424 bnez s2,410         | 0| >0424 bnez s2,410        | 0420 addi s2,s2,-1   ALU | 041c addi a7,a4,4        | 
+   4035 | 0418 addi a6,a4,3        | 0410 addi a4,a4,1        | 0| >0410 addi a4,a4,1       | 0424 bnez s2,410     BJU | 0420 addi s2,s2,-1       | BR-resolve:T
+   4036 | 041c addi a7,a4,4        | 0414 addi a5,a4,2        | 0| >0414 addi a5,a4,2       | 0410 addi a4,a4,1    ALU | 0424 bnez s2,410         | 
+   4037 | 0420 addi s2,s2,-1       | 0418 addi a6,a4,3        | 0| >0418 addi a6,a4,3       | 0414 addi a5,a4,2    ALU | 0410 addi a4,a4,1        | 
+   4038 | 0424 bnez s2,410         | 041c addi a7,a4,4        | 0| >041c addi a7,a4,4       | 0418 addi a6,a4,3    ALU | 0414 addi a5,a4,2        | 
+   4039 | 0410 addi a4,a4,1        | 0420 addi s2,s2,-1       | 0| >0420 addi s2,s2,-1      | 041c addi a7,a4,4    ALU | 0418 addi a6,a4,3        | BTB-redirect
+   4040 | 0414 addi a5,a4,2        | 0424 bnez s2,410         | 0| >0424 bnez s2,410        | 0420 addi s2,s2,-1   ALU | 041c addi a7,a4,4        | 
+   4041 | 0418 addi a6,a4,3        | 0410 addi a4,a4,1        | 0| >0410 addi a4,a4,1       | 0424 bnez s2,410     BJU | 0420 addi s2,s2,-1       | BR-resolve:T
+   4042 | 041c addi a7,a4,4        | 0414 addi a5,a4,2        | 0| >0414 addi a5,a4,2       | 0410 addi a4,a4,1    ALU | 0424 bnez s2,410         | 
+   4043 | 0420 addi s2,s2,-1       | 0418 addi a6,a4,3        | 0| >0418 addi a6,a4,3       | 0414 addi a5,a4,2    ALU | 0410 addi a4,a4,1        | 
+   4044 | 0424 bnez s2,410         | 041c addi a7,a4,4        | 0| >041c addi a7,a4,4       | 0418 addi a6,a4,3    ALU | 0414 addi a5,a4,2        | 
+   4045 | 0410 addi a4,a4,1        | 0420 addi s2,s2,-1       | 0| >0420 addi s2,s2,-1      | 041c addi a7,a4,4    ALU | 0418 addi a6,a4,3        | BTB-redirect
+   4046 | 0414 addi a5,a4,2        | 0424 bnez s2,410         | 0| >0424 bnez s2,410        | 0420 addi s2,s2,-1   ALU | 041c addi a7,a4,4        | 
+   4047 | 0418 addi a6,a4,3        | 0410 addi a4,a4,1        | 0| >0410 addi a4,a4,1       | 0424 bnez s2,410     BJU | 0420 addi s2,s2,-1       | BR-resolve:T
+   4048 | 041c addi a7,a4,4        | 0414 addi a5,a4,2        | 0| >0414 addi a5,a4,2       | 0410 addi a4,a4,1    ALU | 0424 bnez s2,410         | 
+   4049 | 0420 addi s2,s2,-1       | 0418 addi a6,a4,3        | 0| >0418 addi a6,a4,3       | 0414 addi a5,a4,2    ALU | 0410 addi a4,a4,1        | 
+   4050 | 0424 bnez s2,410         | 041c addi a7,a4,4        | 0| >041c addi a7,a4,4       | 0418 addi a6,a4,3    ALU | 0414 addi a5,a4,2        | 
+   4051 | 0410 addi a4,a4,1        | 0420 addi s2,s2,-1       | 0| >0420 addi s2,s2,-1      | 041c addi a7,a4,4    ALU | 0418 addi a6,a4,3        | BTB-redirect
+   4052 | 0414 addi a5,a4,2        | 0424 bnez s2,410         | 0| >0424 bnez s2,410        | 0420 addi s2,s2,-1   ALU | 041c addi a7,a4,4        | 
+   4053 | 0418 addi a6,a4,3        | 0410 addi a4,a4,1        | 0| >0410 addi a4,a4,1       | 0424 bnez s2,410     BJU | 0420 addi s2,s2,-1       | BR-resolve:T
+   4054 | 041c addi a7,a4,4        | 0414 addi a5,a4,2        | 0| >0414 addi a5,a4,2       | 0410 addi a4,a4,1    ALU | 0424 bnez s2,410         | 
+   4055 | 0420 addi s2,s2,-1       | 0418 addi a6,a4,3        | 0| >0418 addi a6,a4,3       | 0414 addi a5,a4,2    ALU | 0410 addi a4,a4,1        | 
+   4056 | 0424 bnez s2,410         | 041c addi a7,a4,4        | 0| >041c addi a7,a4,4       | 0418 addi a6,a4,3    ALU | 0414 addi a5,a4,2        | 
+   4057 | 0410 addi a4,a4,1        | 0420 addi s2,s2,-1       | 0| >0420 addi s2,s2,-1      | 041c addi a7,a4,4    ALU | 0418 addi a6,a4,3        | BTB-redirect
+   4058 | 0414 addi a5,a4,2        | 0424 bnez s2,410         | 0| >0424 bnez s2,410        | 0420 addi s2,s2,-1   ALU | 041c addi a7,a4,4        | 
+   4059 | 0418 addi a6,a4,3        | 0410 addi a4,a4,1        | 0| >0410 addi a4,a4,1       | 0424 bnez s2,410     BJU | 0420 addi s2,s2,-1       | BR-resolve:T
+   4060 | 041c addi a7,a4,4        | 0414 addi a5,a4,2        | 0| >0414 addi a5,a4,2       | 0410 addi a4,a4,1    ALU | 0424 bnez s2,410         | 
+   4061 | 0420 addi s2,s2,-1       | 0418 addi a6,a4,3        | 0| >0418 addi a6,a4,3       | 0414 addi a5,a4,2    ALU | 0410 addi a4,a4,1        | 
+   4062 | 0424 bnez s2,410         | 041c addi a7,a4,4        | 0| >041c addi a7,a4,4       | 0418 addi a6,a4,3    ALU | 0414 addi a5,a4,2        | 
+   4063 | 0410 addi a4,a4,1        | 0420 addi s2,s2,-1       | 0| >0420 addi s2,s2,-1      | 041c addi a7,a4,4    ALU | 0418 addi a6,a4,3        | BTB-redirect
+   4064 | 0414 addi a5,a4,2        | 0424 bnez s2,410         | 0| >0424 bnez s2,410        | 0420 addi s2,s2,-1   ALU | 041c addi a7,a4,4        | 
+   4065 | 0418 addi a6,a4,3        | 0410 addi a4,a4,1        | 0| >0410 addi a4,a4,1       | 0424 bnez s2,410     BJU | 0420 addi s2,s2,-1       | BR-resolve:T
+   4066 | 041c addi a7,a4,4        | 0414 addi a5,a4,2        | 0| >0414 addi a5,a4,2       | 0410 addi a4,a4,1    ALU | 0424 bnez s2,410         | 
+   4067 | 0420 addi s2,s2,-1       | 0418 addi a6,a4,3        | 0| >0418 addi a6,a4,3       | 0414 addi a5,a4,2    ALU | 0410 addi a4,a4,1        | 
+   4068 | 0424 bnez s2,410         | 041c addi a7,a4,4        | 0| >041c addi a7,a4,4       | 0418 addi a6,a4,3    ALU | 0414 addi a5,a4,2        | 
+   4069 | 0410 addi a4,a4,1        | 0420 addi s2,s2,-1       | 0| >0420 addi s2,s2,-1      | 041c addi a7,a4,4    ALU | 0418 addi a6,a4,3        | BTB-redirect
+   4070 | 0414 addi a5,a4,2        | 0424 bnez s2,410         | 0| >0424 bnez s2,410        | 0420 addi s2,s2,-1   ALU | 041c addi a7,a4,4        | 
+   4071 | 0418 addi a6,a4,3        | 0410 addi a4,a4,1        | 0| >0410 addi a4,a4,1       | 0424 bnez s2,410     BJU | 0420 addi s2,s2,-1       | BR-resolve:T
+   4072 | 041c addi a7,a4,4        | 0414 addi a5,a4,2        | 0| >0414 addi a5,a4,2       | 0410 addi a4,a4,1    ALU | 0424 bnez s2,410         | 
+   4073 | 0420 addi s2,s2,-1       | 0418 addi a6,a4,3        | 0| >0418 addi a6,a4,3       | 0414 addi a5,a4,2    ALU | 0410 addi a4,a4,1        | 
+   4074 | 0424 bnez s2,410         | 041c addi a7,a4,4        | 0| >041c addi a7,a4,4       | 0418 addi a6,a4,3    ALU | 0414 addi a5,a4,2        | 
+   4075 | 0410 addi a4,a4,1        | 0420 addi s2,s2,-1       | 0| >0420 addi s2,s2,-1      | 041c addi a7,a4,4    ALU | 0418 addi a6,a4,3        | BTB-redirect
+   4076 | 0414 addi a5,a4,2        | 0424 bnez s2,410         | 0| >0424 bnez s2,410        | 0420 addi s2,s2,-1   ALU | 041c addi a7,a4,4        | 
+   4077 | 0418 addi a6,a4,3        | 0410 addi a4,a4,1        | 0| >0410 addi a4,a4,1       | 0424 bnez s2,410     BJU | 0420 addi s2,s2,-1       | BR-resolve:T
+   4078 | 041c addi a7,a4,4        | 0414 addi a5,a4,2        | 0| >0414 addi a5,a4,2       | 0410 addi a4,a4,1    ALU | 0424 bnez s2,410         | 
+   4079 | 0420 addi s2,s2,-1       | 0418 addi a6,a4,3        | 0| >0418 addi a6,a4,3       | 0414 addi a5,a4,2    ALU | 0410 addi a4,a4,1        | 
+   4080 | 0424 bnez s2,410         | 041c addi a7,a4,4        | 0| >041c addi a7,a4,4       | 0418 addi a6,a4,3    ALU | 0414 addi a5,a4,2        | 
+   4081 | 0410 addi a4,a4,1        | 0420 addi s2,s2,-1       | 0| >0420 addi s2,s2,-1      | 041c addi a7,a4,4    ALU | 0418 addi a6,a4,3        | BTB-redirect
+   4082 | 0414 addi a5,a4,2        | 0424 bnez s2,410         | 0| >0424 bnez s2,410        | 0420 addi s2,s2,-1   ALU | 041c addi a7,a4,4        | 
+   4083 | 0418 addi a6,a4,3        | 0410 addi a4,a4,1        | 0| >0410 addi a4,a4,1       | 0424 bnez s2,410     BJU | 0420 addi s2,s2,-1       | BR-resolve:T
+   4084 | 041c addi a7,a4,4        | 0414 addi a5,a4,2        | 0| >0414 addi a5,a4,2       | 0410 addi a4,a4,1    ALU | 0424 bnez s2,410         | 
+   4085 | 0420 addi s2,s2,-1       | 0418 addi a6,a4,3        | 0| >0418 addi a6,a4,3       | 0414 addi a5,a4,2    ALU | 0410 addi a4,a4,1        | 
+   4086 | 0424 bnez s2,410         | 041c addi a7,a4,4        | 0| >041c addi a7,a4,4       | 0418 addi a6,a4,3    ALU | 0414 addi a5,a4,2        | 
+   4087 | 0410 addi a4,a4,1        | 0420 addi s2,s2,-1       | 0| >0420 addi s2,s2,-1      | 041c addi a7,a4,4    ALU | 0418 addi a6,a4,3        | BTB-redirect
+   4088 | 0414 addi a5,a4,2        | 0424 bnez s2,410         | 0| >0424 bnez s2,410        | 0420 addi s2,s2,-1   ALU | 041c addi a7,a4,4        | 
+   4089 | 0418 addi a6,a4,3        | 0410 addi a4,a4,1        | 0| >0410 addi a4,a4,1       | 0424 bnez s2,410     BJU | 0420 addi s2,s2,-1       | BR-resolve:T
+   4090 | 041c addi a7,a4,4        | 0414 addi a5,a4,2        | 0| >0414 addi a5,a4,2       | 0410 addi a4,a4,1    ALU | 0424 bnez s2,410         | 
+   4091 | 0420 addi s2,s2,-1       | 0418 addi a6,a4,3        | 0| >0418 addi a6,a4,3       | 0414 addi a5,a4,2    ALU | 0410 addi a4,a4,1        | 
+   4092 | 0424 bnez s2,410         | 041c addi a7,a4,4        | 0| >041c addi a7,a4,4       | 0418 addi a6,a4,3    ALU | 0414 addi a5,a4,2        | 
+   4093 | 0410 addi a4,a4,1        | 0420 addi s2,s2,-1       | 0| >0420 addi s2,s2,-1      | 041c addi a7,a4,4    ALU | 0418 addi a6,a4,3        | BTB-redirect
+   4094 | 0414 addi a5,a4,2        | 0424 bnez s2,410         | 0| >0424 bnez s2,410        | 0420 addi s2,s2,-1   ALU | 041c addi a7,a4,4        | 
+   4095 | 0418 addi a6,a4,3        | 0410 addi a4,a4,1        | 0| >0410 addi a4,a4,1       | 0424 bnez s2,410     BJU | 0420 addi s2,s2,-1       | BR-resolve:T
+   4096 | 041c addi a7,a4,4        | 0414 addi a5,a4,2        | 0| >0414 addi a5,a4,2       | 0410 addi a4,a4,1    ALU | 0424 bnez s2,410         | 
+   4097 | 0420 addi s2,s2,-1       | 0418 addi a6,a4,3        | 0| >0418 addi a6,a4,3       | 0414 addi a5,a4,2    ALU | 0410 addi a4,a4,1        | 
+   4098 | 0424 bnez s2,410         | 041c addi a7,a4,4        | 0| >041c addi a7,a4,4       | 0418 addi a6,a4,3    ALU | 0414 addi a5,a4,2        | 
+   4099 | 0410 addi a4,a4,1        | 0420 addi s2,s2,-1       | 0| >0420 addi s2,s2,-1      | 041c addi a7,a4,4    ALU | 0418 addi a6,a4,3        | BTB-redirect
+   4100 | 0414 addi a5,a4,2        | 0424 bnez s2,410         | 0| >0424 bnez s2,410        | 0420 addi s2,s2,-1   ALU | 041c addi a7,a4,4        | 
+   4101 | 0418 addi a6,a4,3        | 0410 addi a4,a4,1        | 0| >0410 addi a4,a4,1       | 0424 bnez s2,410     BJU | 0420 addi s2,s2,-1       | BR-resolve:T
+   4102 | 041c addi a7,a4,4        | 0414 addi a5,a4,2        | 0| >0414 addi a5,a4,2       | 0410 addi a4,a4,1    ALU | 0424 bnez s2,410         | 
+   4103 | 0420 addi s2,s2,-1       | 0418 addi a6,a4,3        | 0| >0418 addi a6,a4,3       | 0414 addi a5,a4,2    ALU | 0410 addi a4,a4,1        | 
+   4104 | 0424 bnez s2,410         | 041c addi a7,a4,4        | 0| >041c addi a7,a4,4       | 0418 addi a6,a4,3    ALU | 0414 addi a5,a4,2        | 
+   4105 | 0410 addi a4,a4,1        | 0420 addi s2,s2,-1       | 0| >0420 addi s2,s2,-1      | 041c addi a7,a4,4    ALU | 0418 addi a6,a4,3        | BTB-redirect
+   ... (526 more cycles, use --mark 1 --max-rows N)
+----------------------------------------------------------------------------------------------------------------------------------------------------------------
+summary: cycles=926 retired=791 IPC=0.854 | btb_redirect=96, icache_miss=1, ip_curflw=2, ip_redirect=7, iu_redirect=33, mispred_bht=33, retired=791, stall_CP0/fence=42, stall_RAW=4, stall_WAW=2
+
+================================================================================================================================================================
+MARK 2   cycles 7638 .. 8734  (1097 cycles)
+================================================================================================================================================================
+    cyc | IF (fetch)               | IP (pred)                |IB| ID                       | EX1                      | RETIRE                   | events
+----------------------------------------------------------------------------------------------------------------------------------------------------------------
+   7638 | 0408 csrr s3,mhpmcounter | 0400 li s2,64            | 0| >0400 li s2,64           |                          | 0304 jal 400             | 
+   7639 | 040c csrr s0,mcycle      | 0404 li a4,0             | 0| >0404 li a4,0            | 0400 li s2,64        ALU |                          | 
+   7640 | 0410 addi a4,a4,1        | 0408 csrr s3,mhpmcounter | 0| .0408 csrr s3,mhpmcounte | 0404 li a4,0         ALU | 0400 li s2,64            | ID-stall:CP0/fence
+   7641 | 0414 addi a5,a4,2        | 040c csrr s0,mcycle      | 0| .0408 csrr s3,mhpmcounte |                          | 0404 li a4,0             | ID-stall:CP0/fence
+   7642 | 0418 addi a6,a4,3        | 0410 addi a4,a4,1        | 2| >0408 csrr s3,mhpmcounte |                          |                          | 
+   7643 | 041c addi a7,a4,4        | 0414 addi a5,a4,2        | 2| .040c csrr s0,mcycle     | 0408 csrr s3,mhpmcou CP0 |                          | ID-stall:CP0/fence
+   7644 | 0420 addi s2,s2,-1       | 0418 addi a6,a4,3        | 4| .040c csrr s0,mcycle     |                          | 0408 csrr s3,mhpmcounter | ID-stall:CP0/fence
+   7645 |                          | 041c addi a7,a4,4        | 6| >040c csrr s0,mcycle     |                          |                          | 
+   7646 | 0420 addi s2,s2,-1       | 041c addi a7,a4,4        | 4| >0410 addi a4,a4,1       | 040c csrr s0,mcycle  CP0 |                          | 
+   7647 | 0424 bnez s2,410         |                          | 4| >0414 addi a5,a4,2       | 0410 addi a4,a4,1    ALU | 040c csrr s0,mcycle      | 
+   7648 | 0428 csrr t0,mcycle      | 0420 addi s2,s2,-1       | 2| >0418 addi a6,a4,3       | 0414 addi a5,a4,2    ALU | 0410 addi a4,a4,1        | 
+   7649 | 042c sub s0,t0,s0        | 0424 bnez s2,410         | 2| >041c addi a7,a4,4       | 0418 addi a6,a4,3    ALU | 0414 addi a5,a4,2        | 
+   7650 | 0430 csrr s1,mhpmcounter | 0428 csrr t0,mcycle      | 2| >0420 addi s2,s2,-1      | 041c addi a7,a4,4    ALU | 0418 addi a6,a4,3        | 
+   7651 | 0434 sub s1,s1,s3        | 042c sub s0,t0,s0        | 2| >0424 bnez s2,410        | 0420 addi s2,s2,-1   ALU | 041c addi a7,a4,4        | 
+   7652 | 0438 ret                 | 0430 csrr s1,mhpmcounter | 2| .(flushed) csrr t0,mcycl | 0424 bnez s2,410     BJU | 0420 addi s2,s2,-1       | ID-stall:CP0/fence BR-resolve:T MISPRED(BHT) IU-redirect->0410
+   7653 | 0410 addi a4,a4,1        |                          | 0|                          |                          | 0424 bnez s2,410         | 
+   7654 | 0414 addi a5,a4,2        |                          | 0|                          |                          |                          | 
+   7655 | 0418 addi a6,a4,3        | 0410 addi a4,a4,1        | 0| >0410 addi a4,a4,1       |                          |                          | 
+   7656 | 041c addi a7,a4,4        | 0414 addi a5,a4,2        | 0| >0414 addi a5,a4,2       | 0410 addi a4,a4,1    ALU |                          | 
+   7657 | 0420 addi s2,s2,-1       | 0418 addi a6,a4,3        | 0| >0418 addi a6,a4,3       | 0414 addi a5,a4,2    ALU | 0410 addi a4,a4,1        | 
+   7658 | 0424 bnez s2,410         | 041c addi a7,a4,4        | 0| >041c addi a7,a4,4       | 0418 addi a6,a4,3    ALU | 0414 addi a5,a4,2        | 
+   7659 | 0428 csrr t0,mcycle      | 0420 addi s2,s2,-1       | 0| >0420 addi s2,s2,-1      | 041c addi a7,a4,4    ALU | 0418 addi a6,a4,3        | 
+   7660 | 042c sub s0,t0,s0        | 0424 bnez s2,410         | 0| >0424 bnez s2,410        | 0420 addi s2,s2,-1   ALU | 041c addi a7,a4,4        | 
+   7661 | 0430 csrr s1,mhpmcounter | 0428 csrr t0,mcycle      | 0| .(flushed) csrr t0,mcycl | 0424 bnez s2,410     BJU | 0420 addi s2,s2,-1       | ID-stall:CP0/fence BR-resolve:T MISPRED(BHT) IU-redirect->0410
+   7662 | 0410 addi a4,a4,1        |                          | 0|                          |                          | 0424 bnez s2,410         | 
+   7663 | 0414 addi a5,a4,2        |                          | 0|                          |                          |                          | 
+   7664 | 0418 addi a6,a4,3        | 0410 addi a4,a4,1        | 0| >0410 addi a4,a4,1       |                          |                          | 
+   7665 | 041c addi a7,a4,4        | 0414 addi a5,a4,2        | 0| >0414 addi a5,a4,2       | 0410 addi a4,a4,1    ALU |                          | 
+   7666 | 0420 addi s2,s2,-1       | 0418 addi a6,a4,3        | 0| >0418 addi a6,a4,3       | 0414 addi a5,a4,2    ALU | 0410 addi a4,a4,1        | 
+   7667 | 0424 bnez s2,410         | 041c addi a7,a4,4        | 0| >041c addi a7,a4,4       | 0418 addi a6,a4,3    ALU | 0414 addi a5,a4,2        | 
+   7668 | 0428 csrr t0,mcycle      | 0420 addi s2,s2,-1       | 0| >0420 addi s2,s2,-1      | 041c addi a7,a4,4    ALU | 0418 addi a6,a4,3        | 
+   7669 | 042c sub s0,t0,s0        | 0424 bnez s2,410         | 0| >0424 bnez s2,410        | 0420 addi s2,s2,-1   ALU | 041c addi a7,a4,4        | 
+   7670 | 0430 csrr s1,mhpmcounter | 0428 csrr t0,mcycle      | 0| .(flushed) csrr t0,mcycl | 0424 bnez s2,410     BJU | 0420 addi s2,s2,-1       | ID-stall:CP0/fence BR-resolve:T MISPRED(BHT) IU-redirect->0410
+   7671 | 0410 addi a4,a4,1        |                          | 0|                          |                          | 0424 bnez s2,410         | 
+   7672 | 0414 addi a5,a4,2        |                          | 0|                          |                          |                          | 
+   7673 | 0418 addi a6,a4,3        | 0410 addi a4,a4,1        | 0| >0410 addi a4,a4,1       |                          |                          | 
+   7674 | 041c addi a7,a4,4        | 0414 addi a5,a4,2        | 0| >0414 addi a5,a4,2       | 0410 addi a4,a4,1    ALU |                          | 
+   7675 | 0420 addi s2,s2,-1       | 0418 addi a6,a4,3        | 0| >0418 addi a6,a4,3       | 0414 addi a5,a4,2    ALU | 0410 addi a4,a4,1        | 
+   7676 | 0424 bnez s2,410         | 041c addi a7,a4,4        | 0| >041c addi a7,a4,4       | 0418 addi a6,a4,3    ALU | 0414 addi a5,a4,2        | 
+   7677 | 0428 csrr t0,mcycle      | 0420 addi s2,s2,-1       | 0| >0420 addi s2,s2,-1      | 041c addi a7,a4,4    ALU | 0418 addi a6,a4,3        | 
+   7678 | 042c sub s0,t0,s0        | 0424 bnez s2,410         | 0| >0424 bnez s2,410        | 0420 addi s2,s2,-1   ALU | 041c addi a7,a4,4        | 
+   7679 | 0430 csrr s1,mhpmcounter | 0428 csrr t0,mcycle      | 0| .(flushed) csrr t0,mcycl | 0424 bnez s2,410     BJU | 0420 addi s2,s2,-1       | ID-stall:CP0/fence BR-resolve:T MISPRED(BHT) IU-redirect->0410
+   7680 | 0410 addi a4,a4,1        |                          | 0|                          |                          | 0424 bnez s2,410         | 
+   7681 | 0414 addi a5,a4,2        |                          | 0|                          |                          |                          | 
+   7682 | 0418 addi a6,a4,3        | 0410 addi a4,a4,1        | 0| >0410 addi a4,a4,1       |                          |                          | 
+   7683 | 041c addi a7,a4,4        | 0414 addi a5,a4,2        | 0| >0414 addi a5,a4,2       | 0410 addi a4,a4,1    ALU |                          | 
+   7684 | 0420 addi s2,s2,-1       | 0418 addi a6,a4,3        | 0| >0418 addi a6,a4,3       | 0414 addi a5,a4,2    ALU | 0410 addi a4,a4,1        | 
+   7685 | 0424 bnez s2,410         | 041c addi a7,a4,4        | 0| >041c addi a7,a4,4       | 0418 addi a6,a4,3    ALU | 0414 addi a5,a4,2        | 
+   7686 | 0428 csrr t0,mcycle      | 0420 addi s2,s2,-1       | 0| >0420 addi s2,s2,-1      | 041c addi a7,a4,4    ALU | 0418 addi a6,a4,3        | 
+   7687 | 042c sub s0,t0,s0        | 0424 bnez s2,410         | 0| >0424 bnez s2,410        | 0420 addi s2,s2,-1   ALU | 041c addi a7,a4,4        | 
+   7688 | 0430 csrr s1,mhpmcounter | 0428 csrr t0,mcycle      | 0| .(flushed) csrr t0,mcycl | 0424 bnez s2,410     BJU | 0420 addi s2,s2,-1       | ID-stall:CP0/fence BR-resolve:T MISPRED(BHT) IU-redirect->0410
+   7689 | 0410 addi a4,a4,1        |                          | 0|                          |                          | 0424 bnez s2,410         | 
+   7690 | 0414 addi a5,a4,2        |                          | 0|                          |                          |                          | 
+   7691 | 0418 addi a6,a4,3        | 0410 addi a4,a4,1        | 0| >0410 addi a4,a4,1       |                          |                          | 
+   7692 | 041c addi a7,a4,4        | 0414 addi a5,a4,2        | 0| >0414 addi a5,a4,2       | 0410 addi a4,a4,1    ALU |                          | 
+   7693 | 0420 addi s2,s2,-1       | 0418 addi a6,a4,3        | 0| >0418 addi a6,a4,3       | 0414 addi a5,a4,2    ALU | 0410 addi a4,a4,1        | 
+   7694 | 0424 bnez s2,410         | 041c addi a7,a4,4        | 0| >041c addi a7,a4,4       | 0418 addi a6,a4,3    ALU | 0414 addi a5,a4,2        | 
+   7695 | 0428 csrr t0,mcycle      | 0420 addi s2,s2,-1       | 0| >0420 addi s2,s2,-1      | 041c addi a7,a4,4    ALU | 0418 addi a6,a4,3        | 
+   7696 | 042c sub s0,t0,s0        | 0424 bnez s2,410         | 0| >0424 bnez s2,410        | 0420 addi s2,s2,-1   ALU | 041c addi a7,a4,4        | 
+   7697 | 0430 csrr s1,mhpmcounter | 0428 csrr t0,mcycle      | 0| .(flushed) csrr t0,mcycl | 0424 bnez s2,410     BJU | 0420 addi s2,s2,-1       | ID-stall:CP0/fence BR-resolve:T MISPRED(BHT) IU-redirect->0410
+   7698 | 0410 addi a4,a4,1        |                          | 0|                          |                          | 0424 bnez s2,410         | 
+   7699 | 0414 addi a5,a4,2        |                          | 0|                          |                          |                          | 
+   7700 | 0418 addi a6,a4,3        | 0410 addi a4,a4,1        | 0| >0410 addi a4,a4,1       |                          |                          | 
+   7701 | 041c addi a7,a4,4        | 0414 addi a5,a4,2        | 0| >0414 addi a5,a4,2       | 0410 addi a4,a4,1    ALU |                          | 
+   7702 | 0420 addi s2,s2,-1       | 0418 addi a6,a4,3        | 0| >0418 addi a6,a4,3       | 0414 addi a5,a4,2    ALU | 0410 addi a4,a4,1        | 
+   7703 | 0424 bnez s2,410         | 041c addi a7,a4,4        | 0| >041c addi a7,a4,4       | 0418 addi a6,a4,3    ALU | 0414 addi a5,a4,2        | 
+   7704 | 0428 csrr t0,mcycle      | 0420 addi s2,s2,-1       | 0| >0420 addi s2,s2,-1      | 041c addi a7,a4,4    ALU | 0418 addi a6,a4,3        | 
+   7705 | 042c sub s0,t0,s0        | 0424 bnez s2,410         | 0| >0424 bnez s2,410        | 0420 addi s2,s2,-1   ALU | 041c addi a7,a4,4        | 
+   7706 | 0430 csrr s1,mhpmcounter | 0428 csrr t0,mcycle      | 0| .(flushed) csrr t0,mcycl | 0424 bnez s2,410     BJU | 0420 addi s2,s2,-1       | ID-stall:CP0/fence BR-resolve:T MISPRED(BHT) IU-redirect->0410
+   7707 | 0410 addi a4,a4,1        |                          | 0|                          |                          | 0424 bnez s2,410         | 
+   7708 | 0414 addi a5,a4,2        |                          | 0|                          |                          |                          | 
+   7709 | 0418 addi a6,a4,3        | 0410 addi a4,a4,1        | 0| >0410 addi a4,a4,1       |                          |                          | 
+   7710 | 041c addi a7,a4,4        | 0414 addi a5,a4,2        | 0| >0414 addi a5,a4,2       | 0410 addi a4,a4,1    ALU |                          | 
+   7711 | 0420 addi s2,s2,-1       | 0418 addi a6,a4,3        | 0| >0418 addi a6,a4,3       | 0414 addi a5,a4,2    ALU | 0410 addi a4,a4,1        | 
+   7712 | 0424 bnez s2,410         | 041c addi a7,a4,4        | 0| >041c addi a7,a4,4       | 0418 addi a6,a4,3    ALU | 0414 addi a5,a4,2        | 
+   7713 | 0428 csrr t0,mcycle      | 0420 addi s2,s2,-1       | 0| >0420 addi s2,s2,-1      | 041c addi a7,a4,4    ALU | 0418 addi a6,a4,3        | 
+   7714 | 042c sub s0,t0,s0        | 0424 bnez s2,410         | 0| >0424 bnez s2,410        | 0420 addi s2,s2,-1   ALU | 041c addi a7,a4,4        | 
+   7715 | 0430 csrr s1,mhpmcounter | 0428 csrr t0,mcycle      | 0| .(flushed) csrr t0,mcycl | 0424 bnez s2,410     BJU | 0420 addi s2,s2,-1       | ID-stall:CP0/fence BR-resolve:T MISPRED(BHT) IU-redirect->0410
+   7716 | 0410 addi a4,a4,1        |                          | 0|                          |                          | 0424 bnez s2,410         | 
+   7717 | 0414 addi a5,a4,2        |                          | 0|                          |                          |                          | 
+   7718 | 0418 addi a6,a4,3        | 0410 addi a4,a4,1        | 0| >0410 addi a4,a4,1       |                          |                          | 
+   7719 | 041c addi a7,a4,4        | 0414 addi a5,a4,2        | 0| >0414 addi a5,a4,2       | 0410 addi a4,a4,1    ALU |                          | 
+   7720 | 0420 addi s2,s2,-1       | 0418 addi a6,a4,3        | 0| >0418 addi a6,a4,3       | 0414 addi a5,a4,2    ALU | 0410 addi a4,a4,1        | 
+   7721 | 0424 bnez s2,410         | 041c addi a7,a4,4        | 0| >041c addi a7,a4,4       | 0418 addi a6,a4,3    ALU | 0414 addi a5,a4,2        | 
+   7722 | 0428 csrr t0,mcycle      | 0420 addi s2,s2,-1       | 0| >0420 addi s2,s2,-1      | 041c addi a7,a4,4    ALU | 0418 addi a6,a4,3        | 
+   7723 | 042c sub s0,t0,s0        | 0424 bnez s2,410         | 0| >0424 bnez s2,410        | 0420 addi s2,s2,-1   ALU | 041c addi a7,a4,4        | 
+   7724 | 0430 csrr s1,mhpmcounter | 0428 csrr t0,mcycle      | 0| .(flushed) csrr t0,mcycl | 0424 bnez s2,410     BJU | 0420 addi s2,s2,-1       | ID-stall:CP0/fence BR-resolve:T MISPRED(BHT) IU-redirect->0410
+   7725 | 0410 addi a4,a4,1        |                          | 0|                          |                          | 0424 bnez s2,410         | 
+   7726 | 0414 addi a5,a4,2        |                          | 0|                          |                          |                          | 
+   7727 | 0418 addi a6,a4,3        | 0410 addi a4,a4,1        | 0| >0410 addi a4,a4,1       |                          |                          | 
+   7728 | 041c addi a7,a4,4        | 0414 addi a5,a4,2        | 0| >0414 addi a5,a4,2       | 0410 addi a4,a4,1    ALU |                          | 
+   7729 | 0420 addi s2,s2,-1       | 0418 addi a6,a4,3        | 0| >0418 addi a6,a4,3       | 0414 addi a5,a4,2    ALU | 0410 addi a4,a4,1        | 
+   7730 | 0424 bnez s2,410         | 041c addi a7,a4,4        | 0| >041c addi a7,a4,4       | 0418 addi a6,a4,3    ALU | 0414 addi a5,a4,2        | 
+   7731 | 0428 csrr t0,mcycle      | 0420 addi s2,s2,-1       | 0| >0420 addi s2,s2,-1      | 041c addi a7,a4,4    ALU | 0418 addi a6,a4,3        | 
+   7732 | 042c sub s0,t0,s0        | 0424 bnez s2,410         | 0| >0424 bnez s2,410        | 0420 addi s2,s2,-1   ALU | 041c addi a7,a4,4        | 
+   7733 | 0430 csrr s1,mhpmcounter | 0428 csrr t0,mcycle      | 0| .(flushed) csrr t0,mcycl | 0424 bnez s2,410     BJU | 0420 addi s2,s2,-1       | ID-stall:CP0/fence BR-resolve:T MISPRED(BHT) IU-redirect->0410
+   7734 | 0410 addi a4,a4,1        |                          | 0|                          |                          | 0424 bnez s2,410         | 
+   7735 | 0414 addi a5,a4,2        |                          | 0|                          |                          |                          | 
+   7736 | 0418 addi a6,a4,3        | 0410 addi a4,a4,1        | 0| >0410 addi a4,a4,1       |                          |                          | 
+   7737 | 041c addi a7,a4,4        | 0414 addi a5,a4,2        | 0| >0414 addi a5,a4,2       | 0410 addi a4,a4,1    ALU |                          | 
+   7738 | 0420 addi s2,s2,-1       | 0418 addi a6,a4,3        | 0| >0418 addi a6,a4,3       | 0414 addi a5,a4,2    ALU | 0410 addi a4,a4,1        | 
+   7739 | 0424 bnez s2,410         | 041c addi a7,a4,4        | 0| >041c addi a7,a4,4       | 0418 addi a6,a4,3    ALU | 0414 addi a5,a4,2        | 
+   7740 | 0428 csrr t0,mcycle      | 0420 addi s2,s2,-1       | 0| >0420 addi s2,s2,-1      | 041c addi a7,a4,4    ALU | 0418 addi a6,a4,3        | 
+   7741 | 042c sub s0,t0,s0        | 0424 bnez s2,410         | 0| >0424 bnez s2,410        | 0420 addi s2,s2,-1   ALU | 041c addi a7,a4,4        | 
+   7742 | 0430 csrr s1,mhpmcounter | 0428 csrr t0,mcycle      | 0| .(flushed) csrr t0,mcycl | 0424 bnez s2,410     BJU | 0420 addi s2,s2,-1       | ID-stall:CP0/fence BR-resolve:T MISPRED(BHT) IU-redirect->0410
+   7743 | 0410 addi a4,a4,1        |                          | 0|                          |                          | 0424 bnez s2,410         | 
+   7744 | 0414 addi a5,a4,2        |                          | 0|                          |                          |                          | 
+   7745 | 0418 addi a6,a4,3        | 0410 addi a4,a4,1        | 0| >0410 addi a4,a4,1       |                          |                          | 
+   7746 | 041c addi a7,a4,4        | 0414 addi a5,a4,2        | 0| >0414 addi a5,a4,2       | 0410 addi a4,a4,1    ALU |                          | 
+   7747 | 0420 addi s2,s2,-1       | 0418 addi a6,a4,3        | 0| >0418 addi a6,a4,3       | 0414 addi a5,a4,2    ALU | 0410 addi a4,a4,1        | 
+   7748 | 0424 bnez s2,410         | 041c addi a7,a4,4        | 0| >041c addi a7,a4,4       | 0418 addi a6,a4,3    ALU | 0414 addi a5,a4,2        | 
+   7749 | 0428 csrr t0,mcycle      | 0420 addi s2,s2,-1       | 0| >0420 addi s2,s2,-1      | 041c addi a7,a4,4    ALU | 0418 addi a6,a4,3        | 
+   7750 | 042c sub s0,t0,s0        | 0424 bnez s2,410         | 0| >0424 bnez s2,410        | 0420 addi s2,s2,-1   ALU | 041c addi a7,a4,4        | 
+   7751 | 0430 csrr s1,mhpmcounter | 0428 csrr t0,mcycle      | 0| .(flushed) csrr t0,mcycl | 0424 bnez s2,410     BJU | 0420 addi s2,s2,-1       | ID-stall:CP0/fence BR-resolve:T MISPRED(BHT) IU-redirect->0410
+   7752 | 0410 addi a4,a4,1        |                          | 0|                          |                          | 0424 bnez s2,410         | 
+   7753 | 0414 addi a5,a4,2        |                          | 0|                          |                          |                          | 
+   7754 | 0418 addi a6,a4,3        | 0410 addi a4,a4,1        | 0| >0410 addi a4,a4,1       |                          |                          | 
+   7755 | 041c addi a7,a4,4        | 0414 addi a5,a4,2        | 0| >0414 addi a5,a4,2       | 0410 addi a4,a4,1    ALU |                          | 
+   7756 | 0420 addi s2,s2,-1       | 0418 addi a6,a4,3        | 0| >0418 addi a6,a4,3       | 0414 addi a5,a4,2    ALU | 0410 addi a4,a4,1        | 
+   7757 | 0424 bnez s2,410         | 041c addi a7,a4,4        | 0| >041c addi a7,a4,4       | 0418 addi a6,a4,3    ALU | 0414 addi a5,a4,2        | 
+   7758 | 0428 csrr t0,mcycle      | 0420 addi s2,s2,-1       | 0| >0420 addi s2,s2,-1      | 041c addi a7,a4,4    ALU | 0418 addi a6,a4,3        | 
+   7759 | 042c sub s0,t0,s0        | 0424 bnez s2,410         | 0| >0424 bnez s2,410        | 0420 addi s2,s2,-1   ALU | 041c addi a7,a4,4        | 
+   7760 | 0430 csrr s1,mhpmcounter | 0428 csrr t0,mcycle      | 0| .(flushed) csrr t0,mcycl | 0424 bnez s2,410     BJU | 0420 addi s2,s2,-1       | ID-stall:CP0/fence BR-resolve:T MISPRED(BHT) IU-redirect->0410
+   7761 | 0410 addi a4,a4,1        |                          | 0|                          |                          | 0424 bnez s2,410         | 
+   7762 | 0414 addi a5,a4,2        |                          | 0|                          |                          |                          | 
+   7763 | 0418 addi a6,a4,3        | 0410 addi a4,a4,1        | 0| >0410 addi a4,a4,1       |                          |                          | 
+   7764 | 041c addi a7,a4,4        | 0414 addi a5,a4,2        | 0| >0414 addi a5,a4,2       | 0410 addi a4,a4,1    ALU |                          | 
+   7765 | 0420 addi s2,s2,-1       | 0418 addi a6,a4,3        | 0| >0418 addi a6,a4,3       | 0414 addi a5,a4,2    ALU | 0410 addi a4,a4,1        | 
+   7766 | 0424 bnez s2,410         | 041c addi a7,a4,4        | 0| >041c addi a7,a4,4       | 0418 addi a6,a4,3    ALU | 0414 addi a5,a4,2        | 
+   7767 | 0428 csrr t0,mcycle      | 0420 addi s2,s2,-1       | 0| >0420 addi s2,s2,-1      | 041c addi a7,a4,4    ALU | 0418 addi a6,a4,3        | 
+   7768 | 042c sub s0,t0,s0        | 0424 bnez s2,410         | 0| >0424 bnez s2,410        | 0420 addi s2,s2,-1   ALU | 041c addi a7,a4,4        | 
+   7769 | 0430 csrr s1,mhpmcounter | 0428 csrr t0,mcycle      | 0| .(flushed) csrr t0,mcycl | 0424 bnez s2,410     BJU | 0420 addi s2,s2,-1       | ID-stall:CP0/fence BR-resolve:T MISPRED(BHT) IU-redirect->0410
+   7770 | 0410 addi a4,a4,1        |                          | 0|                          |                          | 0424 bnez s2,410         | 
+   7771 | 0414 addi a5,a4,2        |                          | 0|                          |                          |                          | 
+   7772 | 0418 addi a6,a4,3        | 0410 addi a4,a4,1        | 0| >0410 addi a4,a4,1       |                          |                          | 
+   7773 | 041c addi a7,a4,4        | 0414 addi a5,a4,2        | 0| >0414 addi a5,a4,2       | 0410 addi a4,a4,1    ALU |                          | 
+   7774 | 0420 addi s2,s2,-1       | 0418 addi a6,a4,3        | 0| >0418 addi a6,a4,3       | 0414 addi a5,a4,2    ALU | 0410 addi a4,a4,1        | 
+   7775 | 0424 bnez s2,410         | 041c addi a7,a4,4        | 0| >041c addi a7,a4,4       | 0418 addi a6,a4,3    ALU | 0414 addi a5,a4,2        | 
+   7776 | 0428 csrr t0,mcycle      | 0420 addi s2,s2,-1       | 0| >0420 addi s2,s2,-1      | 041c addi a7,a4,4    ALU | 0418 addi a6,a4,3        | 
+   7777 | 042c sub s0,t0,s0        | 0424 bnez s2,410         | 0| >0424 bnez s2,410        | 0420 addi s2,s2,-1   ALU | 041c addi a7,a4,4        | 
+   7778 | 0430 csrr s1,mhpmcounter | 0428 csrr t0,mcycle      | 0| .(flushed) csrr t0,mcycl | 0424 bnez s2,410     BJU | 0420 addi s2,s2,-1       | ID-stall:CP0/fence BR-resolve:T MISPRED(BHT) IU-redirect->0410
+   7779 | 0410 addi a4,a4,1        |                          | 0|                          |                          | 0424 bnez s2,410         | 
+   7780 | 0414 addi a5,a4,2        |                          | 0|                          |                          |                          | 
+   7781 | 0418 addi a6,a4,3        | 0410 addi a4,a4,1        | 0| >0410 addi a4,a4,1       |                          |                          | 
+   7782 | 041c addi a7,a4,4        | 0414 addi a5,a4,2        | 0| >0414 addi a5,a4,2       | 0410 addi a4,a4,1    ALU |                          | 
+   7783 | 0420 addi s2,s2,-1       | 0418 addi a6,a4,3        | 0| >0418 addi a6,a4,3       | 0414 addi a5,a4,2    ALU | 0410 addi a4,a4,1        | 
+   7784 | 0424 bnez s2,410         | 041c addi a7,a4,4        | 0| >041c addi a7,a4,4       | 0418 addi a6,a4,3    ALU | 0414 addi a5,a4,2        | 
+   7785 | 0428 csrr t0,mcycle      | 0420 addi s2,s2,-1       | 0| >0420 addi s2,s2,-1      | 041c addi a7,a4,4    ALU | 0418 addi a6,a4,3        | 
+   7786 | 042c sub s0,t0,s0        | 0424 bnez s2,410         | 0| >0424 bnez s2,410        | 0420 addi s2,s2,-1   ALU | 041c addi a7,a4,4        | 
+   7787 | 0430 csrr s1,mhpmcounter | 0428 csrr t0,mcycle      | 0| .(flushed) csrr t0,mcycl | 0424 bnez s2,410     BJU | 0420 addi s2,s2,-1       | ID-stall:CP0/fence BR-resolve:T MISPRED(BHT) IU-redirect->0410
+   7788 | 0410 addi a4,a4,1        |                          | 0|                          |                          | 0424 bnez s2,410         | 
+   7789 | 0414 addi a5,a4,2        |                          | 0|                          |                          |                          | 
+   7790 | 0418 addi a6,a4,3        | 0410 addi a4,a4,1        | 0| >0410 addi a4,a4,1       |                          |                          | 
+   7791 | 041c addi a7,a4,4        | 0414 addi a5,a4,2        | 0| >0414 addi a5,a4,2       | 0410 addi a4,a4,1    ALU |                          | 
+   7792 | 0420 addi s2,s2,-1       | 0418 addi a6,a4,3        | 0| >0418 addi a6,a4,3       | 0414 addi a5,a4,2    ALU | 0410 addi a4,a4,1        | 
+   7793 | 0424 bnez s2,410         | 041c addi a7,a4,4        | 0| >041c addi a7,a4,4       | 0418 addi a6,a4,3    ALU | 0414 addi a5,a4,2        | 
+   7794 | 0428 csrr t0,mcycle      | 0420 addi s2,s2,-1       | 0| >0420 addi s2,s2,-1      | 041c addi a7,a4,4    ALU | 0418 addi a6,a4,3        | 
+   7795 | 042c sub s0,t0,s0        | 0424 bnez s2,410         | 0| >0424 bnez s2,410        | 0420 addi s2,s2,-1   ALU | 041c addi a7,a4,4        | 
+   7796 | 0430 csrr s1,mhpmcounter | 0428 csrr t0,mcycle      | 0| .(flushed) csrr t0,mcycl | 0424 bnez s2,410     BJU | 0420 addi s2,s2,-1       | ID-stall:CP0/fence BR-resolve:T MISPRED(BHT) IU-redirect->0410
+   7797 | 0410 addi a4,a4,1        |                          | 0|                          |                          | 0424 bnez s2,410         | 
+   7798 | 0414 addi a5,a4,2        |                          | 0|                          |                          |                          | 
+   7799 | 0418 addi a6,a4,3        | 0410 addi a4,a4,1        | 0| >0410 addi a4,a4,1       |                          |                          | 
+   7800 | 041c addi a7,a4,4        | 0414 addi a5,a4,2        | 0| >0414 addi a5,a4,2       | 0410 addi a4,a4,1    ALU |                          | 
+   7801 | 0420 addi s2,s2,-1       | 0418 addi a6,a4,3        | 0| >0418 addi a6,a4,3       | 0414 addi a5,a4,2    ALU | 0410 addi a4,a4,1        | 
+   7802 | 0424 bnez s2,410         | 041c addi a7,a4,4        | 0| >041c addi a7,a4,4       | 0418 addi a6,a4,3    ALU | 0414 addi a5,a4,2        | 
+   7803 | 0428 csrr t0,mcycle      | 0420 addi s2,s2,-1       | 0| >0420 addi s2,s2,-1      | 041c addi a7,a4,4    ALU | 0418 addi a6,a4,3        | 
+   7804 | 042c sub s0,t0,s0        | 0424 bnez s2,410         | 0| >0424 bnez s2,410        | 0420 addi s2,s2,-1   ALU | 041c addi a7,a4,4        | 
+   7805 | 0430 csrr s1,mhpmcounter | 0428 csrr t0,mcycle      | 0| .(flushed) csrr t0,mcycl | 0424 bnez s2,410     BJU | 0420 addi s2,s2,-1       | ID-stall:CP0/fence BR-resolve:T MISPRED(BHT) IU-redirect->0410
+   7806 | 0410 addi a4,a4,1        |                          | 0|                          |                          | 0424 bnez s2,410         | 
+   7807 | 0414 addi a5,a4,2        |                          | 0|                          |                          |                          | 
+   7808 | 0418 addi a6,a4,3        | 0410 addi a4,a4,1        | 0| >0410 addi a4,a4,1       |                          |                          | 
+   7809 | 041c addi a7,a4,4        | 0414 addi a5,a4,2        | 0| >0414 addi a5,a4,2       | 0410 addi a4,a4,1    ALU |                          | 
+   7810 | 0420 addi s2,s2,-1       | 0418 addi a6,a4,3        | 0| >0418 addi a6,a4,3       | 0414 addi a5,a4,2    ALU | 0410 addi a4,a4,1        | 
+   7811 | 0424 bnez s2,410         | 041c addi a7,a4,4        | 0| >041c addi a7,a4,4       | 0418 addi a6,a4,3    ALU | 0414 addi a5,a4,2        | 
+   7812 | 0428 csrr t0,mcycle      | 0420 addi s2,s2,-1       | 0| >0420 addi s2,s2,-1      | 041c addi a7,a4,4    ALU | 0418 addi a6,a4,3        | 
+   7813 | 042c sub s0,t0,s0        | 0424 bnez s2,410         | 0| >0424 bnez s2,410        | 0420 addi s2,s2,-1   ALU | 041c addi a7,a4,4        | IP-redirect->0410
+   7814 | 0410 addi a4,a4,1        |                          | 0|                          | 0424 bnez s2,410     BJU | 0420 addi s2,s2,-1       | BR-resolve:T
+   7815 | 0414 addi a5,a4,2        |                          | 0|                          |                          | 0424 bnez s2,410         | 
+   7816 | 0418 addi a6,a4,3        | 0410 addi a4,a4,1        | 0| >0410 addi a4,a4,1       |                          |                          | 
+   7817 | 041c addi a7,a4,4        | 0414 addi a5,a4,2        | 0| >0414 addi a5,a4,2       | 0410 addi a4,a4,1    ALU |                          | 
+   7818 | 0420 addi s2,s2,-1       | 0418 addi a6,a4,3        | 0| >0418 addi a6,a4,3       | 0414 addi a5,a4,2    ALU | 0410 addi a4,a4,1        | 
+   7819 | 0424 bnez s2,410         | 041c addi a7,a4,4        | 0| >041c addi a7,a4,4       | 0418 addi a6,a4,3    ALU | 0414 addi a5,a4,2        | 
+   7820 | 0428 csrr t0,mcycle      | 0420 addi s2,s2,-1       | 0| >0420 addi s2,s2,-1      | 041c addi a7,a4,4    ALU | 0418 addi a6,a4,3        | 
+   7821 | 042c sub s0,t0,s0        | 0424 bnez s2,410         | 0| >0424 bnez s2,410        | 0420 addi s2,s2,-1   ALU | 041c addi a7,a4,4        | IP-redirect->0410
+   7822 | 0410 addi a4,a4,1        |                          | 0|                          | 0424 bnez s2,410     BJU | 0420 addi s2,s2,-1       | BR-resolve:T
+   7823 | 0414 addi a5,a4,2        |                          | 0|                          |                          | 0424 bnez s2,410         | 
+   7824 | 0418 addi a6,a4,3        | 0410 addi a4,a4,1        | 0| >0410 addi a4,a4,1       |                          |                          | 
+   7825 | 041c addi a7,a4,4        | 0414 addi a5,a4,2        | 0| >0414 addi a5,a4,2       | 0410 addi a4,a4,1    ALU |                          | 
+   7826 | 0420 addi s2,s2,-1       | 0418 addi a6,a4,3        | 0| >0418 addi a6,a4,3       | 0414 addi a5,a4,2    ALU | 0410 addi a4,a4,1        | 
+   7827 | 0424 bnez s2,410         | 041c addi a7,a4,4        | 0| >041c addi a7,a4,4       | 0418 addi a6,a4,3    ALU | 0414 addi a5,a4,2        | 
+   7828 | 0428 csrr t0,mcycle      | 0420 addi s2,s2,-1       | 0| >0420 addi s2,s2,-1      | 041c addi a7,a4,4    ALU | 0418 addi a6,a4,3        | 
+   7829 | 042c sub s0,t0,s0        | 0424 bnez s2,410         | 0| >0424 bnez s2,410        | 0420 addi s2,s2,-1   ALU | 041c addi a7,a4,4        | IP-redirect->0410
+   7830 | 0410 addi a4,a4,1        |                          | 0|                          | 0424 bnez s2,410     BJU | 0420 addi s2,s2,-1       | BR-resolve:T
+   7831 | 0414 addi a5,a4,2        |                          | 0|                          |                          | 0424 bnez s2,410         | 
+   7832 | 0418 addi a6,a4,3        | 0410 addi a4,a4,1        | 0| >0410 addi a4,a4,1       |                          |                          | 
+   7833 | 041c addi a7,a4,4        | 0414 addi a5,a4,2        | 0| >0414 addi a5,a4,2       | 0410 addi a4,a4,1    ALU |                          | 
+   7834 | 0420 addi s2,s2,-1       | 0418 addi a6,a4,3        | 0| >0418 addi a6,a4,3       | 0414 addi a5,a4,2    ALU | 0410 addi a4,a4,1        | 
+   7835 | 0424 bnez s2,410         | 041c addi a7,a4,4        | 0| >041c addi a7,a4,4       | 0418 addi a6,a4,3    ALU | 0414 addi a5,a4,2        | 
+   7836 | 0428 csrr t0,mcycle      | 0420 addi s2,s2,-1       | 0| >0420 addi s2,s2,-1      | 041c addi a7,a4,4    ALU | 0418 addi a6,a4,3        | 
+   7837 | 042c sub s0,t0,s0        | 0424 bnez s2,410         | 0| >0424 bnez s2,410        | 0420 addi s2,s2,-1   ALU | 041c addi a7,a4,4        | IP-redirect->0410
+   7838 | 0410 addi a4,a4,1        |                          | 0|                          | 0424 bnez s2,410     BJU | 0420 addi s2,s2,-1       | BR-resolve:T
+   7839 | 0414 addi a5,a4,2        |                          | 0|                          |                          | 0424 bnez s2,410         | 
+   7840 | 0418 addi a6,a4,3        | 0410 addi a4,a4,1        | 0| >0410 addi a4,a4,1       |                          |                          | 
+   7841 | 041c addi a7,a4,4        | 0414 addi a5,a4,2        | 0| >0414 addi a5,a4,2       | 0410 addi a4,a4,1    ALU |                          | 
+   7842 | 0420 addi s2,s2,-1       | 0418 addi a6,a4,3        | 0| >0418 addi a6,a4,3       | 0414 addi a5,a4,2    ALU | 0410 addi a4,a4,1        | 
+   7843 | 0424 bnez s2,410         | 041c addi a7,a4,4        | 0| >041c addi a7,a4,4       | 0418 addi a6,a4,3    ALU | 0414 addi a5,a4,2        | 
+   7844 | 0428 csrr t0,mcycle      | 0420 addi s2,s2,-1       | 0| >0420 addi s2,s2,-1      | 041c addi a7,a4,4    ALU | 0418 addi a6,a4,3        | 
+   7845 | 042c sub s0,t0,s0        | 0424 bnez s2,410         | 0| >0424 bnez s2,410        | 0420 addi s2,s2,-1   ALU | 041c addi a7,a4,4        | IP-redirect->0410
+   7846 | 0410 addi a4,a4,1        |                          | 0|                          | 0424 bnez s2,410     BJU | 0420 addi s2,s2,-1       | BR-resolve:T
+   7847 | 0414 addi a5,a4,2        |                          | 0|                          |                          | 0424 bnez s2,410         | 
+   7848 | 0418 addi a6,a4,3        | 0410 addi a4,a4,1        | 0| >0410 addi a4,a4,1       |                          |                          | 
+   7849 | 041c addi a7,a4,4        | 0414 addi a5,a4,2        | 0| >0414 addi a5,a4,2       | 0410 addi a4,a4,1    ALU |                          | 
+   7850 | 0420 addi s2,s2,-1       | 0418 addi a6,a4,3        | 0| >0418 addi a6,a4,3       | 0414 addi a5,a4,2    ALU | 0410 addi a4,a4,1        | 
+   7851 | 0424 bnez s2,410         | 041c addi a7,a4,4        | 0| >041c addi a7,a4,4       | 0418 addi a6,a4,3    ALU | 0414 addi a5,a4,2        | 
+   7852 | 0428 csrr t0,mcycle      | 0420 addi s2,s2,-1       | 0| >0420 addi s2,s2,-1      | 041c addi a7,a4,4    ALU | 0418 addi a6,a4,3        | 
+   7853 | 042c sub s0,t0,s0        | 0424 bnez s2,410         | 0| >0424 bnez s2,410        | 0420 addi s2,s2,-1   ALU | 041c addi a7,a4,4        | IP-redirect->0410
+   7854 | 0410 addi a4,a4,1        |                          | 0|                          | 0424 bnez s2,410     BJU | 0420 addi s2,s2,-1       | BR-resolve:T
+   7855 | 0414 addi a5,a4,2        |                          | 0|                          |                          | 0424 bnez s2,410         | 
+   7856 | 0418 addi a6,a4,3        | 0410 addi a4,a4,1        | 0| >0410 addi a4,a4,1       |                          |                          | 
+   7857 | 041c addi a7,a4,4        | 0414 addi a5,a4,2        | 0| >0414 addi a5,a4,2       | 0410 addi a4,a4,1    ALU |                          | 
+   7858 | 0420 addi s2,s2,-1       | 0418 addi a6,a4,3        | 0| >0418 addi a6,a4,3       | 0414 addi a5,a4,2    ALU | 0410 addi a4,a4,1        | 
+   7859 | 0424 bnez s2,410         | 041c addi a7,a4,4        | 0| >041c addi a7,a4,4       | 0418 addi a6,a4,3    ALU | 0414 addi a5,a4,2        | 
+   7860 | 0428 csrr t0,mcycle      | 0420 addi s2,s2,-1       | 0| >0420 addi s2,s2,-1      | 041c addi a7,a4,4    ALU | 0418 addi a6,a4,3        | 
+   7861 | 042c sub s0,t0,s0        | 0424 bnez s2,410         | 0| >0424 bnez s2,410        | 0420 addi s2,s2,-1   ALU | 041c addi a7,a4,4        | IP-redirect->0410
+   7862 | 0410 addi a4,a4,1        |                          | 0|                          | 0424 bnez s2,410     BJU | 0420 addi s2,s2,-1       | BR-resolve:T
+   7863 | 0414 addi a5,a4,2        |                          | 0|                          |                          | 0424 bnez s2,410         | 
+   7864 | 0418 addi a6,a4,3        | 0410 addi a4,a4,1        | 0| >0410 addi a4,a4,1       |                          |                          | 
+   7865 | 041c addi a7,a4,4        | 0414 addi a5,a4,2        | 0| >0414 addi a5,a4,2       | 0410 addi a4,a4,1    ALU |                          | 
+   7866 | 0420 addi s2,s2,-1       | 0418 addi a6,a4,3        | 0| >0418 addi a6,a4,3       | 0414 addi a5,a4,2    ALU | 0410 addi a4,a4,1        | 
+   7867 | 0424 bnez s2,410         | 041c addi a7,a4,4        | 0| >041c addi a7,a4,4       | 0418 addi a6,a4,3    ALU | 0414 addi a5,a4,2        | 
+   7868 | 0428 csrr t0,mcycle      | 0420 addi s2,s2,-1       | 0| >0420 addi s2,s2,-1      | 041c addi a7,a4,4    ALU | 0418 addi a6,a4,3        | 
+   7869 | 042c sub s0,t0,s0        | 0424 bnez s2,410         | 0| >0424 bnez s2,410        | 0420 addi s2,s2,-1   ALU | 041c addi a7,a4,4        | IP-redirect->0410
+   7870 | 0410 addi a4,a4,1        |                          | 0|                          | 0424 bnez s2,410     BJU | 0420 addi s2,s2,-1       | BR-resolve:T
+   7871 | 0414 addi a5,a4,2        |                          | 0|                          |                          | 0424 bnez s2,410         | 
+   7872 | 0418 addi a6,a4,3        | 0410 addi a4,a4,1        | 0| >0410 addi a4,a4,1       |                          |                          | 
+   7873 | 041c addi a7,a4,4        | 0414 addi a5,a4,2        | 0| >0414 addi a5,a4,2       | 0410 addi a4,a4,1    ALU |                          | 
+   7874 | 0420 addi s2,s2,-1       | 0418 addi a6,a4,3        | 0| >0418 addi a6,a4,3       | 0414 addi a5,a4,2    ALU | 0410 addi a4,a4,1        | 
+   7875 | 0424 bnez s2,410         | 041c addi a7,a4,4        | 0| >041c addi a7,a4,4       | 0418 addi a6,a4,3    ALU | 0414 addi a5,a4,2        | 
+   7876 | 0428 csrr t0,mcycle      | 0420 addi s2,s2,-1       | 0| >0420 addi s2,s2,-1      | 041c addi a7,a4,4    ALU | 0418 addi a6,a4,3        | 
+   7877 | 042c sub s0,t0,s0        | 0424 bnez s2,410         | 0| >0424 bnez s2,410        | 0420 addi s2,s2,-1   ALU | 041c addi a7,a4,4        | IP-redirect->0410
+   7878 | 0410 addi a4,a4,1        |                          | 0|                          | 0424 bnez s2,410     BJU | 0420 addi s2,s2,-1       | BR-resolve:T
+   7879 | 0414 addi a5,a4,2        |                          | 0|                          |                          | 0424 bnez s2,410         | 
+   7880 | 0418 addi a6,a4,3        | 0410 addi a4,a4,1        | 0| >0410 addi a4,a4,1       |                          |                          | 
+   7881 | 041c addi a7,a4,4        | 0414 addi a5,a4,2        | 0| >0414 addi a5,a4,2       | 0410 addi a4,a4,1    ALU |                          | 
+   7882 | 0420 addi s2,s2,-1       | 0418 addi a6,a4,3        | 0| >0418 addi a6,a4,3       | 0414 addi a5,a4,2    ALU | 0410 addi a4,a4,1        | 
+   7883 | 0424 bnez s2,410         | 041c addi a7,a4,4        | 0| >041c addi a7,a4,4       | 0418 addi a6,a4,3    ALU | 0414 addi a5,a4,2        | 
+   7884 | 0428 csrr t0,mcycle      | 0420 addi s2,s2,-1       | 0| >0420 addi s2,s2,-1      | 041c addi a7,a4,4    ALU | 0418 addi a6,a4,3        | 
+   7885 | 042c sub s0,t0,s0        | 0424 bnez s2,410         | 0| >0424 bnez s2,410        | 0420 addi s2,s2,-1   ALU | 041c addi a7,a4,4        | IP-redirect->0410
+   7886 | 0410 addi a4,a4,1        |                          | 0|                          | 0424 bnez s2,410     BJU | 0420 addi s2,s2,-1       | BR-resolve:T
+   7887 | 0414 addi a5,a4,2        |                          | 0|                          |                          | 0424 bnez s2,410         | 
+   7888 | 0418 addi a6,a4,3        | 0410 addi a4,a4,1        | 0| >0410 addi a4,a4,1       |                          |                          | 
+   7889 | 041c addi a7,a4,4        | 0414 addi a5,a4,2        | 0| >0414 addi a5,a4,2       | 0410 addi a4,a4,1    ALU |                          | 
+   7890 | 0420 addi s2,s2,-1       | 0418 addi a6,a4,3        | 0| >0418 addi a6,a4,3       | 0414 addi a5,a4,2    ALU | 0410 addi a4,a4,1        | 
+   7891 | 0424 bnez s2,410         | 041c addi a7,a4,4        | 0| >041c addi a7,a4,4       | 0418 addi a6,a4,3    ALU | 0414 addi a5,a4,2        | 
+   7892 | 0428 csrr t0,mcycle      | 0420 addi s2,s2,-1       | 0| >0420 addi s2,s2,-1      | 041c addi a7,a4,4    ALU | 0418 addi a6,a4,3        | 
+   7893 | 042c sub s0,t0,s0        | 0424 bnez s2,410         | 0| >0424 bnez s2,410        | 0420 addi s2,s2,-1   ALU | 041c addi a7,a4,4        | IP-redirect->0410
+   7894 | 0410 addi a4,a4,1        |                          | 0|                          | 0424 bnez s2,410     BJU | 0420 addi s2,s2,-1       | BR-resolve:T
+   7895 | 0414 addi a5,a4,2        |                          | 0|                          |                          | 0424 bnez s2,410         | 
+   7896 | 0418 addi a6,a4,3        | 0410 addi a4,a4,1        | 0| >0410 addi a4,a4,1       |                          |                          | 
+   7897 | 041c addi a7,a4,4        | 0414 addi a5,a4,2        | 0| >0414 addi a5,a4,2       | 0410 addi a4,a4,1    ALU |                          | 
+   7898 | 0420 addi s2,s2,-1       | 0418 addi a6,a4,3        | 0| >0418 addi a6,a4,3       | 0414 addi a5,a4,2    ALU | 0410 addi a4,a4,1        | 
+   7899 | 0424 bnez s2,410         | 041c addi a7,a4,4        | 0| >041c addi a7,a4,4       | 0418 addi a6,a4,3    ALU | 0414 addi a5,a4,2        | 
+   7900 | 0428 csrr t0,mcycle      | 0420 addi s2,s2,-1       | 0| >0420 addi s2,s2,-1      | 041c addi a7,a4,4    ALU | 0418 addi a6,a4,3        | 
+   7901 | 042c sub s0,t0,s0        | 0424 bnez s2,410         | 0| >0424 bnez s2,410        | 0420 addi s2,s2,-1   ALU | 041c addi a7,a4,4        | IP-redirect->0410
+   7902 | 0410 addi a4,a4,1        |                          | 0|                          | 0424 bnez s2,410     BJU | 0420 addi s2,s2,-1       | BR-resolve:T
+   7903 | 0414 addi a5,a4,2        |                          | 0|                          |                          | 0424 bnez s2,410         | 
+   7904 | 0418 addi a6,a4,3        | 0410 addi a4,a4,1        | 0| >0410 addi a4,a4,1       |                          |                          | 
+   7905 | 041c addi a7,a4,4        | 0414 addi a5,a4,2        | 0| >0414 addi a5,a4,2       | 0410 addi a4,a4,1    ALU |                          | 
+   7906 | 0420 addi s2,s2,-1       | 0418 addi a6,a4,3        | 0| >0418 addi a6,a4,3       | 0414 addi a5,a4,2    ALU | 0410 addi a4,a4,1        | 
+   7907 | 0424 bnez s2,410         | 041c addi a7,a4,4        | 0| >041c addi a7,a4,4       | 0418 addi a6,a4,3    ALU | 0414 addi a5,a4,2        | 
+   7908 | 0428 csrr t0,mcycle      | 0420 addi s2,s2,-1       | 0| >0420 addi s2,s2,-1      | 041c addi a7,a4,4    ALU | 0418 addi a6,a4,3        | 
+   7909 | 042c sub s0,t0,s0        | 0424 bnez s2,410         | 0| >0424 bnez s2,410        | 0420 addi s2,s2,-1   ALU | 041c addi a7,a4,4        | IP-redirect->0410
+   7910 | 0410 addi a4,a4,1        |                          | 0|                          | 0424 bnez s2,410     BJU | 0420 addi s2,s2,-1       | BR-resolve:T
+   7911 | 0414 addi a5,a4,2        |                          | 0|                          |                          | 0424 bnez s2,410         | 
+   7912 | 0418 addi a6,a4,3        | 0410 addi a4,a4,1        | 0| >0410 addi a4,a4,1       |                          |                          | 
+   7913 | 041c addi a7,a4,4        | 0414 addi a5,a4,2        | 0| >0414 addi a5,a4,2       | 0410 addi a4,a4,1    ALU |                          | 
+   7914 | 0420 addi s2,s2,-1       | 0418 addi a6,a4,3        | 0| >0418 addi a6,a4,3       | 0414 addi a5,a4,2    ALU | 0410 addi a4,a4,1        | 
+   7915 | 0424 bnez s2,410         | 041c addi a7,a4,4        | 0| >041c addi a7,a4,4       | 0418 addi a6,a4,3    ALU | 0414 addi a5,a4,2        | 
+   7916 | 0428 csrr t0,mcycle      | 0420 addi s2,s2,-1       | 0| >0420 addi s2,s2,-1      | 041c addi a7,a4,4    ALU | 0418 addi a6,a4,3        | 
+   7917 | 042c sub s0,t0,s0        | 0424 bnez s2,410         | 0| >0424 bnez s2,410        | 0420 addi s2,s2,-1   ALU | 041c addi a7,a4,4        | IP-redirect->0410
+   7918 | 0410 addi a4,a4,1        |                          | 0|                          | 0424 bnez s2,410     BJU | 0420 addi s2,s2,-1       | BR-resolve:T
+   7919 | 0414 addi a5,a4,2        |                          | 0|                          |                          | 0424 bnez s2,410         | 
+   7920 | 0418 addi a6,a4,3        | 0410 addi a4,a4,1        | 0| >0410 addi a4,a4,1       |                          |                          | 
+   7921 | 041c addi a7,a4,4        | 0414 addi a5,a4,2        | 0| >0414 addi a5,a4,2       | 0410 addi a4,a4,1    ALU |                          | 
+   7922 | 0420 addi s2,s2,-1       | 0418 addi a6,a4,3        | 0| >0418 addi a6,a4,3       | 0414 addi a5,a4,2    ALU | 0410 addi a4,a4,1        | 
+   7923 | 0424 bnez s2,410         | 041c addi a7,a4,4        | 0| >041c addi a7,a4,4       | 0418 addi a6,a4,3    ALU | 0414 addi a5,a4,2        | 
+   7924 | 0428 csrr t0,mcycle      | 0420 addi s2,s2,-1       | 0| >0420 addi s2,s2,-1      | 041c addi a7,a4,4    ALU | 0418 addi a6,a4,3        | 
+   7925 | 042c sub s0,t0,s0        | 0424 bnez s2,410         | 0| >0424 bnez s2,410        | 0420 addi s2,s2,-1   ALU | 041c addi a7,a4,4        | IP-redirect->0410
+   7926 | 0410 addi a4,a4,1        |                          | 0|                          | 0424 bnez s2,410     BJU | 0420 addi s2,s2,-1       | BR-resolve:T
+   7927 | 0414 addi a5,a4,2        |                          | 0|                          |                          | 0424 bnez s2,410         | 
+   7928 | 0418 addi a6,a4,3        | 0410 addi a4,a4,1        | 0| >0410 addi a4,a4,1       |                          |                          | 
+   7929 | 041c addi a7,a4,4        | 0414 addi a5,a4,2        | 0| >0414 addi a5,a4,2       | 0410 addi a4,a4,1    ALU |                          | 
+   7930 | 0420 addi s2,s2,-1       | 0418 addi a6,a4,3        | 0| >0418 addi a6,a4,3       | 0414 addi a5,a4,2    ALU | 0410 addi a4,a4,1        | 
+   7931 | 0424 bnez s2,410         | 041c addi a7,a4,4        | 0| >041c addi a7,a4,4       | 0418 addi a6,a4,3    ALU | 0414 addi a5,a4,2        | 
+   7932 | 0428 csrr t0,mcycle      | 0420 addi s2,s2,-1       | 0| >0420 addi s2,s2,-1      | 041c addi a7,a4,4    ALU | 0418 addi a6,a4,3        | 
+   7933 | 042c sub s0,t0,s0        | 0424 bnez s2,410         | 0| >0424 bnez s2,410        | 0420 addi s2,s2,-1   ALU | 041c addi a7,a4,4        | IP-redirect->0410
+   7934 | 0410 addi a4,a4,1        |                          | 0|                          | 0424 bnez s2,410     BJU | 0420 addi s2,s2,-1       | BR-resolve:T
+   7935 | 0414 addi a5,a4,2        |                          | 0|                          |                          | 0424 bnez s2,410         | 
+   7936 | 0418 addi a6,a4,3        | 0410 addi a4,a4,1        | 0| >0410 addi a4,a4,1       |                          |                          | 
+   7937 | 041c addi a7,a4,4        | 0414 addi a5,a4,2        | 0| >0414 addi a5,a4,2       | 0410 addi a4,a4,1    ALU |                          | 
+   7938 | 0420 addi s2,s2,-1       | 0418 addi a6,a4,3        | 0| >0418 addi a6,a4,3       | 0414 addi a5,a4,2    ALU | 0410 addi a4,a4,1        | 
+   7939 | 0424 bnez s2,410         | 041c addi a7,a4,4        | 0| >041c addi a7,a4,4       | 0418 addi a6,a4,3    ALU | 0414 addi a5,a4,2        | 
+   7940 | 0428 csrr t0,mcycle      | 0420 addi s2,s2,-1       | 0| >0420 addi s2,s2,-1      | 041c addi a7,a4,4    ALU | 0418 addi a6,a4,3        | 
+   7941 | 042c sub s0,t0,s0        | 0424 bnez s2,410         | 0| >0424 bnez s2,410        | 0420 addi s2,s2,-1   ALU | 041c addi a7,a4,4        | IP-redirect->0410
+   7942 | 0410 addi a4,a4,1        |                          | 0|                          | 0424 bnez s2,410     BJU | 0420 addi s2,s2,-1       | BR-resolve:T
+   7943 | 0414 addi a5,a4,2        |                          | 0|                          |                          | 0424 bnez s2,410         | 
+   7944 | 0418 addi a6,a4,3        | 0410 addi a4,a4,1        | 0| >0410 addi a4,a4,1       |                          |                          | 
+   7945 | 041c addi a7,a4,4        | 0414 addi a5,a4,2        | 0| >0414 addi a5,a4,2       | 0410 addi a4,a4,1    ALU |                          | 
+   7946 | 0420 addi s2,s2,-1       | 0418 addi a6,a4,3        | 0| >0418 addi a6,a4,3       | 0414 addi a5,a4,2    ALU | 0410 addi a4,a4,1        | 
+   7947 | 0424 bnez s2,410         | 041c addi a7,a4,4        | 0| >041c addi a7,a4,4       | 0418 addi a6,a4,3    ALU | 0414 addi a5,a4,2        | 
+   7948 | 0428 csrr t0,mcycle      | 0420 addi s2,s2,-1       | 0| >0420 addi s2,s2,-1      | 041c addi a7,a4,4    ALU | 0418 addi a6,a4,3        | 
+   7949 | 042c sub s0,t0,s0        | 0424 bnez s2,410         | 0| >0424 bnez s2,410        | 0420 addi s2,s2,-1   ALU | 041c addi a7,a4,4        | IP-redirect->0410
+   7950 | 0410 addi a4,a4,1        |                          | 0|                          | 0424 bnez s2,410     BJU | 0420 addi s2,s2,-1       | BR-resolve:T
+   7951 | 0414 addi a5,a4,2        |                          | 0|                          |                          | 0424 bnez s2,410         | 
+   7952 | 0418 addi a6,a4,3        | 0410 addi a4,a4,1        | 0| >0410 addi a4,a4,1       |                          |                          | 
+   7953 | 041c addi a7,a4,4        | 0414 addi a5,a4,2        | 0| >0414 addi a5,a4,2       | 0410 addi a4,a4,1    ALU |                          | 
+   7954 | 0420 addi s2,s2,-1       | 0418 addi a6,a4,3        | 0| >0418 addi a6,a4,3       | 0414 addi a5,a4,2    ALU | 0410 addi a4,a4,1        | 
+   7955 | 0424 bnez s2,410         | 041c addi a7,a4,4        | 0| >041c addi a7,a4,4       | 0418 addi a6,a4,3    ALU | 0414 addi a5,a4,2        | 
+   7956 | 0428 csrr t0,mcycle      | 0420 addi s2,s2,-1       | 0| >0420 addi s2,s2,-1      | 041c addi a7,a4,4    ALU | 0418 addi a6,a4,3        | 
+   7957 | 042c sub s0,t0,s0        | 0424 bnez s2,410         | 0| >0424 bnez s2,410        | 0420 addi s2,s2,-1   ALU | 041c addi a7,a4,4        | IP-redirect->0410
+   7958 | 0410 addi a4,a4,1        |                          | 0|                          | 0424 bnez s2,410     BJU | 0420 addi s2,s2,-1       | BR-resolve:T
+   7959 | 0414 addi a5,a4,2        |                          | 0|                          |                          | 0424 bnez s2,410         | 
+   7960 | 0418 addi a6,a4,3        | 0410 addi a4,a4,1        | 0| >0410 addi a4,a4,1       |                          |                          | 
+   7961 | 041c addi a7,a4,4        | 0414 addi a5,a4,2        | 0| >0414 addi a5,a4,2       | 0410 addi a4,a4,1    ALU |                          | 
+   7962 | 0420 addi s2,s2,-1       | 0418 addi a6,a4,3        | 0| >0418 addi a6,a4,3       | 0414 addi a5,a4,2    ALU | 0410 addi a4,a4,1        | 
+   7963 | 0424 bnez s2,410         | 041c addi a7,a4,4        | 0| >041c addi a7,a4,4       | 0418 addi a6,a4,3    ALU | 0414 addi a5,a4,2        | 
+   7964 | 0428 csrr t0,mcycle      | 0420 addi s2,s2,-1       | 0| >0420 addi s2,s2,-1      | 041c addi a7,a4,4    ALU | 0418 addi a6,a4,3        | 
+   7965 | 042c sub s0,t0,s0        | 0424 bnez s2,410         | 0| >0424 bnez s2,410        | 0420 addi s2,s2,-1   ALU | 041c addi a7,a4,4        | IP-redirect->0410
+   7966 | 0410 addi a4,a4,1        |                          | 0|                          | 0424 bnez s2,410     BJU | 0420 addi s2,s2,-1       | BR-resolve:T
+   7967 | 0414 addi a5,a4,2        |                          | 0|                          |                          | 0424 bnez s2,410         | 
+   7968 | 0418 addi a6,a4,3        | 0410 addi a4,a4,1        | 0| >0410 addi a4,a4,1       |                          |                          | 
+   7969 | 041c addi a7,a4,4        | 0414 addi a5,a4,2        | 0| >0414 addi a5,a4,2       | 0410 addi a4,a4,1    ALU |                          | 
+   7970 | 0420 addi s2,s2,-1       | 0418 addi a6,a4,3        | 0| >0418 addi a6,a4,3       | 0414 addi a5,a4,2    ALU | 0410 addi a4,a4,1        | 
+   7971 | 0424 bnez s2,410         | 041c addi a7,a4,4        | 0| >041c addi a7,a4,4       | 0418 addi a6,a4,3    ALU | 0414 addi a5,a4,2        | 
+   7972 | 0428 csrr t0,mcycle      | 0420 addi s2,s2,-1       | 0| >0420 addi s2,s2,-1      | 041c addi a7,a4,4    ALU | 0418 addi a6,a4,3        | 
+   7973 | 042c sub s0,t0,s0        | 0424 bnez s2,410         | 0| >0424 bnez s2,410        | 0420 addi s2,s2,-1   ALU | 041c addi a7,a4,4        | IP-redirect->0410
+   7974 | 0410 addi a4,a4,1        |                          | 0|                          | 0424 bnez s2,410     BJU | 0420 addi s2,s2,-1       | BR-resolve:T
+   7975 | 0414 addi a5,a4,2        |                          | 0|                          |                          | 0424 bnez s2,410         | 
+   7976 | 0418 addi a6,a4,3        | 0410 addi a4,a4,1        | 0| >0410 addi a4,a4,1       |                          |                          | 
+   7977 | 041c addi a7,a4,4        | 0414 addi a5,a4,2        | 0| >0414 addi a5,a4,2       | 0410 addi a4,a4,1    ALU |                          | 
+   7978 | 0420 addi s2,s2,-1       | 0418 addi a6,a4,3        | 0| >0418 addi a6,a4,3       | 0414 addi a5,a4,2    ALU | 0410 addi a4,a4,1        | 
+   7979 | 0424 bnez s2,410         | 041c addi a7,a4,4        | 0| >041c addi a7,a4,4       | 0418 addi a6,a4,3    ALU | 0414 addi a5,a4,2        | 
+   7980 | 0428 csrr t0,mcycle      | 0420 addi s2,s2,-1       | 0| >0420 addi s2,s2,-1      | 041c addi a7,a4,4    ALU | 0418 addi a6,a4,3        | 
+   7981 | 042c sub s0,t0,s0        | 0424 bnez s2,410         | 0| >0424 bnez s2,410        | 0420 addi s2,s2,-1   ALU | 041c addi a7,a4,4        | IP-redirect->0410
+   7982 | 0410 addi a4,a4,1        |                          | 0|                          | 0424 bnez s2,410     BJU | 0420 addi s2,s2,-1       | BR-resolve:T
+   7983 | 0414 addi a5,a4,2        |                          | 0|                          |                          | 0424 bnez s2,410         | 
+   7984 | 0418 addi a6,a4,3        | 0410 addi a4,a4,1        | 0| >0410 addi a4,a4,1       |                          |                          | 
+   7985 | 041c addi a7,a4,4        | 0414 addi a5,a4,2        | 0| >0414 addi a5,a4,2       | 0410 addi a4,a4,1    ALU |                          | 
+   7986 | 0420 addi s2,s2,-1       | 0418 addi a6,a4,3        | 0| >0418 addi a6,a4,3       | 0414 addi a5,a4,2    ALU | 0410 addi a4,a4,1        | 
+   7987 | 0424 bnez s2,410         | 041c addi a7,a4,4        | 0| >041c addi a7,a4,4       | 0418 addi a6,a4,3    ALU | 0414 addi a5,a4,2        | 
+   7988 | 0428 csrr t0,mcycle      | 0420 addi s2,s2,-1       | 0| >0420 addi s2,s2,-1      | 041c addi a7,a4,4    ALU | 0418 addi a6,a4,3        | 
+   7989 | 042c sub s0,t0,s0        | 0424 bnez s2,410         | 0| >0424 bnez s2,410        | 0420 addi s2,s2,-1   ALU | 041c addi a7,a4,4        | IP-redirect->0410
+   7990 | 0410 addi a4,a4,1        |                          | 0|                          | 0424 bnez s2,410     BJU | 0420 addi s2,s2,-1       | BR-resolve:T
+   7991 | 0414 addi a5,a4,2        |                          | 0|                          |                          | 0424 bnez s2,410         | 
+   7992 | 0418 addi a6,a4,3        | 0410 addi a4,a4,1        | 0| >0410 addi a4,a4,1       |                          |                          | 
+   7993 | 041c addi a7,a4,4        | 0414 addi a5,a4,2        | 0| >0414 addi a5,a4,2       | 0410 addi a4,a4,1    ALU |                          | 
+   7994 | 0420 addi s2,s2,-1       | 0418 addi a6,a4,3        | 0| >0418 addi a6,a4,3       | 0414 addi a5,a4,2    ALU | 0410 addi a4,a4,1        | 
+   7995 | 0424 bnez s2,410         | 041c addi a7,a4,4        | 0| >041c addi a7,a4,4       | 0418 addi a6,a4,3    ALU | 0414 addi a5,a4,2        | 
+   7996 | 0428 csrr t0,mcycle      | 0420 addi s2,s2,-1       | 0| >0420 addi s2,s2,-1      | 041c addi a7,a4,4    ALU | 0418 addi a6,a4,3        | 
+   7997 | 042c sub s0,t0,s0        | 0424 bnez s2,410         | 0| >0424 bnez s2,410        | 0420 addi s2,s2,-1   ALU | 041c addi a7,a4,4        | IP-redirect->0410
+   7998 | 0410 addi a4,a4,1        |                          | 0|                          | 0424 bnez s2,410     BJU | 0420 addi s2,s2,-1       | BR-resolve:T
+   7999 | 0414 addi a5,a4,2        |                          | 0|                          |                          | 0424 bnez s2,410         | 
+   8000 | 0418 addi a6,a4,3        | 0410 addi a4,a4,1        | 0| >0410 addi a4,a4,1       |                          |                          | 
+   8001 | 041c addi a7,a4,4        | 0414 addi a5,a4,2        | 0| >0414 addi a5,a4,2       | 0410 addi a4,a4,1    ALU |                          | 
+   8002 | 0420 addi s2,s2,-1       | 0418 addi a6,a4,3        | 0| >0418 addi a6,a4,3       | 0414 addi a5,a4,2    ALU | 0410 addi a4,a4,1        | 
+   8003 | 0424 bnez s2,410         | 041c addi a7,a4,4        | 0| >041c addi a7,a4,4       | 0418 addi a6,a4,3    ALU | 0414 addi a5,a4,2        | 
+   8004 | 0428 csrr t0,mcycle      | 0420 addi s2,s2,-1       | 0| >0420 addi s2,s2,-1      | 041c addi a7,a4,4    ALU | 0418 addi a6,a4,3        | 
+   8005 | 042c sub s0,t0,s0        | 0424 bnez s2,410         | 0| >0424 bnez s2,410        | 0420 addi s2,s2,-1   ALU | 041c addi a7,a4,4        | IP-redirect->0410
+   8006 | 0410 addi a4,a4,1        |                          | 0|                          | 0424 bnez s2,410     BJU | 0420 addi s2,s2,-1       | BR-resolve:T
+   8007 | 0414 addi a5,a4,2        |                          | 0|                          |                          | 0424 bnez s2,410         | 
+   8008 | 0418 addi a6,a4,3        | 0410 addi a4,a4,1        | 0| >0410 addi a4,a4,1       |                          |                          | 
+   8009 | 041c addi a7,a4,4        | 0414 addi a5,a4,2        | 0| >0414 addi a5,a4,2       | 0410 addi a4,a4,1    ALU |                          | 
+   8010 | 0420 addi s2,s2,-1       | 0418 addi a6,a4,3        | 0| >0418 addi a6,a4,3       | 0414 addi a5,a4,2    ALU | 0410 addi a4,a4,1        | 
+   8011 | 0424 bnez s2,410         | 041c addi a7,a4,4        | 0| >041c addi a7,a4,4       | 0418 addi a6,a4,3    ALU | 0414 addi a5,a4,2        | 
+   8012 | 0428 csrr t0,mcycle      | 0420 addi s2,s2,-1       | 0| >0420 addi s2,s2,-1      | 041c addi a7,a4,4    ALU | 0418 addi a6,a4,3        | 
+   8013 | 042c sub s0,t0,s0        | 0424 bnez s2,410         | 0| >0424 bnez s2,410        | 0420 addi s2,s2,-1   ALU | 041c addi a7,a4,4        | IP-redirect->0410
+   8014 | 0410 addi a4,a4,1        |                          | 0|                          | 0424 bnez s2,410     BJU | 0420 addi s2,s2,-1       | BR-resolve:T
+   8015 | 0414 addi a5,a4,2        |                          | 0|                          |                          | 0424 bnez s2,410         | 
+   8016 | 0418 addi a6,a4,3        | 0410 addi a4,a4,1        | 0| >0410 addi a4,a4,1       |                          |                          | 
+   8017 | 041c addi a7,a4,4        | 0414 addi a5,a4,2        | 0| >0414 addi a5,a4,2       | 0410 addi a4,a4,1    ALU |                          | 
+   8018 | 0420 addi s2,s2,-1       | 0418 addi a6,a4,3        | 0| >0418 addi a6,a4,3       | 0414 addi a5,a4,2    ALU | 0410 addi a4,a4,1        | 
+   8019 | 0424 bnez s2,410         | 041c addi a7,a4,4        | 0| >041c addi a7,a4,4       | 0418 addi a6,a4,3    ALU | 0414 addi a5,a4,2        | 
+   8020 | 0428 csrr t0,mcycle      | 0420 addi s2,s2,-1       | 0| >0420 addi s2,s2,-1      | 041c addi a7,a4,4    ALU | 0418 addi a6,a4,3        | 
+   8021 | 042c sub s0,t0,s0        | 0424 bnez s2,410         | 0| >0424 bnez s2,410        | 0420 addi s2,s2,-1   ALU | 041c addi a7,a4,4        | IP-redirect->0410
+   8022 | 0410 addi a4,a4,1        |                          | 0|                          | 0424 bnez s2,410     BJU | 0420 addi s2,s2,-1       | BR-resolve:T
+   8023 | 0414 addi a5,a4,2        |                          | 0|                          |                          | 0424 bnez s2,410         | 
+   8024 | 0418 addi a6,a4,3        | 0410 addi a4,a4,1        | 0| >0410 addi a4,a4,1       |                          |                          | 
+   8025 | 041c addi a7,a4,4        | 0414 addi a5,a4,2        | 0| >0414 addi a5,a4,2       | 0410 addi a4,a4,1    ALU |                          | 
+   8026 | 0420 addi s2,s2,-1       | 0418 addi a6,a4,3        | 0| >0418 addi a6,a4,3       | 0414 addi a5,a4,2    ALU | 0410 addi a4,a4,1        | 
+   8027 | 0424 bnez s2,410         | 041c addi a7,a4,4        | 0| >041c addi a7,a4,4       | 0418 addi a6,a4,3    ALU | 0414 addi a5,a4,2        | 
+   8028 | 0428 csrr t0,mcycle      | 0420 addi s2,s2,-1       | 0| >0420 addi s2,s2,-1      | 041c addi a7,a4,4    ALU | 0418 addi a6,a4,3        | 
+   8029 | 042c sub s0,t0,s0        | 0424 bnez s2,410         | 0| >0424 bnez s2,410        | 0420 addi s2,s2,-1   ALU | 041c addi a7,a4,4        | IP-redirect->0410
+   8030 | 0410 addi a4,a4,1        |                          | 0|                          | 0424 bnez s2,410     BJU | 0420 addi s2,s2,-1       | BR-resolve:T
+   8031 | 0414 addi a5,a4,2        |                          | 0|                          |                          | 0424 bnez s2,410         | 
+   8032 | 0418 addi a6,a4,3        | 0410 addi a4,a4,1        | 0| >0410 addi a4,a4,1       |                          |                          | 
+   8033 | 041c addi a7,a4,4        | 0414 addi a5,a4,2        | 0| >0414 addi a5,a4,2       | 0410 addi a4,a4,1    ALU |                          | 
+   8034 | 0420 addi s2,s2,-1       | 0418 addi a6,a4,3        | 0| >0418 addi a6,a4,3       | 0414 addi a5,a4,2    ALU | 0410 addi a4,a4,1        | 
+   8035 | 0424 bnez s2,410         | 041c addi a7,a4,4        | 0| >041c addi a7,a4,4       | 0418 addi a6,a4,3    ALU | 0414 addi a5,a4,2        | 
+   8036 | 0428 csrr t0,mcycle      | 0420 addi s2,s2,-1       | 0| >0420 addi s2,s2,-1      | 041c addi a7,a4,4    ALU | 0418 addi a6,a4,3        | 
+   8037 | 042c sub s0,t0,s0        | 0424 bnez s2,410         | 0| >0424 bnez s2,410        | 0420 addi s2,s2,-1   ALU | 041c addi a7,a4,4        | IP-redirect->0410
+   ... (697 more cycles, use --mark 2 --max-rows N)
+----------------------------------------------------------------------------------------------------------------------------------------------------------------
+summary: cycles=1097 retired=791 IPC=0.721 | ip_curflw=2, ip_redirect=99, iu_redirect=33, mispred_bht=33, retired=791, stall_CP0/fence=43, stall_RAW=4, stall_WAW=2
+
+================================================================================================================================================================
+MARK 3   cycles 11649 .. 12838  (1190 cycles)
+================================================================================================================================================================
+    cyc | IF (fetch)               | IP (pred)                |IB| ID                       | EX1                      | RETIRE                   | events
+----------------------------------------------------------------------------------------------------------------------------------------------------------------
+  11649 | 0408 csrr s3,mhpmcounter | 0400 li s2,64            | 0| >0400 li s2,64           |                          | 0368 jal 400             | 
+  11650 | 040c csrr s0,mcycle      | 0404 li a4,0             | 0| >0404 li a4,0            | 0400 li s2,64        ALU |                          | 
+  11651 | 0410 addi a4,a4,1        | 0408 csrr s3,mhpmcounter | 0| .0408 csrr s3,mhpmcounte | 0404 li a4,0         ALU | 0400 li s2,64            | ID-stall:CP0/fence
+  11652 | 0414 addi a5,a4,2        | 040c csrr s0,mcycle      | 0| .0408 csrr s3,mhpmcounte |                          | 0404 li a4,0             | ID-stall:CP0/fence
+  11653 | 0418 addi a6,a4,3        | 0410 addi a4,a4,1        | 2| >0408 csrr s3,mhpmcounte |                          |                          | 
+  11654 | 041c addi a7,a4,4        | 0414 addi a5,a4,2        | 2| .040c csrr s0,mcycle     | 0408 csrr s3,mhpmcou CP0 |                          | ID-stall:CP0/fence
+  11655 | 0420 addi s2,s2,-1       | 0418 addi a6,a4,3        | 4| .040c csrr s0,mcycle     |                          | 0408 csrr s3,mhpmcounter | ID-stall:CP0/fence
+  11656 |                          | 041c addi a7,a4,4        | 6| >040c csrr s0,mcycle     |                          |                          | 
+  11657 | 0420 addi s2,s2,-1       | 041c addi a7,a4,4        | 4| >0410 addi a4,a4,1       | 040c csrr s0,mcycle  CP0 |                          | 
+  11658 | 0424 bnez s2,410         |                          | 4| >0414 addi a5,a4,2       | 0410 addi a4,a4,1    ALU | 040c csrr s0,mcycle      | 
+  11659 | 0428 csrr t0,mcycle      | 0420 addi s2,s2,-1       | 2| >0418 addi a6,a4,3       | 0414 addi a5,a4,2    ALU | 0410 addi a4,a4,1        | 
+  11660 | 042c sub s0,t0,s0        | 0424 bnez s2,410         | 2| >041c addi a7,a4,4       | 0418 addi a6,a4,3    ALU | 0414 addi a5,a4,2        | 
+  11661 | 0430 csrr s1,mhpmcounter | 0428 csrr t0,mcycle      | 2| >0420 addi s2,s2,-1      | 041c addi a7,a4,4    ALU | 0418 addi a6,a4,3        | 
+  11662 | 0434 sub s1,s1,s3        | 042c sub s0,t0,s0        | 2| >0424 bnez s2,410        | 0420 addi s2,s2,-1   ALU | 041c addi a7,a4,4        | 
+  11663 | 0438 ret                 | 0430 csrr s1,mhpmcounter | 2| .(flushed) csrr t0,mcycl | 0424 bnez s2,410     BJU | 0420 addi s2,s2,-1       | ID-stall:CP0/fence BR-resolve:T MISPRED(BHT) IU-redirect->0410
+  11664 | 0410 addi a4,a4,1        |                          | 0|                          |                          | 0424 bnez s2,410         | 
+  11665 | 0414 addi a5,a4,2        |                          | 0|                          |                          |                          | 
+  11666 | 0418 addi a6,a4,3        | 0410 addi a4,a4,1        | 0| >0410 addi a4,a4,1       |                          |                          | 
+  11667 | 041c addi a7,a4,4        | 0414 addi a5,a4,2        | 0| >0414 addi a5,a4,2       | 0410 addi a4,a4,1    ALU |                          | 
+  11668 | 0420 addi s2,s2,-1       | 0418 addi a6,a4,3        | 0| >0418 addi a6,a4,3       | 0414 addi a5,a4,2    ALU | 0410 addi a4,a4,1        | 
+  11669 | 0424 bnez s2,410         | 041c addi a7,a4,4        | 0| >041c addi a7,a4,4       | 0418 addi a6,a4,3    ALU | 0414 addi a5,a4,2        | 
+  11670 | 0428 csrr t0,mcycle      | 0420 addi s2,s2,-1       | 0| >0420 addi s2,s2,-1      | 041c addi a7,a4,4    ALU | 0418 addi a6,a4,3        | 
+  11671 | 042c sub s0,t0,s0        | 0424 bnez s2,410         | 0| >0424 bnez s2,410        | 0420 addi s2,s2,-1   ALU | 041c addi a7,a4,4        | 
+  11672 | 0430 csrr s1,mhpmcounter | 0428 csrr t0,mcycle      | 0| .(flushed) csrr t0,mcycl | 0424 bnez s2,410     BJU | 0420 addi s2,s2,-1       | ID-stall:CP0/fence BR-resolve:T MISPRED(BHT) IU-redirect->0410
+  11673 | 0410 addi a4,a4,1        |                          | 0|                          |                          | 0424 bnez s2,410         | 
+  11674 | 0414 addi a5,a4,2        |                          | 0|                          |                          |                          | 
+  11675 | 0418 addi a6,a4,3        | 0410 addi a4,a4,1        | 0| >0410 addi a4,a4,1       |                          |                          | 
+  11676 | 041c addi a7,a4,4        | 0414 addi a5,a4,2        | 0| >0414 addi a5,a4,2       | 0410 addi a4,a4,1    ALU |                          | 
+  11677 | 0420 addi s2,s2,-1       | 0418 addi a6,a4,3        | 0| >0418 addi a6,a4,3       | 0414 addi a5,a4,2    ALU | 0410 addi a4,a4,1        | 
+  11678 | 0424 bnez s2,410         | 041c addi a7,a4,4        | 0| >041c addi a7,a4,4       | 0418 addi a6,a4,3    ALU | 0414 addi a5,a4,2        | 
+  11679 | 0428 csrr t0,mcycle      | 0420 addi s2,s2,-1       | 0| >0420 addi s2,s2,-1      | 041c addi a7,a4,4    ALU | 0418 addi a6,a4,3        | 
+  11680 | 042c sub s0,t0,s0        | 0424 bnez s2,410         | 0| >0424 bnez s2,410        | 0420 addi s2,s2,-1   ALU | 041c addi a7,a4,4        | 
+  11681 | 0430 csrr s1,mhpmcounter | 0428 csrr t0,mcycle      | 0| .(flushed) csrr t0,mcycl | 0424 bnez s2,410     BJU | 0420 addi s2,s2,-1       | ID-stall:CP0/fence BR-resolve:T MISPRED(BHT) IU-redirect->0410
+  11682 | 0410 addi a4,a4,1        |                          | 0|                          |                          | 0424 bnez s2,410         | 
+  11683 | 0414 addi a5,a4,2        |                          | 0|                          |                          |                          | 
+  11684 | 0418 addi a6,a4,3        | 0410 addi a4,a4,1        | 0| >0410 addi a4,a4,1       |                          |                          | 
+  11685 | 041c addi a7,a4,4        | 0414 addi a5,a4,2        | 0| >0414 addi a5,a4,2       | 0410 addi a4,a4,1    ALU |                          | 
+  11686 | 0420 addi s2,s2,-1       | 0418 addi a6,a4,3        | 0| >0418 addi a6,a4,3       | 0414 addi a5,a4,2    ALU | 0410 addi a4,a4,1        | 
+  11687 | 0424 bnez s2,410         | 041c addi a7,a4,4        | 0| >041c addi a7,a4,4       | 0418 addi a6,a4,3    ALU | 0414 addi a5,a4,2        | 
+  11688 | 0428 csrr t0,mcycle      | 0420 addi s2,s2,-1       | 0| >0420 addi s2,s2,-1      | 041c addi a7,a4,4    ALU | 0418 addi a6,a4,3        | 
+  11689 | 042c sub s0,t0,s0        | 0424 bnez s2,410         | 0| >0424 bnez s2,410        | 0420 addi s2,s2,-1   ALU | 041c addi a7,a4,4        | 
+  11690 | 0430 csrr s1,mhpmcounter | 0428 csrr t0,mcycle      | 0| .(flushed) csrr t0,mcycl | 0424 bnez s2,410     BJU | 0420 addi s2,s2,-1       | ID-stall:CP0/fence BR-resolve:T MISPRED(BHT) IU-redirect->0410
+  11691 | 0410 addi a4,a4,1        |                          | 0|                          |                          | 0424 bnez s2,410         | 
+  11692 | 0414 addi a5,a4,2        |                          | 0|                          |                          |                          | 
+  11693 | 0418 addi a6,a4,3        | 0410 addi a4,a4,1        | 0| >0410 addi a4,a4,1       |                          |                          | 
+  11694 | 041c addi a7,a4,4        | 0414 addi a5,a4,2        | 0| >0414 addi a5,a4,2       | 0410 addi a4,a4,1    ALU |                          | 
+  11695 | 0420 addi s2,s2,-1       | 0418 addi a6,a4,3        | 0| >0418 addi a6,a4,3       | 0414 addi a5,a4,2    ALU | 0410 addi a4,a4,1        | 
+  11696 | 0424 bnez s2,410         | 041c addi a7,a4,4        | 0| >041c addi a7,a4,4       | 0418 addi a6,a4,3    ALU | 0414 addi a5,a4,2        | 
+  11697 | 0428 csrr t0,mcycle      | 0420 addi s2,s2,-1       | 0| >0420 addi s2,s2,-1      | 041c addi a7,a4,4    ALU | 0418 addi a6,a4,3        | 
+  11698 | 042c sub s0,t0,s0        | 0424 bnez s2,410         | 0| >0424 bnez s2,410        | 0420 addi s2,s2,-1   ALU | 041c addi a7,a4,4        | 
+  11699 | 0430 csrr s1,mhpmcounter | 0428 csrr t0,mcycle      | 0| .(flushed) csrr t0,mcycl | 0424 bnez s2,410     BJU | 0420 addi s2,s2,-1       | ID-stall:CP0/fence BR-resolve:T MISPRED(BHT) IU-redirect->0410
+  11700 | 0410 addi a4,a4,1        |                          | 0|                          |                          | 0424 bnez s2,410         | 
+  11701 | 0414 addi a5,a4,2        |                          | 0|                          |                          |                          | 
+  11702 | 0418 addi a6,a4,3        | 0410 addi a4,a4,1        | 0| >0410 addi a4,a4,1       |                          |                          | 
+  11703 | 041c addi a7,a4,4        | 0414 addi a5,a4,2        | 0| >0414 addi a5,a4,2       | 0410 addi a4,a4,1    ALU |                          | 
+  11704 | 0420 addi s2,s2,-1       | 0418 addi a6,a4,3        | 0| >0418 addi a6,a4,3       | 0414 addi a5,a4,2    ALU | 0410 addi a4,a4,1        | 
+  11705 | 0424 bnez s2,410         | 041c addi a7,a4,4        | 0| >041c addi a7,a4,4       | 0418 addi a6,a4,3    ALU | 0414 addi a5,a4,2        | 
+  11706 | 0428 csrr t0,mcycle      | 0420 addi s2,s2,-1       | 0| >0420 addi s2,s2,-1      | 041c addi a7,a4,4    ALU | 0418 addi a6,a4,3        | 
+  11707 | 042c sub s0,t0,s0        | 0424 bnez s2,410         | 0| >0424 bnez s2,410        | 0420 addi s2,s2,-1   ALU | 041c addi a7,a4,4        | 
+  11708 | 0430 csrr s1,mhpmcounter | 0428 csrr t0,mcycle      | 0| .(flushed) csrr t0,mcycl | 0424 bnez s2,410     BJU | 0420 addi s2,s2,-1       | ID-stall:CP0/fence BR-resolve:T MISPRED(BHT) IU-redirect->0410
+  11709 | 0410 addi a4,a4,1        |                          | 0|                          |                          | 0424 bnez s2,410         | 
+  11710 | 0414 addi a5,a4,2        |                          | 0|                          |                          |                          | 
+  11711 | 0418 addi a6,a4,3        | 0410 addi a4,a4,1        | 0| >0410 addi a4,a4,1       |                          |                          | 
+  11712 | 041c addi a7,a4,4        | 0414 addi a5,a4,2        | 0| >0414 addi a5,a4,2       | 0410 addi a4,a4,1    ALU |                          | 
+  11713 | 0420 addi s2,s2,-1       | 0418 addi a6,a4,3        | 0| >0418 addi a6,a4,3       | 0414 addi a5,a4,2    ALU | 0410 addi a4,a4,1        | 
+  11714 | 0424 bnez s2,410         | 041c addi a7,a4,4        | 0| >041c addi a7,a4,4       | 0418 addi a6,a4,3    ALU | 0414 addi a5,a4,2        | 
+  11715 | 0428 csrr t0,mcycle      | 0420 addi s2,s2,-1       | 0| >0420 addi s2,s2,-1      | 041c addi a7,a4,4    ALU | 0418 addi a6,a4,3        | 
+  11716 | 042c sub s0,t0,s0        | 0424 bnez s2,410         | 0| >0424 bnez s2,410        | 0420 addi s2,s2,-1   ALU | 041c addi a7,a4,4        | 
+  11717 | 0430 csrr s1,mhpmcounter | 0428 csrr t0,mcycle      | 0| .(flushed) csrr t0,mcycl | 0424 bnez s2,410     BJU | 0420 addi s2,s2,-1       | ID-stall:CP0/fence BR-resolve:T MISPRED(BHT) IU-redirect->0410
+  11718 | 0410 addi a4,a4,1        |                          | 0|                          |                          | 0424 bnez s2,410         | 
+  11719 | 0414 addi a5,a4,2        |                          | 0|                          |                          |                          | 
+  11720 | 0418 addi a6,a4,3        | 0410 addi a4,a4,1        | 0| >0410 addi a4,a4,1       |                          |                          | 
+  11721 | 041c addi a7,a4,4        | 0414 addi a5,a4,2        | 0| >0414 addi a5,a4,2       | 0410 addi a4,a4,1    ALU |                          | 
+  11722 | 0420 addi s2,s2,-1       | 0418 addi a6,a4,3        | 0| >0418 addi a6,a4,3       | 0414 addi a5,a4,2    ALU | 0410 addi a4,a4,1        | 
+  11723 | 0424 bnez s2,410         | 041c addi a7,a4,4        | 0| >041c addi a7,a4,4       | 0418 addi a6,a4,3    ALU | 0414 addi a5,a4,2        | 
+  11724 | 0428 csrr t0,mcycle      | 0420 addi s2,s2,-1       | 0| >0420 addi s2,s2,-1      | 041c addi a7,a4,4    ALU | 0418 addi a6,a4,3        | 
+  11725 | 042c sub s0,t0,s0        | 0424 bnez s2,410         | 0| >0424 bnez s2,410        | 0420 addi s2,s2,-1   ALU | 041c addi a7,a4,4        | 
+  11726 | 0430 csrr s1,mhpmcounter | 0428 csrr t0,mcycle      | 0| .(flushed) csrr t0,mcycl | 0424 bnez s2,410     BJU | 0420 addi s2,s2,-1       | ID-stall:CP0/fence BR-resolve:T MISPRED(BHT) IU-redirect->0410
+  11727 | 0410 addi a4,a4,1        |                          | 0|                          |                          | 0424 bnez s2,410         | 
+  11728 | 0414 addi a5,a4,2        |                          | 0|                          |                          |                          | 
+  11729 | 0418 addi a6,a4,3        | 0410 addi a4,a4,1        | 0| >0410 addi a4,a4,1       |                          |                          | 
+  11730 | 041c addi a7,a4,4        | 0414 addi a5,a4,2        | 0| >0414 addi a5,a4,2       | 0410 addi a4,a4,1    ALU |                          | 
+  11731 | 0420 addi s2,s2,-1       | 0418 addi a6,a4,3        | 0| >0418 addi a6,a4,3       | 0414 addi a5,a4,2    ALU | 0410 addi a4,a4,1        | 
+  11732 | 0424 bnez s2,410         | 041c addi a7,a4,4        | 0| >041c addi a7,a4,4       | 0418 addi a6,a4,3    ALU | 0414 addi a5,a4,2        | 
+  11733 | 0428 csrr t0,mcycle      | 0420 addi s2,s2,-1       | 0| >0420 addi s2,s2,-1      | 041c addi a7,a4,4    ALU | 0418 addi a6,a4,3        | 
+  11734 | 042c sub s0,t0,s0        | 0424 bnez s2,410         | 0| >0424 bnez s2,410        | 0420 addi s2,s2,-1   ALU | 041c addi a7,a4,4        | 
+  11735 | 0430 csrr s1,mhpmcounter | 0428 csrr t0,mcycle      | 0| .(flushed) csrr t0,mcycl | 0424 bnez s2,410     BJU | 0420 addi s2,s2,-1       | ID-stall:CP0/fence BR-resolve:T MISPRED(BHT) IU-redirect->0410
+  11736 | 0410 addi a4,a4,1        |                          | 0|                          |                          | 0424 bnez s2,410         | 
+  11737 | 0414 addi a5,a4,2        |                          | 0|                          |                          |                          | 
+  11738 | 0418 addi a6,a4,3        | 0410 addi a4,a4,1        | 0| >0410 addi a4,a4,1       |                          |                          | 
+  11739 | 041c addi a7,a4,4        | 0414 addi a5,a4,2        | 0| >0414 addi a5,a4,2       | 0410 addi a4,a4,1    ALU |                          | 
+  11740 | 0420 addi s2,s2,-1       | 0418 addi a6,a4,3        | 0| >0418 addi a6,a4,3       | 0414 addi a5,a4,2    ALU | 0410 addi a4,a4,1        | 
+  11741 | 0424 bnez s2,410         | 041c addi a7,a4,4        | 0| >041c addi a7,a4,4       | 0418 addi a6,a4,3    ALU | 0414 addi a5,a4,2        | 
+  11742 | 0428 csrr t0,mcycle      | 0420 addi s2,s2,-1       | 0| >0420 addi s2,s2,-1      | 041c addi a7,a4,4    ALU | 0418 addi a6,a4,3        | 
+  11743 | 042c sub s0,t0,s0        | 0424 bnez s2,410         | 0| >0424 bnez s2,410        | 0420 addi s2,s2,-1   ALU | 041c addi a7,a4,4        | 
+  11744 | 0430 csrr s1,mhpmcounter | 0428 csrr t0,mcycle      | 0| .(flushed) csrr t0,mcycl | 0424 bnez s2,410     BJU | 0420 addi s2,s2,-1       | ID-stall:CP0/fence BR-resolve:T MISPRED(BHT) IU-redirect->0410
+  11745 | 0410 addi a4,a4,1        |                          | 0|                          |                          | 0424 bnez s2,410         | 
+  11746 | 0414 addi a5,a4,2        |                          | 0|                          |                          |                          | 
+  11747 | 0418 addi a6,a4,3        | 0410 addi a4,a4,1        | 0| >0410 addi a4,a4,1       |                          |                          | 
+  11748 | 041c addi a7,a4,4        | 0414 addi a5,a4,2        | 0| >0414 addi a5,a4,2       | 0410 addi a4,a4,1    ALU |                          | 
+  11749 | 0420 addi s2,s2,-1       | 0418 addi a6,a4,3        | 0| >0418 addi a6,a4,3       | 0414 addi a5,a4,2    ALU | 0410 addi a4,a4,1        | 
+  11750 | 0424 bnez s2,410         | 041c addi a7,a4,4        | 0| >041c addi a7,a4,4       | 0418 addi a6,a4,3    ALU | 0414 addi a5,a4,2        | 
+  11751 | 0428 csrr t0,mcycle      | 0420 addi s2,s2,-1       | 0| >0420 addi s2,s2,-1      | 041c addi a7,a4,4    ALU | 0418 addi a6,a4,3        | 
+  11752 | 042c sub s0,t0,s0        | 0424 bnez s2,410         | 0| >0424 bnez s2,410        | 0420 addi s2,s2,-1   ALU | 041c addi a7,a4,4        | 
+  11753 | 0430 csrr s1,mhpmcounter | 0428 csrr t0,mcycle      | 0| .(flushed) csrr t0,mcycl | 0424 bnez s2,410     BJU | 0420 addi s2,s2,-1       | ID-stall:CP0/fence BR-resolve:T MISPRED(BHT) IU-redirect->0410
+  11754 | 0410 addi a4,a4,1        |                          | 0|                          |                          | 0424 bnez s2,410         | 
+  11755 | 0414 addi a5,a4,2        |                          | 0|                          |                          |                          | 
+  11756 | 0418 addi a6,a4,3        | 0410 addi a4,a4,1        | 0| >0410 addi a4,a4,1       |                          |                          | 
+  11757 | 041c addi a7,a4,4        | 0414 addi a5,a4,2        | 0| >0414 addi a5,a4,2       | 0410 addi a4,a4,1    ALU |                          | 
+  11758 | 0420 addi s2,s2,-1       | 0418 addi a6,a4,3        | 0| >0418 addi a6,a4,3       | 0414 addi a5,a4,2    ALU | 0410 addi a4,a4,1        | 
+  11759 | 0424 bnez s2,410         | 041c addi a7,a4,4        | 0| >041c addi a7,a4,4       | 0418 addi a6,a4,3    ALU | 0414 addi a5,a4,2        | 
+  11760 | 0428 csrr t0,mcycle      | 0420 addi s2,s2,-1       | 0| >0420 addi s2,s2,-1      | 041c addi a7,a4,4    ALU | 0418 addi a6,a4,3        | 
+  11761 | 042c sub s0,t0,s0        | 0424 bnez s2,410         | 0| >0424 bnez s2,410        | 0420 addi s2,s2,-1   ALU | 041c addi a7,a4,4        | 
+  11762 | 0430 csrr s1,mhpmcounter | 0428 csrr t0,mcycle      | 0| .(flushed) csrr t0,mcycl | 0424 bnez s2,410     BJU | 0420 addi s2,s2,-1       | ID-stall:CP0/fence BR-resolve:T MISPRED(BHT) IU-redirect->0410
+  11763 | 0410 addi a4,a4,1        |                          | 0|                          |                          | 0424 bnez s2,410         | 
+  11764 | 0414 addi a5,a4,2        |                          | 0|                          |                          |                          | 
+  11765 | 0418 addi a6,a4,3        | 0410 addi a4,a4,1        | 0| >0410 addi a4,a4,1       |                          |                          | 
+  11766 | 041c addi a7,a4,4        | 0414 addi a5,a4,2        | 0| >0414 addi a5,a4,2       | 0410 addi a4,a4,1    ALU |                          | 
+  11767 | 0420 addi s2,s2,-1       | 0418 addi a6,a4,3        | 0| >0418 addi a6,a4,3       | 0414 addi a5,a4,2    ALU | 0410 addi a4,a4,1        | 
+  11768 | 0424 bnez s2,410         | 041c addi a7,a4,4        | 0| >041c addi a7,a4,4       | 0418 addi a6,a4,3    ALU | 0414 addi a5,a4,2        | 
+  11769 | 0428 csrr t0,mcycle      | 0420 addi s2,s2,-1       | 0| >0420 addi s2,s2,-1      | 041c addi a7,a4,4    ALU | 0418 addi a6,a4,3        | 
+  11770 | 042c sub s0,t0,s0        | 0424 bnez s2,410         | 0| >0424 bnez s2,410        | 0420 addi s2,s2,-1   ALU | 041c addi a7,a4,4        | 
+  11771 | 0430 csrr s1,mhpmcounter | 0428 csrr t0,mcycle      | 0| .(flushed) csrr t0,mcycl | 0424 bnez s2,410     BJU | 0420 addi s2,s2,-1       | ID-stall:CP0/fence BR-resolve:T MISPRED(BHT) IU-redirect->0410
+  11772 | 0410 addi a4,a4,1        |                          | 0|                          |                          | 0424 bnez s2,410         | 
+  11773 | 0414 addi a5,a4,2        |                          | 0|                          |                          |                          | 
+  11774 | 0418 addi a6,a4,3        | 0410 addi a4,a4,1        | 0| >0410 addi a4,a4,1       |                          |                          | 
+  11775 | 041c addi a7,a4,4        | 0414 addi a5,a4,2        | 0| >0414 addi a5,a4,2       | 0410 addi a4,a4,1    ALU |                          | 
+  11776 | 0420 addi s2,s2,-1       | 0418 addi a6,a4,3        | 0| >0418 addi a6,a4,3       | 0414 addi a5,a4,2    ALU | 0410 addi a4,a4,1        | 
+  11777 | 0424 bnez s2,410         | 041c addi a7,a4,4        | 0| >041c addi a7,a4,4       | 0418 addi a6,a4,3    ALU | 0414 addi a5,a4,2        | 
+  11778 | 0428 csrr t0,mcycle      | 0420 addi s2,s2,-1       | 0| >0420 addi s2,s2,-1      | 041c addi a7,a4,4    ALU | 0418 addi a6,a4,3        | 
+  11779 | 042c sub s0,t0,s0        | 0424 bnez s2,410         | 0| >0424 bnez s2,410        | 0420 addi s2,s2,-1   ALU | 041c addi a7,a4,4        | 
+  11780 | 0430 csrr s1,mhpmcounter | 0428 csrr t0,mcycle      | 0| .(flushed) csrr t0,mcycl | 0424 bnez s2,410     BJU | 0420 addi s2,s2,-1       | ID-stall:CP0/fence BR-resolve:T MISPRED(BHT) IU-redirect->0410
+  11781 | 0410 addi a4,a4,1        |                          | 0|                          |                          | 0424 bnez s2,410         | 
+  11782 | 0414 addi a5,a4,2        |                          | 0|                          |                          |                          | 
+  11783 | 0418 addi a6,a4,3        | 0410 addi a4,a4,1        | 0| >0410 addi a4,a4,1       |                          |                          | 
+  11784 | 041c addi a7,a4,4        | 0414 addi a5,a4,2        | 0| >0414 addi a5,a4,2       | 0410 addi a4,a4,1    ALU |                          | 
+  11785 | 0420 addi s2,s2,-1       | 0418 addi a6,a4,3        | 0| >0418 addi a6,a4,3       | 0414 addi a5,a4,2    ALU | 0410 addi a4,a4,1        | 
+  11786 | 0424 bnez s2,410         | 041c addi a7,a4,4        | 0| >041c addi a7,a4,4       | 0418 addi a6,a4,3    ALU | 0414 addi a5,a4,2        | 
+  11787 | 0428 csrr t0,mcycle      | 0420 addi s2,s2,-1       | 0| >0420 addi s2,s2,-1      | 041c addi a7,a4,4    ALU | 0418 addi a6,a4,3        | 
+  11788 | 042c sub s0,t0,s0        | 0424 bnez s2,410         | 0| >0424 bnez s2,410        | 0420 addi s2,s2,-1   ALU | 041c addi a7,a4,4        | 
+  11789 | 0430 csrr s1,mhpmcounter | 0428 csrr t0,mcycle      | 0| .(flushed) csrr t0,mcycl | 0424 bnez s2,410     BJU | 0420 addi s2,s2,-1       | ID-stall:CP0/fence BR-resolve:T MISPRED(BHT) IU-redirect->0410
+  11790 | 0410 addi a4,a4,1        |                          | 0|                          |                          | 0424 bnez s2,410         | 
+  11791 | 0414 addi a5,a4,2        |                          | 0|                          |                          |                          | 
+  11792 | 0418 addi a6,a4,3        | 0410 addi a4,a4,1        | 0| >0410 addi a4,a4,1       |                          |                          | 
+  11793 | 041c addi a7,a4,4        | 0414 addi a5,a4,2        | 0| >0414 addi a5,a4,2       | 0410 addi a4,a4,1    ALU |                          | 
+  11794 | 0420 addi s2,s2,-1       | 0418 addi a6,a4,3        | 0| >0418 addi a6,a4,3       | 0414 addi a5,a4,2    ALU | 0410 addi a4,a4,1        | 
+  11795 | 0424 bnez s2,410         | 041c addi a7,a4,4        | 0| >041c addi a7,a4,4       | 0418 addi a6,a4,3    ALU | 0414 addi a5,a4,2        | 
+  11796 | 0428 csrr t0,mcycle      | 0420 addi s2,s2,-1       | 0| >0420 addi s2,s2,-1      | 041c addi a7,a4,4    ALU | 0418 addi a6,a4,3        | 
+  11797 | 042c sub s0,t0,s0        | 0424 bnez s2,410         | 0| >0424 bnez s2,410        | 0420 addi s2,s2,-1   ALU | 041c addi a7,a4,4        | 
+  11798 | 0430 csrr s1,mhpmcounter | 0428 csrr t0,mcycle      | 0| .(flushed) csrr t0,mcycl | 0424 bnez s2,410     BJU | 0420 addi s2,s2,-1       | ID-stall:CP0/fence BR-resolve:T MISPRED(BHT) IU-redirect->0410
+  11799 | 0410 addi a4,a4,1        |                          | 0|                          |                          | 0424 bnez s2,410         | 
+  11800 | 0414 addi a5,a4,2        |                          | 0|                          |                          |                          | 
+  11801 | 0418 addi a6,a4,3        | 0410 addi a4,a4,1        | 0| >0410 addi a4,a4,1       |                          |                          | 
+  11802 | 041c addi a7,a4,4        | 0414 addi a5,a4,2        | 0| >0414 addi a5,a4,2       | 0410 addi a4,a4,1    ALU |                          | 
+  11803 | 0420 addi s2,s2,-1       | 0418 addi a6,a4,3        | 0| >0418 addi a6,a4,3       | 0414 addi a5,a4,2    ALU | 0410 addi a4,a4,1        | 
+  11804 | 0424 bnez s2,410         | 041c addi a7,a4,4        | 0| >041c addi a7,a4,4       | 0418 addi a6,a4,3    ALU | 0414 addi a5,a4,2        | 
+  11805 | 0428 csrr t0,mcycle      | 0420 addi s2,s2,-1       | 0| >0420 addi s2,s2,-1      | 041c addi a7,a4,4    ALU | 0418 addi a6,a4,3        | 
+  11806 | 042c sub s0,t0,s0        | 0424 bnez s2,410         | 0| >0424 bnez s2,410        | 0420 addi s2,s2,-1   ALU | 041c addi a7,a4,4        | 
+  11807 | 0430 csrr s1,mhpmcounter | 0428 csrr t0,mcycle      | 0| .(flushed) csrr t0,mcycl | 0424 bnez s2,410     BJU | 0420 addi s2,s2,-1       | ID-stall:CP0/fence BR-resolve:T MISPRED(BHT) IU-redirect->0410
+  11808 | 0410 addi a4,a4,1        |                          | 0|                          |                          | 0424 bnez s2,410         | 
+  11809 | 0414 addi a5,a4,2        |                          | 0|                          |                          |                          | 
+  11810 | 0418 addi a6,a4,3        | 0410 addi a4,a4,1        | 0| >0410 addi a4,a4,1       |                          |                          | 
+  11811 | 041c addi a7,a4,4        | 0414 addi a5,a4,2        | 0| >0414 addi a5,a4,2       | 0410 addi a4,a4,1    ALU |                          | 
+  11812 | 0420 addi s2,s2,-1       | 0418 addi a6,a4,3        | 0| >0418 addi a6,a4,3       | 0414 addi a5,a4,2    ALU | 0410 addi a4,a4,1        | 
+  11813 | 0424 bnez s2,410         | 041c addi a7,a4,4        | 0| >041c addi a7,a4,4       | 0418 addi a6,a4,3    ALU | 0414 addi a5,a4,2        | 
+  11814 | 0428 csrr t0,mcycle      | 0420 addi s2,s2,-1       | 0| >0420 addi s2,s2,-1      | 041c addi a7,a4,4    ALU | 0418 addi a6,a4,3        | 
+  11815 | 042c sub s0,t0,s0        | 0424 bnez s2,410         | 0| >0424 bnez s2,410        | 0420 addi s2,s2,-1   ALU | 041c addi a7,a4,4        | 
+  11816 | 0430 csrr s1,mhpmcounter | 0428 csrr t0,mcycle      | 0| .(flushed) csrr t0,mcycl | 0424 bnez s2,410     BJU | 0420 addi s2,s2,-1       | ID-stall:CP0/fence BR-resolve:T MISPRED(BHT) IU-redirect->0410
+  11817 | 0410 addi a4,a4,1        |                          | 0|                          |                          | 0424 bnez s2,410         | 
+  11818 | 0414 addi a5,a4,2        |                          | 0|                          |                          |                          | 
+  11819 | 0418 addi a6,a4,3        | 0410 addi a4,a4,1        | 0| >0410 addi a4,a4,1       |                          |                          | 
+  11820 | 041c addi a7,a4,4        | 0414 addi a5,a4,2        | 0| >0414 addi a5,a4,2       | 0410 addi a4,a4,1    ALU |                          | 
+  11821 | 0420 addi s2,s2,-1       | 0418 addi a6,a4,3        | 0| >0418 addi a6,a4,3       | 0414 addi a5,a4,2    ALU | 0410 addi a4,a4,1        | 
+  11822 | 0424 bnez s2,410         | 041c addi a7,a4,4        | 0| >041c addi a7,a4,4       | 0418 addi a6,a4,3    ALU | 0414 addi a5,a4,2        | 
+  11823 | 0428 csrr t0,mcycle      | 0420 addi s2,s2,-1       | 0| >0420 addi s2,s2,-1      | 041c addi a7,a4,4    ALU | 0418 addi a6,a4,3        | 
+  11824 | 042c sub s0,t0,s0        | 0424 bnez s2,410         | 0| >0424 bnez s2,410        | 0420 addi s2,s2,-1   ALU | 041c addi a7,a4,4        | 
+  11825 | 0430 csrr s1,mhpmcounter | 0428 csrr t0,mcycle      | 0| .(flushed) csrr t0,mcycl | 0424 bnez s2,410     BJU | 0420 addi s2,s2,-1       | ID-stall:CP0/fence BR-resolve:T MISPRED(BHT) IU-redirect->0410
+  11826 | 0410 addi a4,a4,1        |                          | 0|                          |                          | 0424 bnez s2,410         | 
+  11827 | 0414 addi a5,a4,2        |                          | 0|                          |                          |                          | 
+  11828 | 0418 addi a6,a4,3        | 0410 addi a4,a4,1        | 0| >0410 addi a4,a4,1       |                          |                          | 
+  11829 | 041c addi a7,a4,4        | 0414 addi a5,a4,2        | 0| >0414 addi a5,a4,2       | 0410 addi a4,a4,1    ALU |                          | 
+  11830 | 0420 addi s2,s2,-1       | 0418 addi a6,a4,3        | 0| >0418 addi a6,a4,3       | 0414 addi a5,a4,2    ALU | 0410 addi a4,a4,1        | 
+  11831 | 0424 bnez s2,410         | 041c addi a7,a4,4        | 0| >041c addi a7,a4,4       | 0418 addi a6,a4,3    ALU | 0414 addi a5,a4,2        | 
+  11832 | 0428 csrr t0,mcycle      | 0420 addi s2,s2,-1       | 0| >0420 addi s2,s2,-1      | 041c addi a7,a4,4    ALU | 0418 addi a6,a4,3        | 
+  11833 | 042c sub s0,t0,s0        | 0424 bnez s2,410         | 0| >0424 bnez s2,410        | 0420 addi s2,s2,-1   ALU | 041c addi a7,a4,4        | 
+  11834 | 0430 csrr s1,mhpmcounter | 0428 csrr t0,mcycle      | 0| .(flushed) csrr t0,mcycl | 0424 bnez s2,410     BJU | 0420 addi s2,s2,-1       | ID-stall:CP0/fence BR-resolve:T MISPRED(BHT) IU-redirect->0410
+  11835 | 0410 addi a4,a4,1        |                          | 0|                          |                          | 0424 bnez s2,410         | 
+  11836 | 0414 addi a5,a4,2        |                          | 0|                          |                          |                          | 
+  11837 | 0418 addi a6,a4,3        | 0410 addi a4,a4,1        | 0| >0410 addi a4,a4,1       |                          |                          | 
+  11838 | 041c addi a7,a4,4        | 0414 addi a5,a4,2        | 0| >0414 addi a5,a4,2       | 0410 addi a4,a4,1    ALU |                          | 
+  11839 | 0420 addi s2,s2,-1       | 0418 addi a6,a4,3        | 0| >0418 addi a6,a4,3       | 0414 addi a5,a4,2    ALU | 0410 addi a4,a4,1        | 
+  11840 | 0424 bnez s2,410         | 041c addi a7,a4,4        | 0| >041c addi a7,a4,4       | 0418 addi a6,a4,3    ALU | 0414 addi a5,a4,2        | 
+  11841 | 0428 csrr t0,mcycle      | 0420 addi s2,s2,-1       | 0| >0420 addi s2,s2,-1      | 041c addi a7,a4,4    ALU | 0418 addi a6,a4,3        | 
+  11842 | 042c sub s0,t0,s0        | 0424 bnez s2,410         | 0| >0424 bnez s2,410        | 0420 addi s2,s2,-1   ALU | 041c addi a7,a4,4        | 
+  11843 | 0430 csrr s1,mhpmcounter | 0428 csrr t0,mcycle      | 0| .(flushed) csrr t0,mcycl | 0424 bnez s2,410     BJU | 0420 addi s2,s2,-1       | ID-stall:CP0/fence BR-resolve:T MISPRED(BHT) IU-redirect->0410
+  11844 | 0410 addi a4,a4,1        |                          | 0|                          |                          | 0424 bnez s2,410         | 
+  11845 | 0414 addi a5,a4,2        |                          | 0|                          |                          |                          | 
+  11846 | 0418 addi a6,a4,3        | 0410 addi a4,a4,1        | 0| >0410 addi a4,a4,1       |                          |                          | 
+  11847 | 041c addi a7,a4,4        | 0414 addi a5,a4,2        | 0| >0414 addi a5,a4,2       | 0410 addi a4,a4,1    ALU |                          | 
+  11848 | 0420 addi s2,s2,-1       | 0418 addi a6,a4,3        | 0| >0418 addi a6,a4,3       | 0414 addi a5,a4,2    ALU | 0410 addi a4,a4,1        | 
+  11849 | 0424 bnez s2,410         | 041c addi a7,a4,4        | 0| >041c addi a7,a4,4       | 0418 addi a6,a4,3    ALU | 0414 addi a5,a4,2        | 
+  11850 | 0428 csrr t0,mcycle      | 0420 addi s2,s2,-1       | 0| >0420 addi s2,s2,-1      | 041c addi a7,a4,4    ALU | 0418 addi a6,a4,3        | 
+  11851 | 042c sub s0,t0,s0        | 0424 bnez s2,410         | 0| >0424 bnez s2,410        | 0420 addi s2,s2,-1   ALU | 041c addi a7,a4,4        | 
+  11852 | 0430 csrr s1,mhpmcounter | 0428 csrr t0,mcycle      | 0| .(flushed) csrr t0,mcycl | 0424 bnez s2,410     BJU | 0420 addi s2,s2,-1       | ID-stall:CP0/fence BR-resolve:T MISPRED(BHT) IU-redirect->0410
+  11853 | 0410 addi a4,a4,1        |                          | 0|                          |                          | 0424 bnez s2,410         | 
+  11854 | 0414 addi a5,a4,2        |                          | 0|                          |                          |                          | 
+  11855 | 0418 addi a6,a4,3        | 0410 addi a4,a4,1        | 0| >0410 addi a4,a4,1       |                          |                          | 
+  11856 | 041c addi a7,a4,4        | 0414 addi a5,a4,2        | 0| >0414 addi a5,a4,2       | 0410 addi a4,a4,1    ALU |                          | 
+  11857 | 0420 addi s2,s2,-1       | 0418 addi a6,a4,3        | 0| >0418 addi a6,a4,3       | 0414 addi a5,a4,2    ALU | 0410 addi a4,a4,1        | 
+  11858 | 0424 bnez s2,410         | 041c addi a7,a4,4        | 0| >041c addi a7,a4,4       | 0418 addi a6,a4,3    ALU | 0414 addi a5,a4,2        | 
+  11859 | 0428 csrr t0,mcycle      | 0420 addi s2,s2,-1       | 0| >0420 addi s2,s2,-1      | 041c addi a7,a4,4    ALU | 0418 addi a6,a4,3        | 
+  11860 | 042c sub s0,t0,s0        | 0424 bnez s2,410         | 0| >0424 bnez s2,410        | 0420 addi s2,s2,-1   ALU | 041c addi a7,a4,4        | 
+  11861 | 0430 csrr s1,mhpmcounter | 0428 csrr t0,mcycle      | 0| .(flushed) csrr t0,mcycl | 0424 bnez s2,410     BJU | 0420 addi s2,s2,-1       | ID-stall:CP0/fence BR-resolve:T MISPRED(BHT) IU-redirect->0410
+  11862 | 0410 addi a4,a4,1        |                          | 0|                          |                          | 0424 bnez s2,410         | 
+  11863 | 0414 addi a5,a4,2        |                          | 0|                          |                          |                          | 
+  11864 | 0418 addi a6,a4,3        | 0410 addi a4,a4,1        | 0| >0410 addi a4,a4,1       |                          |                          | 
+  11865 | 041c addi a7,a4,4        | 0414 addi a5,a4,2        | 0| >0414 addi a5,a4,2       | 0410 addi a4,a4,1    ALU |                          | 
+  11866 | 0420 addi s2,s2,-1       | 0418 addi a6,a4,3        | 0| >0418 addi a6,a4,3       | 0414 addi a5,a4,2    ALU | 0410 addi a4,a4,1        | 
+  11867 | 0424 bnez s2,410         | 041c addi a7,a4,4        | 0| >041c addi a7,a4,4       | 0418 addi a6,a4,3    ALU | 0414 addi a5,a4,2        | 
+  11868 | 0428 csrr t0,mcycle      | 0420 addi s2,s2,-1       | 0| >0420 addi s2,s2,-1      | 041c addi a7,a4,4    ALU | 0418 addi a6,a4,3        | 
+  11869 | 042c sub s0,t0,s0        | 0424 bnez s2,410         | 0| >0424 bnez s2,410        | 0420 addi s2,s2,-1   ALU | 041c addi a7,a4,4        | 
+  11870 | 0430 csrr s1,mhpmcounter | 0428 csrr t0,mcycle      | 0| .(flushed) csrr t0,mcycl | 0424 bnez s2,410     BJU | 0420 addi s2,s2,-1       | ID-stall:CP0/fence BR-resolve:T MISPRED(BHT) IU-redirect->0410
+  11871 | 0410 addi a4,a4,1        |                          | 0|                          |                          | 0424 bnez s2,410         | 
+  11872 | 0414 addi a5,a4,2        |                          | 0|                          |                          |                          | 
+  11873 | 0418 addi a6,a4,3        | 0410 addi a4,a4,1        | 0| >0410 addi a4,a4,1       |                          |                          | 
+  11874 | 041c addi a7,a4,4        | 0414 addi a5,a4,2        | 0| >0414 addi a5,a4,2       | 0410 addi a4,a4,1    ALU |                          | 
+  11875 | 0420 addi s2,s2,-1       | 0418 addi a6,a4,3        | 0| >0418 addi a6,a4,3       | 0414 addi a5,a4,2    ALU | 0410 addi a4,a4,1        | 
+  11876 | 0424 bnez s2,410         | 041c addi a7,a4,4        | 0| >041c addi a7,a4,4       | 0418 addi a6,a4,3    ALU | 0414 addi a5,a4,2        | 
+  11877 | 0428 csrr t0,mcycle      | 0420 addi s2,s2,-1       | 0| >0420 addi s2,s2,-1      | 041c addi a7,a4,4    ALU | 0418 addi a6,a4,3        | 
+  11878 | 042c sub s0,t0,s0        | 0424 bnez s2,410         | 0| >0424 bnez s2,410        | 0420 addi s2,s2,-1   ALU | 041c addi a7,a4,4        | 
+  11879 | 0430 csrr s1,mhpmcounter | 0428 csrr t0,mcycle      | 0| .(flushed) csrr t0,mcycl | 0424 bnez s2,410     BJU | 0420 addi s2,s2,-1       | ID-stall:CP0/fence BR-resolve:T MISPRED(BHT) IU-redirect->0410
+  11880 | 0410 addi a4,a4,1        |                          | 0|                          |                          | 0424 bnez s2,410         | 
+  11881 | 0414 addi a5,a4,2        |                          | 0|                          |                          |                          | 
+  11882 | 0418 addi a6,a4,3        | 0410 addi a4,a4,1        | 0| >0410 addi a4,a4,1       |                          |                          | 
+  11883 | 041c addi a7,a4,4        | 0414 addi a5,a4,2        | 0| >0414 addi a5,a4,2       | 0410 addi a4,a4,1    ALU |                          | 
+  11884 | 0420 addi s2,s2,-1       | 0418 addi a6,a4,3        | 0| >0418 addi a6,a4,3       | 0414 addi a5,a4,2    ALU | 0410 addi a4,a4,1        | 
+  11885 | 0424 bnez s2,410         | 041c addi a7,a4,4        | 0| >041c addi a7,a4,4       | 0418 addi a6,a4,3    ALU | 0414 addi a5,a4,2        | 
+  11886 | 0428 csrr t0,mcycle      | 0420 addi s2,s2,-1       | 0| >0420 addi s2,s2,-1      | 041c addi a7,a4,4    ALU | 0418 addi a6,a4,3        | 
+  11887 | 042c sub s0,t0,s0        | 0424 bnez s2,410         | 0| >0424 bnez s2,410        | 0420 addi s2,s2,-1   ALU | 041c addi a7,a4,4        | 
+  11888 | 0430 csrr s1,mhpmcounter | 0428 csrr t0,mcycle      | 0| .(flushed) csrr t0,mcycl | 0424 bnez s2,410     BJU | 0420 addi s2,s2,-1       | ID-stall:CP0/fence BR-resolve:T MISPRED(BHT) IU-redirect->0410
+  11889 | 0410 addi a4,a4,1        |                          | 0|                          |                          | 0424 bnez s2,410         | 
+  11890 | 0414 addi a5,a4,2        |                          | 0|                          |                          |                          | 
+  11891 | 0418 addi a6,a4,3        | 0410 addi a4,a4,1        | 0| >0410 addi a4,a4,1       |                          |                          | 
+  11892 | 041c addi a7,a4,4        | 0414 addi a5,a4,2        | 0| >0414 addi a5,a4,2       | 0410 addi a4,a4,1    ALU |                          | 
+  11893 | 0420 addi s2,s2,-1       | 0418 addi a6,a4,3        | 0| >0418 addi a6,a4,3       | 0414 addi a5,a4,2    ALU | 0410 addi a4,a4,1        | 
+  11894 | 0424 bnez s2,410         | 041c addi a7,a4,4        | 0| >041c addi a7,a4,4       | 0418 addi a6,a4,3    ALU | 0414 addi a5,a4,2        | 
+  11895 | 0428 csrr t0,mcycle      | 0420 addi s2,s2,-1       | 0| >0420 addi s2,s2,-1      | 041c addi a7,a4,4    ALU | 0418 addi a6,a4,3        | 
+  11896 | 042c sub s0,t0,s0        | 0424 bnez s2,410         | 0| >0424 bnez s2,410        | 0420 addi s2,s2,-1   ALU | 041c addi a7,a4,4        | 
+  11897 | 0430 csrr s1,mhpmcounter | 0428 csrr t0,mcycle      | 0| .(flushed) csrr t0,mcycl | 0424 bnez s2,410     BJU | 0420 addi s2,s2,-1       | ID-stall:CP0/fence BR-resolve:T MISPRED(BHT) IU-redirect->0410
+  11898 | 0410 addi a4,a4,1        |                          | 0|                          |                          | 0424 bnez s2,410         | 
+  11899 | 0414 addi a5,a4,2        |                          | 0|                          |                          |                          | 
+  11900 | 0418 addi a6,a4,3        | 0410 addi a4,a4,1        | 0| >0410 addi a4,a4,1       |                          |                          | 
+  11901 | 041c addi a7,a4,4        | 0414 addi a5,a4,2        | 0| >0414 addi a5,a4,2       | 0410 addi a4,a4,1    ALU |                          | 
+  11902 | 0420 addi s2,s2,-1       | 0418 addi a6,a4,3        | 0| >0418 addi a6,a4,3       | 0414 addi a5,a4,2    ALU | 0410 addi a4,a4,1        | 
+  11903 | 0424 bnez s2,410         | 041c addi a7,a4,4        | 0| >041c addi a7,a4,4       | 0418 addi a6,a4,3    ALU | 0414 addi a5,a4,2        | 
+  11904 | 0428 csrr t0,mcycle      | 0420 addi s2,s2,-1       | 0| >0420 addi s2,s2,-1      | 041c addi a7,a4,4    ALU | 0418 addi a6,a4,3        | 
+  11905 | 042c sub s0,t0,s0        | 0424 bnez s2,410         | 0| >0424 bnez s2,410        | 0420 addi s2,s2,-1   ALU | 041c addi a7,a4,4        | 
+  11906 | 0430 csrr s1,mhpmcounter | 0428 csrr t0,mcycle      | 0| .(flushed) csrr t0,mcycl | 0424 bnez s2,410     BJU | 0420 addi s2,s2,-1       | ID-stall:CP0/fence BR-resolve:T MISPRED(BHT) IU-redirect->0410
+  11907 | 0410 addi a4,a4,1        |                          | 0|                          |                          | 0424 bnez s2,410         | 
+  11908 | 0414 addi a5,a4,2        |                          | 0|                          |                          |                          | 
+  11909 | 0418 addi a6,a4,3        | 0410 addi a4,a4,1        | 0| >0410 addi a4,a4,1       |                          |                          | 
+  11910 | 041c addi a7,a4,4        | 0414 addi a5,a4,2        | 0| >0414 addi a5,a4,2       | 0410 addi a4,a4,1    ALU |                          | 
+  11911 | 0420 addi s2,s2,-1       | 0418 addi a6,a4,3        | 0| >0418 addi a6,a4,3       | 0414 addi a5,a4,2    ALU | 0410 addi a4,a4,1        | 
+  11912 | 0424 bnez s2,410         | 041c addi a7,a4,4        | 0| >041c addi a7,a4,4       | 0418 addi a6,a4,3    ALU | 0414 addi a5,a4,2        | 
+  11913 | 0428 csrr t0,mcycle      | 0420 addi s2,s2,-1       | 0| >0420 addi s2,s2,-1      | 041c addi a7,a4,4    ALU | 0418 addi a6,a4,3        | 
+  11914 | 042c sub s0,t0,s0        | 0424 bnez s2,410         | 0| >0424 bnez s2,410        | 0420 addi s2,s2,-1   ALU | 041c addi a7,a4,4        | 
+  11915 | 0430 csrr s1,mhpmcounter | 0428 csrr t0,mcycle      | 0| .(flushed) csrr t0,mcycl | 0424 bnez s2,410     BJU | 0420 addi s2,s2,-1       | ID-stall:CP0/fence BR-resolve:T MISPRED(BHT) IU-redirect->0410
+  11916 | 0410 addi a4,a4,1        |                          | 0|                          |                          | 0424 bnez s2,410         | 
+  11917 | 0414 addi a5,a4,2        |                          | 0|                          |                          |                          | 
+  11918 | 0418 addi a6,a4,3        | 0410 addi a4,a4,1        | 0| >0410 addi a4,a4,1       |                          |                          | 
+  11919 | 041c addi a7,a4,4        | 0414 addi a5,a4,2        | 0| >0414 addi a5,a4,2       | 0410 addi a4,a4,1    ALU |                          | 
+  11920 | 0420 addi s2,s2,-1       | 0418 addi a6,a4,3        | 0| >0418 addi a6,a4,3       | 0414 addi a5,a4,2    ALU | 0410 addi a4,a4,1        | 
+  11921 | 0424 bnez s2,410         | 041c addi a7,a4,4        | 0| >041c addi a7,a4,4       | 0418 addi a6,a4,3    ALU | 0414 addi a5,a4,2        | 
+  11922 | 0428 csrr t0,mcycle      | 0420 addi s2,s2,-1       | 0| >0420 addi s2,s2,-1      | 041c addi a7,a4,4    ALU | 0418 addi a6,a4,3        | 
+  11923 | 042c sub s0,t0,s0        | 0424 bnez s2,410         | 0| >0424 bnez s2,410        | 0420 addi s2,s2,-1   ALU | 041c addi a7,a4,4        | 
+  11924 | 0430 csrr s1,mhpmcounter | 0428 csrr t0,mcycle      | 0| .(flushed) csrr t0,mcycl | 0424 bnez s2,410     BJU | 0420 addi s2,s2,-1       | ID-stall:CP0/fence BR-resolve:T MISPRED(BHT) IU-redirect->0410
+  11925 | 0410 addi a4,a4,1        |                          | 0|                          |                          | 0424 bnez s2,410         | 
+  11926 | 0414 addi a5,a4,2        |                          | 0|                          |                          |                          | 
+  11927 | 0418 addi a6,a4,3        | 0410 addi a4,a4,1        | 0| >0410 addi a4,a4,1       |                          |                          | 
+  11928 | 041c addi a7,a4,4        | 0414 addi a5,a4,2        | 0| >0414 addi a5,a4,2       | 0410 addi a4,a4,1    ALU |                          | 
+  11929 | 0420 addi s2,s2,-1       | 0418 addi a6,a4,3        | 0| >0418 addi a6,a4,3       | 0414 addi a5,a4,2    ALU | 0410 addi a4,a4,1        | 
+  11930 | 0424 bnez s2,410         | 041c addi a7,a4,4        | 0| >041c addi a7,a4,4       | 0418 addi a6,a4,3    ALU | 0414 addi a5,a4,2        | 
+  11931 | 0428 csrr t0,mcycle      | 0420 addi s2,s2,-1       | 0| >0420 addi s2,s2,-1      | 041c addi a7,a4,4    ALU | 0418 addi a6,a4,3        | 
+  11932 | 042c sub s0,t0,s0        | 0424 bnez s2,410         | 0| >0424 bnez s2,410        | 0420 addi s2,s2,-1   ALU | 041c addi a7,a4,4        | 
+  11933 | 0430 csrr s1,mhpmcounter | 0428 csrr t0,mcycle      | 0| .(flushed) csrr t0,mcycl | 0424 bnez s2,410     BJU | 0420 addi s2,s2,-1       | ID-stall:CP0/fence BR-resolve:T MISPRED(BHT) IU-redirect->0410
+  11934 | 0410 addi a4,a4,1        |                          | 0|                          |                          | 0424 bnez s2,410         | 
+  11935 | 0414 addi a5,a4,2        |                          | 0|                          |                          |                          | 
+  11936 | 0418 addi a6,a4,3        | 0410 addi a4,a4,1        | 0| >0410 addi a4,a4,1       |                          |                          | 
+  11937 | 041c addi a7,a4,4        | 0414 addi a5,a4,2        | 0| >0414 addi a5,a4,2       | 0410 addi a4,a4,1    ALU |                          | 
+  11938 | 0420 addi s2,s2,-1       | 0418 addi a6,a4,3        | 0| >0418 addi a6,a4,3       | 0414 addi a5,a4,2    ALU | 0410 addi a4,a4,1        | 
+  11939 | 0424 bnez s2,410         | 041c addi a7,a4,4        | 0| >041c addi a7,a4,4       | 0418 addi a6,a4,3    ALU | 0414 addi a5,a4,2        | 
+  11940 | 0428 csrr t0,mcycle      | 0420 addi s2,s2,-1       | 0| >0420 addi s2,s2,-1      | 041c addi a7,a4,4    ALU | 0418 addi a6,a4,3        | 
+  11941 | 042c sub s0,t0,s0        | 0424 bnez s2,410         | 0| >0424 bnez s2,410        | 0420 addi s2,s2,-1   ALU | 041c addi a7,a4,4        | 
+  11942 | 0430 csrr s1,mhpmcounter | 0428 csrr t0,mcycle      | 0| .(flushed) csrr t0,mcycl | 0424 bnez s2,410     BJU | 0420 addi s2,s2,-1       | ID-stall:CP0/fence BR-resolve:T MISPRED(BHT) IU-redirect->0410
+  11943 | 0410 addi a4,a4,1        |                          | 0|                          |                          | 0424 bnez s2,410         | 
+  11944 | 0414 addi a5,a4,2        |                          | 0|                          |                          |                          | 
+  11945 | 0418 addi a6,a4,3        | 0410 addi a4,a4,1        | 0| >0410 addi a4,a4,1       |                          |                          | 
+  11946 | 041c addi a7,a4,4        | 0414 addi a5,a4,2        | 0| >0414 addi a5,a4,2       | 0410 addi a4,a4,1    ALU |                          | 
+  11947 | 0420 addi s2,s2,-1       | 0418 addi a6,a4,3        | 0| >0418 addi a6,a4,3       | 0414 addi a5,a4,2    ALU | 0410 addi a4,a4,1        | 
+  11948 | 0424 bnez s2,410         | 041c addi a7,a4,4        | 0| >041c addi a7,a4,4       | 0418 addi a6,a4,3    ALU | 0414 addi a5,a4,2        | 
+  11949 | 0428 csrr t0,mcycle      | 0420 addi s2,s2,-1       | 0| >0420 addi s2,s2,-1      | 041c addi a7,a4,4    ALU | 0418 addi a6,a4,3        | 
+  11950 | 042c sub s0,t0,s0        | 0424 bnez s2,410         | 0| >0424 bnez s2,410        | 0420 addi s2,s2,-1   ALU | 041c addi a7,a4,4        | 
+  11951 | 0430 csrr s1,mhpmcounter | 0428 csrr t0,mcycle      | 0| .(flushed) csrr t0,mcycl | 0424 bnez s2,410     BJU | 0420 addi s2,s2,-1       | ID-stall:CP0/fence BR-resolve:T MISPRED(BHT) IU-redirect->0410
+  11952 | 0410 addi a4,a4,1        |                          | 0|                          |                          | 0424 bnez s2,410         | 
+  11953 | 0414 addi a5,a4,2        |                          | 0|                          |                          |                          | 
+  11954 | 0418 addi a6,a4,3        | 0410 addi a4,a4,1        | 0| >0410 addi a4,a4,1       |                          |                          | 
+  11955 | 041c addi a7,a4,4        | 0414 addi a5,a4,2        | 0| >0414 addi a5,a4,2       | 0410 addi a4,a4,1    ALU |                          | 
+  11956 | 0420 addi s2,s2,-1       | 0418 addi a6,a4,3        | 0| >0418 addi a6,a4,3       | 0414 addi a5,a4,2    ALU | 0410 addi a4,a4,1        | 
+  11957 | 0424 bnez s2,410         | 041c addi a7,a4,4        | 0| >041c addi a7,a4,4       | 0418 addi a6,a4,3    ALU | 0414 addi a5,a4,2        | 
+  11958 | 0428 csrr t0,mcycle      | 0420 addi s2,s2,-1       | 0| >0420 addi s2,s2,-1      | 041c addi a7,a4,4    ALU | 0418 addi a6,a4,3        | 
+  11959 | 042c sub s0,t0,s0        | 0424 bnez s2,410         | 0| >0424 bnez s2,410        | 0420 addi s2,s2,-1   ALU | 041c addi a7,a4,4        | 
+  11960 | 0430 csrr s1,mhpmcounter | 0428 csrr t0,mcycle      | 0| .(flushed) csrr t0,mcycl | 0424 bnez s2,410     BJU | 0420 addi s2,s2,-1       | ID-stall:CP0/fence BR-resolve:T MISPRED(BHT) IU-redirect->0410
+  11961 | 0410 addi a4,a4,1        |                          | 0|                          |                          | 0424 bnez s2,410         | 
+  11962 | 0414 addi a5,a4,2        |                          | 0|                          |                          |                          | 
+  11963 | 0418 addi a6,a4,3        | 0410 addi a4,a4,1        | 0| >0410 addi a4,a4,1       |                          |                          | 
+  11964 | 041c addi a7,a4,4        | 0414 addi a5,a4,2        | 0| >0414 addi a5,a4,2       | 0410 addi a4,a4,1    ALU |                          | 
+  11965 | 0420 addi s2,s2,-1       | 0418 addi a6,a4,3        | 0| >0418 addi a6,a4,3       | 0414 addi a5,a4,2    ALU | 0410 addi a4,a4,1        | 
+  11966 | 0424 bnez s2,410         | 041c addi a7,a4,4        | 0| >041c addi a7,a4,4       | 0418 addi a6,a4,3    ALU | 0414 addi a5,a4,2        | 
+  11967 | 0428 csrr t0,mcycle      | 0420 addi s2,s2,-1       | 0| >0420 addi s2,s2,-1      | 041c addi a7,a4,4    ALU | 0418 addi a6,a4,3        | 
+  11968 | 042c sub s0,t0,s0        | 0424 bnez s2,410         | 0| >0424 bnez s2,410        | 0420 addi s2,s2,-1   ALU | 041c addi a7,a4,4        | 
+  11969 | 0430 csrr s1,mhpmcounter | 0428 csrr t0,mcycle      | 0| .(flushed) csrr t0,mcycl | 0424 bnez s2,410     BJU | 0420 addi s2,s2,-1       | ID-stall:CP0/fence BR-resolve:T MISPRED(BHT) IU-redirect->0410
+  11970 | 0410 addi a4,a4,1        |                          | 0|                          |                          | 0424 bnez s2,410         | 
+  11971 | 0414 addi a5,a4,2        |                          | 0|                          |                          |                          | 
+  11972 | 0418 addi a6,a4,3        | 0410 addi a4,a4,1        | 0| >0410 addi a4,a4,1       |                          |                          | 
+  11973 | 041c addi a7,a4,4        | 0414 addi a5,a4,2        | 0| >0414 addi a5,a4,2       | 0410 addi a4,a4,1    ALU |                          | 
+  11974 | 0420 addi s2,s2,-1       | 0418 addi a6,a4,3        | 0| >0418 addi a6,a4,3       | 0414 addi a5,a4,2    ALU | 0410 addi a4,a4,1        | 
+  11975 | 0424 bnez s2,410         | 041c addi a7,a4,4        | 0| >041c addi a7,a4,4       | 0418 addi a6,a4,3    ALU | 0414 addi a5,a4,2        | 
+  11976 | 0428 csrr t0,mcycle      | 0420 addi s2,s2,-1       | 0| >0420 addi s2,s2,-1      | 041c addi a7,a4,4    ALU | 0418 addi a6,a4,3        | 
+  11977 | 042c sub s0,t0,s0        | 0424 bnez s2,410         | 0| >0424 bnez s2,410        | 0420 addi s2,s2,-1   ALU | 041c addi a7,a4,4        | 
+  11978 | 0430 csrr s1,mhpmcounter | 0428 csrr t0,mcycle      | 0| .(flushed) csrr t0,mcycl | 0424 bnez s2,410     BJU | 0420 addi s2,s2,-1       | ID-stall:CP0/fence BR-resolve:T MISPRED(BHT) IU-redirect->0410
+  11979 | 0410 addi a4,a4,1        |                          | 0|                          |                          | 0424 bnez s2,410         | 
+  11980 | 0414 addi a5,a4,2        |                          | 0|                          |                          |                          | 
+  11981 | 0418 addi a6,a4,3        | 0410 addi a4,a4,1        | 0| >0410 addi a4,a4,1       |                          |                          | 
+  11982 | 041c addi a7,a4,4        | 0414 addi a5,a4,2        | 0| >0414 addi a5,a4,2       | 0410 addi a4,a4,1    ALU |                          | 
+  11983 | 0420 addi s2,s2,-1       | 0418 addi a6,a4,3        | 0| >0418 addi a6,a4,3       | 0414 addi a5,a4,2    ALU | 0410 addi a4,a4,1        | 
+  11984 | 0424 bnez s2,410         | 041c addi a7,a4,4        | 0| >041c addi a7,a4,4       | 0418 addi a6,a4,3    ALU | 0414 addi a5,a4,2        | 
+  11985 | 0428 csrr t0,mcycle      | 0420 addi s2,s2,-1       | 0| >0420 addi s2,s2,-1      | 041c addi a7,a4,4    ALU | 0418 addi a6,a4,3        | 
+  11986 | 042c sub s0,t0,s0        | 0424 bnez s2,410         | 0| >0424 bnez s2,410        | 0420 addi s2,s2,-1   ALU | 041c addi a7,a4,4        | 
+  11987 | 0430 csrr s1,mhpmcounter | 0428 csrr t0,mcycle      | 0| .(flushed) csrr t0,mcycl | 0424 bnez s2,410     BJU | 0420 addi s2,s2,-1       | ID-stall:CP0/fence BR-resolve:T MISPRED(BHT) IU-redirect->0410
+  11988 | 0410 addi a4,a4,1        |                          | 0|                          |                          | 0424 bnez s2,410         | 
+  11989 | 0414 addi a5,a4,2        |                          | 0|                          |                          |                          | 
+  11990 | 0418 addi a6,a4,3        | 0410 addi a4,a4,1        | 0| >0410 addi a4,a4,1       |                          |                          | 
+  11991 | 041c addi a7,a4,4        | 0414 addi a5,a4,2        | 0| >0414 addi a5,a4,2       | 0410 addi a4,a4,1    ALU |                          | 
+  11992 | 0420 addi s2,s2,-1       | 0418 addi a6,a4,3        | 0| >0418 addi a6,a4,3       | 0414 addi a5,a4,2    ALU | 0410 addi a4,a4,1        | 
+  11993 | 0424 bnez s2,410         | 041c addi a7,a4,4        | 0| >041c addi a7,a4,4       | 0418 addi a6,a4,3    ALU | 0414 addi a5,a4,2        | 
+  11994 | 0428 csrr t0,mcycle      | 0420 addi s2,s2,-1       | 0| >0420 addi s2,s2,-1      | 041c addi a7,a4,4    ALU | 0418 addi a6,a4,3        | 
+  11995 | 042c sub s0,t0,s0        | 0424 bnez s2,410         | 0| >0424 bnez s2,410        | 0420 addi s2,s2,-1   ALU | 041c addi a7,a4,4        | 
+  11996 | 0430 csrr s1,mhpmcounter | 0428 csrr t0,mcycle      | 0| .(flushed) csrr t0,mcycl | 0424 bnez s2,410     BJU | 0420 addi s2,s2,-1       | ID-stall:CP0/fence BR-resolve:T MISPRED(BHT) IU-redirect->0410
+  11997 | 0410 addi a4,a4,1        |                          | 0|                          |                          | 0424 bnez s2,410         | 
+  11998 | 0414 addi a5,a4,2        |                          | 0|                          |                          |                          | 
+  11999 | 0418 addi a6,a4,3        | 0410 addi a4,a4,1        | 0| >0410 addi a4,a4,1       |                          |                          | 
+  12000 | 041c addi a7,a4,4        | 0414 addi a5,a4,2        | 0| >0414 addi a5,a4,2       | 0410 addi a4,a4,1    ALU |                          | 
+  12001 | 0420 addi s2,s2,-1       | 0418 addi a6,a4,3        | 0| >0418 addi a6,a4,3       | 0414 addi a5,a4,2    ALU | 0410 addi a4,a4,1        | 
+  12002 | 0424 bnez s2,410         | 041c addi a7,a4,4        | 0| >041c addi a7,a4,4       | 0418 addi a6,a4,3    ALU | 0414 addi a5,a4,2        | 
+  12003 | 0428 csrr t0,mcycle      | 0420 addi s2,s2,-1       | 0| >0420 addi s2,s2,-1      | 041c addi a7,a4,4    ALU | 0418 addi a6,a4,3        | 
+  12004 | 042c sub s0,t0,s0        | 0424 bnez s2,410         | 0| >0424 bnez s2,410        | 0420 addi s2,s2,-1   ALU | 041c addi a7,a4,4        | 
+  12005 | 0430 csrr s1,mhpmcounter | 0428 csrr t0,mcycle      | 0| .(flushed) csrr t0,mcycl | 0424 bnez s2,410     BJU | 0420 addi s2,s2,-1       | ID-stall:CP0/fence BR-resolve:T MISPRED(BHT) IU-redirect->0410
+  12006 | 0410 addi a4,a4,1        |                          | 0|                          |                          | 0424 bnez s2,410         | 
+  12007 | 0414 addi a5,a4,2        |                          | 0|                          |                          |                          | 
+  12008 | 0418 addi a6,a4,3        | 0410 addi a4,a4,1        | 0| >0410 addi a4,a4,1       |                          |                          | 
+  12009 | 041c addi a7,a4,4        | 0414 addi a5,a4,2        | 0| >0414 addi a5,a4,2       | 0410 addi a4,a4,1    ALU |                          | 
+  12010 | 0420 addi s2,s2,-1       | 0418 addi a6,a4,3        | 0| >0418 addi a6,a4,3       | 0414 addi a5,a4,2    ALU | 0410 addi a4,a4,1        | 
+  12011 | 0424 bnez s2,410         | 041c addi a7,a4,4        | 0| >041c addi a7,a4,4       | 0418 addi a6,a4,3    ALU | 0414 addi a5,a4,2        | 
+  12012 | 0428 csrr t0,mcycle      | 0420 addi s2,s2,-1       | 0| >0420 addi s2,s2,-1      | 041c addi a7,a4,4    ALU | 0418 addi a6,a4,3        | 
+  12013 | 042c sub s0,t0,s0        | 0424 bnez s2,410         | 0| >0424 bnez s2,410        | 0420 addi s2,s2,-1   ALU | 041c addi a7,a4,4        | 
+  12014 | 0430 csrr s1,mhpmcounter | 0428 csrr t0,mcycle      | 0| .(flushed) csrr t0,mcycl | 0424 bnez s2,410     BJU | 0420 addi s2,s2,-1       | ID-stall:CP0/fence BR-resolve:T MISPRED(BHT) IU-redirect->0410
+  12015 | 0410 addi a4,a4,1        |                          | 0|                          |                          | 0424 bnez s2,410         | 
+  12016 | 0414 addi a5,a4,2        |                          | 0|                          |                          |                          | 
+  12017 | 0418 addi a6,a4,3        | 0410 addi a4,a4,1        | 0| >0410 addi a4,a4,1       |                          |                          | 
+  12018 | 041c addi a7,a4,4        | 0414 addi a5,a4,2        | 0| >0414 addi a5,a4,2       | 0410 addi a4,a4,1    ALU |                          | 
+  12019 | 0420 addi s2,s2,-1       | 0418 addi a6,a4,3        | 0| >0418 addi a6,a4,3       | 0414 addi a5,a4,2    ALU | 0410 addi a4,a4,1        | 
+  12020 | 0424 bnez s2,410         | 041c addi a7,a4,4        | 0| >041c addi a7,a4,4       | 0418 addi a6,a4,3    ALU | 0414 addi a5,a4,2        | 
+  12021 | 0428 csrr t0,mcycle      | 0420 addi s2,s2,-1       | 0| >0420 addi s2,s2,-1      | 041c addi a7,a4,4    ALU | 0418 addi a6,a4,3        | 
+  12022 | 042c sub s0,t0,s0        | 0424 bnez s2,410         | 0| >0424 bnez s2,410        | 0420 addi s2,s2,-1   ALU | 041c addi a7,a4,4        | 
+  12023 | 0430 csrr s1,mhpmcounter | 0428 csrr t0,mcycle      | 0| .(flushed) csrr t0,mcycl | 0424 bnez s2,410     BJU | 0420 addi s2,s2,-1       | ID-stall:CP0/fence BR-resolve:T MISPRED(BHT) IU-redirect->0410
+  12024 | 0410 addi a4,a4,1        |                          | 0|                          |                          | 0424 bnez s2,410         | 
+  12025 | 0414 addi a5,a4,2        |                          | 0|                          |                          |                          | 
+  12026 | 0418 addi a6,a4,3        | 0410 addi a4,a4,1        | 0| >0410 addi a4,a4,1       |                          |                          | 
+  12027 | 041c addi a7,a4,4        | 0414 addi a5,a4,2        | 0| >0414 addi a5,a4,2       | 0410 addi a4,a4,1    ALU |                          | 
+  12028 | 0420 addi s2,s2,-1       | 0418 addi a6,a4,3        | 0| >0418 addi a6,a4,3       | 0414 addi a5,a4,2    ALU | 0410 addi a4,a4,1        | 
+  12029 | 0424 bnez s2,410         | 041c addi a7,a4,4        | 0| >041c addi a7,a4,4       | 0418 addi a6,a4,3    ALU | 0414 addi a5,a4,2        | 
+  12030 | 0428 csrr t0,mcycle      | 0420 addi s2,s2,-1       | 0| >0420 addi s2,s2,-1      | 041c addi a7,a4,4    ALU | 0418 addi a6,a4,3        | 
+  12031 | 042c sub s0,t0,s0        | 0424 bnez s2,410         | 0| >0424 bnez s2,410        | 0420 addi s2,s2,-1   ALU | 041c addi a7,a4,4        | 
+  12032 | 0430 csrr s1,mhpmcounter | 0428 csrr t0,mcycle      | 0| .(flushed) csrr t0,mcycl | 0424 bnez s2,410     BJU | 0420 addi s2,s2,-1       | ID-stall:CP0/fence BR-resolve:T MISPRED(BHT) IU-redirect->0410
+  12033 | 0410 addi a4,a4,1        |                          | 0|                          |                          | 0424 bnez s2,410         | 
+  12034 | 0414 addi a5,a4,2        |                          | 0|                          |                          |                          | 
+  12035 | 0418 addi a6,a4,3        | 0410 addi a4,a4,1        | 0| >0410 addi a4,a4,1       |                          |                          | 
+  12036 | 041c addi a7,a4,4        | 0414 addi a5,a4,2        | 0| >0414 addi a5,a4,2       | 0410 addi a4,a4,1    ALU |                          | 
+  12037 | 0420 addi s2,s2,-1       | 0418 addi a6,a4,3        | 0| >0418 addi a6,a4,3       | 0414 addi a5,a4,2    ALU | 0410 addi a4,a4,1        | 
+  12038 | 0424 bnez s2,410         | 041c addi a7,a4,4        | 0| >041c addi a7,a4,4       | 0418 addi a6,a4,3    ALU | 0414 addi a5,a4,2        | 
+  12039 | 0428 csrr t0,mcycle      | 0420 addi s2,s2,-1       | 0| >0420 addi s2,s2,-1      | 041c addi a7,a4,4    ALU | 0418 addi a6,a4,3        | 
+  12040 | 042c sub s0,t0,s0        | 0424 bnez s2,410         | 0| >0424 bnez s2,410        | 0420 addi s2,s2,-1   ALU | 041c addi a7,a4,4        | 
+  12041 | 0430 csrr s1,mhpmcounter | 0428 csrr t0,mcycle      | 0| .(flushed) csrr t0,mcycl | 0424 bnez s2,410     BJU | 0420 addi s2,s2,-1       | ID-stall:CP0/fence BR-resolve:T MISPRED(BHT) IU-redirect->0410
+  12042 | 0410 addi a4,a4,1        |                          | 0|                          |                          | 0424 bnez s2,410         | 
+  12043 | 0414 addi a5,a4,2        |                          | 0|                          |                          |                          | 
+  12044 | 0418 addi a6,a4,3        | 0410 addi a4,a4,1        | 0| >0410 addi a4,a4,1       |                          |                          | 
+  12045 | 041c addi a7,a4,4        | 0414 addi a5,a4,2        | 0| >0414 addi a5,a4,2       | 0410 addi a4,a4,1    ALU |                          | 
+  12046 | 0420 addi s2,s2,-1       | 0418 addi a6,a4,3        | 0| >0418 addi a6,a4,3       | 0414 addi a5,a4,2    ALU | 0410 addi a4,a4,1        | 
+  12047 | 0424 bnez s2,410         | 041c addi a7,a4,4        | 0| >041c addi a7,a4,4       | 0418 addi a6,a4,3    ALU | 0414 addi a5,a4,2        | 
+  12048 | 0428 csrr t0,mcycle      | 0420 addi s2,s2,-1       | 0| >0420 addi s2,s2,-1      | 041c addi a7,a4,4    ALU | 0418 addi a6,a4,3        | 
+   ... (790 more cycles, use --mark 3 --max-rows N)
+----------------------------------------------------------------------------------------------------------------------------------------------------------------
+summary: cycles=1190 retired=791 IPC=0.665 | icache_miss=1, ip_curflw=2, ip_redirect=1, iu_redirect=126, mispred_bht=126, retired=791, stall_CP0/fence=142, stall_RAW=4, stall_WAW=2

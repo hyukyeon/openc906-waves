@@ -1,0 +1,1034 @@
+사용: pipeview.py <out/test 디렉토리> [--mark N] [--max-rows K]
+출력: <dir>/pipeview.txt  (mark 구간별 표 + 구간 요약)
+
+================================================================================================================================================================
+MARK 1   cycles 2660 .. 3132  (473 cycles)
+================================================================================================================================================================
+    cyc | IF (fetch)               | IP (pred)                |IB| ID                       | EX1                      | RETIRE                   | events
+----------------------------------------------------------------------------------------------------------------------------------------------------------------
+   2660 | 0298 bnez t1,294         | 0290 li t1,200           | 2| >0288 rdtime s0          |                          |                          | 
+   2661 | 029c rdtime s2           | 0294 addi t1,t1,-1       | 2| .028c csrr s1,mcycle     | 0288 rdtime s0       CP0 |                          | ID-stall:CP0/fence
+   2662 | 02a0 csrr s3,mcycle      | 0298 bnez t1,294         | 4| .028c csrr s1,mcycle     |                          | 0288 rdtime s0           | ID-stall:CP0/fence
+   2663 |                          | 029c rdtime s2           | 6| >028c csrr s1,mcycle     |                          |                          | 
+   2664 | 02a0 csrr s3,mcycle      | 029c rdtime s2           | 4| >0290 li t1,200          | 028c csrr s1,mcycle  CP0 |                          | 
+   2665 | 02a4 sub s2,s2,s0        |                          | 4| >0294 addi t1,t1,-1      | 0290 li t1,200       ALU | 028c csrr s1,mcycle      | 
+   2666 | 02a8 sub s3,s3,s1        | 02a0 csrr s3,mcycle      | 2| >0298 bnez t1,294        | 0294 addi t1,t1,-1   ALU | 0290 li t1,200           | 
+   2667 | 02ac li t6,0             | 02a4 sub s2,s2,s0        | 2| .(flushed) rdtime s2     | 0298 bnez t1,294     BJU | 0294 addi t1,t1,-1       | ID-stall:CP0/fence BR-resolve:T MISPRED(BHT) IU-redirect->0294
+   2668 | 0294 addi t1,t1,-1       |                          | 0|                          |                          | 0298 bnez t1,294         | 
+   2669 | 0298 bnez t1,294         |                          | 0|                          |                          |                          | 
+   2670 | 029c rdtime s2           | 0294 addi t1,t1,-1       | 0| >0294 addi t1,t1,-1      |                          |                          | 
+   2671 | 02a0 csrr s3,mcycle      | 0298 bnez t1,294         | 0| >0298 bnez t1,294        | 0294 addi t1,t1,-1   ALU |                          | 
+   2672 | 02a4 sub s2,s2,s0        | 029c rdtime s2           | 0| .(flushed) rdtime s2     | 0298 bnez t1,294     BJU | 0294 addi t1,t1,-1       | ID-stall:CP0/fence BR-resolve:T MISPRED(BHT) IU-redirect->0294
+   2673 | 0294 addi t1,t1,-1       |                          | 0|                          |                          | 0298 bnez t1,294         | 
+   2674 | 0298 bnez t1,294         |                          | 0|                          |                          |                          | 
+   2675 | 029c rdtime s2           | 0294 addi t1,t1,-1       | 0| >0294 addi t1,t1,-1      |                          |                          | 
+   2676 | 02a0 csrr s3,mcycle      | 0298 bnez t1,294         | 0| >0298 bnez t1,294        | 0294 addi t1,t1,-1   ALU |                          | 
+   2677 | 02a4 sub s2,s2,s0        | 029c rdtime s2           | 0| .(flushed) rdtime s2     | 0298 bnez t1,294     BJU | 0294 addi t1,t1,-1       | ID-stall:CP0/fence BR-resolve:T MISPRED(BHT) IU-redirect->0294
+   2678 | 0294 addi t1,t1,-1       |                          | 0|                          |                          | 0298 bnez t1,294         | 
+   2679 | 0298 bnez t1,294         |                          | 0|                          |                          |                          | 
+   2680 | 029c rdtime s2           | 0294 addi t1,t1,-1       | 0| >0294 addi t1,t1,-1      |                          |                          | 
+   2681 | 02a0 csrr s3,mcycle      | 0298 bnez t1,294         | 0| >0298 bnez t1,294        | 0294 addi t1,t1,-1   ALU |                          | 
+   2682 | 02a4 sub s2,s2,s0        | 029c rdtime s2           | 0| .(flushed) rdtime s2     | 0298 bnez t1,294     BJU | 0294 addi t1,t1,-1       | ID-stall:CP0/fence BR-resolve:T MISPRED(BHT) IU-redirect->0294
+   2683 | 0294 addi t1,t1,-1       |                          | 0|                          |                          | 0298 bnez t1,294         | 
+   2684 | 0298 bnez t1,294         |                          | 0|                          |                          |                          | 
+   2685 | 029c rdtime s2           | 0294 addi t1,t1,-1       | 0| >0294 addi t1,t1,-1      |                          |                          | 
+   2686 | 02a0 csrr s3,mcycle      | 0298 bnez t1,294         | 0| >0298 bnez t1,294        | 0294 addi t1,t1,-1   ALU |                          | 
+   2687 | 02a4 sub s2,s2,s0        | 029c rdtime s2           | 0| .(flushed) rdtime s2     | 0298 bnez t1,294     BJU | 0294 addi t1,t1,-1       | ID-stall:CP0/fence BR-resolve:T MISPRED(BHT) IU-redirect->0294
+   2688 | 0294 addi t1,t1,-1       |                          | 0|                          |                          | 0298 bnez t1,294         | 
+   2689 | 0298 bnez t1,294         |                          | 0|                          |                          |                          | 
+   2690 | 029c rdtime s2           | 0294 addi t1,t1,-1       | 0| >0294 addi t1,t1,-1      |                          |                          | 
+   2691 | 02a0 csrr s3,mcycle      | 0298 bnez t1,294         | 0| >0298 bnez t1,294        | 0294 addi t1,t1,-1   ALU |                          | 
+   2692 | 02a4 sub s2,s2,s0        | 029c rdtime s2           | 0| .(flushed) rdtime s2     | 0298 bnez t1,294     BJU | 0294 addi t1,t1,-1       | ID-stall:CP0/fence BR-resolve:T MISPRED(BHT) IU-redirect->0294
+   2693 | 0294 addi t1,t1,-1       |                          | 0|                          |                          | 0298 bnez t1,294         | 
+   2694 | 0298 bnez t1,294         |                          | 0|                          |                          |                          | 
+   2695 | 029c rdtime s2           | 0294 addi t1,t1,-1       | 0| >0294 addi t1,t1,-1      |                          |                          | 
+   2696 | 02a0 csrr s3,mcycle      | 0298 bnez t1,294         | 0| >0298 bnez t1,294        | 0294 addi t1,t1,-1   ALU |                          | 
+   2697 | 02a4 sub s2,s2,s0        | 029c rdtime s2           | 0| .(flushed) rdtime s2     | 0298 bnez t1,294     BJU | 0294 addi t1,t1,-1       | ID-stall:CP0/fence BR-resolve:T MISPRED(BHT) IU-redirect->0294
+   2698 | 0294 addi t1,t1,-1       |                          | 0|                          |                          | 0298 bnez t1,294         | 
+   2699 | 0298 bnez t1,294         |                          | 0|                          |                          |                          | 
+   2700 | 029c rdtime s2           | 0294 addi t1,t1,-1       | 0| >0294 addi t1,t1,-1      |                          |                          | 
+   2701 | 02a0 csrr s3,mcycle      | 0298 bnez t1,294         | 0| >0298 bnez t1,294        | 0294 addi t1,t1,-1   ALU |                          | 
+   2702 | 02a4 sub s2,s2,s0        | 029c rdtime s2           | 0| .(flushed) rdtime s2     | 0298 bnez t1,294     BJU | 0294 addi t1,t1,-1       | ID-stall:CP0/fence BR-resolve:T MISPRED(BHT) IU-redirect->0294
+   2703 | 0294 addi t1,t1,-1       |                          | 0|                          |                          | 0298 bnez t1,294         | 
+   2704 | 0298 bnez t1,294         |                          | 0|                          |                          |                          | 
+   2705 | 029c rdtime s2           | 0294 addi t1,t1,-1       | 0| >0294 addi t1,t1,-1      |                          |                          | 
+   2706 | 02a0 csrr s3,mcycle      | 0298 bnez t1,294         | 0| >0298 bnez t1,294        | 0294 addi t1,t1,-1   ALU |                          | 
+   2707 | 02a4 sub s2,s2,s0        | 029c rdtime s2           | 0| .(flushed) rdtime s2     | 0298 bnez t1,294     BJU | 0294 addi t1,t1,-1       | ID-stall:CP0/fence BR-resolve:T MISPRED(BHT) IU-redirect->0294
+   2708 | 0294 addi t1,t1,-1       |                          | 0|                          |                          | 0298 bnez t1,294         | 
+   2709 | 0298 bnez t1,294         |                          | 0|                          |                          |                          | 
+   2710 | 029c rdtime s2           | 0294 addi t1,t1,-1       | 0| >0294 addi t1,t1,-1      |                          |                          | 
+   2711 | 02a0 csrr s3,mcycle      | 0298 bnez t1,294         | 0| >0298 bnez t1,294        | 0294 addi t1,t1,-1   ALU |                          | 
+   2712 | 02a4 sub s2,s2,s0        | 029c rdtime s2           | 0| .(flushed) rdtime s2     | 0298 bnez t1,294     BJU | 0294 addi t1,t1,-1       | ID-stall:CP0/fence BR-resolve:T MISPRED(BHT) IU-redirect->0294
+   2713 | 0294 addi t1,t1,-1       |                          | 0|                          |                          | 0298 bnez t1,294         | 
+   2714 | 0298 bnez t1,294         |                          | 0|                          |                          |                          | 
+   2715 | 029c rdtime s2           | 0294 addi t1,t1,-1       | 0| >0294 addi t1,t1,-1      |                          |                          | 
+   2716 | 02a0 csrr s3,mcycle      | 0298 bnez t1,294         | 0| >0298 bnez t1,294        | 0294 addi t1,t1,-1   ALU |                          | 
+   2717 | 02a4 sub s2,s2,s0        | 029c rdtime s2           | 0| .(flushed) rdtime s2     | 0298 bnez t1,294     BJU | 0294 addi t1,t1,-1       | ID-stall:CP0/fence BR-resolve:T MISPRED(BHT) IU-redirect->0294
+   2718 | 0294 addi t1,t1,-1       |                          | 0|                          |                          | 0298 bnez t1,294         | 
+   2719 | 0298 bnez t1,294         |                          | 0|                          |                          |                          | 
+   2720 | 029c rdtime s2           | 0294 addi t1,t1,-1       | 0| >0294 addi t1,t1,-1      |                          |                          | 
+   2721 | 02a0 csrr s3,mcycle      | 0298 bnez t1,294         | 0| >0298 bnez t1,294        | 0294 addi t1,t1,-1   ALU |                          | 
+   2722 | 02a4 sub s2,s2,s0        | 029c rdtime s2           | 0| .(flushed) rdtime s2     | 0298 bnez t1,294     BJU | 0294 addi t1,t1,-1       | ID-stall:CP0/fence BR-resolve:T MISPRED(BHT) IU-redirect->0294
+   2723 | 0294 addi t1,t1,-1       |                          | 0|                          |                          | 0298 bnez t1,294         | 
+   2724 | 0298 bnez t1,294         |                          | 0|                          |                          |                          | 
+   2725 | 029c rdtime s2           | 0294 addi t1,t1,-1       | 0| >0294 addi t1,t1,-1      |                          |                          | 
+   2726 | 02a0 csrr s3,mcycle      | 0298 bnez t1,294         | 0| >0298 bnez t1,294        | 0294 addi t1,t1,-1   ALU |                          | 
+   2727 | 02a4 sub s2,s2,s0        | 029c rdtime s2           | 0| .(flushed) rdtime s2     | 0298 bnez t1,294     BJU | 0294 addi t1,t1,-1       | ID-stall:CP0/fence BR-resolve:T MISPRED(BHT) IU-redirect->0294
+   2728 | 0294 addi t1,t1,-1       |                          | 0|                          |                          | 0298 bnez t1,294         | 
+   2729 | 0298 bnez t1,294         |                          | 0|                          |                          |                          | 
+   2730 | 029c rdtime s2           | 0294 addi t1,t1,-1       | 0| >0294 addi t1,t1,-1      |                          |                          | 
+   2731 | 02a0 csrr s3,mcycle      | 0298 bnez t1,294         | 0| >0298 bnez t1,294        | 0294 addi t1,t1,-1   ALU |                          | 
+   2732 | 02a4 sub s2,s2,s0        | 029c rdtime s2           | 0| .(flushed) rdtime s2     | 0298 bnez t1,294     BJU | 0294 addi t1,t1,-1       | ID-stall:CP0/fence BR-resolve:T MISPRED(BHT) IU-redirect->0294
+   2733 | 0294 addi t1,t1,-1       |                          | 0|                          |                          | 0298 bnez t1,294         | 
+   2734 | 0298 bnez t1,294         |                          | 0|                          |                          |                          | 
+   2735 | 029c rdtime s2           | 0294 addi t1,t1,-1       | 0| >0294 addi t1,t1,-1      |                          |                          | 
+   2736 | 02a0 csrr s3,mcycle      | 0298 bnez t1,294         | 0| >0298 bnez t1,294        | 0294 addi t1,t1,-1   ALU |                          | 
+   2737 | 02a4 sub s2,s2,s0        | 029c rdtime s2           | 0| .(flushed) rdtime s2     | 0298 bnez t1,294     BJU | 0294 addi t1,t1,-1       | ID-stall:CP0/fence BR-resolve:T MISPRED(BHT) IU-redirect->0294
+   2738 | 0294 addi t1,t1,-1       |                          | 0|                          |                          | 0298 bnez t1,294         | 
+   2739 | 0298 bnez t1,294         |                          | 0|                          |                          |                          | 
+   2740 | 029c rdtime s2           | 0294 addi t1,t1,-1       | 0| >0294 addi t1,t1,-1      |                          |                          | 
+   2741 | 02a0 csrr s3,mcycle      | 0298 bnez t1,294         | 0| >0298 bnez t1,294        | 0294 addi t1,t1,-1   ALU |                          | 
+   2742 | 02a4 sub s2,s2,s0        | 029c rdtime s2           | 0| .(flushed) rdtime s2     | 0298 bnez t1,294     BJU | 0294 addi t1,t1,-1       | ID-stall:CP0/fence BR-resolve:T MISPRED(BHT) IU-redirect->0294
+   2743 | 0294 addi t1,t1,-1       |                          | 0|                          |                          | 0298 bnez t1,294         | 
+   2744 | 0298 bnez t1,294         |                          | 0|                          |                          |                          | 
+   2745 | 029c rdtime s2           | 0294 addi t1,t1,-1       | 0| >0294 addi t1,t1,-1      |                          |                          | 
+   2746 | 02a0 csrr s3,mcycle      | 0298 bnez t1,294         | 0| >0298 bnez t1,294        | 0294 addi t1,t1,-1   ALU |                          | 
+   2747 | 02a4 sub s2,s2,s0        | 029c rdtime s2           | 0| .(flushed) rdtime s2     | 0298 bnez t1,294     BJU | 0294 addi t1,t1,-1       | ID-stall:CP0/fence BR-resolve:T MISPRED(BHT) IU-redirect->0294
+   2748 | 0294 addi t1,t1,-1       |                          | 0|                          |                          | 0298 bnez t1,294         | 
+   2749 | 0298 bnez t1,294         |                          | 0|                          |                          |                          | 
+   2750 | 029c rdtime s2           | 0294 addi t1,t1,-1       | 0| >0294 addi t1,t1,-1      |                          |                          | 
+   2751 | 02a0 csrr s3,mcycle      | 0298 bnez t1,294         | 0| >0298 bnez t1,294        | 0294 addi t1,t1,-1   ALU |                          | 
+   2752 | 02a4 sub s2,s2,s0        | 029c rdtime s2           | 0| .(flushed) rdtime s2     | 0298 bnez t1,294     BJU | 0294 addi t1,t1,-1       | ID-stall:CP0/fence BR-resolve:T MISPRED(BHT) IU-redirect->0294
+   2753 | 0294 addi t1,t1,-1       |                          | 0|                          |                          | 0298 bnez t1,294         | 
+   2754 | 0298 bnez t1,294         |                          | 0|                          |                          |                          | 
+   2755 | 029c rdtime s2           | 0294 addi t1,t1,-1       | 0| >0294 addi t1,t1,-1      |                          |                          | 
+   2756 | 02a0 csrr s3,mcycle      | 0298 bnez t1,294         | 0| >0298 bnez t1,294        | 0294 addi t1,t1,-1   ALU |                          | IP-redirect->0294
+   2757 | 0294 addi t1,t1,-1       |                          | 0|                          | 0298 bnez t1,294     BJU | 0294 addi t1,t1,-1       | BR-resolve:T
+   2758 | 0298 bnez t1,294         |                          | 0|                          |                          | 0298 bnez t1,294         | 
+   2759 | 0294 addi t1,t1,-1       | 0294 addi t1,t1,-1       | 0| >0294 addi t1,t1,-1      |                          |                          | BTB-redirect
+   2760 | 0298 bnez t1,294         | 0298 bnez t1,294         | 0| >0298 bnez t1,294        | 0294 addi t1,t1,-1   ALU |                          | 
+   2761 | 0294 addi t1,t1,-1       | 0294 addi t1,t1,-1       | 0| >0294 addi t1,t1,-1      | 0298 bnez t1,294     BJU | 0294 addi t1,t1,-1       | BTB-redirect BR-resolve:T
+   2762 | 0298 bnez t1,294         | 0298 bnez t1,294         | 0| >0298 bnez t1,294        | 0294 addi t1,t1,-1   ALU | 0298 bnez t1,294         | 
+   2763 | 0294 addi t1,t1,-1       | 0294 addi t1,t1,-1       | 0| >0294 addi t1,t1,-1      | 0298 bnez t1,294     BJU | 0294 addi t1,t1,-1       | BTB-redirect BR-resolve:T
+   2764 | 0298 bnez t1,294         | 0298 bnez t1,294         | 0| >0298 bnez t1,294        | 0294 addi t1,t1,-1   ALU | 0298 bnez t1,294         | 
+   2765 | 0294 addi t1,t1,-1       | 0294 addi t1,t1,-1       | 0| >0294 addi t1,t1,-1      | 0298 bnez t1,294     BJU | 0294 addi t1,t1,-1       | BTB-redirect BR-resolve:T
+   2766 | 0298 bnez t1,294         | 0298 bnez t1,294         | 0| >0298 bnez t1,294        | 0294 addi t1,t1,-1   ALU | 0298 bnez t1,294         | 
+   2767 | 0294 addi t1,t1,-1       | 0294 addi t1,t1,-1       | 0| >0294 addi t1,t1,-1      | 0298 bnez t1,294     BJU | 0294 addi t1,t1,-1       | BTB-redirect BR-resolve:T
+   2768 | 0298 bnez t1,294         | 0298 bnez t1,294         | 0| >0298 bnez t1,294        | 0294 addi t1,t1,-1   ALU | 0298 bnez t1,294         | 
+   2769 | 0294 addi t1,t1,-1       | 0294 addi t1,t1,-1       | 0| >0294 addi t1,t1,-1      | 0298 bnez t1,294     BJU | 0294 addi t1,t1,-1       | BTB-redirect BR-resolve:T
+   2770 | 0298 bnez t1,294         | 0298 bnez t1,294         | 0| >0298 bnez t1,294        | 0294 addi t1,t1,-1   ALU | 0298 bnez t1,294         | 
+   2771 | 0294 addi t1,t1,-1       | 0294 addi t1,t1,-1       | 0| >0294 addi t1,t1,-1      | 0298 bnez t1,294     BJU | 0294 addi t1,t1,-1       | BTB-redirect BR-resolve:T
+   2772 | 0298 bnez t1,294         | 0298 bnez t1,294         | 0| >0298 bnez t1,294        | 0294 addi t1,t1,-1   ALU | 0298 bnez t1,294         | 
+   2773 | 0294 addi t1,t1,-1       | 0294 addi t1,t1,-1       | 0| >0294 addi t1,t1,-1      | 0298 bnez t1,294     BJU | 0294 addi t1,t1,-1       | BTB-redirect BR-resolve:T
+   2774 | 0298 bnez t1,294         | 0298 bnez t1,294         | 0| >0298 bnez t1,294        | 0294 addi t1,t1,-1   ALU | 0298 bnez t1,294         | 
+   2775 | 0294 addi t1,t1,-1       | 0294 addi t1,t1,-1       | 0| >0294 addi t1,t1,-1      | 0298 bnez t1,294     BJU | 0294 addi t1,t1,-1       | BTB-redirect BR-resolve:T
+   2776 | 0298 bnez t1,294         | 0298 bnez t1,294         | 0| >0298 bnez t1,294        | 0294 addi t1,t1,-1   ALU | 0298 bnez t1,294         | 
+   2777 | 0294 addi t1,t1,-1       | 0294 addi t1,t1,-1       | 0| >0294 addi t1,t1,-1      | 0298 bnez t1,294     BJU | 0294 addi t1,t1,-1       | BTB-redirect BR-resolve:T
+   2778 | 0298 bnez t1,294         | 0298 bnez t1,294         | 0| >0298 bnez t1,294        | 0294 addi t1,t1,-1   ALU | 0298 bnez t1,294         | 
+   2779 | 0294 addi t1,t1,-1       | 0294 addi t1,t1,-1       | 0| >0294 addi t1,t1,-1      | 0298 bnez t1,294     BJU | 0294 addi t1,t1,-1       | BTB-redirect BR-resolve:T
+   2780 | 0298 bnez t1,294         | 0298 bnez t1,294         | 0| >0298 bnez t1,294        | 0294 addi t1,t1,-1   ALU | 0298 bnez t1,294         | 
+   2781 | 0294 addi t1,t1,-1       | 0294 addi t1,t1,-1       | 0| >0294 addi t1,t1,-1      | 0298 bnez t1,294     BJU | 0294 addi t1,t1,-1       | BTB-redirect BR-resolve:T
+   2782 | 0298 bnez t1,294         | 0298 bnez t1,294         | 0| >0298 bnez t1,294        | 0294 addi t1,t1,-1   ALU | 0298 bnez t1,294         | 
+   2783 | 0294 addi t1,t1,-1       | 0294 addi t1,t1,-1       | 0| >0294 addi t1,t1,-1      | 0298 bnez t1,294     BJU | 0294 addi t1,t1,-1       | BTB-redirect BR-resolve:T
+   2784 | 0298 bnez t1,294         | 0298 bnez t1,294         | 0| >0298 bnez t1,294        | 0294 addi t1,t1,-1   ALU | 0298 bnez t1,294         | 
+   2785 | 0294 addi t1,t1,-1       | 0294 addi t1,t1,-1       | 0| >0294 addi t1,t1,-1      | 0298 bnez t1,294     BJU | 0294 addi t1,t1,-1       | BTB-redirect BR-resolve:T
+   2786 | 0298 bnez t1,294         | 0298 bnez t1,294         | 0| >0298 bnez t1,294        | 0294 addi t1,t1,-1   ALU | 0298 bnez t1,294         | 
+   2787 | 0294 addi t1,t1,-1       | 0294 addi t1,t1,-1       | 0| >0294 addi t1,t1,-1      | 0298 bnez t1,294     BJU | 0294 addi t1,t1,-1       | BTB-redirect BR-resolve:T
+   2788 | 0298 bnez t1,294         | 0298 bnez t1,294         | 0| >0298 bnez t1,294        | 0294 addi t1,t1,-1   ALU | 0298 bnez t1,294         | 
+   2789 | 0294 addi t1,t1,-1       | 0294 addi t1,t1,-1       | 0| >0294 addi t1,t1,-1      | 0298 bnez t1,294     BJU | 0294 addi t1,t1,-1       | BTB-redirect BR-resolve:T
+   2790 | 0298 bnez t1,294         | 0298 bnez t1,294         | 0| >0298 bnez t1,294        | 0294 addi t1,t1,-1   ALU | 0298 bnez t1,294         | 
+   2791 | 0294 addi t1,t1,-1       | 0294 addi t1,t1,-1       | 0| >0294 addi t1,t1,-1      | 0298 bnez t1,294     BJU | 0294 addi t1,t1,-1       | BTB-redirect BR-resolve:T
+   2792 | 0298 bnez t1,294         | 0298 bnez t1,294         | 0| >0298 bnez t1,294        | 0294 addi t1,t1,-1   ALU | 0298 bnez t1,294         | 
+   2793 | 0294 addi t1,t1,-1       | 0294 addi t1,t1,-1       | 0| >0294 addi t1,t1,-1      | 0298 bnez t1,294     BJU | 0294 addi t1,t1,-1       | BTB-redirect BR-resolve:T
+   2794 | 0298 bnez t1,294         | 0298 bnez t1,294         | 0| >0298 bnez t1,294        | 0294 addi t1,t1,-1   ALU | 0298 bnez t1,294         | 
+   2795 | 0294 addi t1,t1,-1       | 0294 addi t1,t1,-1       | 0| >0294 addi t1,t1,-1      | 0298 bnez t1,294     BJU | 0294 addi t1,t1,-1       | BTB-redirect BR-resolve:T
+   2796 | 0298 bnez t1,294         | 0298 bnez t1,294         | 0| >0298 bnez t1,294        | 0294 addi t1,t1,-1   ALU | 0298 bnez t1,294         | 
+   2797 | 0294 addi t1,t1,-1       | 0294 addi t1,t1,-1       | 0| >0294 addi t1,t1,-1      | 0298 bnez t1,294     BJU | 0294 addi t1,t1,-1       | BTB-redirect BR-resolve:T
+   2798 | 0298 bnez t1,294         | 0298 bnez t1,294         | 0| >0298 bnez t1,294        | 0294 addi t1,t1,-1   ALU | 0298 bnez t1,294         | 
+   2799 | 0294 addi t1,t1,-1       | 0294 addi t1,t1,-1       | 0| >0294 addi t1,t1,-1      | 0298 bnez t1,294     BJU | 0294 addi t1,t1,-1       | BTB-redirect BR-resolve:T
+   2800 | 0298 bnez t1,294         | 0298 bnez t1,294         | 0| >0298 bnez t1,294        | 0294 addi t1,t1,-1   ALU | 0298 bnez t1,294         | 
+   2801 | 0294 addi t1,t1,-1       | 0294 addi t1,t1,-1       | 0| >0294 addi t1,t1,-1      | 0298 bnez t1,294     BJU | 0294 addi t1,t1,-1       | BTB-redirect BR-resolve:T
+   2802 | 0298 bnez t1,294         | 0298 bnez t1,294         | 0| >0298 bnez t1,294        | 0294 addi t1,t1,-1   ALU | 0298 bnez t1,294         | 
+   2803 | 0294 addi t1,t1,-1       | 0294 addi t1,t1,-1       | 0| >0294 addi t1,t1,-1      | 0298 bnez t1,294     BJU | 0294 addi t1,t1,-1       | BTB-redirect BR-resolve:T
+   2804 | 0298 bnez t1,294         | 0298 bnez t1,294         | 0| >0298 bnez t1,294        | 0294 addi t1,t1,-1   ALU | 0298 bnez t1,294         | 
+   2805 | 0294 addi t1,t1,-1       | 0294 addi t1,t1,-1       | 0| >0294 addi t1,t1,-1      | 0298 bnez t1,294     BJU | 0294 addi t1,t1,-1       | BTB-redirect BR-resolve:T
+   2806 | 0298 bnez t1,294         | 0298 bnez t1,294         | 0| >0298 bnez t1,294        | 0294 addi t1,t1,-1   ALU | 0298 bnez t1,294         | 
+   2807 | 0294 addi t1,t1,-1       | 0294 addi t1,t1,-1       | 0| >0294 addi t1,t1,-1      | 0298 bnez t1,294     BJU | 0294 addi t1,t1,-1       | BTB-redirect BR-resolve:T
+   2808 | 0298 bnez t1,294         | 0298 bnez t1,294         | 0| >0298 bnez t1,294        | 0294 addi t1,t1,-1   ALU | 0298 bnez t1,294         | 
+   2809 | 0294 addi t1,t1,-1       | 0294 addi t1,t1,-1       | 0| >0294 addi t1,t1,-1      | 0298 bnez t1,294     BJU | 0294 addi t1,t1,-1       | BTB-redirect BR-resolve:T
+   2810 | 0298 bnez t1,294         | 0298 bnez t1,294         | 0| >0298 bnez t1,294        | 0294 addi t1,t1,-1   ALU | 0298 bnez t1,294         | 
+   2811 | 0294 addi t1,t1,-1       | 0294 addi t1,t1,-1       | 0| >0294 addi t1,t1,-1      | 0298 bnez t1,294     BJU | 0294 addi t1,t1,-1       | BTB-redirect BR-resolve:T
+   2812 | 0298 bnez t1,294         | 0298 bnez t1,294         | 0| >0298 bnez t1,294        | 0294 addi t1,t1,-1   ALU | 0298 bnez t1,294         | 
+   2813 | 0294 addi t1,t1,-1       | 0294 addi t1,t1,-1       | 0| >0294 addi t1,t1,-1      | 0298 bnez t1,294     BJU | 0294 addi t1,t1,-1       | BTB-redirect BR-resolve:T
+   2814 | 0298 bnez t1,294         | 0298 bnez t1,294         | 0| >0298 bnez t1,294        | 0294 addi t1,t1,-1   ALU | 0298 bnez t1,294         | 
+   2815 | 0294 addi t1,t1,-1       | 0294 addi t1,t1,-1       | 0| >0294 addi t1,t1,-1      | 0298 bnez t1,294     BJU | 0294 addi t1,t1,-1       | BTB-redirect BR-resolve:T
+   2816 | 0298 bnez t1,294         | 0298 bnez t1,294         | 0| >0298 bnez t1,294        | 0294 addi t1,t1,-1   ALU | 0298 bnez t1,294         | 
+   2817 | 0294 addi t1,t1,-1       | 0294 addi t1,t1,-1       | 0| >0294 addi t1,t1,-1      | 0298 bnez t1,294     BJU | 0294 addi t1,t1,-1       | BTB-redirect BR-resolve:T
+   2818 | 0298 bnez t1,294         | 0298 bnez t1,294         | 0| >0298 bnez t1,294        | 0294 addi t1,t1,-1   ALU | 0298 bnez t1,294         | 
+   2819 | 0294 addi t1,t1,-1       | 0294 addi t1,t1,-1       | 0| >0294 addi t1,t1,-1      | 0298 bnez t1,294     BJU | 0294 addi t1,t1,-1       | BTB-redirect BR-resolve:T
+   2820 | 0298 bnez t1,294         | 0298 bnez t1,294         | 0| >0298 bnez t1,294        | 0294 addi t1,t1,-1   ALU | 0298 bnez t1,294         | 
+   2821 | 0294 addi t1,t1,-1       | 0294 addi t1,t1,-1       | 0| >0294 addi t1,t1,-1      | 0298 bnez t1,294     BJU | 0294 addi t1,t1,-1       | BTB-redirect BR-resolve:T
+   2822 | 0298 bnez t1,294         | 0298 bnez t1,294         | 0| >0298 bnez t1,294        | 0294 addi t1,t1,-1   ALU | 0298 bnez t1,294         | 
+   2823 | 0294 addi t1,t1,-1       | 0294 addi t1,t1,-1       | 0| >0294 addi t1,t1,-1      | 0298 bnez t1,294     BJU | 0294 addi t1,t1,-1       | BTB-redirect BR-resolve:T
+   2824 | 0298 bnez t1,294         | 0298 bnez t1,294         | 0| >0298 bnez t1,294        | 0294 addi t1,t1,-1   ALU | 0298 bnez t1,294         | 
+   2825 | 0294 addi t1,t1,-1       | 0294 addi t1,t1,-1       | 0| >0294 addi t1,t1,-1      | 0298 bnez t1,294     BJU | 0294 addi t1,t1,-1       | BTB-redirect BR-resolve:T
+   2826 | 0298 bnez t1,294         | 0298 bnez t1,294         | 0| >0298 bnez t1,294        | 0294 addi t1,t1,-1   ALU | 0298 bnez t1,294         | 
+   2827 | 0294 addi t1,t1,-1       | 0294 addi t1,t1,-1       | 0| >0294 addi t1,t1,-1      | 0298 bnez t1,294     BJU | 0294 addi t1,t1,-1       | BTB-redirect BR-resolve:T
+   2828 | 0298 bnez t1,294         | 0298 bnez t1,294         | 0| >0298 bnez t1,294        | 0294 addi t1,t1,-1   ALU | 0298 bnez t1,294         | 
+   2829 | 0294 addi t1,t1,-1       | 0294 addi t1,t1,-1       | 0| >0294 addi t1,t1,-1      | 0298 bnez t1,294     BJU | 0294 addi t1,t1,-1       | BTB-redirect BR-resolve:T
+   2830 | 0298 bnez t1,294         | 0298 bnez t1,294         | 0| >0298 bnez t1,294        | 0294 addi t1,t1,-1   ALU | 0298 bnez t1,294         | 
+   2831 | 0294 addi t1,t1,-1       | 0294 addi t1,t1,-1       | 0| >0294 addi t1,t1,-1      | 0298 bnez t1,294     BJU | 0294 addi t1,t1,-1       | BTB-redirect BR-resolve:T
+   2832 | 0298 bnez t1,294         | 0298 bnez t1,294         | 0| >0298 bnez t1,294        | 0294 addi t1,t1,-1   ALU | 0298 bnez t1,294         | 
+   2833 | 0294 addi t1,t1,-1       | 0294 addi t1,t1,-1       | 0| >0294 addi t1,t1,-1      | 0298 bnez t1,294     BJU | 0294 addi t1,t1,-1       | BTB-redirect BR-resolve:T
+   2834 | 0298 bnez t1,294         | 0298 bnez t1,294         | 0| >0298 bnez t1,294        | 0294 addi t1,t1,-1   ALU | 0298 bnez t1,294         | 
+   2835 | 0294 addi t1,t1,-1       | 0294 addi t1,t1,-1       | 0| >0294 addi t1,t1,-1      | 0298 bnez t1,294     BJU | 0294 addi t1,t1,-1       | BTB-redirect BR-resolve:T
+   2836 | 0298 bnez t1,294         | 0298 bnez t1,294         | 0| >0298 bnez t1,294        | 0294 addi t1,t1,-1   ALU | 0298 bnez t1,294         | 
+   2837 | 0294 addi t1,t1,-1       | 0294 addi t1,t1,-1       | 0| >0294 addi t1,t1,-1      | 0298 bnez t1,294     BJU | 0294 addi t1,t1,-1       | BTB-redirect BR-resolve:T
+   2838 | 0298 bnez t1,294         | 0298 bnez t1,294         | 0| >0298 bnez t1,294        | 0294 addi t1,t1,-1   ALU | 0298 bnez t1,294         | 
+   2839 | 0294 addi t1,t1,-1       | 0294 addi t1,t1,-1       | 0| >0294 addi t1,t1,-1      | 0298 bnez t1,294     BJU | 0294 addi t1,t1,-1       | BTB-redirect BR-resolve:T
+   2840 | 0298 bnez t1,294         | 0298 bnez t1,294         | 0| >0298 bnez t1,294        | 0294 addi t1,t1,-1   ALU | 0298 bnez t1,294         | 
+   2841 | 0294 addi t1,t1,-1       | 0294 addi t1,t1,-1       | 0| >0294 addi t1,t1,-1      | 0298 bnez t1,294     BJU | 0294 addi t1,t1,-1       | BTB-redirect BR-resolve:T
+   2842 | 0298 bnez t1,294         | 0298 bnez t1,294         | 0| >0298 bnez t1,294        | 0294 addi t1,t1,-1   ALU | 0298 bnez t1,294         | 
+   2843 | 0294 addi t1,t1,-1       | 0294 addi t1,t1,-1       | 0| >0294 addi t1,t1,-1      | 0298 bnez t1,294     BJU | 0294 addi t1,t1,-1       | BTB-redirect BR-resolve:T
+   2844 | 0298 bnez t1,294         | 0298 bnez t1,294         | 0| >0298 bnez t1,294        | 0294 addi t1,t1,-1   ALU | 0298 bnez t1,294         | 
+   2845 | 0294 addi t1,t1,-1       | 0294 addi t1,t1,-1       | 0| >0294 addi t1,t1,-1      | 0298 bnez t1,294     BJU | 0294 addi t1,t1,-1       | BTB-redirect BR-resolve:T
+   2846 | 0298 bnez t1,294         | 0298 bnez t1,294         | 0| >0298 bnez t1,294        | 0294 addi t1,t1,-1   ALU | 0298 bnez t1,294         | 
+   2847 | 0294 addi t1,t1,-1       | 0294 addi t1,t1,-1       | 0| >0294 addi t1,t1,-1      | 0298 bnez t1,294     BJU | 0294 addi t1,t1,-1       | BTB-redirect BR-resolve:T
+   2848 | 0298 bnez t1,294         | 0298 bnez t1,294         | 0| >0298 bnez t1,294        | 0294 addi t1,t1,-1   ALU | 0298 bnez t1,294         | 
+   2849 | 0294 addi t1,t1,-1       | 0294 addi t1,t1,-1       | 0| >0294 addi t1,t1,-1      | 0298 bnez t1,294     BJU | 0294 addi t1,t1,-1       | BTB-redirect BR-resolve:T
+   2850 | 0298 bnez t1,294         | 0298 bnez t1,294         | 0| >0298 bnez t1,294        | 0294 addi t1,t1,-1   ALU | 0298 bnez t1,294         | 
+   2851 | 0294 addi t1,t1,-1       | 0294 addi t1,t1,-1       | 0| >0294 addi t1,t1,-1      | 0298 bnez t1,294     BJU | 0294 addi t1,t1,-1       | BTB-redirect BR-resolve:T
+   2852 | 0298 bnez t1,294         | 0298 bnez t1,294         | 0| >0298 bnez t1,294        | 0294 addi t1,t1,-1   ALU | 0298 bnez t1,294         | 
+   2853 | 0294 addi t1,t1,-1       | 0294 addi t1,t1,-1       | 0| >0294 addi t1,t1,-1      | 0298 bnez t1,294     BJU | 0294 addi t1,t1,-1       | BTB-redirect BR-resolve:T
+   2854 | 0298 bnez t1,294         | 0298 bnez t1,294         | 0| >0298 bnez t1,294        | 0294 addi t1,t1,-1   ALU | 0298 bnez t1,294         | 
+   2855 | 0294 addi t1,t1,-1       | 0294 addi t1,t1,-1       | 0| >0294 addi t1,t1,-1      | 0298 bnez t1,294     BJU | 0294 addi t1,t1,-1       | BTB-redirect BR-resolve:T
+   2856 | 0298 bnez t1,294         | 0298 bnez t1,294         | 0| >0298 bnez t1,294        | 0294 addi t1,t1,-1   ALU | 0298 bnez t1,294         | 
+   2857 | 0294 addi t1,t1,-1       | 0294 addi t1,t1,-1       | 0| >0294 addi t1,t1,-1      | 0298 bnez t1,294     BJU | 0294 addi t1,t1,-1       | BTB-redirect BR-resolve:T
+   2858 | 0298 bnez t1,294         | 0298 bnez t1,294         | 0| >0298 bnez t1,294        | 0294 addi t1,t1,-1   ALU | 0298 bnez t1,294         | 
+   2859 | 0294 addi t1,t1,-1       | 0294 addi t1,t1,-1       | 0| >0294 addi t1,t1,-1      | 0298 bnez t1,294     BJU | 0294 addi t1,t1,-1       | BTB-redirect BR-resolve:T
+   2860 | 0298 bnez t1,294         | 0298 bnez t1,294         | 0| >0298 bnez t1,294        | 0294 addi t1,t1,-1   ALU | 0298 bnez t1,294         | 
+   2861 | 0294 addi t1,t1,-1       | 0294 addi t1,t1,-1       | 0| >0294 addi t1,t1,-1      | 0298 bnez t1,294     BJU | 0294 addi t1,t1,-1       | BTB-redirect BR-resolve:T
+   2862 | 0298 bnez t1,294         | 0298 bnez t1,294         | 0| >0298 bnez t1,294        | 0294 addi t1,t1,-1   ALU | 0298 bnez t1,294         | 
+   2863 | 0294 addi t1,t1,-1       | 0294 addi t1,t1,-1       | 0| >0294 addi t1,t1,-1      | 0298 bnez t1,294     BJU | 0294 addi t1,t1,-1       | BTB-redirect BR-resolve:T
+   2864 | 0298 bnez t1,294         | 0298 bnez t1,294         | 0| >0298 bnez t1,294        | 0294 addi t1,t1,-1   ALU | 0298 bnez t1,294         | 
+   2865 | 0294 addi t1,t1,-1       | 0294 addi t1,t1,-1       | 0| >0294 addi t1,t1,-1      | 0298 bnez t1,294     BJU | 0294 addi t1,t1,-1       | BTB-redirect BR-resolve:T
+   2866 | 0298 bnez t1,294         | 0298 bnez t1,294         | 0| >0298 bnez t1,294        | 0294 addi t1,t1,-1   ALU | 0298 bnez t1,294         | 
+   2867 | 0294 addi t1,t1,-1       | 0294 addi t1,t1,-1       | 0| >0294 addi t1,t1,-1      | 0298 bnez t1,294     BJU | 0294 addi t1,t1,-1       | BTB-redirect BR-resolve:T
+   2868 | 0298 bnez t1,294         | 0298 bnez t1,294         | 0| >0298 bnez t1,294        | 0294 addi t1,t1,-1   ALU | 0298 bnez t1,294         | 
+   2869 | 0294 addi t1,t1,-1       | 0294 addi t1,t1,-1       | 0| >0294 addi t1,t1,-1      | 0298 bnez t1,294     BJU | 0294 addi t1,t1,-1       | BTB-redirect BR-resolve:T
+   2870 | 0298 bnez t1,294         | 0298 bnez t1,294         | 0| >0298 bnez t1,294        | 0294 addi t1,t1,-1   ALU | 0298 bnez t1,294         | 
+   2871 | 0294 addi t1,t1,-1       | 0294 addi t1,t1,-1       | 0| >0294 addi t1,t1,-1      | 0298 bnez t1,294     BJU | 0294 addi t1,t1,-1       | BTB-redirect BR-resolve:T
+   2872 | 0298 bnez t1,294         | 0298 bnez t1,294         | 0| >0298 bnez t1,294        | 0294 addi t1,t1,-1   ALU | 0298 bnez t1,294         | 
+   2873 | 0294 addi t1,t1,-1       | 0294 addi t1,t1,-1       | 0| >0294 addi t1,t1,-1      | 0298 bnez t1,294     BJU | 0294 addi t1,t1,-1       | BTB-redirect BR-resolve:T
+   2874 | 0298 bnez t1,294         | 0298 bnez t1,294         | 0| >0298 bnez t1,294        | 0294 addi t1,t1,-1   ALU | 0298 bnez t1,294         | 
+   2875 | 0294 addi t1,t1,-1       | 0294 addi t1,t1,-1       | 0| >0294 addi t1,t1,-1      | 0298 bnez t1,294     BJU | 0294 addi t1,t1,-1       | BTB-redirect BR-resolve:T
+   2876 | 0298 bnez t1,294         | 0298 bnez t1,294         | 0| >0298 bnez t1,294        | 0294 addi t1,t1,-1   ALU | 0298 bnez t1,294         | 
+   2877 | 0294 addi t1,t1,-1       | 0294 addi t1,t1,-1       | 0| >0294 addi t1,t1,-1      | 0298 bnez t1,294     BJU | 0294 addi t1,t1,-1       | BTB-redirect BR-resolve:T
+   2878 | 0298 bnez t1,294         | 0298 bnez t1,294         | 0| >0298 bnez t1,294        | 0294 addi t1,t1,-1   ALU | 0298 bnez t1,294         | 
+   2879 | 0294 addi t1,t1,-1       | 0294 addi t1,t1,-1       | 0| >0294 addi t1,t1,-1      | 0298 bnez t1,294     BJU | 0294 addi t1,t1,-1       | BTB-redirect BR-resolve:T
+   2880 | 0298 bnez t1,294         | 0298 bnez t1,294         | 0| >0298 bnez t1,294        | 0294 addi t1,t1,-1   ALU | 0298 bnez t1,294         | 
+   2881 | 0294 addi t1,t1,-1       | 0294 addi t1,t1,-1       | 0| >0294 addi t1,t1,-1      | 0298 bnez t1,294     BJU | 0294 addi t1,t1,-1       | BTB-redirect BR-resolve:T
+   2882 | 0298 bnez t1,294         | 0298 bnez t1,294         | 0| >0298 bnez t1,294        | 0294 addi t1,t1,-1   ALU | 0298 bnez t1,294         | 
+   2883 | 0294 addi t1,t1,-1       | 0294 addi t1,t1,-1       | 0| >0294 addi t1,t1,-1      | 0298 bnez t1,294     BJU | 0294 addi t1,t1,-1       | BTB-redirect BR-resolve:T
+   2884 | 0298 bnez t1,294         | 0298 bnez t1,294         | 0| >0298 bnez t1,294        | 0294 addi t1,t1,-1   ALU | 0298 bnez t1,294         | 
+   2885 | 0294 addi t1,t1,-1       | 0294 addi t1,t1,-1       | 0| >0294 addi t1,t1,-1      | 0298 bnez t1,294     BJU | 0294 addi t1,t1,-1       | BTB-redirect BR-resolve:T
+   2886 | 0298 bnez t1,294         | 0298 bnez t1,294         | 0| >0298 bnez t1,294        | 0294 addi t1,t1,-1   ALU | 0298 bnez t1,294         | 
+   2887 | 0294 addi t1,t1,-1       | 0294 addi t1,t1,-1       | 0| >0294 addi t1,t1,-1      | 0298 bnez t1,294     BJU | 0294 addi t1,t1,-1       | BTB-redirect BR-resolve:T
+   2888 | 0298 bnez t1,294         | 0298 bnez t1,294         | 0| >0298 bnez t1,294        | 0294 addi t1,t1,-1   ALU | 0298 bnez t1,294         | 
+   2889 | 0294 addi t1,t1,-1       | 0294 addi t1,t1,-1       | 0| >0294 addi t1,t1,-1      | 0298 bnez t1,294     BJU | 0294 addi t1,t1,-1       | BTB-redirect BR-resolve:T
+   2890 | 0298 bnez t1,294         | 0298 bnez t1,294         | 0| >0298 bnez t1,294        | 0294 addi t1,t1,-1   ALU | 0298 bnez t1,294         | 
+   2891 | 0294 addi t1,t1,-1       | 0294 addi t1,t1,-1       | 0| >0294 addi t1,t1,-1      | 0298 bnez t1,294     BJU | 0294 addi t1,t1,-1       | BTB-redirect BR-resolve:T
+   2892 | 0298 bnez t1,294         | 0298 bnez t1,294         | 0| >0298 bnez t1,294        | 0294 addi t1,t1,-1   ALU | 0298 bnez t1,294         | 
+   2893 | 0294 addi t1,t1,-1       | 0294 addi t1,t1,-1       | 0| >0294 addi t1,t1,-1      | 0298 bnez t1,294     BJU | 0294 addi t1,t1,-1       | BTB-redirect BR-resolve:T
+   2894 | 0298 bnez t1,294         | 0298 bnez t1,294         | 0| >0298 bnez t1,294        | 0294 addi t1,t1,-1   ALU | 0298 bnez t1,294         | 
+   2895 | 0294 addi t1,t1,-1       | 0294 addi t1,t1,-1       | 0| >0294 addi t1,t1,-1      | 0298 bnez t1,294     BJU | 0294 addi t1,t1,-1       | BTB-redirect BR-resolve:T
+   2896 | 0298 bnez t1,294         | 0298 bnez t1,294         | 0| >0298 bnez t1,294        | 0294 addi t1,t1,-1   ALU | 0298 bnez t1,294         | 
+   2897 | 0294 addi t1,t1,-1       | 0294 addi t1,t1,-1       | 0| >0294 addi t1,t1,-1      | 0298 bnez t1,294     BJU | 0294 addi t1,t1,-1       | BTB-redirect BR-resolve:T
+   2898 | 0298 bnez t1,294         | 0298 bnez t1,294         | 0| >0298 bnez t1,294        | 0294 addi t1,t1,-1   ALU | 0298 bnez t1,294         | 
+   2899 | 0294 addi t1,t1,-1       | 0294 addi t1,t1,-1       | 0| >0294 addi t1,t1,-1      | 0298 bnez t1,294     BJU | 0294 addi t1,t1,-1       | BTB-redirect BR-resolve:T
+   2900 | 0298 bnez t1,294         | 0298 bnez t1,294         | 0| >0298 bnez t1,294        | 0294 addi t1,t1,-1   ALU | 0298 bnez t1,294         | 
+   2901 | 0294 addi t1,t1,-1       | 0294 addi t1,t1,-1       | 0| >0294 addi t1,t1,-1      | 0298 bnez t1,294     BJU | 0294 addi t1,t1,-1       | BTB-redirect BR-resolve:T
+   2902 | 0298 bnez t1,294         | 0298 bnez t1,294         | 0| >0298 bnez t1,294        | 0294 addi t1,t1,-1   ALU | 0298 bnez t1,294         | 
+   2903 | 0294 addi t1,t1,-1       | 0294 addi t1,t1,-1       | 0| >0294 addi t1,t1,-1      | 0298 bnez t1,294     BJU | 0294 addi t1,t1,-1       | BTB-redirect BR-resolve:T
+   2904 | 0298 bnez t1,294         | 0298 bnez t1,294         | 0| >0298 bnez t1,294        | 0294 addi t1,t1,-1   ALU | 0298 bnez t1,294         | 
+   2905 | 0294 addi t1,t1,-1       | 0294 addi t1,t1,-1       | 0| >0294 addi t1,t1,-1      | 0298 bnez t1,294     BJU | 0294 addi t1,t1,-1       | BTB-redirect BR-resolve:T
+   2906 | 0298 bnez t1,294         | 0298 bnez t1,294         | 0| >0298 bnez t1,294        | 0294 addi t1,t1,-1   ALU | 0298 bnez t1,294         | 
+   2907 | 0294 addi t1,t1,-1       | 0294 addi t1,t1,-1       | 0| >0294 addi t1,t1,-1      | 0298 bnez t1,294     BJU | 0294 addi t1,t1,-1       | BTB-redirect BR-resolve:T
+   2908 | 0298 bnez t1,294         | 0298 bnez t1,294         | 0| >0298 bnez t1,294        | 0294 addi t1,t1,-1   ALU | 0298 bnez t1,294         | 
+   2909 | 0294 addi t1,t1,-1       | 0294 addi t1,t1,-1       | 0| >0294 addi t1,t1,-1      | 0298 bnez t1,294     BJU | 0294 addi t1,t1,-1       | BTB-redirect BR-resolve:T
+   2910 | 0298 bnez t1,294         | 0298 bnez t1,294         | 0| >0298 bnez t1,294        | 0294 addi t1,t1,-1   ALU | 0298 bnez t1,294         | 
+   2911 | 0294 addi t1,t1,-1       | 0294 addi t1,t1,-1       | 0| >0294 addi t1,t1,-1      | 0298 bnez t1,294     BJU | 0294 addi t1,t1,-1       | BTB-redirect BR-resolve:T
+   2912 | 0298 bnez t1,294         | 0298 bnez t1,294         | 0| >0298 bnez t1,294        | 0294 addi t1,t1,-1   ALU | 0298 bnez t1,294         | 
+   2913 | 0294 addi t1,t1,-1       | 0294 addi t1,t1,-1       | 0| >0294 addi t1,t1,-1      | 0298 bnez t1,294     BJU | 0294 addi t1,t1,-1       | BTB-redirect BR-resolve:T
+   2914 | 0298 bnez t1,294         | 0298 bnez t1,294         | 0| >0298 bnez t1,294        | 0294 addi t1,t1,-1   ALU | 0298 bnez t1,294         | 
+   2915 | 0294 addi t1,t1,-1       | 0294 addi t1,t1,-1       | 0| >0294 addi t1,t1,-1      | 0298 bnez t1,294     BJU | 0294 addi t1,t1,-1       | BTB-redirect BR-resolve:T
+   2916 | 0298 bnez t1,294         | 0298 bnez t1,294         | 0| >0298 bnez t1,294        | 0294 addi t1,t1,-1   ALU | 0298 bnez t1,294         | 
+   2917 | 0294 addi t1,t1,-1       | 0294 addi t1,t1,-1       | 0| >0294 addi t1,t1,-1      | 0298 bnez t1,294     BJU | 0294 addi t1,t1,-1       | BTB-redirect BR-resolve:T
+   2918 | 0298 bnez t1,294         | 0298 bnez t1,294         | 0| >0298 bnez t1,294        | 0294 addi t1,t1,-1   ALU | 0298 bnez t1,294         | 
+   2919 | 0294 addi t1,t1,-1       | 0294 addi t1,t1,-1       | 0| >0294 addi t1,t1,-1      | 0298 bnez t1,294     BJU | 0294 addi t1,t1,-1       | BTB-redirect BR-resolve:T
+   2920 | 0298 bnez t1,294         | 0298 bnez t1,294         | 0| >0298 bnez t1,294        | 0294 addi t1,t1,-1   ALU | 0298 bnez t1,294         | 
+   2921 | 0294 addi t1,t1,-1       | 0294 addi t1,t1,-1       | 0| >0294 addi t1,t1,-1      | 0298 bnez t1,294     BJU | 0294 addi t1,t1,-1       | BTB-redirect BR-resolve:T
+   2922 | 0298 bnez t1,294         | 0298 bnez t1,294         | 0| >0298 bnez t1,294        | 0294 addi t1,t1,-1   ALU | 0298 bnez t1,294         | 
+   2923 | 0294 addi t1,t1,-1       | 0294 addi t1,t1,-1       | 0| >0294 addi t1,t1,-1      | 0298 bnez t1,294     BJU | 0294 addi t1,t1,-1       | BTB-redirect BR-resolve:T
+   2924 | 0298 bnez t1,294         | 0298 bnez t1,294         | 0| >0298 bnez t1,294        | 0294 addi t1,t1,-1   ALU | 0298 bnez t1,294         | 
+   2925 | 0294 addi t1,t1,-1       | 0294 addi t1,t1,-1       | 0| >0294 addi t1,t1,-1      | 0298 bnez t1,294     BJU | 0294 addi t1,t1,-1       | BTB-redirect BR-resolve:T
+   2926 | 0298 bnez t1,294         | 0298 bnez t1,294         | 0| >0298 bnez t1,294        | 0294 addi t1,t1,-1   ALU | 0298 bnez t1,294         | 
+   2927 | 0294 addi t1,t1,-1       | 0294 addi t1,t1,-1       | 0| >0294 addi t1,t1,-1      | 0298 bnez t1,294     BJU | 0294 addi t1,t1,-1       | BTB-redirect BR-resolve:T
+   2928 | 0298 bnez t1,294         | 0298 bnez t1,294         | 0| >0298 bnez t1,294        | 0294 addi t1,t1,-1   ALU | 0298 bnez t1,294         | 
+   2929 | 0294 addi t1,t1,-1       | 0294 addi t1,t1,-1       | 0| >0294 addi t1,t1,-1      | 0298 bnez t1,294     BJU | 0294 addi t1,t1,-1       | BTB-redirect BR-resolve:T
+   2930 | 0298 bnez t1,294         | 0298 bnez t1,294         | 0| >0298 bnez t1,294        | 0294 addi t1,t1,-1   ALU | 0298 bnez t1,294         | 
+   2931 | 0294 addi t1,t1,-1       | 0294 addi t1,t1,-1       | 0| >0294 addi t1,t1,-1      | 0298 bnez t1,294     BJU | 0294 addi t1,t1,-1       | BTB-redirect BR-resolve:T
+   2932 | 0298 bnez t1,294         | 0298 bnez t1,294         | 0| >0298 bnez t1,294        | 0294 addi t1,t1,-1   ALU | 0298 bnez t1,294         | 
+   2933 | 0294 addi t1,t1,-1       | 0294 addi t1,t1,-1       | 0| >0294 addi t1,t1,-1      | 0298 bnez t1,294     BJU | 0294 addi t1,t1,-1       | BTB-redirect BR-resolve:T
+   2934 | 0298 bnez t1,294         | 0298 bnez t1,294         | 0| >0298 bnez t1,294        | 0294 addi t1,t1,-1   ALU | 0298 bnez t1,294         | 
+   2935 | 0294 addi t1,t1,-1       | 0294 addi t1,t1,-1       | 0| >0294 addi t1,t1,-1      | 0298 bnez t1,294     BJU | 0294 addi t1,t1,-1       | BTB-redirect BR-resolve:T
+   2936 | 0298 bnez t1,294         | 0298 bnez t1,294         | 0| >0298 bnez t1,294        | 0294 addi t1,t1,-1   ALU | 0298 bnez t1,294         | 
+   2937 | 0294 addi t1,t1,-1       | 0294 addi t1,t1,-1       | 0| >0294 addi t1,t1,-1      | 0298 bnez t1,294     BJU | 0294 addi t1,t1,-1       | BTB-redirect BR-resolve:T
+   2938 | 0298 bnez t1,294         | 0298 bnez t1,294         | 0| >0298 bnez t1,294        | 0294 addi t1,t1,-1   ALU | 0298 bnez t1,294         | 
+   2939 | 0294 addi t1,t1,-1       | 0294 addi t1,t1,-1       | 0| >0294 addi t1,t1,-1      | 0298 bnez t1,294     BJU | 0294 addi t1,t1,-1       | BTB-redirect BR-resolve:T
+   2940 | 0298 bnez t1,294         | 0298 bnez t1,294         | 0| >0298 bnez t1,294        | 0294 addi t1,t1,-1   ALU | 0298 bnez t1,294         | 
+   2941 | 0294 addi t1,t1,-1       | 0294 addi t1,t1,-1       | 0| >0294 addi t1,t1,-1      | 0298 bnez t1,294     BJU | 0294 addi t1,t1,-1       | BTB-redirect BR-resolve:T
+   2942 | 0298 bnez t1,294         | 0298 bnez t1,294         | 0| >0298 bnez t1,294        | 0294 addi t1,t1,-1   ALU | 0298 bnez t1,294         | 
+   2943 | 0294 addi t1,t1,-1       | 0294 addi t1,t1,-1       | 0| >0294 addi t1,t1,-1      | 0298 bnez t1,294     BJU | 0294 addi t1,t1,-1       | BTB-redirect BR-resolve:T
+   2944 | 0298 bnez t1,294         | 0298 bnez t1,294         | 0| >0298 bnez t1,294        | 0294 addi t1,t1,-1   ALU | 0298 bnez t1,294         | 
+   2945 | 0294 addi t1,t1,-1       | 0294 addi t1,t1,-1       | 0| >0294 addi t1,t1,-1      | 0298 bnez t1,294     BJU | 0294 addi t1,t1,-1       | BTB-redirect BR-resolve:T
+   2946 | 0298 bnez t1,294         | 0298 bnez t1,294         | 0| >0298 bnez t1,294        | 0294 addi t1,t1,-1   ALU | 0298 bnez t1,294         | 
+   2947 | 0294 addi t1,t1,-1       | 0294 addi t1,t1,-1       | 0| >0294 addi t1,t1,-1      | 0298 bnez t1,294     BJU | 0294 addi t1,t1,-1       | BTB-redirect BR-resolve:T
+   2948 | 0298 bnez t1,294         | 0298 bnez t1,294         | 0| >0298 bnez t1,294        | 0294 addi t1,t1,-1   ALU | 0298 bnez t1,294         | 
+   2949 | 0294 addi t1,t1,-1       | 0294 addi t1,t1,-1       | 0| >0294 addi t1,t1,-1      | 0298 bnez t1,294     BJU | 0294 addi t1,t1,-1       | BTB-redirect BR-resolve:T
+   2950 | 0298 bnez t1,294         | 0298 bnez t1,294         | 0| >0298 bnez t1,294        | 0294 addi t1,t1,-1   ALU | 0298 bnez t1,294         | 
+   2951 | 0294 addi t1,t1,-1       | 0294 addi t1,t1,-1       | 0| >0294 addi t1,t1,-1      | 0298 bnez t1,294     BJU | 0294 addi t1,t1,-1       | BTB-redirect BR-resolve:T
+   2952 | 0298 bnez t1,294         | 0298 bnez t1,294         | 0| >0298 bnez t1,294        | 0294 addi t1,t1,-1   ALU | 0298 bnez t1,294         | 
+   2953 | 0294 addi t1,t1,-1       | 0294 addi t1,t1,-1       | 0| >0294 addi t1,t1,-1      | 0298 bnez t1,294     BJU | 0294 addi t1,t1,-1       | BTB-redirect BR-resolve:T
+   2954 | 0298 bnez t1,294         | 0298 bnez t1,294         | 0| >0298 bnez t1,294        | 0294 addi t1,t1,-1   ALU | 0298 bnez t1,294         | 
+   2955 | 0294 addi t1,t1,-1       | 0294 addi t1,t1,-1       | 0| >0294 addi t1,t1,-1      | 0298 bnez t1,294     BJU | 0294 addi t1,t1,-1       | BTB-redirect BR-resolve:T
+   2956 | 0298 bnez t1,294         | 0298 bnez t1,294         | 0| >0298 bnez t1,294        | 0294 addi t1,t1,-1   ALU | 0298 bnez t1,294         | 
+   2957 | 0294 addi t1,t1,-1       | 0294 addi t1,t1,-1       | 0| >0294 addi t1,t1,-1      | 0298 bnez t1,294     BJU | 0294 addi t1,t1,-1       | BTB-redirect BR-resolve:T
+   2958 | 0298 bnez t1,294         | 0298 bnez t1,294         | 0| >0298 bnez t1,294        | 0294 addi t1,t1,-1   ALU | 0298 bnez t1,294         | 
+   2959 | 0294 addi t1,t1,-1       | 0294 addi t1,t1,-1       | 0| >0294 addi t1,t1,-1      | 0298 bnez t1,294     BJU | 0294 addi t1,t1,-1       | BTB-redirect BR-resolve:T
+   2960 | 0298 bnez t1,294         | 0298 bnez t1,294         | 0| >0298 bnez t1,294        | 0294 addi t1,t1,-1   ALU | 0298 bnez t1,294         | 
+   2961 | 0294 addi t1,t1,-1       | 0294 addi t1,t1,-1       | 0| >0294 addi t1,t1,-1      | 0298 bnez t1,294     BJU | 0294 addi t1,t1,-1       | BTB-redirect BR-resolve:T
+   2962 | 0298 bnez t1,294         | 0298 bnez t1,294         | 0| >0298 bnez t1,294        | 0294 addi t1,t1,-1   ALU | 0298 bnez t1,294         | 
+   2963 | 0294 addi t1,t1,-1       | 0294 addi t1,t1,-1       | 0| >0294 addi t1,t1,-1      | 0298 bnez t1,294     BJU | 0294 addi t1,t1,-1       | BTB-redirect BR-resolve:T
+   2964 | 0298 bnez t1,294         | 0298 bnez t1,294         | 0| >0298 bnez t1,294        | 0294 addi t1,t1,-1   ALU | 0298 bnez t1,294         | 
+   2965 | 0294 addi t1,t1,-1       | 0294 addi t1,t1,-1       | 0| >0294 addi t1,t1,-1      | 0298 bnez t1,294     BJU | 0294 addi t1,t1,-1       | BTB-redirect BR-resolve:T
+   2966 | 0298 bnez t1,294         | 0298 bnez t1,294         | 0| >0298 bnez t1,294        | 0294 addi t1,t1,-1   ALU | 0298 bnez t1,294         | 
+   2967 | 0294 addi t1,t1,-1       | 0294 addi t1,t1,-1       | 0| >0294 addi t1,t1,-1      | 0298 bnez t1,294     BJU | 0294 addi t1,t1,-1       | BTB-redirect BR-resolve:T
+   2968 | 0298 bnez t1,294         | 0298 bnez t1,294         | 0| >0298 bnez t1,294        | 0294 addi t1,t1,-1   ALU | 0298 bnez t1,294         | 
+   2969 | 0294 addi t1,t1,-1       | 0294 addi t1,t1,-1       | 0| >0294 addi t1,t1,-1      | 0298 bnez t1,294     BJU | 0294 addi t1,t1,-1       | BTB-redirect BR-resolve:T
+   2970 | 0298 bnez t1,294         | 0298 bnez t1,294         | 0| >0298 bnez t1,294        | 0294 addi t1,t1,-1   ALU | 0298 bnez t1,294         | 
+   2971 | 0294 addi t1,t1,-1       | 0294 addi t1,t1,-1       | 0| >0294 addi t1,t1,-1      | 0298 bnez t1,294     BJU | 0294 addi t1,t1,-1       | BTB-redirect BR-resolve:T
+   2972 | 0298 bnez t1,294         | 0298 bnez t1,294         | 0| >0298 bnez t1,294        | 0294 addi t1,t1,-1   ALU | 0298 bnez t1,294         | 
+   2973 | 0294 addi t1,t1,-1       | 0294 addi t1,t1,-1       | 0| >0294 addi t1,t1,-1      | 0298 bnez t1,294     BJU | 0294 addi t1,t1,-1       | BTB-redirect BR-resolve:T
+   2974 | 0298 bnez t1,294         | 0298 bnez t1,294         | 0| >0298 bnez t1,294        | 0294 addi t1,t1,-1   ALU | 0298 bnez t1,294         | 
+   2975 | 0294 addi t1,t1,-1       | 0294 addi t1,t1,-1       | 0| >0294 addi t1,t1,-1      | 0298 bnez t1,294     BJU | 0294 addi t1,t1,-1       | BTB-redirect BR-resolve:T
+   2976 | 0298 bnez t1,294         | 0298 bnez t1,294         | 0| >0298 bnez t1,294        | 0294 addi t1,t1,-1   ALU | 0298 bnez t1,294         | 
+   2977 | 0294 addi t1,t1,-1       | 0294 addi t1,t1,-1       | 0| >0294 addi t1,t1,-1      | 0298 bnez t1,294     BJU | 0294 addi t1,t1,-1       | BTB-redirect BR-resolve:T
+   2978 | 0298 bnez t1,294         | 0298 bnez t1,294         | 0| >0298 bnez t1,294        | 0294 addi t1,t1,-1   ALU | 0298 bnez t1,294         | 
+   2979 | 0294 addi t1,t1,-1       | 0294 addi t1,t1,-1       | 0| >0294 addi t1,t1,-1      | 0298 bnez t1,294     BJU | 0294 addi t1,t1,-1       | BTB-redirect BR-resolve:T
+   2980 | 0298 bnez t1,294         | 0298 bnez t1,294         | 0| >0298 bnez t1,294        | 0294 addi t1,t1,-1   ALU | 0298 bnez t1,294         | 
+   2981 | 0294 addi t1,t1,-1       | 0294 addi t1,t1,-1       | 0| >0294 addi t1,t1,-1      | 0298 bnez t1,294     BJU | 0294 addi t1,t1,-1       | BTB-redirect BR-resolve:T
+   2982 | 0298 bnez t1,294         | 0298 bnez t1,294         | 0| >0298 bnez t1,294        | 0294 addi t1,t1,-1   ALU | 0298 bnez t1,294         | 
+   2983 | 0294 addi t1,t1,-1       | 0294 addi t1,t1,-1       | 0| >0294 addi t1,t1,-1      | 0298 bnez t1,294     BJU | 0294 addi t1,t1,-1       | BTB-redirect BR-resolve:T
+   2984 | 0298 bnez t1,294         | 0298 bnez t1,294         | 0| >0298 bnez t1,294        | 0294 addi t1,t1,-1   ALU | 0298 bnez t1,294         | 
+   2985 | 0294 addi t1,t1,-1       | 0294 addi t1,t1,-1       | 0| >0294 addi t1,t1,-1      | 0298 bnez t1,294     BJU | 0294 addi t1,t1,-1       | BTB-redirect BR-resolve:T
+   2986 | 0298 bnez t1,294         | 0298 bnez t1,294         | 0| >0298 bnez t1,294        | 0294 addi t1,t1,-1   ALU | 0298 bnez t1,294         | 
+   2987 | 0294 addi t1,t1,-1       | 0294 addi t1,t1,-1       | 0| >0294 addi t1,t1,-1      | 0298 bnez t1,294     BJU | 0294 addi t1,t1,-1       | BTB-redirect BR-resolve:T
+   2988 | 0298 bnez t1,294         | 0298 bnez t1,294         | 0| >0298 bnez t1,294        | 0294 addi t1,t1,-1   ALU | 0298 bnez t1,294         | 
+   2989 | 0294 addi t1,t1,-1       | 0294 addi t1,t1,-1       | 0| >0294 addi t1,t1,-1      | 0298 bnez t1,294     BJU | 0294 addi t1,t1,-1       | BTB-redirect BR-resolve:T
+   2990 | 0298 bnez t1,294         | 0298 bnez t1,294         | 0| >0298 bnez t1,294        | 0294 addi t1,t1,-1   ALU | 0298 bnez t1,294         | 
+   2991 | 0294 addi t1,t1,-1       | 0294 addi t1,t1,-1       | 0| >0294 addi t1,t1,-1      | 0298 bnez t1,294     BJU | 0294 addi t1,t1,-1       | BTB-redirect BR-resolve:T
+   2992 | 0298 bnez t1,294         | 0298 bnez t1,294         | 0| >0298 bnez t1,294        | 0294 addi t1,t1,-1   ALU | 0298 bnez t1,294         | 
+   2993 | 0294 addi t1,t1,-1       | 0294 addi t1,t1,-1       | 0| >0294 addi t1,t1,-1      | 0298 bnez t1,294     BJU | 0294 addi t1,t1,-1       | BTB-redirect BR-resolve:T
+   2994 | 0298 bnez t1,294         | 0298 bnez t1,294         | 0| >0298 bnez t1,294        | 0294 addi t1,t1,-1   ALU | 0298 bnez t1,294         | 
+   2995 | 0294 addi t1,t1,-1       | 0294 addi t1,t1,-1       | 0| >0294 addi t1,t1,-1      | 0298 bnez t1,294     BJU | 0294 addi t1,t1,-1       | BTB-redirect BR-resolve:T
+   2996 | 0298 bnez t1,294         | 0298 bnez t1,294         | 0| >0298 bnez t1,294        | 0294 addi t1,t1,-1   ALU | 0298 bnez t1,294         | 
+   2997 | 0294 addi t1,t1,-1       | 0294 addi t1,t1,-1       | 0| >0294 addi t1,t1,-1      | 0298 bnez t1,294     BJU | 0294 addi t1,t1,-1       | BTB-redirect BR-resolve:T
+   2998 | 0298 bnez t1,294         | 0298 bnez t1,294         | 0| >0298 bnez t1,294        | 0294 addi t1,t1,-1   ALU | 0298 bnez t1,294         | 
+   2999 | 0294 addi t1,t1,-1       | 0294 addi t1,t1,-1       | 0| >0294 addi t1,t1,-1      | 0298 bnez t1,294     BJU | 0294 addi t1,t1,-1       | BTB-redirect BR-resolve:T
+   3000 | 0298 bnez t1,294         | 0298 bnez t1,294         | 0| >0298 bnez t1,294        | 0294 addi t1,t1,-1   ALU | 0298 bnez t1,294         | 
+   3001 | 0294 addi t1,t1,-1       | 0294 addi t1,t1,-1       | 0| >0294 addi t1,t1,-1      | 0298 bnez t1,294     BJU | 0294 addi t1,t1,-1       | BTB-redirect BR-resolve:T
+   3002 | 0298 bnez t1,294         | 0298 bnez t1,294         | 0| >0298 bnez t1,294        | 0294 addi t1,t1,-1   ALU | 0298 bnez t1,294         | 
+   3003 | 0294 addi t1,t1,-1       | 0294 addi t1,t1,-1       | 0| >0294 addi t1,t1,-1      | 0298 bnez t1,294     BJU | 0294 addi t1,t1,-1       | BTB-redirect BR-resolve:T
+   3004 | 0298 bnez t1,294         | 0298 bnez t1,294         | 0| >0298 bnez t1,294        | 0294 addi t1,t1,-1   ALU | 0298 bnez t1,294         | 
+   3005 | 0294 addi t1,t1,-1       | 0294 addi t1,t1,-1       | 0| >0294 addi t1,t1,-1      | 0298 bnez t1,294     BJU | 0294 addi t1,t1,-1       | BTB-redirect BR-resolve:T
+   3006 | 0298 bnez t1,294         | 0298 bnez t1,294         | 0| >0298 bnez t1,294        | 0294 addi t1,t1,-1   ALU | 0298 bnez t1,294         | 
+   3007 | 0294 addi t1,t1,-1       | 0294 addi t1,t1,-1       | 0| >0294 addi t1,t1,-1      | 0298 bnez t1,294     BJU | 0294 addi t1,t1,-1       | BTB-redirect BR-resolve:T
+   3008 | 0298 bnez t1,294         | 0298 bnez t1,294         | 0| >0298 bnez t1,294        | 0294 addi t1,t1,-1   ALU | 0298 bnez t1,294         | 
+   3009 | 0294 addi t1,t1,-1       | 0294 addi t1,t1,-1       | 0| >0294 addi t1,t1,-1      | 0298 bnez t1,294     BJU | 0294 addi t1,t1,-1       | BTB-redirect BR-resolve:T
+   3010 | 0298 bnez t1,294         | 0298 bnez t1,294         | 0| >0298 bnez t1,294        | 0294 addi t1,t1,-1   ALU | 0298 bnez t1,294         | 
+   3011 | 0294 addi t1,t1,-1       | 0294 addi t1,t1,-1       | 0| >0294 addi t1,t1,-1      | 0298 bnez t1,294     BJU | 0294 addi t1,t1,-1       | BTB-redirect BR-resolve:T
+   3012 | 0298 bnez t1,294         | 0298 bnez t1,294         | 0| >0298 bnez t1,294        | 0294 addi t1,t1,-1   ALU | 0298 bnez t1,294         | 
+   3013 | 0294 addi t1,t1,-1       | 0294 addi t1,t1,-1       | 0| >0294 addi t1,t1,-1      | 0298 bnez t1,294     BJU | 0294 addi t1,t1,-1       | BTB-redirect BR-resolve:T
+   3014 | 0298 bnez t1,294         | 0298 bnez t1,294         | 0| >0298 bnez t1,294        | 0294 addi t1,t1,-1   ALU | 0298 bnez t1,294         | 
+   3015 | 0294 addi t1,t1,-1       | 0294 addi t1,t1,-1       | 0| >0294 addi t1,t1,-1      | 0298 bnez t1,294     BJU | 0294 addi t1,t1,-1       | BTB-redirect BR-resolve:T
+   3016 | 0298 bnez t1,294         | 0298 bnez t1,294         | 0| >0298 bnez t1,294        | 0294 addi t1,t1,-1   ALU | 0298 bnez t1,294         | 
+   3017 | 0294 addi t1,t1,-1       | 0294 addi t1,t1,-1       | 0| >0294 addi t1,t1,-1      | 0298 bnez t1,294     BJU | 0294 addi t1,t1,-1       | BTB-redirect BR-resolve:T
+   3018 | 0298 bnez t1,294         | 0298 bnez t1,294         | 0| >0298 bnez t1,294        | 0294 addi t1,t1,-1   ALU | 0298 bnez t1,294         | 
+   3019 | 0294 addi t1,t1,-1       | 0294 addi t1,t1,-1       | 0| >0294 addi t1,t1,-1      | 0298 bnez t1,294     BJU | 0294 addi t1,t1,-1       | BTB-redirect BR-resolve:T
+   3020 | 0298 bnez t1,294         | 0298 bnez t1,294         | 0| >0298 bnez t1,294        | 0294 addi t1,t1,-1   ALU | 0298 bnez t1,294         | 
+   3021 | 0294 addi t1,t1,-1       | 0294 addi t1,t1,-1       | 0| >0294 addi t1,t1,-1      | 0298 bnez t1,294     BJU | 0294 addi t1,t1,-1       | BTB-redirect BR-resolve:T
+   3022 | 0298 bnez t1,294         | 0298 bnez t1,294         | 0| >0298 bnez t1,294        | 0294 addi t1,t1,-1   ALU | 0298 bnez t1,294         | 
+   3023 | 0294 addi t1,t1,-1       | 0294 addi t1,t1,-1       | 0| >0294 addi t1,t1,-1      | 0298 bnez t1,294     BJU | 0294 addi t1,t1,-1       | BTB-redirect BR-resolve:T
+   3024 | 0298 bnez t1,294         | 0298 bnez t1,294         | 0| >0298 bnez t1,294        | 0294 addi t1,t1,-1   ALU | 0298 bnez t1,294         | 
+   3025 | 0294 addi t1,t1,-1       | 0294 addi t1,t1,-1       | 0| >0294 addi t1,t1,-1      | 0298 bnez t1,294     BJU | 0294 addi t1,t1,-1       | BTB-redirect BR-resolve:T
+   3026 | 0298 bnez t1,294         | 0298 bnez t1,294         | 0| >0298 bnez t1,294        | 0294 addi t1,t1,-1   ALU | 0298 bnez t1,294         | 
+   3027 | 0294 addi t1,t1,-1       | 0294 addi t1,t1,-1       | 0| >0294 addi t1,t1,-1      | 0298 bnez t1,294     BJU | 0294 addi t1,t1,-1       | BTB-redirect BR-resolve:T
+   3028 | 0298 bnez t1,294         | 0298 bnez t1,294         | 0| >0298 bnez t1,294        | 0294 addi t1,t1,-1   ALU | 0298 bnez t1,294         | 
+   3029 | 0294 addi t1,t1,-1       | 0294 addi t1,t1,-1       | 0| >0294 addi t1,t1,-1      | 0298 bnez t1,294     BJU | 0294 addi t1,t1,-1       | BTB-redirect BR-resolve:T
+   3030 | 0298 bnez t1,294         | 0298 bnez t1,294         | 0| >0298 bnez t1,294        | 0294 addi t1,t1,-1   ALU | 0298 bnez t1,294         | 
+   3031 | 0294 addi t1,t1,-1       | 0294 addi t1,t1,-1       | 0| >0294 addi t1,t1,-1      | 0298 bnez t1,294     BJU | 0294 addi t1,t1,-1       | BTB-redirect BR-resolve:T
+   3032 | 0298 bnez t1,294         | 0298 bnez t1,294         | 0| >0298 bnez t1,294        | 0294 addi t1,t1,-1   ALU | 0298 bnez t1,294         | 
+   3033 | 0294 addi t1,t1,-1       | 0294 addi t1,t1,-1       | 0| >0294 addi t1,t1,-1      | 0298 bnez t1,294     BJU | 0294 addi t1,t1,-1       | BTB-redirect BR-resolve:T
+   3034 | 0298 bnez t1,294         | 0298 bnez t1,294         | 0| >0298 bnez t1,294        | 0294 addi t1,t1,-1   ALU | 0298 bnez t1,294         | 
+   3035 | 0294 addi t1,t1,-1       | 0294 addi t1,t1,-1       | 0| >0294 addi t1,t1,-1      | 0298 bnez t1,294     BJU | 0294 addi t1,t1,-1       | BTB-redirect BR-resolve:T
+   3036 | 0298 bnez t1,294         | 0298 bnez t1,294         | 0| >0298 bnez t1,294        | 0294 addi t1,t1,-1   ALU | 0298 bnez t1,294         | 
+   3037 | 0294 addi t1,t1,-1       | 0294 addi t1,t1,-1       | 0| >0294 addi t1,t1,-1      | 0298 bnez t1,294     BJU | 0294 addi t1,t1,-1       | BTB-redirect BR-resolve:T
+   3038 | 0298 bnez t1,294         | 0298 bnez t1,294         | 0| >0298 bnez t1,294        | 0294 addi t1,t1,-1   ALU | 0298 bnez t1,294         | 
+   3039 | 0294 addi t1,t1,-1       | 0294 addi t1,t1,-1       | 0| >0294 addi t1,t1,-1      | 0298 bnez t1,294     BJU | 0294 addi t1,t1,-1       | BTB-redirect BR-resolve:T
+   3040 | 0298 bnez t1,294         | 0298 bnez t1,294         | 0| >0298 bnez t1,294        | 0294 addi t1,t1,-1   ALU | 0298 bnez t1,294         | 
+   3041 | 0294 addi t1,t1,-1       | 0294 addi t1,t1,-1       | 0| >0294 addi t1,t1,-1      | 0298 bnez t1,294     BJU | 0294 addi t1,t1,-1       | BTB-redirect BR-resolve:T
+   3042 | 0298 bnez t1,294         | 0298 bnez t1,294         | 0| >0298 bnez t1,294        | 0294 addi t1,t1,-1   ALU | 0298 bnez t1,294         | 
+   3043 | 0294 addi t1,t1,-1       | 0294 addi t1,t1,-1       | 0| >0294 addi t1,t1,-1      | 0298 bnez t1,294     BJU | 0294 addi t1,t1,-1       | BTB-redirect BR-resolve:T
+   3044 | 0298 bnez t1,294         | 0298 bnez t1,294         | 0| >0298 bnez t1,294        | 0294 addi t1,t1,-1   ALU | 0298 bnez t1,294         | 
+   3045 | 0294 addi t1,t1,-1       | 0294 addi t1,t1,-1       | 0| >0294 addi t1,t1,-1      | 0298 bnez t1,294     BJU | 0294 addi t1,t1,-1       | BTB-redirect BR-resolve:T
+   3046 | 0298 bnez t1,294         | 0298 bnez t1,294         | 0| >0298 bnez t1,294        | 0294 addi t1,t1,-1   ALU | 0298 bnez t1,294         | 
+   3047 | 0294 addi t1,t1,-1       | 0294 addi t1,t1,-1       | 0| >0294 addi t1,t1,-1      | 0298 bnez t1,294     BJU | 0294 addi t1,t1,-1       | BTB-redirect BR-resolve:T
+   3048 | 0298 bnez t1,294         | 0298 bnez t1,294         | 0| >0298 bnez t1,294        | 0294 addi t1,t1,-1   ALU | 0298 bnez t1,294         | 
+   3049 | 0294 addi t1,t1,-1       | 0294 addi t1,t1,-1       | 0| >0294 addi t1,t1,-1      | 0298 bnez t1,294     BJU | 0294 addi t1,t1,-1       | BTB-redirect BR-resolve:T
+   3050 | 0298 bnez t1,294         | 0298 bnez t1,294         | 0| >0298 bnez t1,294        | 0294 addi t1,t1,-1   ALU | 0298 bnez t1,294         | 
+   3051 | 0294 addi t1,t1,-1       | 0294 addi t1,t1,-1       | 0| >0294 addi t1,t1,-1      | 0298 bnez t1,294     BJU | 0294 addi t1,t1,-1       | BTB-redirect BR-resolve:T
+   3052 | 0298 bnez t1,294         | 0298 bnez t1,294         | 0| >0298 bnez t1,294        | 0294 addi t1,t1,-1   ALU | 0298 bnez t1,294         | 
+   3053 | 0294 addi t1,t1,-1       | 0294 addi t1,t1,-1       | 0| >0294 addi t1,t1,-1      | 0298 bnez t1,294     BJU | 0294 addi t1,t1,-1       | BTB-redirect BR-resolve:T
+   3054 | 0298 bnez t1,294         | 0298 bnez t1,294         | 0| >0298 bnez t1,294        | 0294 addi t1,t1,-1   ALU | 0298 bnez t1,294         | 
+   3055 | 0294 addi t1,t1,-1       | 0294 addi t1,t1,-1       | 0| >0294 addi t1,t1,-1      | 0298 bnez t1,294     BJU | 0294 addi t1,t1,-1       | BTB-redirect BR-resolve:T
+   3056 | 0298 bnez t1,294         | 0298 bnez t1,294         | 0| >0298 bnez t1,294        | 0294 addi t1,t1,-1   ALU | 0298 bnez t1,294         | 
+   3057 | 0294 addi t1,t1,-1       | 0294 addi t1,t1,-1       | 0| >0294 addi t1,t1,-1      | 0298 bnez t1,294     BJU | 0294 addi t1,t1,-1       | BTB-redirect BR-resolve:T
+   3058 | 0298 bnez t1,294         | 0298 bnez t1,294         | 0| >0298 bnez t1,294        | 0294 addi t1,t1,-1   ALU | 0298 bnez t1,294         | 
+   3059 | 0294 addi t1,t1,-1       | 0294 addi t1,t1,-1       | 0| >0294 addi t1,t1,-1      | 0298 bnez t1,294     BJU | 0294 addi t1,t1,-1       | BTB-redirect BR-resolve:T
+   ... (73 more cycles, use --mark 1 --max-rows N)
+----------------------------------------------------------------------------------------------------------------------------------------------------------------
+summary: cycles=473 retired=408 IPC=0.863 | btb_redirect=182, ip_redirect=2, iu_redirect=19, mispred_bht=19, retired=408, stall_CP0/fence=22
+
+================================================================================================================================================================
+MARK 2   cycles 4074 .. 4461  (388 cycles)
+================================================================================================================================================================
+    cyc | IF (fetch)               | IP (pred)                |IB| ID                       | EX1                      | RETIRE                   | events
+----------------------------------------------------------------------------------------------------------------------------------------------------------------
+   4074 | 0334 sub s11,s11,s5      | 032c li t6,0             | 2| >0324 csrr s5,mcycle     |                          |                          | 
+   4075 | 0338 auipc t1,0x0        | 0330 sub s10,s10,s6      | 2| .0328 wfi                | 0324 csrr s5,mcycle  CP0 |                          | ID-stall:CP0/fence
+   4076 | 033c addi t1,t1,-16      | 0334 sub s11,s11,s5      | 4| .0328 wfi                |                          | 0324 csrr s5,mcycle      | ID-stall:CP0/fence
+   4077 |                          | 0338 auipc t1,0x0        | 6| >0328 wfi                |                          |                          | 
+   4078 | 033c addi t1,t1,-16      | 0338 auipc t1,0x0        | 4| .032c li t6,0            | 0328 wfi             CP0 |                          | ID-stall:EX1-busy
+   4079 |                          |                          | 6| .032c li t6,0            | 0328 wfi             CP0 |                          | ID-stall:EX1-busy
+   4080 |                          | 033c addi t1,t1,-16      | 6| .032c li t6,0            | 0328 wfi             CP0 |                          | ID-stall:EX1-busy
+   4081 |                          | 033c addi t1,t1,-16      | 6| .032c li t6,0            | 0328 wfi             CP0 |                          | ID-stall:EX1-busy
+   4082 |                          | 033c addi t1,t1,-16      | 6| .032c li t6,0            | 0328 wfi             CP0 |                          | ID-stall:EX1-busy
+   4083 |                          | 033c addi t1,t1,-16      | 6| .032c li t6,0            | 0328 wfi             CP0 |                          | ID-stall:EX1-busy
+   4084 |                          | 033c addi t1,t1,-16      | 6| .032c li t6,0            | 0328 wfi             CP0 |                          | ID-stall:EX1-busy
+   4085 |                          | 033c addi t1,t1,-16      | 6| .032c li t6,0            | 0328 wfi             CP0 |                          | ID-stall:EX1-busy
+   4086 |                          | 033c addi t1,t1,-16      | 6| .032c li t6,0            | 0328 wfi             CP0 |                          | ID-stall:EX1-busy
+   4087 |                          | 033c addi t1,t1,-16      | 6| .032c li t6,0            | 0328 wfi             CP0 |                          | ID-stall:EX1-busy
+   4088 |                          | 033c addi t1,t1,-16      | 6| .032c li t6,0            | 0328 wfi             CP0 |                          | ID-stall:EX1-busy
+   4089 |                          | 033c addi t1,t1,-16      | 6| .032c li t6,0            | 0328 wfi             CP0 |                          | ID-stall:EX1-busy
+   4090 |                          | 033c addi t1,t1,-16      | 6| .032c li t6,0            | 0328 wfi             CP0 |                          | ID-stall:EX1-busy
+   4091 |                          | 033c addi t1,t1,-16      | 6| .032c li t6,0            | 0328 wfi             CP0 |                          | ID-stall:EX1-busy
+   4092 |                          | 033c addi t1,t1,-16      | 6| .032c li t6,0            | 0328 wfi             CP0 |                          | ID-stall:EX1-busy
+   4093 |                          | 033c addi t1,t1,-16      | 6| .032c li t6,0            | 0328 wfi             CP0 |                          | ID-stall:EX1-busy
+   4094 |                          | 033c addi t1,t1,-16      | 6| .032c li t6,0            | 0328 wfi             CP0 |                          | ID-stall:EX1-busy
+   4095 |                          | 033c addi t1,t1,-16      | 6| .032c li t6,0            | 0328 wfi             CP0 |                          | ID-stall:EX1-busy
+   4096 |                          | 033c addi t1,t1,-16      | 6| .032c li t6,0            | 0328 wfi             CP0 |                          | ID-stall:EX1-busy
+   4097 |                          | 033c addi t1,t1,-16      | 6| .032c li t6,0            | 0328 wfi             CP0 |                          | ID-stall:EX1-busy
+   4098 |                          | 033c addi t1,t1,-16      | 6| .032c li t6,0            | 0328 wfi             CP0 |                          | ID-stall:EX1-busy
+   4099 |                          | 033c addi t1,t1,-16      | 6| .032c li t6,0            | 0328 wfi             CP0 |                          | ID-stall:EX1-busy
+   4100 |                          | 033c addi t1,t1,-16      | 6| .032c li t6,0            | 0328 wfi             CP0 |                          | ID-stall:EX1-busy
+   4101 |                          | 033c addi t1,t1,-16      | 6| .032c li t6,0            | 0328 wfi             CP0 |                          | ID-stall:EX1-busy
+   4102 |                          | 033c addi t1,t1,-16      | 6| .032c li t6,0            | 0328 wfi             CP0 |                          | ID-stall:EX1-busy
+   4103 |                          | 033c addi t1,t1,-16      | 6| .032c li t6,0            | 0328 wfi             CP0 |                          | ID-stall:EX1-busy
+   4104 |                          | 033c addi t1,t1,-16      | 6| .032c li t6,0            | 0328 wfi             CP0 |                          | ID-stall:EX1-busy
+   4105 |                          | 033c addi t1,t1,-16      | 6| .032c li t6,0            | 0328 wfi             CP0 |                          | ID-stall:EX1-busy
+   4106 |                          | 033c addi t1,t1,-16      | 6| .032c li t6,0            | 0328 wfi             CP0 |                          | ID-stall:EX1-busy
+   4107 |                          | 033c addi t1,t1,-16      | 6| .032c li t6,0            | 0328 wfi             CP0 |                          | ID-stall:EX1-busy
+   4108 |                          | 033c addi t1,t1,-16      | 6| .032c li t6,0            | 0328 wfi             CP0 |                          | ID-stall:EX1-busy
+   4109 |                          | 033c addi t1,t1,-16      | 6| .032c li t6,0            | 0328 wfi             CP0 |                          | ID-stall:EX1-busy
+   4110 |                          | 033c addi t1,t1,-16      | 6| .032c li t6,0            | 0328 wfi             CP0 |                          | ID-stall:EX1-busy
+   4111 |                          | 033c addi t1,t1,-16      | 6| .032c li t6,0            | 0328 wfi             CP0 |                          | ID-stall:EX1-busy
+   4112 |                          | 033c addi t1,t1,-16      | 6| .032c li t6,0            | 0328 wfi             CP0 |                          | ID-stall:EX1-busy
+   4113 |                          | 033c addi t1,t1,-16      | 6| .032c li t6,0            | 0328 wfi             CP0 |                          | ID-stall:EX1-busy
+   4114 |                          | 033c addi t1,t1,-16      | 6| .032c li t6,0            | 0328 wfi             CP0 |                          | ID-stall:EX1-busy
+   4115 |                          | 033c addi t1,t1,-16      | 6| .032c li t6,0            | 0328 wfi             CP0 |                          | ID-stall:EX1-busy
+   4116 |                          | 033c addi t1,t1,-16      | 6| .032c li t6,0            | 0328 wfi             CP0 |                          | ID-stall:EX1-busy
+   4117 |                          | 033c addi t1,t1,-16      | 6| .032c li t6,0            | 0328 wfi             CP0 |                          | ID-stall:EX1-busy
+   4118 |                          | 033c addi t1,t1,-16      | 6| .032c li t6,0            | 0328 wfi             CP0 |                          | ID-stall:EX1-busy
+   4119 |                          | 033c addi t1,t1,-16      | 6| .032c li t6,0            | 0328 wfi             CP0 |                          | ID-stall:EX1-busy
+   4120 |                          | 033c addi t1,t1,-16      | 6| .032c li t6,0            | 0328 wfi             CP0 |                          | ID-stall:EX1-busy
+   4121 |                          | 033c addi t1,t1,-16      | 6| .032c li t6,0            | 0328 wfi             CP0 |                          | ID-stall:EX1-busy
+   4122 |                          | 033c addi t1,t1,-16      | 6| .032c li t6,0            | 0328 wfi             CP0 |                          | ID-stall:EX1-busy
+   4123 |                          | 033c addi t1,t1,-16      | 6| .032c li t6,0            | 0328 wfi             CP0 |                          | ID-stall:EX1-busy
+   4124 |                          | 033c addi t1,t1,-16      | 6| .032c li t6,0            | 0328 wfi             CP0 |                          | ID-stall:EX1-busy
+   4125 |                          | 033c addi t1,t1,-16      | 6| .032c li t6,0            | 0328 wfi             CP0 |                          | ID-stall:EX1-busy
+   4126 |                          | 033c addi t1,t1,-16      | 6| .032c li t6,0            | 0328 wfi             CP0 |                          | ID-stall:EX1-busy
+   4127 |                          | 033c addi t1,t1,-16      | 6| .032c li t6,0            | 0328 wfi             CP0 |                          | ID-stall:EX1-busy
+   4128 |                          | 033c addi t1,t1,-16      | 6| .032c li t6,0            | 0328 wfi             CP0 |                          | ID-stall:EX1-busy
+   4129 |                          | 033c addi t1,t1,-16      | 6| .032c li t6,0            | 0328 wfi             CP0 |                          | ID-stall:EX1-busy
+   4130 |                          | 033c addi t1,t1,-16      | 6| .032c li t6,0            | 0328 wfi             CP0 |                          | ID-stall:EX1-busy
+   4131 |                          | 033c addi t1,t1,-16      | 6| .032c li t6,0            | 0328 wfi             CP0 |                          | ID-stall:EX1-busy
+   4132 |                          | 033c addi t1,t1,-16      | 6| .032c li t6,0            | 0328 wfi             CP0 |                          | ID-stall:EX1-busy
+   4133 |                          | 033c addi t1,t1,-16      | 6| .032c li t6,0            | 0328 wfi             CP0 |                          | ID-stall:EX1-busy
+   4134 |                          | 033c addi t1,t1,-16      | 6| .032c li t6,0            | 0328 wfi             CP0 |                          | ID-stall:EX1-busy
+   4135 |                          | 033c addi t1,t1,-16      | 6| .032c li t6,0            | 0328 wfi             CP0 |                          | ID-stall:EX1-busy
+   4136 |                          | 033c addi t1,t1,-16      | 6| .032c li t6,0            | 0328 wfi             CP0 |                          | ID-stall:EX1-busy
+   4137 |                          | 033c addi t1,t1,-16      | 6| .032c li t6,0            | 0328 wfi             CP0 |                          | ID-stall:EX1-busy
+   4138 |                          | 033c addi t1,t1,-16      | 6| .032c li t6,0            | 0328 wfi             CP0 |                          | ID-stall:EX1-busy
+   4139 |                          | 033c addi t1,t1,-16      | 6| .032c li t6,0            | 0328 wfi             CP0 |                          | ID-stall:EX1-busy
+   4140 |                          | 033c addi t1,t1,-16      | 6| .032c li t6,0            | 0328 wfi             CP0 |                          | ID-stall:EX1-busy
+   4141 |                          | 033c addi t1,t1,-16      | 6| .032c li t6,0            | 0328 wfi             CP0 |                          | ID-stall:EX1-busy
+   4142 |                          | 033c addi t1,t1,-16      | 6| .032c li t6,0            | 0328 wfi             CP0 |                          | ID-stall:EX1-busy
+   4143 |                          | 033c addi t1,t1,-16      | 6| .032c li t6,0            | 0328 wfi             CP0 |                          | ID-stall:EX1-busy
+   4144 |                          | 033c addi t1,t1,-16      | 6| .032c li t6,0            | 0328 wfi             CP0 |                          | ID-stall:EX1-busy
+   4145 |                          | 033c addi t1,t1,-16      | 6| .032c li t6,0            | 0328 wfi             CP0 |                          | ID-stall:EX1-busy
+   4146 |                          | 033c addi t1,t1,-16      | 6| .032c li t6,0            | 0328 wfi             CP0 |                          | ID-stall:EX1-busy
+   4147 |                          | 033c addi t1,t1,-16      | 6| .032c li t6,0            | 0328 wfi             CP0 |                          | ID-stall:EX1-busy
+   4148 |                          | 033c addi t1,t1,-16      | 6| .032c li t6,0            | 0328 wfi             CP0 |                          | ID-stall:EX1-busy
+   4149 |                          | 033c addi t1,t1,-16      | 6| .032c li t6,0            | 0328 wfi             CP0 |                          | ID-stall:EX1-busy
+   4150 |                          | 033c addi t1,t1,-16      | 6| .032c li t6,0            | 0328 wfi             CP0 |                          | ID-stall:EX1-busy
+   4151 |                          | 033c addi t1,t1,-16      | 6| .032c li t6,0            | 0328 wfi             CP0 |                          | ID-stall:EX1-busy
+   4152 |                          | 033c addi t1,t1,-16      | 6| .032c li t6,0            | 0328 wfi             CP0 |                          | ID-stall:EX1-busy
+   4153 |                          | 033c addi t1,t1,-16      | 6| .032c li t6,0            | 0328 wfi             CP0 |                          | ID-stall:EX1-busy
+   4154 |                          | 033c addi t1,t1,-16      | 6| .032c li t6,0            | 0328 wfi             CP0 |                          | ID-stall:EX1-busy
+   4155 |                          | 033c addi t1,t1,-16      | 6| .032c li t6,0            | 0328 wfi             CP0 |                          | ID-stall:EX1-busy
+   4156 |                          | 033c addi t1,t1,-16      | 6| .032c li t6,0            | 0328 wfi             CP0 |                          | ID-stall:EX1-busy
+   4157 |                          | 033c addi t1,t1,-16      | 6| .032c li t6,0            | 0328 wfi             CP0 |                          | ID-stall:EX1-busy
+   4158 |                          | 033c addi t1,t1,-16      | 6| .032c li t6,0            | 0328 wfi             CP0 |                          | ID-stall:EX1-busy
+   4159 |                          | 033c addi t1,t1,-16      | 6| .032c li t6,0            | 0328 wfi             CP0 |                          | ID-stall:EX1-busy
+   4160 |                          | 033c addi t1,t1,-16      | 6| .032c li t6,0            | 0328 wfi             CP0 |                          | ID-stall:EX1-busy
+   4161 |                          | 033c addi t1,t1,-16      | 6| .032c li t6,0            | 0328 wfi             CP0 |                          | ID-stall:EX1-busy
+   4162 |                          | 033c addi t1,t1,-16      | 6| .032c li t6,0            | 0328 wfi             CP0 |                          | ID-stall:EX1-busy
+   4163 |                          | 033c addi t1,t1,-16      | 6| .032c li t6,0            | 0328 wfi             CP0 |                          | ID-stall:EX1-busy
+   4164 |                          | 033c addi t1,t1,-16      | 6| .032c li t6,0            | 0328 wfi             CP0 |                          | ID-stall:EX1-busy
+   4165 |                          | 033c addi t1,t1,-16      | 6| .032c li t6,0            | 0328 wfi             CP0 |                          | ID-stall:EX1-busy
+   4166 |                          | 033c addi t1,t1,-16      | 6| .032c li t6,0            | 0328 wfi             CP0 |                          | ID-stall:EX1-busy
+   4167 |                          | 033c addi t1,t1,-16      | 6| .032c li t6,0            | 0328 wfi             CP0 |                          | ID-stall:EX1-busy
+   4168 |                          | 033c addi t1,t1,-16      | 6| .032c li t6,0            | 0328 wfi             CP0 |                          | ID-stall:EX1-busy
+   4169 |                          | 033c addi t1,t1,-16      | 6| .032c li t6,0            | 0328 wfi             CP0 |                          | ID-stall:EX1-busy
+   4170 |                          | 033c addi t1,t1,-16      | 6| .032c li t6,0            | 0328 wfi             CP0 |                          | ID-stall:EX1-busy
+   4171 |                          | 033c addi t1,t1,-16      | 6| .032c li t6,0            | 0328 wfi             CP0 |                          | ID-stall:EX1-busy
+   4172 |                          | 033c addi t1,t1,-16      | 6| .032c li t6,0            | 0328 wfi             CP0 |                          | ID-stall:EX1-busy
+   4173 |                          | 033c addi t1,t1,-16      | 6| .032c li t6,0            | 0328 wfi             CP0 |                          | ID-stall:EX1-busy
+   4174 |                          | 033c addi t1,t1,-16      | 6| .032c li t6,0            | 0328 wfi             CP0 |                          | ID-stall:EX1-busy
+   4175 |                          | 033c addi t1,t1,-16      | 6| .032c li t6,0            | 0328 wfi             CP0 |                          | ID-stall:EX1-busy
+   4176 |                          | 033c addi t1,t1,-16      | 6| .032c li t6,0            | 0328 wfi             CP0 |                          | ID-stall:EX1-busy
+   4177 |                          | 033c addi t1,t1,-16      | 6| .032c li t6,0            | 0328 wfi             CP0 |                          | ID-stall:EX1-busy
+   4178 |                          | 033c addi t1,t1,-16      | 6| .032c li t6,0            | 0328 wfi             CP0 |                          | ID-stall:EX1-busy
+   4179 |                          | 033c addi t1,t1,-16      | 6| .032c li t6,0            | 0328 wfi             CP0 |                          | ID-stall:EX1-busy
+   4180 |                          | 033c addi t1,t1,-16      | 6| .032c li t6,0            | 0328 wfi             CP0 |                          | ID-stall:EX1-busy
+   4181 |                          | 033c addi t1,t1,-16      | 6| .032c li t6,0            | 0328 wfi             CP0 |                          | ID-stall:EX1-busy
+   4182 |                          | 033c addi t1,t1,-16      | 6| .032c li t6,0            | 0328 wfi             CP0 |                          | ID-stall:EX1-busy
+   4183 |                          | 033c addi t1,t1,-16      | 6| .032c li t6,0            | 0328 wfi             CP0 |                          | ID-stall:EX1-busy
+   4184 |                          | 033c addi t1,t1,-16      | 6| .032c li t6,0            | 0328 wfi             CP0 |                          | ID-stall:EX1-busy
+   4185 |                          | 033c addi t1,t1,-16      | 6| .032c li t6,0            | 0328 wfi             CP0 |                          | ID-stall:EX1-busy
+   4186 |                          | 033c addi t1,t1,-16      | 6| .032c li t6,0            | 0328 wfi             CP0 |                          | ID-stall:EX1-busy
+   4187 |                          | 033c addi t1,t1,-16      | 6| .032c li t6,0            | 0328 wfi             CP0 |                          | ID-stall:EX1-busy
+   4188 |                          | 033c addi t1,t1,-16      | 6| .032c li t6,0            | 0328 wfi             CP0 |                          | ID-stall:EX1-busy
+   4189 |                          | 033c addi t1,t1,-16      | 6| .032c li t6,0            | 0328 wfi             CP0 |                          | ID-stall:EX1-busy
+   4190 |                          | 033c addi t1,t1,-16      | 6| .032c li t6,0            | 0328 wfi             CP0 |                          | ID-stall:EX1-busy
+   4191 |                          | 033c addi t1,t1,-16      | 6| .032c li t6,0            | 0328 wfi             CP0 |                          | ID-stall:EX1-busy
+   4192 |                          | 033c addi t1,t1,-16      | 6| .032c li t6,0            | 0328 wfi             CP0 |                          | ID-stall:EX1-busy
+   4193 |                          | 033c addi t1,t1,-16      | 6| .032c li t6,0            | 0328 wfi             CP0 |                          | ID-stall:EX1-busy
+   4194 |                          | 033c addi t1,t1,-16      | 6| .032c li t6,0            | 0328 wfi             CP0 |                          | ID-stall:EX1-busy
+   4195 |                          | 033c addi t1,t1,-16      | 6| .032c li t6,0            | 0328 wfi             CP0 |                          | ID-stall:EX1-busy
+   4196 |                          | 033c addi t1,t1,-16      | 6| .032c li t6,0            | 0328 wfi             CP0 |                          | ID-stall:EX1-busy
+   4197 |                          | 033c addi t1,t1,-16      | 6| .032c li t6,0            | 0328 wfi             CP0 |                          | ID-stall:EX1-busy
+   4198 |                          | 033c addi t1,t1,-16      | 6| .032c li t6,0            | 0328 wfi             CP0 |                          | ID-stall:EX1-busy
+   4199 |                          | 033c addi t1,t1,-16      | 6| .032c li t6,0            | 0328 wfi             CP0 |                          | ID-stall:EX1-busy
+   4200 |                          | 033c addi t1,t1,-16      | 6| .032c li t6,0            | 0328 wfi             CP0 |                          | ID-stall:EX1-busy
+   4201 |                          | 033c addi t1,t1,-16      | 6| .032c li t6,0            | 0328 wfi             CP0 |                          | ID-stall:EX1-busy
+   4202 |                          | 033c addi t1,t1,-16      | 6| .032c li t6,0            | 0328 wfi             CP0 |                          | ID-stall:EX1-busy
+   4203 |                          | 033c addi t1,t1,-16      | 6| .032c li t6,0            | 0328 wfi             CP0 |                          | ID-stall:EX1-busy
+   4204 |                          | 033c addi t1,t1,-16      | 6| .032c li t6,0            | 0328 wfi             CP0 |                          | ID-stall:EX1-busy
+   4205 |                          | 033c addi t1,t1,-16      | 6| .032c li t6,0            | 0328 wfi             CP0 |                          | ID-stall:EX1-busy
+   4206 |                          | 033c addi t1,t1,-16      | 6| .032c li t6,0            | 0328 wfi             CP0 |                          | ID-stall:EX1-busy
+   4207 |                          | 033c addi t1,t1,-16      | 6| .032c li t6,0            | 0328 wfi             CP0 |                          | ID-stall:EX1-busy
+   4208 |                          | 033c addi t1,t1,-16      | 6| .032c li t6,0            | 0328 wfi             CP0 |                          | ID-stall:EX1-busy
+   4209 |                          | 033c addi t1,t1,-16      | 6| .032c li t6,0            | 0328 wfi             CP0 |                          | ID-stall:EX1-busy
+   4210 |                          | 033c addi t1,t1,-16      | 6| .032c li t6,0            | 0328 wfi             CP0 |                          | ID-stall:EX1-busy
+   4211 |                          | 033c addi t1,t1,-16      | 6| .032c li t6,0            | 0328 wfi             CP0 |                          | ID-stall:EX1-busy
+   4212 |                          | 033c addi t1,t1,-16      | 6| .032c li t6,0            | 0328 wfi             CP0 |                          | ID-stall:EX1-busy
+   4213 |                          | 033c addi t1,t1,-16      | 6| .032c li t6,0            | 0328 wfi             CP0 |                          | ID-stall:EX1-busy
+   4214 |                          | 033c addi t1,t1,-16      | 6| .032c li t6,0            | 0328 wfi             CP0 |                          | ID-stall:EX1-busy
+   4215 |                          | 033c addi t1,t1,-16      | 6| .032c li t6,0            | 0328 wfi             CP0 |                          | ID-stall:EX1-busy
+   4216 |                          | 033c addi t1,t1,-16      | 6| .032c li t6,0            | 0328 wfi             CP0 |                          | ID-stall:EX1-busy
+   4217 |                          | 033c addi t1,t1,-16      | 6| .032c li t6,0            | 0328 wfi             CP0 |                          | ID-stall:EX1-busy
+   4218 |                          | 033c addi t1,t1,-16      | 6| .032c li t6,0            | 0328 wfi             CP0 |                          | ID-stall:EX1-busy
+   4219 |                          | 033c addi t1,t1,-16      | 6| .032c li t6,0            | 0328 wfi             CP0 |                          | ID-stall:EX1-busy
+   4220 |                          | 033c addi t1,t1,-16      | 6| .032c li t6,0            | 0328 wfi             CP0 |                          | ID-stall:EX1-busy
+   4221 |                          | 033c addi t1,t1,-16      | 6| .032c li t6,0            | 0328 wfi             CP0 |                          | ID-stall:EX1-busy
+   4222 |                          | 033c addi t1,t1,-16      | 6| .032c li t6,0            | 0328 wfi             CP0 |                          | ID-stall:EX1-busy
+   4223 |                          | 033c addi t1,t1,-16      | 6| .032c li t6,0            | 0328 wfi             CP0 |                          | ID-stall:EX1-busy
+   4224 |                          | 033c addi t1,t1,-16      | 6| .032c li t6,0            | 0328 wfi             CP0 |                          | ID-stall:EX1-busy
+   4225 |                          | 033c addi t1,t1,-16      | 6| .032c li t6,0            | 0328 wfi             CP0 |                          | ID-stall:EX1-busy
+   4226 |                          | 033c addi t1,t1,-16      | 6| .032c li t6,0            | 0328 wfi             CP0 |                          | ID-stall:EX1-busy
+   4227 |                          | 033c addi t1,t1,-16      | 6| .032c li t6,0            | 0328 wfi             CP0 |                          | ID-stall:EX1-busy
+   4228 |                          | 033c addi t1,t1,-16      | 6| .032c li t6,0            | 0328 wfi             CP0 |                          | ID-stall:EX1-busy
+   4229 |                          | 033c addi t1,t1,-16      | 6| .032c li t6,0            | 0328 wfi             CP0 |                          | ID-stall:EX1-busy
+   4230 |                          | 033c addi t1,t1,-16      | 6| .032c li t6,0            | 0328 wfi             CP0 |                          | ID-stall:EX1-busy
+   4231 |                          | 033c addi t1,t1,-16      | 6| .032c li t6,0            | 0328 wfi             CP0 |                          | ID-stall:EX1-busy
+   4232 |                          | 033c addi t1,t1,-16      | 6| .032c li t6,0            | 0328 wfi             CP0 |                          | ID-stall:EX1-busy
+   4233 |                          | 033c addi t1,t1,-16      | 6| .032c li t6,0            | 0328 wfi             CP0 |                          | ID-stall:EX1-busy
+   4234 |                          | 033c addi t1,t1,-16      | 6| .032c li t6,0            | 0328 wfi             CP0 |                          | ID-stall:EX1-busy
+   4235 |                          | 033c addi t1,t1,-16      | 6| .032c li t6,0            | 0328 wfi             CP0 |                          | ID-stall:EX1-busy
+   4236 |                          | 033c addi t1,t1,-16      | 6| .032c li t6,0            | 0328 wfi             CP0 |                          | ID-stall:EX1-busy
+   4237 |                          | 033c addi t1,t1,-16      | 6| .032c li t6,0            | 0328 wfi             CP0 |                          | ID-stall:EX1-busy
+   4238 |                          | 033c addi t1,t1,-16      | 6| .032c li t6,0            | 0328 wfi             CP0 |                          | ID-stall:EX1-busy
+   4239 |                          | 033c addi t1,t1,-16      | 6| .032c li t6,0            | 0328 wfi             CP0 |                          | ID-stall:EX1-busy
+   4240 |                          | 033c addi t1,t1,-16      | 6| .032c li t6,0            | 0328 wfi             CP0 |                          | ID-stall:EX1-busy
+   4241 |                          | 033c addi t1,t1,-16      | 6| .032c li t6,0            | 0328 wfi             CP0 |                          | ID-stall:EX1-busy
+   4242 |                          | 033c addi t1,t1,-16      | 6| .032c li t6,0            | 0328 wfi             CP0 |                          | ID-stall:EX1-busy
+   4243 |                          | 033c addi t1,t1,-16      | 6| .032c li t6,0            | 0328 wfi             CP0 |                          | ID-stall:EX1-busy
+   4244 |                          | 033c addi t1,t1,-16      | 6| .032c li t6,0            | 0328 wfi             CP0 |                          | ID-stall:EX1-busy
+   4245 |                          | 033c addi t1,t1,-16      | 6| .032c li t6,0            | 0328 wfi             CP0 |                          | ID-stall:EX1-busy
+   4246 |                          | 033c addi t1,t1,-16      | 6| .032c li t6,0            | 0328 wfi             CP0 |                          | ID-stall:EX1-busy
+   4247 |                          | 033c addi t1,t1,-16      | 6| .032c li t6,0            | 0328 wfi             CP0 |                          | ID-stall:EX1-busy
+   4248 |                          | 033c addi t1,t1,-16      | 6| .032c li t6,0            | 0328 wfi             CP0 |                          | ID-stall:EX1-busy
+   4249 |                          | 033c addi t1,t1,-16      | 6| .032c li t6,0            | 0328 wfi             CP0 |                          | ID-stall:EX1-busy
+   4250 |                          | 033c addi t1,t1,-16      | 6| .032c li t6,0            | 0328 wfi             CP0 |                          | ID-stall:EX1-busy
+   4251 |                          | 033c addi t1,t1,-16      | 6| .032c li t6,0            | 0328 wfi             CP0 |                          | ID-stall:EX1-busy
+   4252 |                          | 033c addi t1,t1,-16      | 6| .032c li t6,0            | 0328 wfi             CP0 |                          | ID-stall:EX1-busy
+   4253 |                          | 033c addi t1,t1,-16      | 6| .032c li t6,0            | 0328 wfi             CP0 |                          | ID-stall:EX1-busy
+   4254 |                          | 033c addi t1,t1,-16      | 6| .032c li t6,0            | 0328 wfi             CP0 |                          | ID-stall:EX1-busy
+   4255 |                          | 033c addi t1,t1,-16      | 6| .032c li t6,0            | 0328 wfi             CP0 |                          | ID-stall:EX1-busy
+   4256 |                          | 033c addi t1,t1,-16      | 6| .032c li t6,0            | 0328 wfi             CP0 |                          | ID-stall:EX1-busy
+   4257 |                          | 033c addi t1,t1,-16      | 6| .032c li t6,0            | 0328 wfi             CP0 |                          | ID-stall:EX1-busy
+   4258 |                          | 033c addi t1,t1,-16      | 6| .032c li t6,0            | 0328 wfi             CP0 |                          | ID-stall:EX1-busy
+   4259 |                          | 033c addi t1,t1,-16      | 6| .032c li t6,0            | 0328 wfi             CP0 |                          | ID-stall:EX1-busy
+   4260 |                          | 033c addi t1,t1,-16      | 6| .032c li t6,0            | 0328 wfi             CP0 |                          | ID-stall:EX1-busy
+   4261 |                          | 033c addi t1,t1,-16      | 6| .032c li t6,0            | 0328 wfi             CP0 |                          | ID-stall:EX1-busy
+   4262 |                          | 033c addi t1,t1,-16      | 6| .032c li t6,0            | 0328 wfi             CP0 |                          | ID-stall:EX1-busy
+   4263 |                          | 033c addi t1,t1,-16      | 6| .032c li t6,0            | 0328 wfi             CP0 |                          | ID-stall:EX1-busy
+   4264 |                          | 033c addi t1,t1,-16      | 6| .032c li t6,0            | 0328 wfi             CP0 |                          | ID-stall:EX1-busy
+   4265 |                          | 033c addi t1,t1,-16      | 6| .032c li t6,0            | 0328 wfi             CP0 |                          | ID-stall:EX1-busy
+   4266 |                          | 033c addi t1,t1,-16      | 6| .032c li t6,0            | 0328 wfi             CP0 |                          | ID-stall:EX1-busy
+   4267 |                          | 033c addi t1,t1,-16      | 6| .032c li t6,0            | 0328 wfi             CP0 |                          | ID-stall:EX1-busy
+   4268 |                          | 033c addi t1,t1,-16      | 6| .032c li t6,0            | 0328 wfi             CP0 |                          | ID-stall:EX1-busy
+   4269 |                          | 033c addi t1,t1,-16      | 6| .032c li t6,0            | 0328 wfi             CP0 |                          | ID-stall:EX1-busy
+   4270 |                          | 033c addi t1,t1,-16      | 6| .032c li t6,0            | 0328 wfi             CP0 |                          | ID-stall:EX1-busy
+   4271 |                          | 033c addi t1,t1,-16      | 6| .032c li t6,0            | 0328 wfi             CP0 |                          | ID-stall:EX1-busy
+   4272 |                          | 033c addi t1,t1,-16      | 6| .032c li t6,0            | 0328 wfi             CP0 |                          | ID-stall:EX1-busy
+   4273 |                          | 033c addi t1,t1,-16      | 6| .032c li t6,0            | 0328 wfi             CP0 |                          | ID-stall:EX1-busy
+   4274 |                          | 033c addi t1,t1,-16      | 6| .032c li t6,0            | 0328 wfi             CP0 |                          | ID-stall:EX1-busy
+   4275 |                          | 033c addi t1,t1,-16      | 6| .032c li t6,0            | 0328 wfi             CP0 |                          | ID-stall:EX1-busy
+   4276 |                          | 033c addi t1,t1,-16      | 6| .032c li t6,0            | 0328 wfi             CP0 |                          | ID-stall:EX1-busy
+   4277 |                          | 033c addi t1,t1,-16      | 6| .032c li t6,0            | 0328 wfi             CP0 |                          | ID-stall:EX1-busy
+   4278 |                          | 033c addi t1,t1,-16      | 6| .032c li t6,0            | 0328 wfi             CP0 |                          | ID-stall:EX1-busy
+   4279 |                          | 033c addi t1,t1,-16      | 6| .032c li t6,0            | 0328 wfi             CP0 |                          | ID-stall:EX1-busy
+   4280 |                          | 033c addi t1,t1,-16      | 6| .032c li t6,0            | 0328 wfi             CP0 |                          | ID-stall:EX1-busy
+   4281 |                          | 033c addi t1,t1,-16      | 6| .032c li t6,0            | 0328 wfi             CP0 |                          | ID-stall:EX1-busy
+   4282 |                          | 033c addi t1,t1,-16      | 6| .032c li t6,0            | 0328 wfi             CP0 |                          | ID-stall:EX1-busy
+   4283 |                          | 033c addi t1,t1,-16      | 6| .032c li t6,0            | 0328 wfi             CP0 |                          | ID-stall:EX1-busy
+   4284 |                          | 033c addi t1,t1,-16      | 6| .032c li t6,0            | 0328 wfi             CP0 |                          | ID-stall:EX1-busy
+   4285 |                          | 033c addi t1,t1,-16      | 6| .032c li t6,0            | 0328 wfi             CP0 |                          | ID-stall:EX1-busy
+   4286 |                          | 033c addi t1,t1,-16      | 6| .032c li t6,0            | 0328 wfi             CP0 |                          | ID-stall:EX1-busy
+   4287 |                          | 033c addi t1,t1,-16      | 6| .032c li t6,0            | 0328 wfi             CP0 |                          | ID-stall:EX1-busy
+   4288 |                          | 033c addi t1,t1,-16      | 6| .032c li t6,0            | 0328 wfi             CP0 |                          | ID-stall:EX1-busy
+   4289 |                          | 033c addi t1,t1,-16      | 6| .032c li t6,0            | 0328 wfi             CP0 |                          | ID-stall:EX1-busy
+   4290 |                          | 033c addi t1,t1,-16      | 6| .032c li t6,0            | 0328 wfi             CP0 |                          | ID-stall:EX1-busy
+   4291 |                          | 033c addi t1,t1,-16      | 6| .032c li t6,0            | 0328 wfi             CP0 |                          | ID-stall:EX1-busy
+   4292 |                          | 033c addi t1,t1,-16      | 6| .032c li t6,0            | 0328 wfi             CP0 |                          | ID-stall:EX1-busy
+   4293 |                          | 033c addi t1,t1,-16      | 6| .032c li t6,0            | 0328 wfi             CP0 |                          | ID-stall:EX1-busy
+   4294 |                          | 033c addi t1,t1,-16      | 6| .032c li t6,0            | 0328 wfi             CP0 |                          | ID-stall:EX1-busy
+   4295 |                          | 033c addi t1,t1,-16      | 6| .032c li t6,0            | 0328 wfi             CP0 |                          | ID-stall:EX1-busy
+   4296 |                          | 033c addi t1,t1,-16      | 6| .032c li t6,0            | 0328 wfi             CP0 |                          | ID-stall:EX1-busy
+   4297 |                          | 033c addi t1,t1,-16      | 6| .032c li t6,0            | 0328 wfi             CP0 |                          | ID-stall:EX1-busy
+   4298 |                          | 033c addi t1,t1,-16      | 6| .032c li t6,0            | 0328 wfi             CP0 |                          | ID-stall:EX1-busy
+   4299 |                          | 033c addi t1,t1,-16      | 6| .032c li t6,0            | 0328 wfi             CP0 |                          | ID-stall:EX1-busy
+   4300 |                          | 033c addi t1,t1,-16      | 6| .032c li t6,0            | 0328 wfi             CP0 |                          | ID-stall:EX1-busy
+   4301 |                          | 033c addi t1,t1,-16      | 6| .032c li t6,0            | 0328 wfi             CP0 |                          | ID-stall:EX1-busy
+   4302 |                          | 033c addi t1,t1,-16      | 6| .032c li t6,0            | 0328 wfi             CP0 |                          | ID-stall:EX1-busy
+   4303 |                          | 033c addi t1,t1,-16      | 6| .032c li t6,0            | 0328 wfi             CP0 |                          | ID-stall:EX1-busy
+   4304 |                          | 033c addi t1,t1,-16      | 6| .032c li t6,0            | 0328 wfi             CP0 |                          | ID-stall:EX1-busy
+   4305 |                          | 033c addi t1,t1,-16      | 6| .032c li t6,0            | 0328 wfi             CP0 |                          | ID-stall:EX1-busy
+   4306 |                          | 033c addi t1,t1,-16      | 6| .032c li t6,0            | 0328 wfi             CP0 |                          | ID-stall:EX1-busy
+   4307 |                          | 033c addi t1,t1,-16      | 6| .032c li t6,0            | 0328 wfi             CP0 |                          | ID-stall:EX1-busy
+   4308 |                          | 033c addi t1,t1,-16      | 6| .032c li t6,0            | 0328 wfi             CP0 |                          | ID-stall:EX1-busy
+   4309 |                          | 033c addi t1,t1,-16      | 6| .032c li t6,0            | 0328 wfi             CP0 |                          | ID-stall:EX1-busy
+   4310 |                          | 033c addi t1,t1,-16      | 6| .032c li t6,0            | 0328 wfi             CP0 |                          | ID-stall:EX1-busy
+   4311 |                          | 033c addi t1,t1,-16      | 6| .032c li t6,0            | 0328 wfi             CP0 |                          | ID-stall:EX1-busy
+   4312 |                          | 033c addi t1,t1,-16      | 6| .032c li t6,0            | 0328 wfi             CP0 |                          | ID-stall:EX1-busy
+   4313 |                          | 033c addi t1,t1,-16      | 6| .032c li t6,0            | 0328 wfi             CP0 |                          | ID-stall:EX1-busy
+   4314 |                          | 033c addi t1,t1,-16      | 6| .032c li t6,0            | 0328 wfi             CP0 |                          | ID-stall:EX1-busy
+   4315 |                          | 033c addi t1,t1,-16      | 6| .032c li t6,0            | 0328 wfi             CP0 |                          | ID-stall:EX1-busy
+   4316 |                          | 033c addi t1,t1,-16      | 6| .032c li t6,0            | 0328 wfi             CP0 |                          | ID-stall:EX1-busy
+   4317 |                          | 033c addi t1,t1,-16      | 6| .032c li t6,0            | 0328 wfi             CP0 |                          | ID-stall:EX1-busy
+   4318 |                          | 033c addi t1,t1,-16      | 6| .032c li t6,0            | 0328 wfi             CP0 |                          | ID-stall:EX1-busy
+   4319 |                          | 033c addi t1,t1,-16      | 6| .032c li t6,0            | 0328 wfi             CP0 |                          | ID-stall:EX1-busy
+   4320 |                          | 033c addi t1,t1,-16      | 6| .032c li t6,0            | 0328 wfi             CP0 |                          | ID-stall:EX1-busy
+   4321 |                          | 033c addi t1,t1,-16      | 6| .032c li t6,0            | 0328 wfi             CP0 |                          | ID-stall:EX1-busy
+   4322 |                          | 033c addi t1,t1,-16      | 6| .032c li t6,0            | 0328 wfi             CP0 |                          | ID-stall:EX1-busy
+   4323 |                          | 033c addi t1,t1,-16      | 6| .032c li t6,0            | 0328 wfi             CP0 |                          | ID-stall:EX1-busy
+   4324 |                          | 033c addi t1,t1,-16      | 6| .032c li t6,0            | 0328 wfi             CP0 |                          | ID-stall:EX1-busy
+   4325 |                          | 033c addi t1,t1,-16      | 6| .032c li t6,0            | 0328 wfi             CP0 |                          | ID-stall:EX1-busy
+   4326 |                          | 033c addi t1,t1,-16      | 6| .032c li t6,0            | 0328 wfi             CP0 |                          | ID-stall:EX1-busy
+   4327 |                          | 033c addi t1,t1,-16      | 6| .032c li t6,0            | 0328 wfi             CP0 |                          | ID-stall:EX1-busy
+   4328 |                          | 033c addi t1,t1,-16      | 6| .032c li t6,0            | 0328 wfi             CP0 |                          | ID-stall:EX1-busy
+   4329 |                          | 033c addi t1,t1,-16      | 6| .032c li t6,0            | 0328 wfi             CP0 |                          | ID-stall:EX1-busy
+   4330 |                          | 033c addi t1,t1,-16      | 6| .032c li t6,0            | 0328 wfi             CP0 |                          | ID-stall:EX1-busy
+   4331 |                          | 033c addi t1,t1,-16      | 6| .032c li t6,0            | 0328 wfi             CP0 |                          | ID-stall:EX1-busy
+   4332 |                          | 033c addi t1,t1,-16      | 6| .032c li t6,0            | 0328 wfi             CP0 |                          | ID-stall:EX1-busy
+   4333 |                          | 033c addi t1,t1,-16      | 6| .032c li t6,0            | 0328 wfi             CP0 |                          | ID-stall:EX1-busy
+   4334 |                          | 033c addi t1,t1,-16      | 6| .032c li t6,0            | 0328 wfi             CP0 |                          | ID-stall:EX1-busy
+   4335 |                          | 033c addi t1,t1,-16      | 6| .032c li t6,0            | 0328 wfi             CP0 |                          | ID-stall:EX1-busy
+   4336 |                          | 033c addi t1,t1,-16      | 6| .032c li t6,0            | 0328 wfi             CP0 |                          | ID-stall:EX1-busy
+   4337 |                          | 033c addi t1,t1,-16      | 6| .032c li t6,0            | 0328 wfi             CP0 |                          | ID-stall:EX1-busy
+   4338 |                          | 033c addi t1,t1,-16      | 6| .032c li t6,0            | 0328 wfi             CP0 |                          | ID-stall:EX1-busy
+   4339 |                          | 033c addi t1,t1,-16      | 6| .032c li t6,0            | 0328 wfi             CP0 |                          | ID-stall:EX1-busy
+   4340 |                          | 033c addi t1,t1,-16      | 6| .032c li t6,0            | 0328 wfi             CP0 |                          | ID-stall:EX1-busy
+   4341 |                          | 033c addi t1,t1,-16      | 6| .032c li t6,0            | 0328 wfi             CP0 |                          | ID-stall:EX1-busy
+   4342 |                          | 033c addi t1,t1,-16      | 6| .032c li t6,0            | 0328 wfi             CP0 |                          | ID-stall:EX1-busy
+   4343 |                          | 033c addi t1,t1,-16      | 6| .032c li t6,0            | 0328 wfi             CP0 |                          | ID-stall:EX1-busy
+   4344 |                          | 033c addi t1,t1,-16      | 6| .032c li t6,0            | 0328 wfi             CP0 |                          | ID-stall:EX1-busy
+   4345 |                          | 033c addi t1,t1,-16      | 6| .032c li t6,0            | 0328 wfi             CP0 |                          | ID-stall:EX1-busy
+   4346 |                          | 033c addi t1,t1,-16      | 6| .032c li t6,0            | 0328 wfi             CP0 |                          | ID-stall:EX1-busy
+   4347 |                          | 033c addi t1,t1,-16      | 6| .032c li t6,0            | 0328 wfi             CP0 |                          | ID-stall:EX1-busy
+   4348 |                          | 033c addi t1,t1,-16      | 6| .032c li t6,0            | 0328 wfi             CP0 |                          | ID-stall:EX1-busy
+   4349 |                          | 033c addi t1,t1,-16      | 6| .032c li t6,0            | 0328 wfi             CP0 |                          | ID-stall:EX1-busy
+   4350 |                          | 033c addi t1,t1,-16      | 6| .032c li t6,0            | 0328 wfi             CP0 |                          | ID-stall:EX1-busy
+   4351 |                          | 033c addi t1,t1,-16      | 6| .032c li t6,0            | 0328 wfi             CP0 |                          | ID-stall:EX1-busy
+   4352 |                          | 033c addi t1,t1,-16      | 6| .032c li t6,0            | 0328 wfi             CP0 |                          | ID-stall:EX1-busy
+   4353 |                          | 033c addi t1,t1,-16      | 6| .032c li t6,0            | 0328 wfi             CP0 |                          | ID-stall:EX1-busy
+   4354 |                          | 033c addi t1,t1,-16      | 6| .032c li t6,0            | 0328 wfi             CP0 |                          | ID-stall:EX1-busy
+   4355 |                          | 033c addi t1,t1,-16      | 6| .032c li t6,0            | 0328 wfi             CP0 |                          | ID-stall:EX1-busy
+   4356 |                          | 033c addi t1,t1,-16      | 6| .032c li t6,0            | 0328 wfi             CP0 |                          | ID-stall:EX1-busy
+   4357 |                          | 033c addi t1,t1,-16      | 6| .032c li t6,0            | 0328 wfi             CP0 |                          | ID-stall:EX1-busy
+   4358 |                          | 033c addi t1,t1,-16      | 6| .032c li t6,0            | 0328 wfi             CP0 |                          | ID-stall:EX1-busy
+   4359 |                          | 033c addi t1,t1,-16      | 6| .032c li t6,0            | 0328 wfi             CP0 |                          | ID-stall:EX1-busy
+   4360 |                          | 033c addi t1,t1,-16      | 6| .032c li t6,0            | 0328 wfi             CP0 |                          | ID-stall:EX1-busy
+   4361 |                          | 033c addi t1,t1,-16      | 6| >032c li t6,0            | 0328 wfi             CP0 |                          | 
+   4362 | 0340 sub s9,s9,t1        | 033c addi t1,t1,-16      | 4| >032c li t6,0            | 032c li t6,0         ALU | 0328 wfi                 | TRAP
+   4363 | 0344 mv a1,s8            |                          | 4| >(flushed) sub s11,s11,s | 032c li t6,0         ALU |                          | RT-redirect->0140
+   4364 | 0140 j 4c0               |                          | 0|                          |                          |                          | ID-stall:other
+   4365 |                          |                          | 0|                          |                          |                          | ID-stall:other FLUSH
+   4366 |                          |                          | 0|                          |                          |                          | I$-miss
+   4367 |                          |                          | 0|                          |                          |                          | 
+   4368 |                          |                          | 0|                          |                          |                          | 
+   4369 |                          |                          | 0|                          |                          |                          | 
+   4370 |                          |                          | 0|                          |                          |                          | 
+   4371 |                          |                          | 0|                          |                          |                          | 
+   4372 |                          | 0140 j 4c0               | 0| >0140 j 4c0              |                          |                          | IP-redirect->04c0
+   4373 |                          |                          | 0|                          | 0140 j 4c0           BJU |                          | 
+   4374 |                          |                          | 0|                          |                          | 0140 j 4c0               | 
+   4375 |                          |                          | 0|                          |                          |                          | 
+   4376 |                          |                          | 0|                          |                          |                          | 
+   4377 |                          |                          | 0|                          |                          |                          | 
+   4378 | 04c0 rdtime s10          |                          | 0|                          |                          |                          | 
+   4379 |                          |                          | 0|                          |                          |                          | 
+   4380 |                          |                          | 0|                          |                          |                          | I$-miss
+   4381 |                          |                          | 0|                          |                          |                          | 
+   4382 |                          |                          | 0|                          |                          |                          | 
+   4383 |                          |                          | 0|                          |                          |                          | 
+   4384 |                          |                          | 0|                          |                          |                          | 
+   4385 |                          |                          | 0|                          |                          |                          | 
+   4386 |                          | 04c0 rdtime s10          | 0| >04c0 rdtime s10         |                          |                          | 
+   4387 |                          |                          | 0|                          | 04c0 rdtime s10      CP0 |                          | 
+   4388 |                          |                          | 0|                          |                          | 04c0 rdtime s10          | 
+   4389 |                          |                          | 0|                          |                          |                          | 
+   4390 |                          |                          | 0|                          |                          |                          | 
+   4391 |                          |                          | 0|                          |                          |                          | 
+   4392 | 04c4 csrr s11,mcycle     |                          | 0|                          |                          |                          | 
+   4393 | 04c8 csrr s8,mcause      |                          | 0|                          |                          |                          | 
+   4394 | 04cc csrr s9,mepc        | 04c4 csrr s11,mcycle     | 0| >04c4 csrr s11,mcycle    |                          |                          | 
+   4395 | 04d0 bltz s8,4d8         | 04c8 csrr s8,mcause      | 0| .04c8 csrr s8,mcause     | 04c4 csrr s11,mcycle CP0 |                          | ID-stall:CP0/fence
+   4396 | 04d4 j 144               | 04cc csrr s9,mepc        | 0| .04c8 csrr s8,mcause     |                          | 04c4 csrr s11,mcycle     | ID-stall:CP0/fence
+   4397 | 04d8 addi s7,s7,1        | 04d0 bltz s8,4d8         | 2| >04c8 csrr s8,mcause     |                          |                          | 
+   4398 | 04dc zext.b t3,s8        | 04d4 j 144               | 2| .04cc csrr s9,mepc       | 04c8 csrr s8,mcause  CP0 |                          | IP-redirect->0144 ID-stall:CP0/fence
+   4399 | 0144 csrr s0,mcause      |                          | 4| .04cc csrr s9,mepc       |                          | 04c8 csrr s8,mcause      | ID-stall:CP0/fence
+   4400 | 0148 csrr s1,mepc        |                          | 4| >04cc csrr s9,mepc       |                          |                          | 
+   4401 | 014c csrr s2,mtval       | 0144 csrr s0,mcause      | 2| >04d0 bltz s8,4d8        | 04cc csrr s9,mepc    CP0 |                          | 
+   4402 | 0150 mv a1,s0            | 0148 csrr s1,mepc        | 2| >(flushed) j 144         | 04d0 bltz s8,4d8     BJU | 04cc csrr s9,mepc        | BR-resolve:T MISPRED(BHT) IU-redirect->04d8
+   4403 | 04d8 addi s7,s7,1        |                          | 0|                          |                          | 04d0 bltz s8,4d8         | 
+   4404 | 04dc zext.b t3,s8        |                          | 0|                          |                          |                          | 
+   4405 | 04e0 li t4,7             | 04d8 addi s7,s7,1        | 0| >04d8 addi s7,s7,1       |                          |                          | 
+   4406 | 04e4 beq t3,t4,4f4       | 04dc zext.b t3,s8        | 0| >04dc zext.b t3,s8       | 04d8 addi s7,s7,1    ALU |                          | 
+   4407 | 04e8 li t4,3             | 04e0 li t4,7             | 0| >04e0 li t4,7            | 04dc zext.b t3,s8    ALU | 04d8 addi s7,s7,1        | 
+   4408 | 04ec beq t3,t4,52c       | 04e4 beq t3,t4,4f4       | 0| >04e4 beq t3,t4,4f4      | 04e0 li t4,7         ALU | 04dc zext.b t3,s8        | 
+   4409 | 04f0 j 144               | 04e8 li t4,3             | 0| >(flushed) li t4,3       | 04e4 beq t3,t4,4f4   BJU | 04e0 li t4,7             | BR-resolve:T MISPRED(BHT) IU-redirect->04f4
+   4410 | 04f4 lui t3,0x1001       |                          | 0|                          |                          | 04e4 beq t3,t4,4f4       | 
+   4411 | 04f8 addiw t3,t3,1       |                          | 0|                          |                          |                          | 
+   4412 | 04fc slli t3,t3,0xe      | 04f4 lui t3,0x1001       | 0| >04f4 lui t3,0x1001      |                          |                          | 
+   4413 | 0500 addi t3,t3,4        | 04f8 addiw t3,t3,1       | 0| >04f8 addiw t3,t3,1      | 04f4 lui t3,0x1001   ALU |                          | 
+   4414 |                          | 04fc slli t3,t3,0xe      | 0| >04fc slli t3,t3,0xe     | 04f8 addiw t3,t3,1   ALU | 04f4 lui t3,0x1001       | 
+   4415 |                          |                          | 0|                          | 04fc slli t3,t3,0xe  ALU | 04f8 addiw t3,t3,1       | I$-miss
+   4416 |                          |                          | 0|                          |                          | 04fc slli t3,t3,0xe      | 
+   4417 |                          |                          | 0|                          |                          |                          | 
+   4418 |                          |                          | 0|                          |                          |                          | 
+   4419 |                          |                          | 0|                          |                          |                          | 
+   4420 |                          |                          | 0|                          |                          |                          | 
+   4421 |                          | 0500 addi t3,t3,4        | 0| >0500 addi t3,t3,4       |                          |                          | 
+   4422 |                          |                          | 0|                          | 0500 addi t3,t3,4    ALU |                          | 
+   4423 |                          |                          | 0|                          |                          | 0500 addi t3,t3,4        | 
+   4424 |                          |                          | 0|                          |                          |                          | 
+   4425 |                          |                          | 0|                          |                          |                          | 
+   4426 |                          |                          | 0|                          |                          |                          | 
+   4427 | 0504 li t4,-1            |                          | 0|                          |                          |                          | 
+   4428 | 0508 sw t4,0(t3)         |                          | 0|                          |                          |                          | 
+   4429 | 050c lui t3,0x1001       | 0504 li t4,-1            | 0| >0504 li t4,-1           |                          |                          | 
+   4430 | 0510 addiw t3,t3,1       | 0508 sw t4,0(t3)         | 0| >0508 sw t4,0(t3)        | 0504 li t4,-1        ALU |                          | 
+   4431 | 0514 slli t3,t3,0xe      | 050c lui t3,0x1001       | 0| >050c lui t3,0x1001      | 0508 sw t4,0(t3)     LSU | 0504 li t4,-1            | 
+   4432 | 0518 sw t4,0(t3)         | 0510 addiw t3,t3,1       | 0| >0510 addiw t3,t3,1      | 050c lui t3,0x1001   ALU | 0508 sw t4,0(t3)         | DC:ST MISS
+   4433 | 051c csrr t4,mip         | 0514 slli t3,t3,0xe      | 0| >0514 slli t3,t3,0xe     | 0510 addiw t3,t3,1   ALU | 050c lui t3,0x1001       | 
+   4434 | 0520 andi t4,t4,128      | 0518 sw t4,0(t3)         | 0| >0518 sw t4,0(t3)        | 0514 slli t3,t3,0xe  ALU | 0510 addiw t3,t3,1       | 
+   4435 | 0524 bnez t4,51c         | 051c csrr t4,mip         | 0| .051c csrr t4,mip        | 0518 sw t4,0(t3)     LSU | 0514 slli t3,t3,0xe      | ID-stall:CP0/fence
+   4436 | 0528 mret                | 0520 andi t4,t4,128      | 0| .051c csrr t4,mip        |                          | 0518 sw t4,0(t3)         | ID-stall:CP0/fence DC:ST MISS
+   4437 | 052c lui t3,0x1          | 0524 bnez t4,51c         | 2| .051c csrr t4,mip        |                          |                          | ID-stall:CP0/fence
+   4438 | 0530 addiw t3,t3,1       | 0528 mret                | 4| .051c csrr t4,mip        |                          |                          | ID-stall:CP0/fence
+   4439 |                          | 052c lui t3,0x1          | 6| .051c csrr t4,mip        |                          |                          | ID-stall:CP0/fence DC:ST MISS
+   4440 |                          | 052c lui t3,0x1          | 6| >051c csrr t4,mip        |                          |                          | 
+   4441 | 0530 addiw t3,t3,1       | 052c lui t3,0x1          | 4| .0520 andi t4,t4,128     | 051c csrr t4,mip     CP0 |                          | ID-stall:RAW,WAW
+   4442 | 0534 slli t3,t3,0x1a     |                          | 6| >0520 andi t4,t4,128     |                          | 051c csrr t4,mip         | 
+   4443 | 0538 sw zero,0(t3)       | 0530 addiw t3,t3,1       | 4| >0524 bnez t4,51c        | 0520 andi t4,t4,128  ALU |                          | 
+   4444 | 053c csrr t4,mip         | 0534 slli t3,t3,0x1a     | 4| .(flushed) mret          | 0524 bnez t4,51c     BJU | 0520 andi t4,t4,128      | ID-stall:CP0/fence BR-resolve:T MISPRED(BHT) IU-redirect->051c
+   4445 | 051c csrr t4,mip         |                          | 0|                          |                          | 0524 bnez t4,51c         | 
+   4446 | 0520 andi t4,t4,128      |                          | 0|                          |                          |                          | 
+   4447 | 0524 bnez t4,51c         | 051c csrr t4,mip         | 0| >051c csrr t4,mip        |                          |                          | 
+   4448 | 0528 mret                | 0520 andi t4,t4,128      | 0| .0520 andi t4,t4,128     | 051c csrr t4,mip     CP0 |                          | ID-stall:RAW,WAW
+   4449 | 052c lui t3,0x1          | 0524 bnez t4,51c         | 0| >0520 andi t4,t4,128     |                          | 051c csrr t4,mip         | 
+   4450 | 0530 addiw t3,t3,1       | 0528 mret                | 0| >0524 bnez t4,51c        | 0520 andi t4,t4,128  ALU |                          | 
+   4451 | 0534 slli t3,t3,0x1a     | 052c lui t3,0x1          | 0| .0528 mret               | 0524 bnez t4,51c     BJU | 0520 andi t4,t4,128      | ID-stall:CP0/fence BR-resolve:N
+   4452 | 0538 sw zero,0(t3)       | 0530 addiw t3,t3,1       | 2| .0528 mret               |                          | 0524 bnez t4,51c         | ID-stall:CP0/fence
+   4453 | 053c csrr t4,mip         | 0534 slli t3,t3,0x1a     | 4| >0528 mret               |                          |                          | 
+   4454 | 0540 andi t4,t4,8        | 0538 sw zero,0(t3)       | 4| >052c lui t3,0x1         | 0528 mret            CP0 |                          | 
+   4455 | 0544 bnez t4,53c         | 053c csrr t4,mip         | 4| >032c li t6,0            | 052c lui t3,0x1      ALU | 0528 mret                | RT-redirect->032c
+   4456 | 032c li t6,0             |                          | 0|                          | 032c li t6,0         ALU |                          | 
+   4457 | 0330 sub s10,s10,s6      |                          | 0|                          |                          |                          | ID-stall:other
+   4458 | 0334 sub s11,s11,s5      | 032c li t6,0             | 0| .(flushed) li t6,0       |                          |                          | ID-stall:other FLUSH
+   4459 | 0338 auipc t1,0x0        | 0330 sub s10,s10,s6      | 0| >032c li t6,0            |                          |                          | 
+   4460 | 033c addi t1,t1,-16      | 0334 sub s11,s11,s5      | 0| >0330 sub s10,s10,s6     | 032c li t6,0         ALU |                          | 
+   4461 | 0340 sub s9,s9,t1        | 0338 auipc t1,0x0        | 0| >0384 addiw t0,t0,1      | 0330 sub s10,s10,s6  ALU | 032c li t6,0             | 
+----------------------------------------------------------------------------------------------------------------------------------------------------------------
+summary: cycles=388 retired=30 IPC=0.077 | dc_miss=3, flush=2, icache_miss=3, ip_redirect=2, iu_redirect=3, mispred_bht=3, retired=30, stall_CP0/fence=14, stall_EX1-busy=283, stall_RAW=2, stall_WAW=2, stall_other=4, trap=1
+
+================================================================================================================================================================
+MARK 3   cycles 6798 .. 6901  (104 cycles)
+================================================================================================================================================================
+    cyc | IF (fetch)               | IP (pred)                |IB| ID                       | EX1                      | RETIRE                   | events
+----------------------------------------------------------------------------------------------------------------------------------------------------------------
+   6798 | 0390 sw t1,0(t0)         | 0388 slli t0,t0,0x1a     | 0| >0388 slli t0,t0,0x1a    | 0384 addiw t0,t0,1   ALU | 0380 lui t0,0x1          | 
+   6799 | 0394 nop                 | 038c li t1,1             | 0| >038c li t1,1            | 0388 slli t0,t0,0x1a ALU | 0384 addiw t0,t0,1       | 
+   6800 | 0398 nop                 | 0390 sw t1,0(t0)         | 0| >0390 sw t1,0(t0)        | 038c li t1,1         ALU | 0388 slli t0,t0,0x1a     | 
+   6801 | 039c nop                 | 0394 nop                 | 0| >0390 sw t1,0(t0)        | 0390 sw t1,0(t0)     LSU | 038c li t1,1             | 
+   6802 | 03a0 nop                 | 0398 nop                 | 0| .0398 nop                | 0390 sw t1,0(t0)     ALU |                          | ID-stall:EX1-busy
+   6803 | 03a4 nop                 | 039c nop                 | 0| .0398 nop                | 0390 sw t1,0(t0)     ALU |                          | ID-stall:EX1-busy
+   6804 | 03a8 nop                 | 03a0 nop                 | 2| .0398 nop                | 0390 sw t1,0(t0)     ALU |                          | ID-stall:EX1-busy
+   6805 | 03ac nop                 | 03a4 nop                 | 4| .0398 nop                | 0390 sw t1,0(t0)     ALU |                          | ID-stall:EX1-busy
+   6806 |                          | 03a8 nop                 | 6| .0398 nop                | 0390 sw t1,0(t0)     ALU |                          | ID-stall:EX1-busy
+   6807 |                          | 03a8 nop                 | 6| .0398 nop                | 0390 sw t1,0(t0)     ALU |                          | ID-stall:EX1-busy
+   6808 |                          | 03a8 nop                 | 6| .0398 nop                | 0390 sw t1,0(t0)     ALU |                          | ID-stall:EX1-busy
+   6809 |                          | 03a8 nop                 | 6| .0398 nop                | 0390 sw t1,0(t0)     ALU |                          | ID-stall:EX1-busy
+   6810 |                          | 03a8 nop                 | 6| .0398 nop                | 0390 sw t1,0(t0)     ALU |                          | ID-stall:EX1-busy
+   6811 |                          | 03a8 nop                 | 6| >0398 nop                | 0394 nop             ALU | 0390 sw t1,0(t0)         | DC:ST MISS
+   6812 | 03ac nop                 | 03a8 nop                 | 4| >039c nop                | 0398 nop             ALU | 0394 nop                 | 
+   6813 | 03b0 nop                 |                          | 4| >03a0 nop                | 039c nop             ALU | 0398 nop                 | 
+   6814 | 03b4 nop                 | 03ac nop                 | 2| >03a4 nop                | 03a0 nop             ALU | 039c nop                 | 
+   6815 | 03b8 nop                 | 03b0 nop                 | 2| >03a8 nop                | 03a4 nop             ALU | 03a0 nop                 | 
+   6816 | 03bc nop                 | 03b4 nop                 | 2| >03ac nop                | 03a8 nop             ALU | 03a4 nop                 | 
+   6817 | 03c0 nop                 | 03b8 nop                 | 2| >03b0 nop                | 03ac nop             ALU | 03a8 nop                 | 
+   6818 |                          | 03bc nop                 | 2| >03b4 nop                | 03b0 nop             ALU | 03ac nop                 | 
+   6819 |                          |                          | 2| >03b8 nop                | 03b4 nop             ALU | 03b0 nop                 | I$-miss
+   6820 |                          |                          | 0| >03bc nop                | 03b8 nop             ALU | 03b4 nop                 | 
+   6821 |                          |                          | 0|                          | 03bc nop             ALU | 03b8 nop                 | 
+   6822 |                          |                          | 0|                          |                          | 03bc nop                 | TRAP
+   6823 |                          |                          | 0|                          |                          |                          | RT-redirect->0140
+   6824 |                          |                          | 0|                          |                          |                          | ID-stall:other FLUSH
+   6825 |                          |                          | 0|                          |                          |                          | 
+   6826 |                          |                          | 0|                          |                          |                          | 
+   6827 |                          |                          | 0|                          |                          |                          | 
+   6828 |                          |                          | 0|                          |                          |                          | 
+   6829 |                          |                          | 0|                          |                          |                          | 
+   6830 |                          |                          | 0|                          |                          |                          | 
+   6831 | 0140 j 4c0               |                          | 0|                          |                          |                          | 
+   6832 | 0144 csrr s0,mcause      |                          | 0|                          |                          |                          | 
+   6833 | 0148 csrr s1,mepc        | 0140 j 4c0               | 0| >0140 j 4c0              |                          |                          | IP-redirect->04c0
+   6834 | 04c0 rdtime s10          |                          | 0|                          | 0140 j 4c0           BJU |                          | 
+   6835 | 04c4 csrr s11,mcycle     |                          | 0|                          |                          | 0140 j 4c0               | 
+   6836 | 04c8 csrr s8,mcause      | 04c0 rdtime s10          | 0| >04c0 rdtime s10         |                          |                          | 
+   6837 | 04cc csrr s9,mepc        | 04c4 csrr s11,mcycle     | 0| .04c4 csrr s11,mcycle    | 04c0 rdtime s10      CP0 |                          | ID-stall:CP0/fence
+   6838 | 04d0 bltz s8,4d8         | 04c8 csrr s8,mcause      | 0| .04c4 csrr s11,mcycle    |                          | 04c0 rdtime s10          | ID-stall:CP0/fence
+   6839 | 04d4 j 144               | 04cc csrr s9,mepc        | 2| >04c4 csrr s11,mcycle    |                          |                          | 
+   6840 | 0144 csrr s0,mcause      | 04d0 bltz s8,4d8         | 2| .04c8 csrr s8,mcause     | 04c4 csrr s11,mcycle CP0 |                          | BTB-redirect ID-stall:CP0/fence
+   6841 | 0148 csrr s1,mepc        | 04d4 j 144               | 4| .04c8 csrr s8,mcause     |                          | 04c4 csrr s11,mcycle     | ID-stall:CP0/fence
+   6842 |                          | 0144 csrr s0,mcause      | 6| >04c8 csrr s8,mcause     |                          |                          | 
+   6843 | 0148 csrr s1,mepc        | 0144 csrr s0,mcause      | 4| .04cc csrr s9,mepc       | 04c8 csrr s8,mcause  CP0 |                          | ID-stall:CP0/fence
+   6844 | 014c csrr s2,mtval       |                          | 6| .04cc csrr s9,mepc       |                          | 04c8 csrr s8,mcause      | ID-stall:CP0/fence
+   6845 |                          | 0148 csrr s1,mepc        | 6| >04cc csrr s9,mepc       |                          |                          | 
+   6846 | 014c csrr s2,mtval       | 0148 csrr s1,mepc        | 4| >04d0 bltz s8,4d8        | 04cc csrr s9,mepc    CP0 |                          | 
+   6847 | 0150 mv a1,s0            |                          | 4| >(flushed) j 144         | 04d0 bltz s8,4d8     BJU | 04cc csrr s9,mepc        | BR-resolve:T MISPRED(BHT) IU-redirect->04d8
+   6848 | 04d8 addi s7,s7,1        |                          | 0|                          |                          | 04d0 bltz s8,4d8         | 
+   6849 | 04dc zext.b t3,s8        |                          | 0|                          |                          |                          | 
+   6850 | 04e0 li t4,7             | 04d8 addi s7,s7,1        | 0| >04d8 addi s7,s7,1       |                          |                          | 
+   6851 | 04e4 beq t3,t4,4f4       | 04dc zext.b t3,s8        | 0| >04dc zext.b t3,s8       | 04d8 addi s7,s7,1    ALU |                          | 
+   6852 | 04e8 li t4,3             | 04e0 li t4,7             | 0| >04e0 li t4,7            | 04dc zext.b t3,s8    ALU | 04d8 addi s7,s7,1        | 
+   6853 | 04ec beq t3,t4,52c       | 04e4 beq t3,t4,4f4       | 0| >04e4 beq t3,t4,4f4      | 04e0 li t4,7         ALU | 04dc zext.b t3,s8        | 
+   6854 | 04f0 j 144               | 04e8 li t4,3             | 0| >04e8 li t4,3            | 04e4 beq t3,t4,4f4   BJU | 04e0 li t4,7             | BR-resolve:N
+   6855 | 04f4 lui t3,0x1001       | 04ec beq t3,t4,52c       | 0| >04ec beq t3,t4,52c      | 04e8 li t4,3         ALU | 04e4 beq t3,t4,4f4       | 
+   6856 | 04f8 addiw t3,t3,1       | 04f0 j 144               | 0| >(flushed) j 144         | 04ec beq t3,t4,52c   BJU | 04e8 li t4,3             | IP-redirect->0144 BR-resolve:T MISPRED(BHT) IU-redirect->052c
+   6857 | 052c lui t3,0x1          |                          | 0|                          |                          | 04ec beq t3,t4,52c       | 
+   6858 | 0530 addiw t3,t3,1       |                          | 0|                          |                          |                          | 
+   6859 | 0534 slli t3,t3,0x1a     | 052c lui t3,0x1          | 0| >052c lui t3,0x1         |                          |                          | 
+   6860 | 0538 sw zero,0(t3)       | 0530 addiw t3,t3,1       | 0| >0530 addiw t3,t3,1      | 052c lui t3,0x1      ALU |                          | 
+   6861 | 053c csrr t4,mip         | 0534 slli t3,t3,0x1a     | 0| >0534 slli t3,t3,0x1a    | 0530 addiw t3,t3,1   ALU | 052c lui t3,0x1          | 
+   6862 | 0540 andi t4,t4,8        | 0538 sw zero,0(t3)       | 0| >0538 sw zero,0(t3)      | 0534 slli t3,t3,0x1a ALU | 0530 addiw t3,t3,1       | 
+   6863 |                          | 053c csrr t4,mip         | 0| .053c csrr t4,mip        | 0538 sw zero,0(t3)   LSU | 0534 slli t3,t3,0x1a     | ID-stall:CP0/fence
+   6864 |                          |                          | 0| .053c csrr t4,mip        |                          | 0538 sw zero,0(t3)       | ID-stall:CP0/fence DC:ST MISS I$-miss
+   6865 |                          |                          | 0| >053c csrr t4,mip        |                          |                          | 
+   6866 |                          |                          | 0|                          | 053c csrr t4,mip     CP0 |                          | 
+   6867 |                          |                          | 0|                          |                          | 053c csrr t4,mip         | 
+   6868 |                          |                          | 0|                          |                          |                          | 
+   6869 |                          |                          | 0|                          |                          |                          | 
+   6870 |                          | 0540 andi t4,t4,8        | 0| >0540 andi t4,t4,8       |                          |                          | 
+   6871 |                          |                          | 0|                          | 0540 andi t4,t4,8    ALU |                          | 
+   6872 |                          |                          | 0|                          |                          | 0540 andi t4,t4,8        | 
+   6873 |                          |                          | 0|                          |                          |                          | 
+   6874 |                          |                          | 0|                          |                          |                          | 
+   6875 |                          |                          | 0|                          |                          |                          | 
+   6876 | 0544 bnez t4,53c         |                          | 0|                          |                          |                          | 
+   6877 | 0548 mret                |                          | 0|                          |                          |                          | 
+   6878 | 054c .insn 2, 0x         | 0544 bnez t4,53c         | 0| >0544 bnez t4,53c        |                          |                          | 
+   6879 | 0550 ?                   | 0548 mret                | 0| .(flushed) mret          | 0544 bnez t4,53c     BJU |                          | ID-stall:CP0/fence BR-resolve:T MISPRED(BHT) IU-redirect->053c
+   6880 | 053c csrr t4,mip         |                          | 0|                          |                          | 0544 bnez t4,53c         | 
+   6881 | 0540 andi t4,t4,8        |                          | 0|                          |                          |                          | 
+   6882 | 0544 bnez t4,53c         | 053c csrr t4,mip         | 0| >053c csrr t4,mip        |                          |                          | 
+   6883 | 0548 mret                | 0540 andi t4,t4,8        | 0| .0540 andi t4,t4,8       | 053c csrr t4,mip     CP0 |                          | ID-stall:RAW,WAW
+   6884 | 054c .insn 2, 0x         | 0544 bnez t4,53c         | 0| >0540 andi t4,t4,8       |                          | 053c csrr t4,mip         | 
+   6885 | 0550 ?                   | 0548 mret                | 0| >0544 bnez t4,53c        | 0540 andi t4,t4,8    ALU |                          | 
+   6886 | 0554 ?                   | 054c .insn 2, 0x         | 0| .0548 mret               | 0544 bnez t4,53c     BJU | 0540 andi t4,t4,8        | ID-stall:CP0/fence BR-resolve:N
+   6887 | 0558 ?                   | 0550 ?                   | 2| .0548 mret               |                          | 0544 bnez t4,53c         | ID-stall:CP0/fence
+   6888 | 055c ?                   | 0554 ?                   | 4| >0548 mret               |                          |                          | 
+   6889 | 0560 ?                   | 0558 ?                   | 5| >054c .insn 2, 0x        | 0548 mret            CP0 |                          | 
+   6890 |                          | 055c ?                   | 5| >03c0 nop                | 054c .insn 2, 0x     CP0 | 0548 mret                | RT-redirect->03c0
+   6891 | 03c0 nop                 |                          | 0|                          | 03c0 nop             CP0 |                          | 
+   6892 | 03c4 nop                 |                          | 0|                          |                          |                          | ID-stall:other
+   6893 | 03c8 nop                 | 03c0 nop                 | 0| .(flushed) nop           |                          |                          | ID-stall:other FLUSH
+   6894 | 03cc nop                 | 03c4 nop                 | 0| >03c0 nop                |                          |                          | 
+   6895 | 03d0 nop                 | 03c8 nop                 | 0| >03c4 nop                | 03c0 nop             ALU |                          | 
+   6896 | 03d4 li t6,0             | 03cc nop                 | 0| >03c8 nop                | 03c4 nop             ALU | 03c0 nop                 | 
+   6897 | 03d8 mv a1,s8            | 03d0 nop                 | 0| >03cc nop                | 03c8 nop             ALU | 03c4 nop                 | 
+   6898 | 03dc li a0,1564          | 03d4 li t6,0             | 0| >03d0 nop                | 03cc nop             ALU | 03c8 nop                 | 
+   6899 | 03e0 jal 21e             | 03d8 mv a1,s8            | 0| >03d4 li t6,0            | 03d0 nop             ALU | 03cc nop                 | 
+   6900 | 03e4 mv a1,s7            | 03dc li a0,1564          | 0| >03d8 mv a1,s8           | 03d4 li t6,0         ALU | 03d0 nop                 | 
+   6901 | 03e8 li a0,1575          | 03e0 jal 21e             | 0| >03fc addiw t0,t0,1      | 03d8 mv a1,s8        ALU | 03d4 li t6,0             | IP-redirect->021e
+----------------------------------------------------------------------------------------------------------------------------------------------------------------
+summary: cycles=104 retired=45 IPC=0.433 | btb_redirect=1, dc_miss=2, flush=2, icache_miss=2, ip_redirect=3, iu_redirect=3, mispred_bht=3, retired=45, stall_CP0/fence=11, stall_EX1-busy=9, stall_RAW=1, stall_WAW=1, stall_other=3, trap=1
+
+================================================================================================================================================================
+MARK 4   cycles 8226 .. 8332  (107 cycles)
+================================================================================================================================================================
+    cyc | IF (fetch)               | IP (pred)                |IB| ID                       | EX1                      | RETIRE                   | events
+----------------------------------------------------------------------------------------------------------------------------------------------------------------
+   8226 | 0408 sw t1,0(t0)         | 0400 slli t0,t0,0x1a     | 0| >0400 slli t0,t0,0x1a    | 03fc addiw t0,t0,1   ALU | 03f8 lui t0,0x1          | 
+   8227 | 040c nop                 | 0404 li t1,1             | 0| >0404 li t1,1            | 0400 slli t0,t0,0x1a ALU | 03fc addiw t0,t0,1       | 
+   8228 | 0410 nop                 | 0408 sw t1,0(t0)         | 0| >0408 sw t1,0(t0)        | 0404 li t1,1         ALU | 0400 slli t0,t0,0x1a     | 
+   8229 | 0414 nop                 | 040c nop                 | 0| >040c nop                | 0408 sw t1,0(t0)     LSU | 0404 li t1,1             | 
+   8230 | 0418 nop                 | 0410 nop                 | 0| >0410 nop                | 040c nop             ALU | 0408 sw t1,0(t0)         | DC:ST MISS
+   8231 | 041c nop                 | 0414 nop                 | 0| >0414 nop                | 0410 nop             ALU | 040c nop                 | 
+   8232 | 0420 nop                 | 0418 nop                 | 0| >0418 nop                | 0414 nop             ALU | 0410 nop                 | 
+   8233 | 0424 nop                 | 041c nop                 | 0| >041c nop                | 0418 nop             ALU | 0414 nop                 | 
+   8234 | 0428 nop                 | 0420 nop                 | 0| >0420 nop                | 041c nop             ALU | 0418 nop                 | 
+   8235 | 042c nop                 | 0424 nop                 | 0| >0424 nop                | 0420 nop             ALU | 041c nop                 | 
+   8236 | 0430 nop                 | 0428 nop                 | 0| >0428 nop                | 0424 nop             ALU | 0420 nop                 | 
+   8237 | 0434 nop                 | 042c nop                 | 0| >042c nop                | 0428 nop             ALU | 0424 nop                 | 
+   8238 | 0438 nop                 | 0430 nop                 | 0| >0430 nop                | 042c nop             ALU | 0428 nop                 | 
+   8239 | 043c nop                 | 0434 nop                 | 0| >0434 nop                | 0430 nop             ALU | 042c nop                 | 
+   8240 | 0440 nop                 | 0438 nop                 | 0| >0438 nop                | 0434 nop             ALU | 0430 nop                 | 
+   8241 |                          | 043c nop                 | 0| >043c nop                | 0438 nop             ALU | 0434 nop                 | 
+   8242 |                          |                          | 0|                          | 043c nop             ALU | 0438 nop                 | I$-miss
+   8243 |                          |                          | 0|                          |                          | 043c nop                 | 
+   8244 |                          |                          | 0|                          |                          |                          | 
+   8245 |                          |                          | 0|                          |                          |                          | 
+   8246 |                          |                          | 0|                          |                          |                          | 
+   8247 |                          |                          | 0|                          |                          |                          | 
+   8248 |                          | 0440 nop                 | 0| >0440 nop                |                          |                          | 
+   8249 |                          |                          | 0|                          | 0440 nop             ALU |                          | 
+   8250 |                          |                          | 0|                          |                          | 0440 nop                 | 
+   8251 |                          |                          | 0|                          |                          |                          | 
+   8252 |                          |                          | 0|                          |                          |                          | 
+   8253 |                          |                          | 0|                          |                          |                          | 
+   8254 | 0444 nop                 |                          | 0|                          |                          |                          | 
+   8255 | 0448 nop                 |                          | 0|                          |                          |                          | 
+   8256 | 044c csrr s4,mip         | 0444 nop                 | 0| >0444 nop                |                          |                          | 
+   8257 | 0450 mv s3,s7            | 0448 nop                 | 0| >0448 nop                | 0444 nop             ALU |                          | 
+   8258 | 0454 csrsi mstatus,8     | 044c csrr s4,mip         | 0| .044c csrr s4,mip        | 0448 nop             ALU | 0444 nop                 | ID-stall:CP0/fence
+   8259 | 0458 nop                 | 0450 mv s3,s7            | 0| .044c csrr s4,mip        |                          | 0448 nop                 | ID-stall:CP0/fence
+   8260 | 045c nop                 | 0454 csrsi mstatus,8     | 2| >044c csrr s4,mip        |                          |                          | 
+   8261 | 0460 li t6,0             | 0458 nop                 | 2| >0450 mv s3,s7           | 044c csrr s4,mip     CP0 |                          | 
+   8262 | 0464 andi s4,s4,8        | 045c nop                 | 2| .0454 csrsi mstatus,8    | 0450 mv s3,s7        ALU | 044c csrr s4,mip         | ID-stall:CP0/fence
+   8263 | 0468 srli s4,s4,0x3      | 0460 li t6,0             | 4| .0454 csrsi mstatus,8    |                          | 0450 mv s3,s7            | ID-stall:CP0/fence
+   8264 |                          | 0464 andi s4,s4,8        | 6| >0454 csrsi mstatus,8    |                          |                          | 
+   8265 | 0468 srli s4,s4,0x3      | 0464 andi s4,s4,8        | 4| >0458 nop                | 0454 csrsi mstatus,8 CP0 |                          | 
+   8266 | 046c mv a1,s4            |                          | 4| >0458 nop                | 0458 nop             ALU | 0454 csrsi mstatus,8     | TRAP
+   8267 | 0470 li a0,1595          | 0468 srli s4,s4,0x3      | 2| >(flushed) li t6,0       | 0458 nop             ALU |                          | RT-redirect->0140
+   8268 | 0140 j 4c0               |                          | 0|                          |                          |                          | ID-stall:other
+   8269 | 04c0 rdtime s10          |                          | 0|                          |                          |                          | BTB-redirect ID-stall:other FLUSH
+   8270 | 04c4 csrr s11,mcycle     | 0140 j 4c0               | 0| >0140 j 4c0              |                          |                          | 
+   8271 | 04c8 csrr s8,mcause      | 04c0 rdtime s10          | 0| .04c0 rdtime s10         | 0140 j 4c0           BJU |                          | ID-stall:CP0/fence
+   8272 | 04cc csrr s9,mepc        | 04c4 csrr s11,mcycle     | 0| .04c0 rdtime s10         |                          | 0140 j 4c0               | ID-stall:CP0/fence
+   8273 | 04d0 bltz s8,4d8         | 04c8 csrr s8,mcause      | 2| >04c0 rdtime s10         |                          |                          | 
+   8274 | 04d4 j 144               | 04cc csrr s9,mepc        | 2| .04c4 csrr s11,mcycle    | 04c0 rdtime s10      CP0 |                          | ID-stall:CP0/fence
+   8275 | 0144 csrr s0,mcause      | 04d0 bltz s8,4d8         | 4| .04c4 csrr s11,mcycle    |                          | 04c0 rdtime s10          | BTB-redirect ID-stall:CP0/fence
+   8276 |                          | 04d4 j 144               | 6| >04c4 csrr s11,mcycle    |                          |                          | 
+   8277 | 0144 csrr s0,mcause      | 04d4 j 144               | 4| .04c8 csrr s8,mcause     | 04c4 csrr s11,mcycle CP0 |                          | ID-stall:CP0/fence
+   8278 | 0148 csrr s1,mepc        |                          | 6| .04c8 csrr s8,mcause     |                          | 04c4 csrr s11,mcycle     | ID-stall:CP0/fence
+   8279 |                          | 0144 csrr s0,mcause      | 6| >04c8 csrr s8,mcause     |                          |                          | 
+   8280 | 0148 csrr s1,mepc        | 0144 csrr s0,mcause      | 4| .04cc csrr s9,mepc       | 04c8 csrr s8,mcause  CP0 |                          | ID-stall:CP0/fence
+   8281 | 014c csrr s2,mtval       |                          | 6| .04cc csrr s9,mepc       |                          | 04c8 csrr s8,mcause      | ID-stall:CP0/fence
+   8282 |                          | 0148 csrr s1,mepc        | 6| >04cc csrr s9,mepc       |                          |                          | 
+   8283 | 014c csrr s2,mtval       | 0148 csrr s1,mepc        | 4| >04d0 bltz s8,4d8        | 04cc csrr s9,mepc    CP0 |                          | 
+   8284 | 0150 mv a1,s0            |                          | 4| >(flushed) j 144         | 04d0 bltz s8,4d8     BJU | 04cc csrr s9,mepc        | BR-resolve:T MISPRED(BHT) IU-redirect->04d8
+   8285 | 04d8 addi s7,s7,1        |                          | 0|                          |                          | 04d0 bltz s8,4d8         | 
+   8286 | 04dc zext.b t3,s8        |                          | 0|                          |                          |                          | 
+   8287 | 04e0 li t4,7             | 04d8 addi s7,s7,1        | 0| >04d8 addi s7,s7,1       |                          |                          | 
+   8288 | 04e4 beq t3,t4,4f4       | 04dc zext.b t3,s8        | 0| >04dc zext.b t3,s8       | 04d8 addi s7,s7,1    ALU |                          | 
+   8289 | 04e8 li t4,3             | 04e0 li t4,7             | 0| >04e0 li t4,7            | 04dc zext.b t3,s8    ALU | 04d8 addi s7,s7,1        | 
+   8290 | 04ec beq t3,t4,52c       | 04e4 beq t3,t4,4f4       | 0| >04e4 beq t3,t4,4f4      | 04e0 li t4,7         ALU | 04dc zext.b t3,s8        | 
+   8291 | 04f0 j 144               | 04e8 li t4,3             | 0| >04e8 li t4,3            | 04e4 beq t3,t4,4f4   BJU | 04e0 li t4,7             | BR-resolve:N
+   8292 | 0144 csrr s0,mcause      | 04ec beq t3,t4,52c       | 0| >04ec beq t3,t4,52c      | 04e8 li t4,3         ALU | 04e4 beq t3,t4,4f4       | BTB-redirect
+   8293 | 0148 csrr s1,mepc        | 04f0 j 144               | 0| >(flushed) j 144         | 04ec beq t3,t4,52c   BJU | 04e8 li t4,3             | BR-resolve:T MISPRED(BHT) IU-redirect->052c
+   8294 | 052c lui t3,0x1          |                          | 0|                          |                          | 04ec beq t3,t4,52c       | 
+   8295 | 0530 addiw t3,t3,1       |                          | 0|                          |                          |                          | 
+   8296 | 0534 slli t3,t3,0x1a     | 052c lui t3,0x1          | 0| >052c lui t3,0x1         |                          |                          | 
+   8297 | 0538 sw zero,0(t3)       | 0530 addiw t3,t3,1       | 0| >0530 addiw t3,t3,1      | 052c lui t3,0x1      ALU |                          | 
+   8298 | 053c csrr t4,mip         | 0534 slli t3,t3,0x1a     | 0| >0534 slli t3,t3,0x1a    | 0530 addiw t3,t3,1   ALU | 052c lui t3,0x1          | 
+   8299 | 0540 andi t4,t4,8        | 0538 sw zero,0(t3)       | 0| >0538 sw zero,0(t3)      | 0534 slli t3,t3,0x1a ALU | 0530 addiw t3,t3,1       | 
+   8300 | 0544 bnez t4,53c         | 053c csrr t4,mip         | 0| .053c csrr t4,mip        | 0538 sw zero,0(t3)   LSU | 0534 slli t3,t3,0x1a     | ID-stall:CP0/fence
+   8301 | 0548 mret                | 0540 andi t4,t4,8        | 0| .053c csrr t4,mip        |                          | 0538 sw zero,0(t3)       | ID-stall:CP0/fence DC:ST MISS
+   8302 | 054c .insn 2, 0x         | 0544 bnez t4,53c         | 2| >053c csrr t4,mip        |                          |                          | 
+   8303 | 0550 ?                   | 0548 mret                | 2| .0540 andi t4,t4,8       | 053c csrr t4,mip     CP0 |                          | ID-stall:RAW,WAW
+   8304 | 0554 ?                   | 054c .insn 2, 0x         | 4| >0540 andi t4,t4,8       |                          | 053c csrr t4,mip         | 
+   8305 | 0558 ?                   | 0550 ?                   | 4| >0544 bnez t4,53c        | 0540 andi t4,t4,8    ALU |                          | 
+   8306 | 055c ?                   | 0554 ?                   | 4| .(flushed) mret          | 0544 bnez t4,53c     BJU | 0540 andi t4,t4,8        | ID-stall:CP0/fence BR-resolve:T MISPRED(BHT) IU-redirect->053c
+   8307 | 053c csrr t4,mip         |                          | 0|                          |                          | 0544 bnez t4,53c         | 
+   8308 | 0540 andi t4,t4,8        |                          | 0|                          |                          |                          | 
+   8309 | 0544 bnez t4,53c         | 053c csrr t4,mip         | 0| >053c csrr t4,mip        |                          |                          | 
+   8310 | 0548 mret                | 0540 andi t4,t4,8        | 0| .0540 andi t4,t4,8       | 053c csrr t4,mip     CP0 |                          | ID-stall:RAW,WAW
+   8311 | 054c .insn 2, 0x         | 0544 bnez t4,53c         | 0| >0540 andi t4,t4,8       |                          | 053c csrr t4,mip         | 
+   8312 | 0550 ?                   | 0548 mret                | 0| >0544 bnez t4,53c        | 0540 andi t4,t4,8    ALU |                          | 
+   8313 | 0554 ?                   | 054c .insn 2, 0x         | 0| .(flushed) mret          | 0544 bnez t4,53c     BJU | 0540 andi t4,t4,8        | ID-stall:CP0/fence BR-resolve:T MISPRED(BHT) IU-redirect->053c
+   8314 | 053c csrr t4,mip         |                          | 0|                          |                          | 0544 bnez t4,53c         | 
+   8315 | 0540 andi t4,t4,8        |                          | 0|                          |                          |                          | 
+   8316 | 0544 bnez t4,53c         | 053c csrr t4,mip         | 0| >053c csrr t4,mip        |                          |                          | 
+   8317 | 0548 mret                | 0540 andi t4,t4,8        | 0| .0540 andi t4,t4,8       | 053c csrr t4,mip     CP0 |                          | ID-stall:RAW,WAW
+   8318 | 054c .insn 2, 0x         | 0544 bnez t4,53c         | 0| >0540 andi t4,t4,8       |                          | 053c csrr t4,mip         | 
+   8319 | 0550 ?                   | 0548 mret                | 0| >0544 bnez t4,53c        | 0540 andi t4,t4,8    ALU |                          | 
+   8320 | 0554 ?                   | 054c .insn 2, 0x         | 0| .0548 mret               | 0544 bnez t4,53c     BJU | 0540 andi t4,t4,8        | ID-stall:CP0/fence BR-resolve:N
+   8321 | 0558 ?                   | 0550 ?                   | 2| .0548 mret               |                          | 0544 bnez t4,53c         | ID-stall:CP0/fence
+   8322 | 055c ?                   | 0554 ?                   | 4| >0548 mret               |                          |                          | 
+   8323 | 0560 ?                   | 0558 ?                   | 5| >054c .insn 2, 0x        | 0548 mret            CP0 |                          | 
+   8324 |                          | 055c ?                   | 5| >0458 nop                | 054c .insn 2, 0x     CP0 | 0548 mret                | RT-redirect->0458
+   8325 | 0458 nop                 |                          | 0|                          | 0458 nop             CP0 |                          | 
+   8326 | 045c nop                 |                          | 0|                          |                          |                          | ID-stall:other
+   8327 | 0460 li t6,0             | 0458 nop                 | 0| .(flushed) nop           |                          |                          | ID-stall:other FLUSH
+   8328 | 0464 andi s4,s4,8        | 045c nop                 | 0| >0458 nop                |                          |                          | 
+   8329 | 0468 srli s4,s4,0x3      | 0460 li t6,0             | 0| >045c nop                | 0458 nop             ALU |                          | 
+   8330 | 046c mv a1,s4            | 0464 andi s4,s4,8        | 0| >0460 li t6,0            | 045c nop             ALU | 0458 nop                 | 
+   8331 | 0470 li a0,1595          | 0468 srli s4,s4,0x3      | 0| >0464 andi s4,s4,8       | 0460 li t6,0         ALU | 045c nop                 | 
+   8332 | 0474 jal 21e             | 046c mv a1,s4            | 0| >(flushed) srli s4,s4,0x | 0464 andi s4,s4,8    ALU | 0460 li t6,0             | 
+----------------------------------------------------------------------------------------------------------------------------------------------------------------
+summary: cycles=107 retired=53 IPC=0.495 | btb_redirect=3, dc_miss=2, flush=2, icache_miss=1, iu_redirect=4, mispred_bht=4, retired=53, stall_CP0/fence=18, stall_RAW=3, stall_WAW=3, stall_other=4, trap=1

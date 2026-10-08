@@ -1,0 +1,626 @@
+사용: pipeview.py <out/test 디렉토리> [--mark N] [--max-rows K]
+출력: <dir>/pipeview.txt  (mark 구간별 표 + 구간 요약)
+
+================================================================================================================================================================
+MARK 1   cycles 2683 .. 2696  (14 cycles)
+================================================================================================================================================================
+    cyc | IF (fetch)               | IP (pred)                |IB| ID                       | EX1                      | RETIRE                   | events
+----------------------------------------------------------------------------------------------------------------------------------------------------------------
+   2683 | 02c0 mv a1,t2            | 02b8 li t6,0             | 0| >02b4 sd t1,0(s1)        | 02b0 addiw t1,t1,564 ALU | 02ac lui t1,0x1          | 
+   2684 |                          | 02bc ld t2,0(s1)         | 0| >02b4 sd t1,0(s1)        | 02b4 sd t1,0(s1)     LSU | 02b0 addiw t1,t1,564     | 
+   2685 |                          |                          | 0| .02bc ld t2,0(s1)        | 02b4 sd t1,0(s1)     ALU |                          | ID-stall:EX1-busy I$-miss
+   2686 |                          |                          | 0| .02bc ld t2,0(s1)        | 02b4 sd t1,0(s1)     ALU |                          | ID-stall:EX1-busy
+   2687 |                          |                          | 0| .02bc ld t2,0(s1)        | 02b4 sd t1,0(s1)     ALU |                          | ID-stall:EX1-busy
+   2688 |                          |                          | 0| .02bc ld t2,0(s1)        | 02b4 sd t1,0(s1)     ALU |                          | ID-stall:EX1-busy
+   2689 |                          |                          | 0| .02bc ld t2,0(s1)        | 02b4 sd t1,0(s1)     ALU |                          | ID-stall:EX1-busy
+   2690 |                          |                          | 0| .02bc ld t2,0(s1)        | 02b4 sd t1,0(s1)     ALU |                          | ID-stall:EX1-busy
+   2691 |                          | 02c0 mv a1,t2            | 0| .02bc ld t2,0(s1)        | 02b4 sd t1,0(s1)     ALU |                          | ID-stall:EX1-busy
+   2692 |                          |                          | 2| .02bc ld t2,0(s1)        | 02b4 sd t1,0(s1)     ALU |                          | ID-stall:EX1-busy
+   2693 |                          |                          | 2| .02bc ld t2,0(s1)        | 02b4 sd t1,0(s1)     ALU |                          | ID-stall:EX1-busy
+   2694 |                          |                          | 2| .02bc ld t2,0(s1)        | 02b4 sd t1,0(s1)     ALU |                          | ID-stall:EX1-busy
+   2695 |                          |                          | 2| >02bc ld t2,0(s1)        | 02b8 li t6,0         ALU | 02b4 sd t1,0(s1)         | DC:ST MISS
+   2696 |                          |                          | 0| .0304 ld s6,0(s1)        | 02bc ld t2,0(s1)     LSU | 02b8 li t6,0             | ID-stall:RAW
+----------------------------------------------------------------------------------------------------------------------------------------------------------------
+summary: cycles=14 retired=4 IPC=0.286 | dc_miss=1, icache_miss=1, retired=4, stall_EX1-busy=10, stall_RAW=1
+
+================================================================================================================================================================
+MARK 2   cycles 4057 .. 4183  (127 cycles)
+================================================================================================================================================================
+    cyc | IF (fetch)               | IP (pred)                |IB| ID                       | EX1                      | RETIRE                   | events
+----------------------------------------------------------------------------------------------------------------------------------------------------------------
+   4057 | 0310 sd t1,8(s1)         | 0308 lui t1,0x5          | 0| >0304 ld s6,0(s1)        | 0304 ld s6,0(s1)     LSU |                          | 
+   4058 | 0314 mv s5,s8            | 030c addiw t1,t1,1656    | 0| .030c addiw t1,t1,1656   | 0304 ld s6,0(s1)     ALU |                          | ID-stall:EX1-busy
+   4059 | 0318 mv s4,s10           | 0310 sd t1,8(s1)         | 0| .030c addiw t1,t1,1656   | 0304 ld s6,0(s1)     ALU |                          | ID-stall:EX1-busy
+   4060 | 031c ecall               | 0314 mv s5,s8            | 2| .030c addiw t1,t1,1656   | 0304 ld s6,0(s1)     ALU |                          | ID-stall:EX1-busy
+   4061 | 0320 li t6,0             | 0318 mv s4,s10           | 4| .030c addiw t1,t1,1656   | 0304 ld s6,0(s1)     ALU |                          | ID-stall:EX1-busy
+   4062 |                          | 031c ecall               | 6| .030c addiw t1,t1,1656   | 0304 ld s6,0(s1)     ALU |                          | ID-stall:EX1-busy
+   4063 |                          | 031c ecall               | 6| .030c addiw t1,t1,1656   | 0304 ld s6,0(s1)     ALU |                          | ID-stall:EX1-busy
+   4064 |                          | 031c ecall               | 6| .030c addiw t1,t1,1656   | 0304 ld s6,0(s1)     ALU |                          | ID-stall:EX1-busy
+   4065 |                          | 031c ecall               | 6| .030c addiw t1,t1,1656   | 0304 ld s6,0(s1)     ALU |                          | ID-stall:EX1-busy
+   4066 |                          | 031c ecall               | 6| .030c addiw t1,t1,1656   | 0304 ld s6,0(s1)     ALU |                          | ID-stall:EX1-busy
+   4067 |                          | 031c ecall               | 6| >030c addiw t1,t1,1656   | 0308 lui t1,0x5      ALU | 0304 ld s6,0(s1)         | DC:LD hit
+   4068 | 0320 li t6,0             | 031c ecall               | 4| >0310 sd t1,8(s1)        | 030c addiw t1,t1,165 ALU | 0308 lui t1,0x5          | 
+   4069 | 0324 mv a1,s6            |                          | 4| >0314 mv s5,s8           | 0310 sd t1,8(s1)     LSU | 030c addiw t1,t1,1656    | 
+   4070 | 0328 li a0,1288          | 0320 li t6,0             | 2| >0314 mv s5,s8           | 0314 mv s5,s8        ALU | 0310 sd t1,8(s1)         | TRAP
+   4071 | 032c jal 21e             | 0324 mv a1,s6            | 2| .(flushed) ecall         | 0314 mv s5,s8        ALU |                          | ID-stall:CP0/fence RT-redirect->0140
+   4072 | 0140 j 400               |                          | 0|                          |                          |                          | ID-stall:other
+   4073 |                          |                          | 0|                          |                          |                          | ID-stall:other FLUSH
+   4074 |                          |                          | 0|                          |                          |                          | I$-miss
+   4075 |                          |                          | 0|                          |                          |                          | 
+   4076 |                          |                          | 0|                          |                          |                          | 
+   4077 |                          |                          | 0|                          |                          |                          | 
+   4078 |                          |                          | 0|                          |                          |                          | 
+   4079 |                          |                          | 0|                          |                          |                          | 
+   4080 |                          | 0140 j 400               | 0| >0140 j 400              |                          |                          | IP-redirect->0400
+   4081 |                          |                          | 0|                          | 0140 j 400           BJU |                          | 
+   4082 |                          |                          | 0|                          |                          | 0140 j 400               | 
+   4083 |                          |                          | 0|                          |                          |                          | 
+   4084 |                          |                          | 0|                          |                          |                          | 
+   4085 |                          |                          | 0|                          |                          |                          | 
+   4086 | 0400 csrr s8,mcause      |                          | 0|                          |                          |                          | 
+   4087 |                          |                          | 0|                          |                          |                          | 
+   4088 |                          |                          | 0|                          |                          |                          | I$-miss
+   4089 |                          |                          | 0|                          |                          |                          | 
+   4090 |                          |                          | 0|                          |                          |                          | 
+   4091 |                          |                          | 0|                          |                          |                          | 
+   4092 |                          |                          | 0|                          |                          |                          | 
+   4093 |                          |                          | 0|                          |                          |                          | 
+   4094 |                          | 0400 csrr s8,mcause      | 0| >0400 csrr s8,mcause     |                          |                          | 
+   4095 |                          |                          | 0|                          | 0400 csrr s8,mcause  CP0 |                          | 
+   4096 |                          |                          | 0|                          |                          | 0400 csrr s8,mcause      | 
+   4097 |                          |                          | 0|                          |                          |                          | 
+   4098 |                          |                          | 0|                          |                          |                          | 
+   4099 |                          |                          | 0|                          |                          |                          | 
+   4100 | 0404 csrr s9,mepc        |                          | 0|                          |                          |                          | 
+   4101 | 0408 csrr s10,mtval      |                          | 0|                          |                          |                          | 
+   4102 | 040c li t3,8             | 0404 csrr s9,mepc        | 0| >0404 csrr s9,mepc       |                          |                          | 
+   4103 | 0410 beq s8,t3,420       | 0408 csrr s10,mtval      | 0| .0408 csrr s10,mtval     | 0404 csrr s9,mepc    CP0 |                          | ID-stall:CP0/fence
+   4104 | 0414 addi t3,s9,4        | 040c li t3,8             | 0| .0408 csrr s10,mtval     |                          | 0404 csrr s9,mepc        | ID-stall:CP0/fence
+   4105 | 0418 csrw mepc,t3        | 0410 beq s8,t3,420       | 2| >0408 csrr s10,mtval     |                          |                          | 
+   4106 | 041c mret                | 0414 addi t3,s9,4        | 2| >040c li t3,8            | 0408 csrr s10,mtval  CP0 |                          | 
+   4107 | 0420 lui t3,0x2          | 0418 csrw mepc,t3        | 2| >0410 beq s8,t3,420      | 040c li t3,8         ALU | 0408 csrr s10,mtval      | 
+   4108 | 0424 addiw t3,t3,-2048   | 041c mret                | 2| >0414 addi t3,s9,4       | 0410 beq s8,t3,420   BJU | 040c li t3,8             | BR-resolve:N
+   4109 | 0428 csrs mstatus,t3     | 0420 lui t3,0x2          | 2| .0418 csrw mepc,t3       | 0414 addi t3,s9,4    ALU | 0410 beq s8,t3,420       | ID-stall:CP0/fence
+   4110 | 042c auipc t3,0x0        | 0424 addiw t3,t3,-2048   | 4| .0418 csrw mepc,t3       |                          | 0414 addi t3,s9,4        | ID-stall:CP0/fence
+   4111 |                          | 0428 csrs mstatus,t3     | 6| >0418 csrw mepc,t3       |                          |                          | 
+   4112 | 042c auipc t3,0x0        | 0428 csrs mstatus,t3     | 4| .(flushed) mret          | 0418 csrw mepc,t3    CP0 |                          | ID-stall:CP0/fence
+   4113 | 0430 addi t3,t3,-268     |                          | 6| .(flushed) mret          |                          | 0418 csrw mepc,t3        | ID-stall:CP0/fence RT-redirect->041c
+   4114 | 041c mret                |                          | 0|                          |                          |                          | 
+   4115 | 0420 lui t3,0x2          |                          | 0|                          |                          |                          | ID-stall:other FLUSH
+   4116 | 0424 addiw t3,t3,-2048   | 041c mret                | 0| >041c mret               |                          |                          | 
+   4117 | 0428 csrs mstatus,t3     | 0420 lui t3,0x2          | 0| >0420 lui t3,0x2         | 041c mret            CP0 |                          | 
+   4118 | 042c auipc t3,0x0        | 0424 addiw t3,t3,-2048   | 0| >0314 mv s5,s8           | 0420 lui t3,0x2      ALU | 041c mret                | RT-redirect->0314
+   4119 | 0314 mv s5,s8            |                          | 0|                          | 0314 mv s5,s8        ALU |                          | 
+   4120 | 0318 mv s4,s10           |                          | 0|                          |                          |                          | ID-stall:other
+   4121 | 031c ecall               | 0314 mv s5,s8            | 0| .(flushed) mv s5,s8      |                          |                          | ID-stall:other FLUSH
+   4122 | 0320 li t6,0             | 0318 mv s4,s10           | 0| >0314 mv s5,s8           |                          |                          | 
+   4123 | 0324 mv a1,s6            | 031c ecall               | 0| >0318 mv s4,s10          | 0314 mv s5,s8        ALU |                          | 
+   4124 | 0328 li a0,1288          | 0320 li t6,0             | 0| .031c ecall              | 0318 mv s4,s10       ALU | 0314 mv s5,s8            | ID-stall:CP0/fence
+   4125 | 032c jal 21e             | 0324 mv a1,s6            | 2| .031c ecall              |                          | 0318 mv s4,s10           | ID-stall:CP0/fence
+   4126 | 0330 mv a1,s5            | 0328 li a0,1288          | 4| >031c ecall              |                          |                          | 
+   4127 | 0334 li a0,1301          | 032c jal 21e             | 4| >0320 li t6,0            | 031c ecall           CP0 |                          | IP-redirect->021e
+   4128 | 021e addi sp,sp,-16      |                          | 4| >0320 li t6,0            | 0320 li t6,0         ALU | 031c ecall               | TRAP
+   4129 | 0220 sd ra,0(sp)         |                          | 2| >(flushed) li a0,1288    | 0320 li t6,0         ALU |                          | RT-redirect->0140
+   4130 | 0140 j 400               |                          | 0|                          |                          |                          | ID-stall:other
+   4131 | 0400 csrr s8,mcause      |                          | 0|                          |                          |                          | BTB-redirect ID-stall:other FLUSH
+   4132 | 0404 csrr s9,mepc        | 0140 j 400               | 0| >0140 j 400              |                          |                          | 
+   4133 | 0408 csrr s10,mtval      | 0400 csrr s8,mcause      | 0| .0400 csrr s8,mcause     | 0140 j 400           BJU |                          | ID-stall:CP0/fence
+   4134 | 040c li t3,8             | 0404 csrr s9,mepc        | 0| .0400 csrr s8,mcause     |                          | 0140 j 400               | ID-stall:CP0/fence
+   4135 | 0410 beq s8,t3,420       | 0408 csrr s10,mtval      | 2| >0400 csrr s8,mcause     |                          |                          | 
+   4136 | 0414 addi t3,s9,4        | 040c li t3,8             | 2| .0404 csrr s9,mepc       | 0400 csrr s8,mcause  CP0 |                          | ID-stall:CP0/fence
+   4137 | 0418 csrw mepc,t3        | 0410 beq s8,t3,420       | 4| .0404 csrr s9,mepc       |                          | 0400 csrr s8,mcause      | ID-stall:CP0/fence
+   4138 |                          | 0414 addi t3,s9,4        | 6| >0404 csrr s9,mepc       |                          |                          | 
+   4139 | 0418 csrw mepc,t3        | 0414 addi t3,s9,4        | 4| .0408 csrr s10,mtval     | 0404 csrr s9,mepc    CP0 |                          | ID-stall:CP0/fence
+   4140 | 041c mret                |                          | 6| .0408 csrr s10,mtval     |                          | 0404 csrr s9,mepc        | ID-stall:CP0/fence
+   4141 |                          | 0418 csrw mepc,t3        | 6| >0408 csrr s10,mtval     |                          |                          | 
+   4142 | 041c mret                | 0418 csrw mepc,t3        | 4| >040c li t3,8            | 0408 csrr s10,mtval  CP0 |                          | 
+   4143 | 0420 lui t3,0x2          |                          | 4| >0410 beq s8,t3,420      | 040c li t3,8         ALU | 0408 csrr s10,mtval      | 
+   4144 | 0424 addiw t3,t3,-2048   | 041c mret                | 2| >(flushed) addi t3,s9,4  | 0410 beq s8,t3,420   BJU | 040c li t3,8             | BR-resolve:T MISPRED(BHT) IU-redirect->0420
+   4145 | 0420 lui t3,0x2          |                          | 0|                          |                          | 0410 beq s8,t3,420       | 
+   4146 | 0424 addiw t3,t3,-2048   |                          | 0|                          |                          |                          | 
+   4147 | 0428 csrs mstatus,t3     | 0420 lui t3,0x2          | 0| >0420 lui t3,0x2         |                          |                          | 
+   4148 | 042c auipc t3,0x0        | 0424 addiw t3,t3,-2048   | 0| >0424 addiw t3,t3,-2048  | 0420 lui t3,0x2      ALU |                          | 
+   4149 | 0430 addi t3,t3,-268     | 0428 csrs mstatus,t3     | 0| .0428 csrs mstatus,t3    | 0424 addiw t3,t3,-20 ALU | 0420 lui t3,0x2          | ID-stall:CP0/fence
+   4150 | 0434 csrw mepc,t3        | 042c auipc t3,0x0        | 0| .0428 csrs mstatus,t3    |                          | 0424 addiw t3,t3,-2048   | ID-stall:CP0/fence
+   4151 | 0438 mret                | 0430 addi t3,t3,-268     | 2| >0428 csrs mstatus,t3    |                          |                          | 
+   4152 | 043c ?                   | 0434 csrw mepc,t3        | 2| >042c auipc t3,0x0       | 0428 csrs mstatus,t3 CP0 |                          | 
+   4153 | 0440 ?                   | 0438 mret                | 2| >042c auipc t3,0x0       | 042c auipc t3,0x0    BJU | 0428 csrs mstatus,t3     | RT-redirect->042c
+   4154 | 042c auipc t3,0x0        |                          | 0|                          | 042c auipc t3,0x0    ALU |                          | 
+   4155 | 0430 addi t3,t3,-268     |                          | 0|                          |                          |                          | ID-stall:other
+   4156 | 0434 csrw mepc,t3        | 042c auipc t3,0x0        | 0| .(flushed) auipc t3,0x0  |                          |                          | ID-stall:other FLUSH
+   4157 | 0438 mret                | 0430 addi t3,t3,-268     | 0| >042c auipc t3,0x0       |                          |                          | 
+   4158 | 043c ?                   | 0434 csrw mepc,t3        | 0| >0430 addi t3,t3,-268    | 042c auipc t3,0x0    BJU |                          | 
+   4159 | 0440 ?                   | 0438 mret                | 0| .0434 csrw mepc,t3       | 0430 addi t3,t3,-268 ALU | 042c auipc t3,0x0        | ID-stall:CP0/fence
+   4160 |                          | 043c ?                   | 2| .0434 csrw mepc,t3       |                          | 0430 addi t3,t3,-268     | ID-stall:CP0/fence
+   4161 |                          |                          | 4| >0434 csrw mepc,t3       |                          |                          | I$-miss
+   4162 |                          |                          | 2| .(flushed) mret          | 0434 csrw mepc,t3    CP0 |                          | ID-stall:CP0/fence
+   4163 |                          |                          | 2| .(flushed) mret          |                          | 0434 csrw mepc,t3        | ID-stall:CP0/fence RT-redirect->0438
+   4164 |                          |                          | 0|                          |                          |                          | 
+   4165 |                          |                          | 0|                          |                          |                          | ID-stall:other FLUSH
+   4166 |                          |                          | 0|                          |                          |                          | 
+   4167 |                          |                          | 0|                          |                          |                          | 
+   4168 |                          |                          | 0|                          |                          |                          | 
+   4169 |                          |                          | 0|                          |                          |                          | 
+   4170 |                          |                          | 0|                          |                          |                          | 
+   4171 |                          |                          | 0|                          |                          |                          | 
+   4172 |                          |                          | 0|                          |                          |                          | 
+   4173 | 0438 mret                |                          | 0|                          |                          |                          | 
+   4174 | 043c ?                   |                          | 0|                          |                          |                          | 
+   4175 | 0440 ?                   | 0438 mret                | 0| >0438 mret               |                          |                          | 
+   4176 | 0444 ?                   | 043c ?                   | 0| >043c ?                  | 0438 mret            CP0 |                          | 
+   4177 | 0448 ?                   | 0440 ?                   | 0| >0320 li t6,0            | 043c ?               CP0 | 0438 mret                | RT-redirect->0320
+   4178 | 0320 li t6,0             |                          | 0|                          | 0320 li t6,0         CP0 |                          | 
+   4179 | 0324 mv a1,s6            |                          | 0|                          |                          |                          | ID-stall:other
+   4180 | 0328 li a0,1288          | 0320 li t6,0             | 0| .(flushed) li t6,0       |                          |                          | ID-stall:other FLUSH
+   4181 | 032c jal 21e             | 0324 mv a1,s6            | 0| >0320 li t6,0            |                          |                          | 
+   4182 | 0330 mv a1,s5            | 0328 li a0,1288          | 0| >0324 mv a1,s6           | 0320 li t6,0         ALU |                          | 
+   4183 | 0334 li a0,1301          | 032c jal 21e             | 0| >0360 addiw t1,t1,-1639  | 0324 mv a1,s6        ALU | 0320 li t6,0             | IP-redirect->021e
+----------------------------------------------------------------------------------------------------------------------------------------------------------------
+summary: cycles=127 retired=30 IPC=0.236 | btb_redirect=1, flush=7, icache_miss=3, ip_redirect=3, iu_redirect=1, mispred_bht=1, retired=30, stall_CP0/fence=21, stall_EX1-busy=9, stall_other=12, trap=2
+
+================================================================================================================================================================
+MARK 3   cycles 5251 .. 5616  (366 cycles)
+================================================================================================================================================================
+    cyc | IF (fetch)               | IP (pred)                |IB| ID                       | EX1                      | RETIRE                   | events
+----------------------------------------------------------------------------------------------------------------------------------------------------------------
+   5251 | 0370 sfence.vma          | 0368 mv s7,s8            | 0| >0364 sd t1,16(s1)       | 0360 addiw t1,t1,-16 ALU | 035c lui t1,0xa          | 
+   5252 | 0374 li t6,4             | 036c li s8,0             | 0| >0368 mv s7,s8           | 0364 sd t1,16(s1)    LSU | 0360 addiw t1,t1,-1639   | 
+   5253 | 0378 sd t1,24(s1)        | 0370 sfence.vma          | 0| >036c li s8,0            | 0368 mv s7,s8        ALU | 0364 sd t1,16(s1)        | DC:ST hit
+   5254 | 037c mv s5,s8            | 0374 li t6,4             | 0| .0370 sfence.vma         | 036c li s8,0         ALU | 0368 mv s7,s8            | ID-stall:CP0/fence
+   5255 | 0380 li t0,-1            | 0378 sd t1,24(s1)        | 2| .0370 sfence.vma         |                          | 036c li s8,0             | ID-stall:CP0/fence
+   5256 |                          | 037c mv s5,s8            | 4| >0370 sfence.vma         |                          |                          | 
+   5257 |                          |                          | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence I$-miss
+   5258 |                          |                          | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5259 |                          |                          | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5260 |                          |                          | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5261 |                          |                          | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5262 |                          |                          | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5263 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5264 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5265 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5266 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5267 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5268 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5269 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5270 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5271 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5272 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5273 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5274 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5275 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5276 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5277 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5278 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5279 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5280 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5281 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5282 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5283 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5284 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5285 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5286 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5287 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5288 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5289 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5290 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5291 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5292 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5293 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5294 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5295 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5296 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5297 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5298 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5299 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5300 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5301 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5302 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5303 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5304 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5305 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5306 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5307 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5308 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5309 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5310 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5311 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5312 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5313 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5314 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5315 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5316 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5317 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5318 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5319 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5320 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5321 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5322 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5323 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5324 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5325 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5326 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5327 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5328 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5329 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5330 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5331 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5332 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5333 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5334 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5335 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5336 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5337 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5338 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5339 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5340 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5341 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5342 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5343 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5344 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5345 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5346 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5347 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5348 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5349 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5350 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5351 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5352 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5353 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5354 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5355 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5356 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5357 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5358 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5359 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5360 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5361 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5362 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5363 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5364 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5365 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5366 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5367 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5368 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5369 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5370 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5371 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5372 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5373 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5374 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5375 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5376 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5377 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5378 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5379 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5380 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5381 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5382 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5383 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5384 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5385 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5386 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5387 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5388 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5389 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5390 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5391 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5392 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5393 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5394 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5395 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5396 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5397 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5398 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5399 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5400 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5401 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5402 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5403 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5404 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5405 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5406 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5407 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5408 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5409 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5410 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5411 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5412 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5413 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5414 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5415 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5416 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5417 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5418 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5419 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5420 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5421 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5422 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5423 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5424 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5425 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5426 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5427 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5428 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5429 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5430 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5431 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5432 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5433 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5434 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5435 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5436 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5437 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5438 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5439 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5440 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5441 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5442 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5443 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5444 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5445 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5446 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5447 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5448 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5449 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5450 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5451 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5452 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5453 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5454 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5455 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5456 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5457 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5458 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5459 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5460 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5461 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5462 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5463 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5464 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5465 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5466 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5467 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5468 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5469 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5470 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5471 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5472 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5473 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5474 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5475 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5476 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5477 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5478 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5479 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5480 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5481 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5482 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5483 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5484 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5485 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5486 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5487 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5488 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5489 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5490 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5491 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5492 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5493 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5494 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5495 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5496 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5497 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5498 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5499 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5500 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5501 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5502 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5503 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5504 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5505 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5506 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5507 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5508 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5509 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5510 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5511 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5512 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5513 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5514 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5515 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5516 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5517 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5518 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5519 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5520 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5521 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5522 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5523 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5524 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5525 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5526 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5527 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5528 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5529 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5530 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5531 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5532 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5533 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5534 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5535 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5536 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5537 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5538 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5539 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5540 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5541 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5542 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5543 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5544 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5545 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5546 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5547 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5548 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5549 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5550 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5551 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5552 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5553 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5554 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5555 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5556 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5557 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5558 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5559 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5560 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5561 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5562 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5563 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5564 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5565 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5566 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5567 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5568 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5569 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5570 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5571 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5572 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5573 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5574 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5575 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5576 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5577 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5578 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5579 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5580 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5581 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5582 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5583 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5584 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   5585 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         | 0370 sfence.vma      CP0 |                          | ID-stall:CP0/fence
+   5586 |                          | 0380 li t0,-1            | 6| .0370 sfence.vma         |                          | 0370 sfence.vma          | ID-stall:CP0/fence
+   5587 |                          | 0380 li t0,-1            | 6| >0370 sfence.vma         |                          |                          | 
+   5588 | 0384 csrw pmpaddr0,t0    | 0380 li t0,-1            | 4| .0374 li t6,4            | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy
+   5589 |                          |                          | 6| .0374 li t6,4            | 0370 sfence.vma      CP0 |                          | ID-stall:EX1-busy
+   5590 |                          |                          | 6| >0374 li t6,4            | 0370 sfence.vma      CP0 |                          | 
+   5591 |                          |                          | 4| >0374 li t6,4            | 0374 li t6,4         ALU | 0370 sfence.vma          | RT-redirect->0374
+   5592 | 0374 li t6,4             |                          | 0|                          | 0374 li t6,4         LSU |                          | 
+   5593 |                          |                          | 0|                          |                          |                          | ID-stall:other
+   5594 |                          |                          | 0|                          |                          |                          | ID-stall:other FLUSH
+   5595 |                          |                          | 0|                          |                          |                          | 
+   5596 |                          |                          | 0|                          |                          |                          | 
+   5597 |                          |                          | 0|                          |                          |                          | 
+   5598 |                          |                          | 0|                          |                          |                          | 
+   5599 |                          |                          | 0|                          |                          |                          | 
+   5600 |                          |                          | 0|                          |                          |                          | 
+   5601 |                          |                          | 0|                          |                          |                          | 
+   5602 |                          |                          | 0|                          |                          |                          | 
+   5603 |                          |                          | 0|                          |                          |                          | 
+   5604 |                          |                          | 0|                          |                          |                          | 
+   5605 |                          |                          | 0|                          |                          |                          | 
+   5606 |                          |                          | 0|                          |                          |                          | 
+   5607 |                          |                          | 0|                          |                          |                          | 
+   5608 |                          |                          | 0|                          |                          |                          | I$-miss
+   5609 |                          |                          | 0|                          |                          |                          | 
+   5610 |                          |                          | 0|                          |                          |                          | 
+   5611 |                          |                          | 0|                          |                          |                          | 
+   5612 |                          |                          | 0|                          |                          |                          | 
+   5613 |                          |                          | 0|                          |                          |                          | 
+   5614 |                          | 0374 li t6,4             | 0| >0374 li t6,4            |                          |                          | 
+   5615 |                          |                          | 0|                          | 0374 li t6,4         ALU |                          | 
+   5616 |                          |                          | 0|                          |                          | 0374 li t6,4             | 
+----------------------------------------------------------------------------------------------------------------------------------------------------------------
+summary: cycles=366 retired=8 IPC=0.022 | flush=1, icache_miss=2, retired=8, stall_CP0/fence=332, stall_EX1-busy=330, stall_other=2
+
+================================================================================================================================================================
+MARK 4   cycles 5617 .. 5701  (85 cycles)
+================================================================================================================================================================
+    cyc | IF (fetch)               | IP (pred)                |IB| ID                       | EX1                      | RETIRE                   | events
+----------------------------------------------------------------------------------------------------------------------------------------------------------------
+   5617 |                          |                          | 0|                          |                          |                          | 
+   5618 |                          |                          | 0|                          |                          |                          | 
+   5619 |                          |                          | 0|                          |                          |                          | 
+   5620 | 0378 sd t1,24(s1)        |                          | 0|                          |                          |                          | 
+   5621 | 037c mv s5,s8            |                          | 0|                          |                          |                          | 
+   5622 | 0380 li t0,-1            | 0378 sd t1,24(s1)        | 0| >0378 sd t1,24(s1)       |                          |                          | 
+   5623 |                          | 037c mv s5,s8            | 0| >0378 sd t1,24(s1)       | 0378 sd t1,24(s1)    LSU |                          | 
+   5624 |                          |                          | 0|                          | 0378 sd t1,24(s1)    ALU |                          | ID-stall:EX1-busy I$-miss
+   5625 |                          |                          | 0|                          | 0378 sd t1,24(s1)    ALU |                          | ID-stall:EX1-busy
+   5626 |                          |                          | 0|                          | 0378 sd t1,24(s1)    ALU |                          | ID-stall:EX1-busy
+   5627 |                          |                          | 0|                          | 0378 sd t1,24(s1)    ALU |                          | ID-stall:EX1-busy
+   5628 |                          |                          | 0|                          | 0378 sd t1,24(s1)    ALU |                          | ID-stall:EX1-busy
+   5629 |                          |                          | 0|                          | 0378 sd t1,24(s1)    ALU |                          | ID-stall:EX1-busy
+   5630 |                          | 0380 li t0,-1            | 0| .037c mv s5,s8           | 0378 sd t1,24(s1)    ALU |                          | ID-stall:EX1-busy
+   5631 |                          |                          | 0| .037c mv s5,s8           | 0378 sd t1,24(s1)    ALU |                          | ID-stall:EX1-busy
+   5632 |                          |                          | 0| .037c mv s5,s8           | 0378 sd t1,24(s1)    ALU |                          | ID-stall:EX1-busy
+   5633 |                          |                          | 0| >037c mv s5,s8           | 037c mv s5,s8        ALU | 0378 sd t1,24(s1)        | TRAP
+   5634 |                          |                          | 0|                          | 037c mv s5,s8        ALU |                          | RT-redirect->0140
+   5635 |                          |                          | 0|                          |                          |                          | ID-stall:other
+   5636 | 0140 j 400               |                          | 0|                          |                          |                          | ID-stall:other FLUSH
+   5637 |                          |                          | 0|                          |                          |                          | 
+   5638 |                          |                          | 0|                          |                          |                          | I$-miss
+   5639 |                          |                          | 0|                          |                          |                          | 
+   5640 |                          |                          | 0|                          |                          |                          | 
+   5641 |                          |                          | 0|                          |                          |                          | 
+   5642 |                          |                          | 0|                          |                          |                          | 
+   5643 |                          |                          | 0|                          |                          |                          | 
+   5644 |                          | 0140 j 400               | 0| >0140 j 400              |                          |                          | IP-redirect->0400
+   5645 |                          |                          | 0|                          | 0140 j 400           BJU |                          | 
+   5646 |                          |                          | 0|                          |                          | 0140 j 400               | 
+   5647 |                          |                          | 0|                          |                          |                          | 
+   5648 |                          |                          | 0|                          |                          |                          | 
+   5649 |                          |                          | 0|                          |                          |                          | 
+   5650 | 0400 csrr s8,mcause      |                          | 0|                          |                          |                          | 
+   5651 |                          |                          | 0|                          |                          |                          | 
+   5652 |                          |                          | 0|                          |                          |                          | I$-miss
+   5653 |                          |                          | 0|                          |                          |                          | 
+   5654 |                          |                          | 0|                          |                          |                          | 
+   5655 |                          |                          | 0|                          |                          |                          | 
+   5656 |                          |                          | 0|                          |                          |                          | 
+   5657 |                          |                          | 0|                          |                          |                          | 
+   5658 |                          | 0400 csrr s8,mcause      | 0| >0400 csrr s8,mcause     |                          |                          | 
+   5659 |                          |                          | 0|                          | 0400 csrr s8,mcause  CP0 |                          | 
+   5660 |                          |                          | 0|                          |                          | 0400 csrr s8,mcause      | 
+   5661 |                          |                          | 0|                          |                          |                          | 
+   5662 |                          |                          | 0|                          |                          |                          | 
+   5663 |                          |                          | 0|                          |                          |                          | 
+   5664 | 0404 csrr s9,mepc        |                          | 0|                          |                          |                          | 
+   5665 | 0408 csrr s10,mtval      |                          | 0|                          |                          |                          | 
+   5666 | 040c li t3,8             | 0404 csrr s9,mepc        | 0| >0404 csrr s9,mepc       |                          |                          | 
+   5667 | 0410 beq s8,t3,420       | 0408 csrr s10,mtval      | 0| .0408 csrr s10,mtval     | 0404 csrr s9,mepc    CP0 |                          | ID-stall:CP0/fence
+   5668 | 0414 addi t3,s9,4        | 040c li t3,8             | 0| .0408 csrr s10,mtval     |                          | 0404 csrr s9,mepc        | ID-stall:CP0/fence
+   5669 | 0418 csrw mepc,t3        | 0410 beq s8,t3,420       | 2| >0408 csrr s10,mtval     |                          |                          | 
+   5670 | 041c mret                | 0414 addi t3,s9,4        | 2| >040c li t3,8            | 0408 csrr s10,mtval  CP0 |                          | 
+   5671 | 0420 lui t3,0x2          | 0418 csrw mepc,t3        | 2| >0410 beq s8,t3,420      | 040c li t3,8         ALU | 0408 csrr s10,mtval      | 
+   5672 | 0424 addiw t3,t3,-2048   | 041c mret                | 2| >0414 addi t3,s9,4       | 0410 beq s8,t3,420   BJU | 040c li t3,8             | BR-resolve:N
+   5673 | 0428 csrs mstatus,t3     | 0420 lui t3,0x2          | 2| .0418 csrw mepc,t3       | 0414 addi t3,s9,4    ALU | 0410 beq s8,t3,420       | ID-stall:CP0/fence
+   5674 | 042c auipc t3,0x0        | 0424 addiw t3,t3,-2048   | 4| .0418 csrw mepc,t3       |                          | 0414 addi t3,s9,4        | ID-stall:CP0/fence
+   5675 |                          | 0428 csrs mstatus,t3     | 6| >0418 csrw mepc,t3       |                          |                          | 
+   5676 | 042c auipc t3,0x0        | 0428 csrs mstatus,t3     | 4| .(flushed) mret          | 0418 csrw mepc,t3    CP0 |                          | ID-stall:CP0/fence
+   5677 | 0430 addi t3,t3,-268     |                          | 6| .(flushed) mret          |                          | 0418 csrw mepc,t3        | ID-stall:CP0/fence RT-redirect->041c
+   5678 | 041c mret                |                          | 0|                          |                          |                          | 
+   5679 | 0420 lui t3,0x2          |                          | 0|                          |                          |                          | ID-stall:other FLUSH
+   5680 | 0424 addiw t3,t3,-2048   | 041c mret                | 0| >041c mret               |                          |                          | 
+   5681 | 0428 csrs mstatus,t3     | 0420 lui t3,0x2          | 0| >0420 lui t3,0x2         | 041c mret            CP0 |                          | 
+   5682 | 042c auipc t3,0x0        | 0424 addiw t3,t3,-2048   | 0| >037c mv s5,s8           | 0420 lui t3,0x2      ALU | 041c mret                | RT-redirect->037c
+   5683 | 037c mv s5,s8            |                          | 0|                          | 037c mv s5,s8        ALU |                          | 
+   5684 | 0380 li t0,-1            |                          | 0|                          |                          |                          | ID-stall:other
+   5685 | 0384 csrw pmpaddr0,t0    | 037c mv s5,s8            | 0| .(flushed) mv s5,s8      |                          |                          | ID-stall:other FLUSH
+   5686 | 0388 csrr s3,pmpaddr0    | 0380 li t0,-1            | 0| >037c mv s5,s8           |                          |                          | 
+   5687 | 038c csrr s2,pmpcfg0     | 0384 csrw pmpaddr0,t0    | 0| >0380 li t0,-1           | 037c mv s5,s8        ALU |                          | 
+   5688 | 0390 li t6,0             | 0388 csrr s3,pmpaddr0    | 0| .0384 csrw pmpaddr0,t0   | 0380 li t0,-1        ALU | 037c mv s5,s8            | ID-stall:CP0/fence
+   5689 | 0394 mv a1,s7            | 038c csrr s2,pmpcfg0     | 2| .0384 csrw pmpaddr0,t0   |                          | 0380 li t0,-1            | ID-stall:CP0/fence
+   5690 | 0398 li a0,1341          | 0390 li t6,0             | 4| >0384 csrw pmpaddr0,t0   |                          |                          | 
+   5691 | 039c jal 21e             | 0394 mv a1,s7            | 4| .(flushed) csrr s3,pmpad | 0384 csrw pmpaddr0,t CP0 |                          | ID-stall:CP0/fence
+   5692 |                          | 0398 li a0,1341          | 6| .(flushed) csrr s3,pmpad |                          | 0384 csrw pmpaddr0,t0    | ID-stall:CP0/fence RT-redirect->0388
+   5693 | 0388 csrr s3,pmpaddr0    |                          | 0|                          |                          |                          | 
+   5694 | 038c csrr s2,pmpcfg0     |                          | 0|                          |                          |                          | ID-stall:other FLUSH
+   5695 | 0390 li t6,0             | 0388 csrr s3,pmpaddr0    | 0| >0388 csrr s3,pmpaddr0   |                          |                          | 
+   5696 | 0394 mv a1,s7            | 038c csrr s2,pmpcfg0     | 0| .038c csrr s2,pmpcfg0    | 0388 csrr s3,pmpaddr CP0 |                          | ID-stall:CP0/fence
+   5697 | 0398 li a0,1341          | 0390 li t6,0             | 0| .038c csrr s2,pmpcfg0    |                          | 0388 csrr s3,pmpaddr0    | ID-stall:CP0/fence
+   5698 | 039c jal 21e             | 0394 mv a1,s7            | 2| >038c csrr s2,pmpcfg0    |                          |                          | 
+   5699 | 03a0 mv a1,s5            | 0398 li a0,1341          | 2| >0390 li t6,0            | 038c csrr s2,pmpcfg0 CP0 |                          | 
+   5700 | 03a4 li a0,1377          | 039c jal 21e             | 2| >0394 mv a1,s7           | 0390 li t6,0         ALU | 038c csrr s2,pmpcfg0     | IP-redirect->021e
+   5701 | 021e addi sp,sp,-16      |                          | 2| >(flushed) li a0,1341    | 0394 mv a1,s7        ALU | 0390 li t6,0             | 
+----------------------------------------------------------------------------------------------------------------------------------------------------------------
+summary: cycles=85 retired=16 IPC=0.188 | flush=4, icache_miss=3, ip_redirect=2, retired=16, stall_CP0/fence=12, stall_EX1-busy=9, stall_other=6, trap=1

@@ -1,0 +1,612 @@
+사용: pipeview.py <out/test 디렉토리> [--mark N] [--max-rows K]
+출력: <dir>/pipeview.txt  (mark 구간별 표 + 구간 요약)
+
+================================================================================================================================================================
+MARK 1   cycles 2673 .. 2729  (57 cycles)
+================================================================================================================================================================
+    cyc | IF (fetch)               | IP (pred)                |IB| ID                       | EX1                      | RETIRE                   | events
+----------------------------------------------------------------------------------------------------------------------------------------------------------------
+   2673 | 02ac jal 21e             | 02a4 mv a1,a5            | 2| .0298 sc.d a5,a2,(s8)    | 0294 lr.d a4,(s8)    LSU |                          | ID-stall:EX1-busy
+   2674 | 02b0 mv a1,a6            | 02a8 li a0,1334          | 4| >0298 sc.d a5,a2,(s8)    | 0298 sc.d a5,a2,(s8) LSU | 0294 lr.d a4,(s8)        | DC:LD MISS
+   2675 | 02b4 li a0,1355          | 02ac jal 21e             | 4| .02a0 ld a6,0(s8)        | 0298 sc.d a5,a2,(s8) ALU |                          | IP-redirect->021e ID-stall:EX1-busy
+   2676 | 021e addi sp,sp,-16      |                          | 6| .02a0 ld a6,0(s8)        | 0298 sc.d a5,a2,(s8) ALU |                          | ID-stall:EX1-busy
+   2677 |                          |                          | 6| .02a0 ld a6,0(s8)        | 0298 sc.d a5,a2,(s8) ALU |                          | ID-stall:EX1-busy
+   2678 |                          |                          | 6| .02a0 ld a6,0(s8)        | 0298 sc.d a5,a2,(s8) ALU |                          | ID-stall:EX1-busy I$-miss
+   2679 |                          |                          | 6| .02a0 ld a6,0(s8)        | 0298 sc.d a5,a2,(s8) ALU |                          | ID-stall:EX1-busy
+   2680 |                          |                          | 6| .02a0 ld a6,0(s8)        | 0298 sc.d a5,a2,(s8) ALU |                          | ID-stall:EX1-busy
+   2681 |                          |                          | 6| .02a0 ld a6,0(s8)        | 0298 sc.d a5,a2,(s8) ALU |                          | ID-stall:EX1-busy
+   2682 |                          |                          | 6| .02a0 ld a6,0(s8)        | 0298 sc.d a5,a2,(s8) ALU |                          | ID-stall:EX1-busy
+   2683 |                          |                          | 6| .02a0 ld a6,0(s8)        | 0298 sc.d a5,a2,(s8) ALU |                          | ID-stall:EX1-busy
+   2684 |                          |                          | 6| .02a0 ld a6,0(s8)        | 0298 sc.d a5,a2,(s8) ALU |                          | ID-stall:EX1-busy
+   2685 |                          |                          | 6| .02a0 ld a6,0(s8)        | 0298 sc.d a5,a2,(s8) ALU |                          | ID-stall:EX1-busy
+   2686 |                          |                          | 6| .02a0 ld a6,0(s8)        | 0298 sc.d a5,a2,(s8) ALU |                          | ID-stall:EX1-busy
+   2687 |                          |                          | 6| .02a0 ld a6,0(s8)        | 0298 sc.d a5,a2,(s8) ALU |                          | ID-stall:EX1-busy
+   2688 |                          |                          | 6| .02a0 ld a6,0(s8)        | 0298 sc.d a5,a2,(s8) ALU |                          | ID-stall:EX1-busy
+   2689 |                          |                          | 6| .02a0 ld a6,0(s8)        | 0298 sc.d a5,a2,(s8) ALU |                          | ID-stall:EX1-busy
+   2690 |                          |                          | 6| .02a0 ld a6,0(s8)        | 0298 sc.d a5,a2,(s8) ALU |                          | ID-stall:EX1-busy
+   2691 |                          |                          | 6| .02a0 ld a6,0(s8)        | 0298 sc.d a5,a2,(s8) ALU |                          | ID-stall:EX1-busy
+   2692 |                          |                          | 6| .02a0 ld a6,0(s8)        | 0298 sc.d a5,a2,(s8) ALU |                          | ID-stall:EX1-busy
+   2693 |                          |                          | 6| .02a0 ld a6,0(s8)        | 0298 sc.d a5,a2,(s8) ALU |                          | ID-stall:EX1-busy
+   2694 |                          |                          | 6| .02a0 ld a6,0(s8)        | 0298 sc.d a5,a2,(s8) ALU |                          | ID-stall:EX1-busy
+   2695 |                          |                          | 6| .02a0 ld a6,0(s8)        | 0298 sc.d a5,a2,(s8) ALU |                          | ID-stall:EX1-busy
+   2696 |                          |                          | 6| .02a0 ld a6,0(s8)        | 0298 sc.d a5,a2,(s8) ALU |                          | ID-stall:EX1-busy
+   2697 |                          |                          | 6| .02a0 ld a6,0(s8)        | 0298 sc.d a5,a2,(s8) ALU |                          | ID-stall:EX1-busy
+   2698 |                          |                          | 6| .02a0 ld a6,0(s8)        | 0298 sc.d a5,a2,(s8) ALU |                          | ID-stall:EX1-busy
+   2699 |                          |                          | 6| .02a0 ld a6,0(s8)        | 0298 sc.d a5,a2,(s8) ALU |                          | ID-stall:EX1-busy
+   2700 |                          |                          | 6| .02a0 ld a6,0(s8)        | 0298 sc.d a5,a2,(s8) ALU |                          | ID-stall:EX1-busy
+   2701 |                          |                          | 6| .02a0 ld a6,0(s8)        | 0298 sc.d a5,a2,(s8) ALU |                          | ID-stall:EX1-busy
+   2702 |                          |                          | 6| .02a0 ld a6,0(s8)        | 0298 sc.d a5,a2,(s8) ALU |                          | ID-stall:EX1-busy
+   2703 |                          |                          | 6| .02a0 ld a6,0(s8)        | 0298 sc.d a5,a2,(s8) ALU |                          | ID-stall:EX1-busy
+   2704 |                          |                          | 6| .02a0 ld a6,0(s8)        | 0298 sc.d a5,a2,(s8) ALU |                          | ID-stall:EX1-busy
+   2705 |                          |                          | 6| .02a0 ld a6,0(s8)        | 0298 sc.d a5,a2,(s8) ALU |                          | ID-stall:EX1-busy
+   2706 |                          |                          | 6| .02a0 ld a6,0(s8)        | 0298 sc.d a5,a2,(s8) ALU |                          | ID-stall:EX1-busy
+   2707 |                          |                          | 6| .02a0 ld a6,0(s8)        | 0298 sc.d a5,a2,(s8) ALU |                          | ID-stall:EX1-busy
+   2708 |                          |                          | 6| .02a0 ld a6,0(s8)        | 0298 sc.d a5,a2,(s8) ALU |                          | ID-stall:EX1-busy
+   2709 |                          |                          | 6| .02a0 ld a6,0(s8)        | 0298 sc.d a5,a2,(s8) ALU |                          | ID-stall:EX1-busy
+   2710 |                          |                          | 6| .02a0 ld a6,0(s8)        | 0298 sc.d a5,a2,(s8) ALU |                          | ID-stall:EX1-busy
+   2711 |                          |                          | 6| .02a0 ld a6,0(s8)        | 0298 sc.d a5,a2,(s8) ALU |                          | ID-stall:EX1-busy
+   2712 |                          |                          | 6| .02a0 ld a6,0(s8)        | 0298 sc.d a5,a2,(s8) ALU |                          | ID-stall:EX1-busy
+   2713 |                          |                          | 6| .02a0 ld a6,0(s8)        | 0298 sc.d a5,a2,(s8) ALU |                          | ID-stall:EX1-busy
+   2714 |                          |                          | 6| .02a0 ld a6,0(s8)        | 0298 sc.d a5,a2,(s8) ALU |                          | ID-stall:EX1-busy
+   2715 |                          |                          | 6| .02a0 ld a6,0(s8)        | 0298 sc.d a5,a2,(s8) ALU |                          | ID-stall:EX1-busy
+   2716 |                          |                          | 6| .02a0 ld a6,0(s8)        | 0298 sc.d a5,a2,(s8) ALU |                          | ID-stall:EX1-busy
+   2717 |                          |                          | 6| .02a0 ld a6,0(s8)        | 0298 sc.d a5,a2,(s8) ALU |                          | ID-stall:EX1-busy
+   2718 |                          |                          | 6| .02a0 ld a6,0(s8)        | 0298 sc.d a5,a2,(s8) ALU |                          | ID-stall:EX1-busy
+   2719 |                          |                          | 6| .02a0 ld a6,0(s8)        | 0298 sc.d a5,a2,(s8) ALU |                          | ID-stall:EX1-busy
+   2720 |                          |                          | 6| .02a0 ld a6,0(s8)        | 0298 sc.d a5,a2,(s8) ALU |                          | ID-stall:EX1-busy
+   2721 |                          |                          | 6| .02a0 ld a6,0(s8)        | 0298 sc.d a5,a2,(s8) ALU |                          | ID-stall:EX1-busy DC:LD MISS
+   2722 |                          |                          | 6| .02a0 ld a6,0(s8)        | 0298 sc.d a5,a2,(s8) ALU |                          | ID-stall:EX1-busy
+   2723 |                          |                          | 6| .02a0 ld a6,0(s8)        | 0298 sc.d a5,a2,(s8) ALU |                          | ID-stall:EX1-busy
+   2724 |                          |                          | 6| .02a0 ld a6,0(s8)        | 0298 sc.d a5,a2,(s8) ALU |                          | ID-stall:EX1-busy
+   2725 |                          |                          | 6| .02a0 ld a6,0(s8)        | 0298 sc.d a5,a2,(s8) ALU |                          | ID-stall:EX1-busy
+   2726 |                          |                          | 6| .02a0 ld a6,0(s8)        | 0298 sc.d a5,a2,(s8) ALU |                          | ID-stall:EX1-busy
+   2727 |                          |                          | 6| .02a0 ld a6,0(s8)        | 0298 sc.d a5,a2,(s8) ALU |                          | ID-stall:EX1-busy DC:LD hit
+   2728 |                          |                          | 6| >02a0 ld a6,0(s8)        | 029c li t6,0         ALU | 0298 sc.d a5,a2,(s8)     | DC:ST hit
+   2729 |                          |                          | 4| >02c4 sc.d a5,a2,(s8)    | 02a0 ld a6,0(s8)     LSU | 029c li t6,0             | 
+----------------------------------------------------------------------------------------------------------------------------------------------------------------
+summary: cycles=57 retired=3 IPC=0.053 | dc_miss=2, icache_miss=1, ip_redirect=1, retired=3, stall_EX1-busy=54
+
+================================================================================================================================================================
+MARK 2   cycles 3709 .. 3717  (9 cycles)
+================================================================================================================================================================
+    cyc | IF (fetch)               | IP (pred)                |IB| ID                       | EX1                      | RETIRE                   | events
+----------------------------------------------------------------------------------------------------------------------------------------------------------------
+   3709 |                          |                          | 0|                          |                          |                          | 
+   3710 |                          |                          | 0|                          |                          |                          | 
+   3711 |                          |                          | 0|                          |                          |                          | 
+   3712 | 02c4 sc.d a5,a2,(s8)     |                          | 0|                          |                          |                          | 
+   3713 | 02c8 li t6,0             |                          | 0|                          |                          |                          | 
+   3714 | 02cc ld a6,0(s8)         | 02c4 sc.d a5,a2,(s8)     | 0| >02c4 sc.d a5,a2,(s8)    |                          |                          | 
+   3715 | 02d0 mv a1,a5            | 02c8 li t6,0             | 0| >02c8 li t6,0            | 02c4 sc.d a5,a2,(s8) LSU |                          | 
+   3716 | 02d4 li a0,1370          | 02cc ld a6,0(s8)         | 0| >02cc ld a6,0(s8)        | 02c8 li t6,0         ALU | 02c4 sc.d a5,a2,(s8)     | DC:ST hit
+   3717 | 02d8 jal 21e             | 02d0 mv a1,a5            | 0| >02f8 sd a3,0(s8)        | 02cc ld a6,0(s8)     LSU | 02c8 li t6,0             | 
+----------------------------------------------------------------------------------------------------------------------------------------------------------------
+summary: cycles=9 retired=2 IPC=0.222 | retired=2
+
+================================================================================================================================================================
+MARK 3   cycles 4417 .. 4425  (9 cycles)
+================================================================================================================================================================
+    cyc | IF (fetch)               | IP (pred)                |IB| ID                       | EX1                      | RETIRE                   | events
+----------------------------------------------------------------------------------------------------------------------------------------------------------------
+   4417 |                          |                          | 0| >02fc sc.d a5,a2,(s8)    | 02f8 sd a3,0(s8)     LSU | 02f4 lr.d a4,(s8)        | DC:LD hit I$-miss
+   4418 |                          |                          | 0|                          | 02fc sc.d a5,a2,(s8) LSU | 02f8 sd a3,0(s8)         | DC:ST hit
+   4419 |                          |                          | 0|                          |                          | 02fc sc.d a5,a2,(s8)     | DC:ST hit
+   4420 |                          |                          | 0|                          |                          |                          | 
+   4421 |                          |                          | 0|                          |                          |                          | DC:ST hit
+   4422 |                          |                          | 0|                          |                          |                          | 
+   4423 |                          | 0300 li t6,0             | 0| >0300 li t6,0            |                          |                          | 
+   4424 |                          |                          | 0|                          | 0300 li t6,0         ALU |                          | 
+   4425 |                          |                          | 0|                          |                          | 0300 li t6,0             | 
+----------------------------------------------------------------------------------------------------------------------------------------------------------------
+summary: cycles=9 retired=4 IPC=0.444 | icache_miss=1, retired=4
+
+================================================================================================================================================================
+MARK 4   cycles 5147 .. 5156  (10 cycles)
+================================================================================================================================================================
+    cyc | IF (fetch)               | IP (pred)                |IB| ID                       | EX1                      | RETIRE                   | events
+----------------------------------------------------------------------------------------------------------------------------------------------------------------
+   5147 |                          | 033c amomax.d a6,a3,(s8) | 0| >0338 li a3,77           | 0334 amoswap.d a5,a2 LSU | 0330 amoadd.d a4,a2,(s8) | DC:ST hit
+   5148 |                          |                          | 0| >033c amomax.d a6,a3,(s8 | 0338 li a3,77        ALU | 0334 amoswap.d a5,a2,(s8 | DC:ST hit I$-miss
+   5149 |                          |                          | 0|                          | 033c amomax.d a6,a3, LSU | 0338 li a3,77            | 
+   5150 |                          |                          | 0|                          |                          |                          | 
+   5151 |                          |                          | 0|                          |                          |                          | DC:ST hit
+   5152 |                          |                          | 0|                          |                          |                          | 
+   5153 |                          |                          | 0|                          |                          |                          | 
+   5154 |                          | 0340 li t6,0             | 0| >0340 li t6,0            |                          |                          | DC:ST hit
+   5155 |                          |                          | 0|                          | 0340 li t6,0         ALU | 033c amomax.d a6,a3,(s8) | DC:ST hit
+   5156 |                          |                          | 0|                          |                          | 0340 li t6,0             | 
+----------------------------------------------------------------------------------------------------------------------------------------------------------------
+summary: cycles=10 retired=5 IPC=0.500 | icache_miss=1, retired=5
+
+================================================================================================================================================================
+MARK 5   cycles 6215 .. 6301  (76 cycles)
+================================================================================================================================================================
+    cyc | IF (fetch)               | IP (pred)                |IB| ID                       | EX1                      | RETIRE                   | events
+----------------------------------------------------------------------------------------------------------------------------------------------------------------
+   6215 |                          |                          | 0|                          |                          |                          | 
+   6216 |                          |                          | 0|                          |                          |                          | 
+   6217 |                          |                          | 0|                          |                          |                          | 
+   6218 |                          | 0380 csrr s0,mcycle      | 0| >0380 csrr s0,mcycle     |                          |                          | 
+   6219 |                          |                          | 0|                          | 0380 csrr s0,mcycle  CP0 |                          | 
+   6220 |                          |                          | 0|                          |                          | 0380 csrr s0,mcycle      | 
+   6221 |                          |                          | 0|                          |                          |                          | 
+   6222 |                          |                          | 0|                          |                          |                          | 
+   6223 |                          |                          | 0|                          |                          |                          | 
+   6224 | 0384 amoadd.d a4,a2,(s8) |                          | 0|                          |                          |                          | 
+   6225 | 0388 csrr t0,mcycle      |                          | 0|                          |                          |                          | 
+   6226 | 038c sub s0,t0,s0        | 0384 amoadd.d a4,a2,(s8) | 0| >0384 amoadd.d a4,a2,(s8 |                          |                          | 
+   6227 | 0390 csrr s1,mcycle      | 0388 csrr t0,mcycle      | 0| .0388 csrr t0,mcycle     | 0384 amoadd.d a4,a2, LSU |                          | ID-stall:CP0/fence
+   6228 | 0394 ld a4,0(s8)         | 038c sub s0,t0,s0        | 0| .0388 csrr t0,mcycle     |                          | 0384 amoadd.d a4,a2,(s8) | ID-stall:CP0/fence DC:ST hit
+   6229 | 0398 add a4,a4,a2        | 0390 csrr s1,mcycle      | 2| .0388 csrr t0,mcycle     |                          |                          | ID-stall:CP0/fence
+   6230 | 039c sd a4,0(s8)         | 0394 ld a4,0(s8)         | 4| >0388 csrr t0,mcycle     |                          |                          | 
+   6231 | 03a0 csrr t0,mcycle      | 0398 add a4,a4,a2        | 4| .038c sub s0,t0,s0       | 0388 csrr t0,mcycle  CP0 |                          | ID-stall:RAW
+   6232 |                          | 039c sd a4,0(s8)         | 6| >038c sub s0,t0,s0       |                          | 0388 csrr t0,mcycle      | 
+   6233 | 03a0 csrr t0,mcycle      | 039c sd a4,0(s8)         | 4| .0390 csrr s1,mcycle     | 038c sub s0,t0,s0    ALU |                          | ID-stall:CP0/fence
+   6234 | 03a4 sub s1,t0,s1        |                          | 6| .0390 csrr s1,mcycle     |                          | 038c sub s0,t0,s0        | ID-stall:CP0/fence
+   6235 |                          | 03a0 csrr t0,mcycle      | 6| >0390 csrr s1,mcycle     |                          |                          | 
+   6236 | 03a4 sub s1,t0,s1        | 03a0 csrr t0,mcycle      | 4| >0394 ld a4,0(s8)        | 0390 csrr s1,mcycle  CP0 |                          | 
+   6237 | 03a8 csrr s2,mcycle      |                          | 4| .0398 add a4,a4,a2       | 0394 ld a4,0(s8)     LSU | 0390 csrr s1,mcycle      | ID-stall:RAW,WAW
+   6238 | 03ac fence rw,rw         | 03a4 sub s1,t0,s1        | 4| .0398 add a4,a4,a2       |                          | 0394 ld a4,0(s8)         | ID-stall:WAW DC:LD hit
+   6239 |                          | 03a8 csrr s2,mcycle      | 6| >0398 add a4,a4,a2       |                          |                          | 
+   6240 | 03ac fence rw,rw         | 03a8 csrr s2,mcycle      | 4| >039c sd a4,0(s8)        | 0398 add a4,a4,a2    ALU |                          | 
+   6241 | 03b0 csrr t0,mcycle      |                          | 4| .03a0 csrr t0,mcycle     | 039c sd a4,0(s8)     LSU | 0398 add a4,a4,a2        | ID-stall:CP0/fence
+   6242 | 03b4 sub s2,t0,s2        | 03ac fence rw,rw         | 4| .03a0 csrr t0,mcycle     |                          | 039c sd a4,0(s8)         | ID-stall:CP0/fence DC:ST hit
+   6243 |                          | 03b0 csrr t0,mcycle      | 6| >03a0 csrr t0,mcycle     |                          |                          | 
+   6244 | 03b4 sub s2,t0,s2        | 03b0 csrr t0,mcycle      | 4| .03a4 sub s1,t0,s1       | 03a0 csrr t0,mcycle  CP0 |                          | ID-stall:RAW
+   6245 | 03b8 li t6,0             |                          | 6| >03a4 sub s1,t0,s1       |                          | 03a0 csrr t0,mcycle      | 
+   6246 | 03bc addi s6,s6,-1       | 03b4 sub s2,t0,s2        | 4| .03a8 csrr s2,mcycle     | 03a4 sub s1,t0,s1    ALU |                          | ID-stall:CP0/fence
+   6247 |                          | 03b8 li t6,0             | 6| .03a8 csrr s2,mcycle     |                          | 03a4 sub s1,t0,s1        | ID-stall:CP0/fence
+   6248 |                          | 03b8 li t6,0             | 6| >03a8 csrr s2,mcycle     |                          |                          | 
+   6249 | 03bc addi s6,s6,-1       | 03b8 li t6,0             | 4| >03ac fence rw,rw        | 03a8 csrr s2,mcycle  CP0 |                          | 
+   6250 | 03c0 bnez s6,37c         |                          | 4| .03b0 csrr t0,mcycle     | 03ac fence rw,rw     CP0 | 03a8 csrr s2,mcycle      | ID-stall:CP0/fence
+   6251 |                          | 03bc addi s6,s6,-1       | 4| .03b0 csrr t0,mcycle     |                          | 03ac fence rw,rw         | ID-stall:CP0/fence
+   6252 |                          |                          | 6| >03b0 csrr t0,mcycle     |                          |                          | I$-miss
+   6253 |                          |                          | 4| .03b4 sub s2,t0,s2       | 03b0 csrr t0,mcycle  CP0 |                          | ID-stall:RAW
+   6254 |                          |                          | 4| >03b4 sub s2,t0,s2       |                          | 03b0 csrr t0,mcycle      | 
+   6255 |                          |                          | 2| >03b8 li t6,0            | 03b4 sub s2,t0,s2    ALU |                          | 
+   6256 |                          |                          | 0| >03bc addi s6,s6,-1      | 03b8 li t6,0         ALU | 03b4 sub s2,t0,s2        | 
+   6257 |                          |                          | 0|                          | 03bc addi s6,s6,-1   ALU | 03b8 li t6,0             | 
+   6269 | 0390 csrr s1,mcycle      | 0388 csrr t0,mcycle      | 2| >0380 csrr s0,mcycle     |                          |                          | 
+   6270 | 0394 ld a4,0(s8)         | 038c sub s0,t0,s0        | 2| >0384 amoadd.d a4,a2,(s8 | 0380 csrr s0,mcycle  CP0 |                          | 
+   6271 | 0398 add a4,a4,a2        | 0390 csrr s1,mcycle      | 2| .0388 csrr t0,mcycle     | 0384 amoadd.d a4,a2, LSU | 0380 csrr s0,mcycle      | ID-stall:CP0/fence
+   6272 | 039c sd a4,0(s8)         | 0394 ld a4,0(s8)         | 4| .0388 csrr t0,mcycle     |                          | 0384 amoadd.d a4,a2,(s8) | ID-stall:CP0/fence DC:ST hit
+   6273 |                          | 0398 add a4,a4,a2        | 6| .0388 csrr t0,mcycle     |                          |                          | ID-stall:CP0/fence
+   6274 |                          | 0398 add a4,a4,a2        | 6| >0388 csrr t0,mcycle     |                          |                          | 
+   6275 | 039c sd a4,0(s8)         | 0398 add a4,a4,a2        | 4| .038c sub s0,t0,s0       | 0388 csrr t0,mcycle  CP0 |                          | ID-stall:RAW
+   6276 | 03a0 csrr t0,mcycle      |                          | 6| >038c sub s0,t0,s0       |                          | 0388 csrr t0,mcycle      | 
+   6277 | 03a4 sub s1,t0,s1        | 039c sd a4,0(s8)         | 4| .0390 csrr s1,mcycle     | 038c sub s0,t0,s0    ALU |                          | ID-stall:CP0/fence
+   6278 |                          | 03a0 csrr t0,mcycle      | 6| .0390 csrr s1,mcycle     |                          | 038c sub s0,t0,s0        | ID-stall:CP0/fence
+   6279 |                          | 03a0 csrr t0,mcycle      | 6| >0390 csrr s1,mcycle     |                          |                          | 
+   6280 | 03a4 sub s1,t0,s1        | 03a0 csrr t0,mcycle      | 4| >0394 ld a4,0(s8)        | 0390 csrr s1,mcycle  CP0 |                          | 
+   6281 | 03a8 csrr s2,mcycle      |                          | 4| .0398 add a4,a4,a2       | 0394 ld a4,0(s8)     LSU | 0390 csrr s1,mcycle      | ID-stall:RAW,WAW
+   6282 | 03ac fence rw,rw         | 03a4 sub s1,t0,s1        | 4| .0398 add a4,a4,a2       |                          | 0394 ld a4,0(s8)         | ID-stall:WAW DC:LD hit
+   6283 |                          | 03a8 csrr s2,mcycle      | 6| >0398 add a4,a4,a2       |                          |                          | 
+   6284 | 03ac fence rw,rw         | 03a8 csrr s2,mcycle      | 4| >039c sd a4,0(s8)        | 0398 add a4,a4,a2    ALU |                          | 
+   6285 | 03b0 csrr t0,mcycle      |                          | 4| .03a0 csrr t0,mcycle     | 039c sd a4,0(s8)     LSU | 0398 add a4,a4,a2        | ID-stall:CP0/fence
+   6286 | 03b4 sub s2,t0,s2        | 03ac fence rw,rw         | 4| .03a0 csrr t0,mcycle     |                          | 039c sd a4,0(s8)         | ID-stall:CP0/fence DC:ST hit
+   6287 |                          | 03b0 csrr t0,mcycle      | 6| >03a0 csrr t0,mcycle     |                          |                          | 
+   6288 | 03b4 sub s2,t0,s2        | 03b0 csrr t0,mcycle      | 4| .03a4 sub s1,t0,s1       | 03a0 csrr t0,mcycle  CP0 |                          | ID-stall:RAW
+   6289 | 03b8 li t6,0             |                          | 6| >03a4 sub s1,t0,s1       |                          | 03a0 csrr t0,mcycle      | 
+   6290 | 03bc addi s6,s6,-1       | 03b4 sub s2,t0,s2        | 4| .03a8 csrr s2,mcycle     | 03a4 sub s1,t0,s1    ALU |                          | ID-stall:CP0/fence
+   6291 |                          | 03b8 li t6,0             | 6| .03a8 csrr s2,mcycle     |                          | 03a4 sub s1,t0,s1        | ID-stall:CP0/fence
+   6292 |                          | 03b8 li t6,0             | 6| >03a8 csrr s2,mcycle     |                          |                          | 
+   6293 | 03bc addi s6,s6,-1       | 03b8 li t6,0             | 4| >03ac fence rw,rw        | 03a8 csrr s2,mcycle  CP0 |                          | 
+   6294 | 03c0 bnez s6,37c         |                          | 4| .03b0 csrr t0,mcycle     | 03ac fence rw,rw     CP0 | 03a8 csrr s2,mcycle      | ID-stall:CP0/fence
+   6295 | 03c4 mv a1,s0            | 03bc addi s6,s6,-1       | 4| .03b0 csrr t0,mcycle     |                          | 03ac fence rw,rw         | ID-stall:CP0/fence
+   6296 |                          | 03c0 bnez s6,37c         | 6| >03b0 csrr t0,mcycle     |                          |                          | 
+   6297 | 03c4 mv a1,s0            | 03c0 bnez s6,37c         | 4| .03b4 sub s2,t0,s2       | 03b0 csrr t0,mcycle  CP0 |                          | ID-stall:RAW
+   6298 | 03c8 li a0,1484          |                          | 6| >03b4 sub s2,t0,s2       |                          | 03b0 csrr t0,mcycle      | 
+   6299 | 03cc jal 21e             | 03c4 mv a1,s0            | 4| >03b8 li t6,0            | 03b4 sub s2,t0,s2    ALU |                          | 
+   6300 | 03d0 mv a1,s1            | 03c8 li a0,1484          | 4| >03bc addi s6,s6,-1      | 03b8 li t6,0         ALU | 03b4 sub s2,t0,s2        | 
+   6301 | 03d4 li a0,1498          | 03cc jal 21e             | 4| >0410 csrr s1,mcycle     | 03bc addi s6,s6,-1   ALU | 03b8 li t6,0             | IP-redirect->021e
+----------------------------------------------------------------------------------------------------------------------------------------------------------------
+summary: cycles=76 retired=30 IPC=0.395 | icache_miss=1, ip_redirect=1, retired=30, stall_CP0/fence=22, stall_RAW=8, stall_WAW=4
+
+================================================================================================================================================================
+MARK 6   cycles 7723 .. 8577  (855 cycles)
+================================================================================================================================================================
+    cyc | IF (fetch)               | IP (pred)                |IB| ID                       | EX1                      | RETIRE                   | events
+----------------------------------------------------------------------------------------------------------------------------------------------------------------
+   7723 |                          | 0420 csrr s0,mcycle      | 6| >0410 csrr s1,mcycle     |                          |                          | 
+   7724 | 0424 jal 480             | 0420 csrr s0,mcycle      | 4| .0414 fence.i            | 0410 csrr s1,mcycle  CP0 |                          | ID-stall:CP0/fence
+   7725 | 0428 csrr t0,mcycle      |                          | 6| .0414 fence.i            |                          | 0410 csrr s1,mcycle      | ID-stall:CP0/fence
+   7726 |                          | 0424 jal 480             | 6| >0414 fence.i            |                          |                          | IP-redirect->0480
+   7727 | 0480 addi a4,a4,1        | 0424 jal 480             | 4| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | IP-redirect->0480 ID-stall:EX1-busy,CP0/fence
+   7728 | 0480 addi a4,a4,1        |                          | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   7729 | 0484 addi a4,a4,1        |                          | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   7730 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   7731 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   7732 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   7733 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   7734 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   7735 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   7736 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   7737 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   7738 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   7739 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   7740 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   7741 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   7742 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   7743 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   7744 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   7745 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   7746 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   7747 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   7748 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   7749 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   7750 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   7751 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   7752 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   7753 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   7754 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   7755 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   7756 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   7757 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   7758 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   7759 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   7760 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   7761 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   7762 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   7763 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   7764 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   7765 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   7766 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   7767 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   7768 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   7769 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   7770 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   7771 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   7772 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   7773 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   7774 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   7775 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   7776 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   7777 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   7778 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   7779 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   7780 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   7781 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   7782 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   7783 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   7784 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   7785 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   7786 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   7787 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   7788 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   7789 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   7790 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   7791 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   7792 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   7793 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   7794 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   7795 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   7796 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   7797 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   7798 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   7799 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   7800 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   7801 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   7802 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   7803 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   7804 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   7805 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   7806 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   7807 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   7808 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   7809 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   7810 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   7811 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   7812 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   7813 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   7814 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   7815 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   7816 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   7817 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   7818 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   7819 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   7820 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   7821 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   7822 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   7823 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   7824 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   7825 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   7826 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   7827 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   7828 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   7829 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   7830 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   7831 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   7832 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   7833 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   7834 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   7835 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   7836 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   7837 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   7838 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   7839 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   7840 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   7841 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   7842 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   7843 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   7844 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   7845 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   7846 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   7847 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   7848 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   7849 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   7850 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   7851 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   7852 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   7853 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   7854 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   7855 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   7856 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   7857 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   7858 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   7859 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   7860 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   7861 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   7862 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   7863 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   7864 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   7865 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   7866 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   7867 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   7868 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   7869 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   7870 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   7871 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   7872 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   7873 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   7874 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   7875 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   7876 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   7877 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   7878 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   7879 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   7880 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   7881 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   7882 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   7883 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   7884 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   7885 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   7886 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   7887 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   7888 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   7889 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   7890 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   7891 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   7892 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   7893 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   7894 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   7895 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   7896 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   7897 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   7898 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   7899 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   7900 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   7901 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   7902 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   7903 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   7904 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   7905 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   7906 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   7907 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   7908 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   7909 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   7910 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   7911 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   7912 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   7913 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   7914 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   7915 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   7916 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   7917 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   7918 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   7919 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   7920 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   7921 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   7922 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   7923 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   7924 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   7925 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   7926 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   7927 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   7928 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   7929 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   7930 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   7931 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   7932 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   7933 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   7934 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   7935 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   7936 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   7937 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   7938 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   7939 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   7940 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   7941 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   7942 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   7943 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   7944 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   7945 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   7946 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   7947 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   7948 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   7949 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   7950 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   7951 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   7952 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   7953 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   7954 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   7955 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   7956 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   7957 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   7958 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   7959 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   7960 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   7961 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   7962 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   7963 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   7964 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   7965 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   7966 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   7967 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   7968 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   7969 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   7970 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   7971 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   7972 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   7973 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   7974 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   7975 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   7976 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   7977 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   7978 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   7979 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   7980 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   7981 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   7982 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   7983 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   7984 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   7985 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   7986 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   7987 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   7988 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   7989 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   7990 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   7991 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   7992 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   7993 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   7994 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   7995 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   7996 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   7997 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   7998 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   7999 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   8000 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   8001 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   8002 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   8003 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   8004 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   8005 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   8006 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   8007 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   8008 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   8009 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   8010 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   8011 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   8012 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   8013 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   8014 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   8015 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   8016 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   8017 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   8018 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   8019 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   8020 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   8021 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   8022 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   8023 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   8024 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   8025 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   8026 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   8027 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   8028 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   8029 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   8030 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   8031 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   8032 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   8033 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   8034 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   8035 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   8036 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   8037 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   8038 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   8039 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   8040 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   8041 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   8042 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   8043 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   8044 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   8045 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   8046 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   8047 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   8048 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   8049 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   8050 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   8051 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   8052 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   8053 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   8054 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   8055 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   8056 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   8057 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   8058 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   8059 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   8060 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   8061 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   8062 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   8063 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   8064 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   8065 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   8066 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   8067 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   8068 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   8069 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   8070 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   8071 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   8072 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   8073 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   8074 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   8075 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   8076 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   8077 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   8078 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   8079 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   8080 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   8081 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   8082 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   8083 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   8084 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   8085 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   8086 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   8087 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   8088 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   8089 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   8090 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   8091 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   8092 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   8093 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   8094 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   8095 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   8096 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   8097 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   8098 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   8099 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   8100 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   8101 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   8102 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   8103 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   8104 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   8105 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   8106 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   8107 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   8108 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   8109 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   8110 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   8111 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   8112 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   8113 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   8114 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   8115 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   8116 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   8117 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   8118 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   8119 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   8120 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   8121 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   8122 |                          | 0480 addi a4,a4,1        | 6| .(flushed) csrr t0,mcycl | 0414 fence.i         CP0 |                          | ID-stall:EX1-busy,CP0/fence
+   ... (455 more cycles, use --mark 6 --max-rows N)
+----------------------------------------------------------------------------------------------------------------------------------------------------------------
+summary: cycles=855 retired=18 IPC=0.021 | flush=1, icache_miss=3, ip_curflw=1, ip_redirect=3, retired=18, stall_CP0/fence=807, stall_EX1-busy=798, stall_RAW=1, stall_other=1

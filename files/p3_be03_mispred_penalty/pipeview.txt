@@ -1,0 +1,820 @@
+사용: pipeview.py <out/test 디렉토리> [--mark N] [--max-rows K]
+출력: <dir>/pipeview.txt  (mark 구간별 표 + 구간 요약)
+
+================================================================================================================================================================
+MARK 1   cycles 6603 .. 9462  (2860 cycles)
+================================================================================================================================================================
+    cyc | IF (fetch)               | IP (pred)                |IB| ID                       | EX1                      | RETIRE                   | events
+----------------------------------------------------------------------------------------------------------------------------------------------------------------
+   6603 | 0350 slli t1,s7,0xd      | 0348 csrr s3,mhpmcounter | 0| >0344 li s4,0            | 0340 li s2,256       ALU | 02a8 jal 340             | 
+   6604 | 0354 xor s7,s7,t1        | 034c csrr s0,mcycle      | 0| .0348 csrr s3,mhpmcounte | 0344 li s4,0         ALU | 0340 li s2,256           | ID-stall:CP0/fence
+   6605 | 0358 srli t1,s7,0x7      | 0350 slli t1,s7,0xd      | 2| .0348 csrr s3,mhpmcounte |                          | 0344 li s4,0             | ID-stall:CP0/fence
+   6606 | 035c xor s7,s7,t1        | 0354 xor s7,s7,t1        | 4| >0348 csrr s3,mhpmcounte |                          |                          | 
+   6607 | 0360 slli t1,s7,0x11     | 0358 srli t1,s7,0x7      | 4| .034c csrr s0,mcycle     | 0348 csrr s3,mhpmcou CP0 |                          | ID-stall:CP0/fence
+   6608 |                          | 035c xor s7,s7,t1        | 6| .034c csrr s0,mcycle     |                          | 0348 csrr s3,mhpmcounter | ID-stall:CP0/fence
+   6609 |                          | 035c xor s7,s7,t1        | 6| >034c csrr s0,mcycle     |                          |                          | 
+   6610 | 0360 slli t1,s7,0x11     | 035c xor s7,s7,t1        | 4| >0350 slli t1,s7,0xd     | 034c csrr s0,mcycle  CP0 |                          | 
+   6611 | 0364 xor s7,s7,t1        |                          | 4| >0354 xor s7,s7,t1       | 0350 slli t1,s7,0xd  ALU | 034c csrr s0,mcycle      | 
+   6612 | 0368 andi t2,s7,1        | 0360 slli t1,s7,0x11     | 2| >0358 srli t1,s7,0x7     | 0354 xor s7,s7,t1    ALU | 0350 slli t1,s7,0xd      | 
+   6613 | 036c bnez t2,374         | 0364 xor s7,s7,t1        | 2| >035c xor s7,s7,t1       | 0358 srli t1,s7,0x7  ALU | 0354 xor s7,s7,t1        | 
+   6614 | 0370 addi s4,s4,1        | 0368 andi t2,s7,1        | 2| >0360 slli t1,s7,0x11    | 035c xor s7,s7,t1    ALU | 0358 srli t1,s7,0x7      | 
+   6615 | 0374 addi s2,s2,-1       | 036c bnez t2,374         | 2| >0364 xor s7,s7,t1       | 0360 slli t1,s7,0x11 ALU | 035c xor s7,s7,t1        | 
+   6616 | 0378 bnez s2,350         | 0370 addi s4,s4,1        | 2| >0368 andi t2,s7,1       | 0364 xor s7,s7,t1    ALU | 0360 slli t1,s7,0x11     | 
+   6617 | 0350 slli t1,s7,0xd      | 0374 addi s2,s2,-1       | 2| >036c bnez t2,374        | 0368 andi t2,s7,1    ALU | 0364 xor s7,s7,t1        | BTB-redirect
+   6618 | 0354 xor s7,s7,t1        | 0378 bnez s2,350         | 2| >0370 addi s4,s4,1       | 036c bnez t2,374     BJU | 0368 andi t2,s7,1        | IP-redirect->037c BR-resolve:N
+   6619 | 037c csrr t0,mcycle      |                          | 2| >0374 addi s2,s2,-1      | 0370 addi s4,s4,1    ALU | 036c bnez t2,374         | 
+   6620 | 0380 sub s0,t0,s0        |                          | 0| >0378 bnez s2,350        | 0374 addi s2,s2,-1   ALU | 0370 addi s4,s4,1        | 
+   6621 | 0384 csrr s1,mhpmcounter | 037c csrr t0,mcycle      | 0| .(flushed) csrr t0,mcycl | 0378 bnez s2,350     BJU | 0374 addi s2,s2,-1       | ID-stall:CP0/fence BR-resolve:T MISPRED(BHT) IU-redirect->0350
+   6622 | 0350 slli t1,s7,0xd      |                          | 0|                          |                          | 0378 bnez s2,350         | 
+   6623 | 0354 xor s7,s7,t1        |                          | 0|                          |                          |                          | 
+   6624 | 0358 srli t1,s7,0x7      | 0350 slli t1,s7,0xd      | 0| >0350 slli t1,s7,0xd     |                          |                          | 
+   6625 | 035c xor s7,s7,t1        | 0354 xor s7,s7,t1        | 0| >0354 xor s7,s7,t1       | 0350 slli t1,s7,0xd  ALU |                          | 
+   6626 | 0360 slli t1,s7,0x11     | 0358 srli t1,s7,0x7      | 0| >0358 srli t1,s7,0x7     | 0354 xor s7,s7,t1    ALU | 0350 slli t1,s7,0xd      | 
+   6627 | 0364 xor s7,s7,t1        | 035c xor s7,s7,t1        | 0| >035c xor s7,s7,t1       | 0358 srli t1,s7,0x7  ALU | 0354 xor s7,s7,t1        | 
+   6628 | 0368 andi t2,s7,1        | 0360 slli t1,s7,0x11     | 0| >0360 slli t1,s7,0x11    | 035c xor s7,s7,t1    ALU | 0358 srli t1,s7,0x7      | 
+   6629 | 036c bnez t2,374         | 0364 xor s7,s7,t1        | 0| >0364 xor s7,s7,t1       | 0360 slli t1,s7,0x11 ALU | 035c xor s7,s7,t1        | 
+   6630 | 0370 addi s4,s4,1        | 0368 andi t2,s7,1        | 0| >0368 andi t2,s7,1       | 0364 xor s7,s7,t1    ALU | 0360 slli t1,s7,0x11     | 
+   6631 | 0374 addi s2,s2,-1       | 036c bnez t2,374         | 0| >036c bnez t2,374        | 0368 andi t2,s7,1    ALU | 0364 xor s7,s7,t1        | 
+   6632 | 0378 bnez s2,350         | 0370 addi s4,s4,1        | 0| >0370 addi s4,s4,1       | 036c bnez t2,374     BJU | 0368 andi t2,s7,1        | BR-resolve:N
+   6633 | 037c csrr t0,mcycle      | 0374 addi s2,s2,-1       | 0| >0374 addi s2,s2,-1      | 0370 addi s4,s4,1    ALU | 036c bnez t2,374         | 
+   6634 | 0380 sub s0,t0,s0        | 0378 bnez s2,350         | 0| >0378 bnez s2,350        | 0374 addi s2,s2,-1   ALU | 0370 addi s4,s4,1        | IP-redirect->0350
+   6635 | 0350 slli t1,s7,0xd      |                          | 0|                          | 0378 bnez s2,350     BJU | 0374 addi s2,s2,-1       | BR-resolve:T
+   6636 | 0354 xor s7,s7,t1        |                          | 0|                          |                          | 0378 bnez s2,350         | 
+   6637 | 0358 srli t1,s7,0x7      | 0350 slli t1,s7,0xd      | 0| >0350 slli t1,s7,0xd     |                          |                          | 
+   6638 | 035c xor s7,s7,t1        | 0354 xor s7,s7,t1        | 0| >0354 xor s7,s7,t1       | 0350 slli t1,s7,0xd  ALU |                          | 
+   6639 | 0360 slli t1,s7,0x11     | 0358 srli t1,s7,0x7      | 0| >0358 srli t1,s7,0x7     | 0354 xor s7,s7,t1    ALU | 0350 slli t1,s7,0xd      | 
+   6640 | 0364 xor s7,s7,t1        | 035c xor s7,s7,t1        | 0| >035c xor s7,s7,t1       | 0358 srli t1,s7,0x7  ALU | 0354 xor s7,s7,t1        | 
+   6641 | 0368 andi t2,s7,1        | 0360 slli t1,s7,0x11     | 0| >0360 slli t1,s7,0x11    | 035c xor s7,s7,t1    ALU | 0358 srli t1,s7,0x7      | 
+   6642 | 036c bnez t2,374         | 0364 xor s7,s7,t1        | 0| >0364 xor s7,s7,t1       | 0360 slli t1,s7,0x11 ALU | 035c xor s7,s7,t1        | 
+   6643 | 0370 addi s4,s4,1        | 0368 andi t2,s7,1        | 0| >0368 andi t2,s7,1       | 0364 xor s7,s7,t1    ALU | 0360 slli t1,s7,0x11     | 
+   6644 | 0374 addi s2,s2,-1       | 036c bnez t2,374         | 0| >036c bnez t2,374        | 0368 andi t2,s7,1    ALU | 0364 xor s7,s7,t1        | 
+   6645 | 0378 bnez s2,350         | 0370 addi s4,s4,1        | 0| >0370 addi s4,s4,1       | 036c bnez t2,374     BJU | 0368 andi t2,s7,1        | BR-resolve:N
+   6646 | 0350 slli t1,s7,0xd      | 0374 addi s2,s2,-1       | 0| >0374 addi s2,s2,-1      | 0370 addi s4,s4,1    ALU | 036c bnez t2,374         | BTB-redirect
+   6647 | 0354 xor s7,s7,t1        | 0378 bnez s2,350         | 0| >0378 bnez s2,350        | 0374 addi s2,s2,-1   ALU | 0370 addi s4,s4,1        | IP-redirect->037c
+   6648 | 037c csrr t0,mcycle      |                          | 0|                          | 0378 bnez s2,350     BJU | 0374 addi s2,s2,-1       | BR-resolve:T MISPRED(BHT) IU-redirect->0350
+   6649 | 0350 slli t1,s7,0xd      |                          | 0|                          |                          | 0378 bnez s2,350         | 
+   6650 | 0354 xor s7,s7,t1        |                          | 0|                          |                          |                          | 
+   6651 | 0358 srli t1,s7,0x7      | 0350 slli t1,s7,0xd      | 0| >0350 slli t1,s7,0xd     |                          |                          | 
+   6652 | 035c xor s7,s7,t1        | 0354 xor s7,s7,t1        | 0| >0354 xor s7,s7,t1       | 0350 slli t1,s7,0xd  ALU |                          | 
+   6653 | 0360 slli t1,s7,0x11     | 0358 srli t1,s7,0x7      | 0| >0358 srli t1,s7,0x7     | 0354 xor s7,s7,t1    ALU | 0350 slli t1,s7,0xd      | 
+   6654 | 0364 xor s7,s7,t1        | 035c xor s7,s7,t1        | 0| >035c xor s7,s7,t1       | 0358 srli t1,s7,0x7  ALU | 0354 xor s7,s7,t1        | 
+   6655 | 0368 andi t2,s7,1        | 0360 slli t1,s7,0x11     | 0| >0360 slli t1,s7,0x11    | 035c xor s7,s7,t1    ALU | 0358 srli t1,s7,0x7      | 
+   6656 | 036c bnez t2,374         | 0364 xor s7,s7,t1        | 0| >0364 xor s7,s7,t1       | 0360 slli t1,s7,0x11 ALU | 035c xor s7,s7,t1        | 
+   6657 | 0370 addi s4,s4,1        | 0368 andi t2,s7,1        | 0| >0368 andi t2,s7,1       | 0364 xor s7,s7,t1    ALU | 0360 slli t1,s7,0x11     | 
+   6658 | 0374 addi s2,s2,-1       | 036c bnez t2,374         | 0| >036c bnez t2,374        | 0368 andi t2,s7,1    ALU | 0364 xor s7,s7,t1        | 
+   6659 | 0378 bnez s2,350         | 0370 addi s4,s4,1        | 0| >0370 addi s4,s4,1       | 036c bnez t2,374     BJU | 0368 andi t2,s7,1        | BR-resolve:N
+   6660 | 037c csrr t0,mcycle      | 0374 addi s2,s2,-1       | 0| >0374 addi s2,s2,-1      | 0370 addi s4,s4,1    ALU | 036c bnez t2,374         | 
+   6661 | 0380 sub s0,t0,s0        | 0378 bnez s2,350         | 0| >0378 bnez s2,350        | 0374 addi s2,s2,-1   ALU | 0370 addi s4,s4,1        | 
+   6662 | 0384 csrr s1,mhpmcounter | 037c csrr t0,mcycle      | 0| .(flushed) csrr t0,mcycl | 0378 bnez s2,350     BJU | 0374 addi s2,s2,-1       | ID-stall:CP0/fence BR-resolve:T MISPRED(BHT) IU-redirect->0350
+   6663 | 0350 slli t1,s7,0xd      |                          | 0|                          |                          | 0378 bnez s2,350         | 
+   6664 | 0354 xor s7,s7,t1        |                          | 0|                          |                          |                          | 
+   6665 | 0358 srli t1,s7,0x7      | 0350 slli t1,s7,0xd      | 0| >0350 slli t1,s7,0xd     |                          |                          | 
+   6666 | 035c xor s7,s7,t1        | 0354 xor s7,s7,t1        | 0| >0354 xor s7,s7,t1       | 0350 slli t1,s7,0xd  ALU |                          | 
+   6667 | 0360 slli t1,s7,0x11     | 0358 srli t1,s7,0x7      | 0| >0358 srli t1,s7,0x7     | 0354 xor s7,s7,t1    ALU | 0350 slli t1,s7,0xd      | 
+   6668 | 0364 xor s7,s7,t1        | 035c xor s7,s7,t1        | 0| >035c xor s7,s7,t1       | 0358 srli t1,s7,0x7  ALU | 0354 xor s7,s7,t1        | 
+   6669 | 0368 andi t2,s7,1        | 0360 slli t1,s7,0x11     | 0| >0360 slli t1,s7,0x11    | 035c xor s7,s7,t1    ALU | 0358 srli t1,s7,0x7      | 
+   6670 | 036c bnez t2,374         | 0364 xor s7,s7,t1        | 0| >0364 xor s7,s7,t1       | 0360 slli t1,s7,0x11 ALU | 035c xor s7,s7,t1        | 
+   6671 | 0370 addi s4,s4,1        | 0368 andi t2,s7,1        | 0| >0368 andi t2,s7,1       | 0364 xor s7,s7,t1    ALU | 0360 slli t1,s7,0x11     | 
+   6672 | 0374 addi s2,s2,-1       | 036c bnez t2,374         | 0| >036c bnez t2,374        | 0368 andi t2,s7,1    ALU | 0364 xor s7,s7,t1        | 
+   6673 | 0378 bnez s2,350         | 0370 addi s4,s4,1        | 0| >0370 addi s4,s4,1       | 036c bnez t2,374     BJU | 0368 andi t2,s7,1        | BR-resolve:N
+   6674 | 037c csrr t0,mcycle      | 0374 addi s2,s2,-1       | 0| >0374 addi s2,s2,-1      | 0370 addi s4,s4,1    ALU | 036c bnez t2,374         | 
+   6675 | 0380 sub s0,t0,s0        | 0378 bnez s2,350         | 0| >0378 bnez s2,350        | 0374 addi s2,s2,-1   ALU | 0370 addi s4,s4,1        | 
+   6676 | 0384 csrr s1,mhpmcounter | 037c csrr t0,mcycle      | 0| .(flushed) csrr t0,mcycl | 0378 bnez s2,350     BJU | 0374 addi s2,s2,-1       | ID-stall:CP0/fence BR-resolve:T MISPRED(BHT) IU-redirect->0350
+   6677 | 0350 slli t1,s7,0xd      |                          | 0|                          |                          | 0378 bnez s2,350         | 
+   6678 | 0354 xor s7,s7,t1        |                          | 0|                          |                          |                          | 
+   6679 | 0358 srli t1,s7,0x7      | 0350 slli t1,s7,0xd      | 0| >0350 slli t1,s7,0xd     |                          |                          | 
+   6680 | 035c xor s7,s7,t1        | 0354 xor s7,s7,t1        | 0| >0354 xor s7,s7,t1       | 0350 slli t1,s7,0xd  ALU |                          | 
+   6681 | 0360 slli t1,s7,0x11     | 0358 srli t1,s7,0x7      | 0| >0358 srli t1,s7,0x7     | 0354 xor s7,s7,t1    ALU | 0350 slli t1,s7,0xd      | 
+   6682 | 0364 xor s7,s7,t1        | 035c xor s7,s7,t1        | 0| >035c xor s7,s7,t1       | 0358 srli t1,s7,0x7  ALU | 0354 xor s7,s7,t1        | 
+   6683 | 0368 andi t2,s7,1        | 0360 slli t1,s7,0x11     | 0| >0360 slli t1,s7,0x11    | 035c xor s7,s7,t1    ALU | 0358 srli t1,s7,0x7      | 
+   6684 | 036c bnez t2,374         | 0364 xor s7,s7,t1        | 0| >0364 xor s7,s7,t1       | 0360 slli t1,s7,0x11 ALU | 035c xor s7,s7,t1        | 
+   6685 | 0370 addi s4,s4,1        | 0368 andi t2,s7,1        | 0| >0368 andi t2,s7,1       | 0364 xor s7,s7,t1    ALU | 0360 slli t1,s7,0x11     | 
+   6686 | 0374 addi s2,s2,-1       | 036c bnez t2,374         | 0| >036c bnez t2,374        | 0368 andi t2,s7,1    ALU | 0364 xor s7,s7,t1        | 
+   6687 | 0378 bnez s2,350         | 0370 addi s4,s4,1        | 0| >0370 addi s4,s4,1       | 036c bnez t2,374     BJU | 0368 andi t2,s7,1        | BR-resolve:N
+   6688 | 037c csrr t0,mcycle      | 0374 addi s2,s2,-1       | 0| >0374 addi s2,s2,-1      | 0370 addi s4,s4,1    ALU | 036c bnez t2,374         | 
+   6689 | 0380 sub s0,t0,s0        | 0378 bnez s2,350         | 0| >0378 bnez s2,350        | 0374 addi s2,s2,-1   ALU | 0370 addi s4,s4,1        | 
+   6690 | 0384 csrr s1,mhpmcounter | 037c csrr t0,mcycle      | 0| .(flushed) csrr t0,mcycl | 0378 bnez s2,350     BJU | 0374 addi s2,s2,-1       | ID-stall:CP0/fence BR-resolve:T MISPRED(BHT) IU-redirect->0350
+   6691 | 0350 slli t1,s7,0xd      |                          | 0|                          |                          | 0378 bnez s2,350         | 
+   6692 | 0354 xor s7,s7,t1        |                          | 0|                          |                          |                          | 
+   6693 | 0358 srli t1,s7,0x7      | 0350 slli t1,s7,0xd      | 0| >0350 slli t1,s7,0xd     |                          |                          | 
+   6694 | 035c xor s7,s7,t1        | 0354 xor s7,s7,t1        | 0| >0354 xor s7,s7,t1       | 0350 slli t1,s7,0xd  ALU |                          | 
+   6695 | 0360 slli t1,s7,0x11     | 0358 srli t1,s7,0x7      | 0| >0358 srli t1,s7,0x7     | 0354 xor s7,s7,t1    ALU | 0350 slli t1,s7,0xd      | 
+   6696 | 0364 xor s7,s7,t1        | 035c xor s7,s7,t1        | 0| >035c xor s7,s7,t1       | 0358 srli t1,s7,0x7  ALU | 0354 xor s7,s7,t1        | 
+   6697 | 0368 andi t2,s7,1        | 0360 slli t1,s7,0x11     | 0| >0360 slli t1,s7,0x11    | 035c xor s7,s7,t1    ALU | 0358 srli t1,s7,0x7      | 
+   6698 | 036c bnez t2,374         | 0364 xor s7,s7,t1        | 0| >0364 xor s7,s7,t1       | 0360 slli t1,s7,0x11 ALU | 035c xor s7,s7,t1        | 
+   6699 | 0370 addi s4,s4,1        | 0368 andi t2,s7,1        | 0| >0368 andi t2,s7,1       | 0364 xor s7,s7,t1    ALU | 0360 slli t1,s7,0x11     | 
+   6700 | 0374 addi s2,s2,-1       | 036c bnez t2,374         | 0| >036c bnez t2,374        | 0368 andi t2,s7,1    ALU | 0364 xor s7,s7,t1        | 
+   6701 | 0378 bnez s2,350         | 0370 addi s4,s4,1        | 0| >0370 addi s4,s4,1       | 036c bnez t2,374     BJU | 0368 andi t2,s7,1        | BR-resolve:N
+   6702 | 037c csrr t0,mcycle      | 0374 addi s2,s2,-1       | 0| >0374 addi s2,s2,-1      | 0370 addi s4,s4,1    ALU | 036c bnez t2,374         | 
+   6703 | 0380 sub s0,t0,s0        | 0378 bnez s2,350         | 0| >0378 bnez s2,350        | 0374 addi s2,s2,-1   ALU | 0370 addi s4,s4,1        | 
+   6704 | 0384 csrr s1,mhpmcounter | 037c csrr t0,mcycle      | 0| .(flushed) csrr t0,mcycl | 0378 bnez s2,350     BJU | 0374 addi s2,s2,-1       | ID-stall:CP0/fence BR-resolve:T MISPRED(BHT) IU-redirect->0350
+   6705 | 0350 slli t1,s7,0xd      |                          | 0|                          |                          | 0378 bnez s2,350         | 
+   6706 | 0354 xor s7,s7,t1        |                          | 0|                          |                          |                          | 
+   6707 | 0358 srli t1,s7,0x7      | 0350 slli t1,s7,0xd      | 0| >0350 slli t1,s7,0xd     |                          |                          | 
+   6708 | 035c xor s7,s7,t1        | 0354 xor s7,s7,t1        | 0| >0354 xor s7,s7,t1       | 0350 slli t1,s7,0xd  ALU |                          | 
+   6709 | 0360 slli t1,s7,0x11     | 0358 srli t1,s7,0x7      | 0| >0358 srli t1,s7,0x7     | 0354 xor s7,s7,t1    ALU | 0350 slli t1,s7,0xd      | 
+   6710 | 0364 xor s7,s7,t1        | 035c xor s7,s7,t1        | 0| >035c xor s7,s7,t1       | 0358 srli t1,s7,0x7  ALU | 0354 xor s7,s7,t1        | 
+   6711 | 0368 andi t2,s7,1        | 0360 slli t1,s7,0x11     | 0| >0360 slli t1,s7,0x11    | 035c xor s7,s7,t1    ALU | 0358 srli t1,s7,0x7      | 
+   6712 | 036c bnez t2,374         | 0364 xor s7,s7,t1        | 0| >0364 xor s7,s7,t1       | 0360 slli t1,s7,0x11 ALU | 035c xor s7,s7,t1        | 
+   6713 | 0370 addi s4,s4,1        | 0368 andi t2,s7,1        | 0| >0368 andi t2,s7,1       | 0364 xor s7,s7,t1    ALU | 0360 slli t1,s7,0x11     | 
+   6714 | 0374 addi s2,s2,-1       | 036c bnez t2,374         | 0| >036c bnez t2,374        | 0368 andi t2,s7,1    ALU | 0364 xor s7,s7,t1        | 
+   6715 | 0378 bnez s2,350         | 0370 addi s4,s4,1        | 0| >0370 addi s4,s4,1       | 036c bnez t2,374     BJU | 0368 andi t2,s7,1        | BR-resolve:N
+   6716 | 037c csrr t0,mcycle      | 0374 addi s2,s2,-1       | 0| >0374 addi s2,s2,-1      | 0370 addi s4,s4,1    ALU | 036c bnez t2,374         | 
+   6717 | 0380 sub s0,t0,s0        | 0378 bnez s2,350         | 0| >0378 bnez s2,350        | 0374 addi s2,s2,-1   ALU | 0370 addi s4,s4,1        | IP-redirect->0350
+   6718 | 0350 slli t1,s7,0xd      |                          | 0|                          | 0378 bnez s2,350     BJU | 0374 addi s2,s2,-1       | BR-resolve:T
+   6719 | 0354 xor s7,s7,t1        |                          | 0|                          |                          | 0378 bnez s2,350         | 
+   6720 | 0358 srli t1,s7,0x7      | 0350 slli t1,s7,0xd      | 0| >0350 slli t1,s7,0xd     |                          |                          | 
+   6721 | 035c xor s7,s7,t1        | 0354 xor s7,s7,t1        | 0| >0354 xor s7,s7,t1       | 0350 slli t1,s7,0xd  ALU |                          | 
+   6722 | 0360 slli t1,s7,0x11     | 0358 srli t1,s7,0x7      | 0| >0358 srli t1,s7,0x7     | 0354 xor s7,s7,t1    ALU | 0350 slli t1,s7,0xd      | 
+   6723 | 0364 xor s7,s7,t1        | 035c xor s7,s7,t1        | 0| >035c xor s7,s7,t1       | 0358 srli t1,s7,0x7  ALU | 0354 xor s7,s7,t1        | 
+   6724 | 0368 andi t2,s7,1        | 0360 slli t1,s7,0x11     | 0| >0360 slli t1,s7,0x11    | 035c xor s7,s7,t1    ALU | 0358 srli t1,s7,0x7      | 
+   6725 | 036c bnez t2,374         | 0364 xor s7,s7,t1        | 0| >0364 xor s7,s7,t1       | 0360 slli t1,s7,0x11 ALU | 035c xor s7,s7,t1        | 
+   6726 | 0370 addi s4,s4,1        | 0368 andi t2,s7,1        | 0| >0368 andi t2,s7,1       | 0364 xor s7,s7,t1    ALU | 0360 slli t1,s7,0x11     | 
+   6727 | 0374 addi s2,s2,-1       | 036c bnez t2,374         | 0| >036c bnez t2,374        | 0368 andi t2,s7,1    ALU | 0364 xor s7,s7,t1        | 
+   6728 | 0378 bnez s2,350         | 0370 addi s4,s4,1        | 0| >0370 addi s4,s4,1       | 036c bnez t2,374     BJU | 0368 andi t2,s7,1        | BR-resolve:N
+   6729 | 0350 slli t1,s7,0xd      | 0374 addi s2,s2,-1       | 0| >0374 addi s2,s2,-1      | 0370 addi s4,s4,1    ALU | 036c bnez t2,374         | BTB-redirect
+   6730 | 0354 xor s7,s7,t1        | 0378 bnez s2,350         | 0| >0378 bnez s2,350        | 0374 addi s2,s2,-1   ALU | 0370 addi s4,s4,1        | 
+   6731 | 0358 srli t1,s7,0x7      | 0350 slli t1,s7,0xd      | 0| >0350 slli t1,s7,0xd     | 0378 bnez s2,350     BJU | 0374 addi s2,s2,-1       | BR-resolve:T
+   6732 | 035c xor s7,s7,t1        | 0354 xor s7,s7,t1        | 0| >0354 xor s7,s7,t1       | 0350 slli t1,s7,0xd  ALU | 0378 bnez s2,350         | 
+   6733 | 0360 slli t1,s7,0x11     | 0358 srli t1,s7,0x7      | 0| >0358 srli t1,s7,0x7     | 0354 xor s7,s7,t1    ALU | 0350 slli t1,s7,0xd      | 
+   6734 | 0364 xor s7,s7,t1        | 035c xor s7,s7,t1        | 0| >035c xor s7,s7,t1       | 0358 srli t1,s7,0x7  ALU | 0354 xor s7,s7,t1        | 
+   6735 | 0368 andi t2,s7,1        | 0360 slli t1,s7,0x11     | 0| >0360 slli t1,s7,0x11    | 035c xor s7,s7,t1    ALU | 0358 srli t1,s7,0x7      | 
+   6736 | 036c bnez t2,374         | 0364 xor s7,s7,t1        | 0| >0364 xor s7,s7,t1       | 0360 slli t1,s7,0x11 ALU | 035c xor s7,s7,t1        | 
+   6737 | 0370 addi s4,s4,1        | 0368 andi t2,s7,1        | 0| >0368 andi t2,s7,1       | 0364 xor s7,s7,t1    ALU | 0360 slli t1,s7,0x11     | 
+   6738 | 0374 addi s2,s2,-1       | 036c bnez t2,374         | 0| >036c bnez t2,374        | 0368 andi t2,s7,1    ALU | 0364 xor s7,s7,t1        | 
+   6739 | 0378 bnez s2,350         | 0370 addi s4,s4,1        | 0| >0370 addi s4,s4,1       | 036c bnez t2,374     BJU | 0368 andi t2,s7,1        | BR-resolve:N
+   6740 | 0350 slli t1,s7,0xd      | 0374 addi s2,s2,-1       | 0| >0374 addi s2,s2,-1      | 0370 addi s4,s4,1    ALU | 036c bnez t2,374         | BTB-redirect
+   6741 | 0354 xor s7,s7,t1        | 0378 bnez s2,350         | 0| >0378 bnez s2,350        | 0374 addi s2,s2,-1   ALU | 0370 addi s4,s4,1        | 
+   6742 | 0358 srli t1,s7,0x7      | 0350 slli t1,s7,0xd      | 0| >0350 slli t1,s7,0xd     | 0378 bnez s2,350     BJU | 0374 addi s2,s2,-1       | BR-resolve:T
+   6743 | 035c xor s7,s7,t1        | 0354 xor s7,s7,t1        | 0| >0354 xor s7,s7,t1       | 0350 slli t1,s7,0xd  ALU | 0378 bnez s2,350         | 
+   6744 | 0360 slli t1,s7,0x11     | 0358 srli t1,s7,0x7      | 0| >0358 srli t1,s7,0x7     | 0354 xor s7,s7,t1    ALU | 0350 slli t1,s7,0xd      | 
+   6745 | 0364 xor s7,s7,t1        | 035c xor s7,s7,t1        | 0| >035c xor s7,s7,t1       | 0358 srli t1,s7,0x7  ALU | 0354 xor s7,s7,t1        | 
+   6746 | 0368 andi t2,s7,1        | 0360 slli t1,s7,0x11     | 0| >0360 slli t1,s7,0x11    | 035c xor s7,s7,t1    ALU | 0358 srli t1,s7,0x7      | 
+   6747 | 036c bnez t2,374         | 0364 xor s7,s7,t1        | 0| >0364 xor s7,s7,t1       | 0360 slli t1,s7,0x11 ALU | 035c xor s7,s7,t1        | 
+   6748 | 0370 addi s4,s4,1        | 0368 andi t2,s7,1        | 0| >0368 andi t2,s7,1       | 0364 xor s7,s7,t1    ALU | 0360 slli t1,s7,0x11     | 
+   6749 | 0374 addi s2,s2,-1       | 036c bnez t2,374         | 0| >036c bnez t2,374        | 0368 andi t2,s7,1    ALU | 0364 xor s7,s7,t1        | 
+   6750 | 0378 bnez s2,350         | 0370 addi s4,s4,1        | 0| >0370 addi s4,s4,1       | 036c bnez t2,374     BJU | 0368 andi t2,s7,1        | BR-resolve:N
+   6751 | 0350 slli t1,s7,0xd      | 0374 addi s2,s2,-1       | 0| >0374 addi s2,s2,-1      | 0370 addi s4,s4,1    ALU | 036c bnez t2,374         | BTB-redirect
+   6752 | 0354 xor s7,s7,t1        | 0378 bnez s2,350         | 0| >0378 bnez s2,350        | 0374 addi s2,s2,-1   ALU | 0370 addi s4,s4,1        | 
+   6753 | 0358 srli t1,s7,0x7      | 0350 slli t1,s7,0xd      | 0| >0350 slli t1,s7,0xd     | 0378 bnez s2,350     BJU | 0374 addi s2,s2,-1       | BR-resolve:T
+   6754 | 035c xor s7,s7,t1        | 0354 xor s7,s7,t1        | 0| >0354 xor s7,s7,t1       | 0350 slli t1,s7,0xd  ALU | 0378 bnez s2,350         | 
+   6755 | 0360 slli t1,s7,0x11     | 0358 srli t1,s7,0x7      | 0| >0358 srli t1,s7,0x7     | 0354 xor s7,s7,t1    ALU | 0350 slli t1,s7,0xd      | 
+   6756 | 0364 xor s7,s7,t1        | 035c xor s7,s7,t1        | 0| >035c xor s7,s7,t1       | 0358 srli t1,s7,0x7  ALU | 0354 xor s7,s7,t1        | 
+   6757 | 0368 andi t2,s7,1        | 0360 slli t1,s7,0x11     | 0| >0360 slli t1,s7,0x11    | 035c xor s7,s7,t1    ALU | 0358 srli t1,s7,0x7      | 
+   6758 | 036c bnez t2,374         | 0364 xor s7,s7,t1        | 0| >0364 xor s7,s7,t1       | 0360 slli t1,s7,0x11 ALU | 035c xor s7,s7,t1        | 
+   6759 | 0370 addi s4,s4,1        | 0368 andi t2,s7,1        | 0| >0368 andi t2,s7,1       | 0364 xor s7,s7,t1    ALU | 0360 slli t1,s7,0x11     | 
+   6760 | 0374 addi s2,s2,-1       | 036c bnez t2,374         | 0| >036c bnez t2,374        | 0368 andi t2,s7,1    ALU | 0364 xor s7,s7,t1        | 
+   6761 | 0378 bnez s2,350         | 0370 addi s4,s4,1        | 0| >0370 addi s4,s4,1       | 036c bnez t2,374     BJU | 0368 andi t2,s7,1        | BR-resolve:N
+   6762 | 0350 slli t1,s7,0xd      | 0374 addi s2,s2,-1       | 0| >0374 addi s2,s2,-1      | 0370 addi s4,s4,1    ALU | 036c bnez t2,374         | BTB-redirect
+   6763 | 0354 xor s7,s7,t1        | 0378 bnez s2,350         | 0| >0378 bnez s2,350        | 0374 addi s2,s2,-1   ALU | 0370 addi s4,s4,1        | 
+   6764 | 0358 srli t1,s7,0x7      | 0350 slli t1,s7,0xd      | 0| >0350 slli t1,s7,0xd     | 0378 bnez s2,350     BJU | 0374 addi s2,s2,-1       | BR-resolve:T
+   6765 | 035c xor s7,s7,t1        | 0354 xor s7,s7,t1        | 0| >0354 xor s7,s7,t1       | 0350 slli t1,s7,0xd  ALU | 0378 bnez s2,350         | 
+   6766 | 0360 slli t1,s7,0x11     | 0358 srli t1,s7,0x7      | 0| >0358 srli t1,s7,0x7     | 0354 xor s7,s7,t1    ALU | 0350 slli t1,s7,0xd      | 
+   6767 | 0364 xor s7,s7,t1        | 035c xor s7,s7,t1        | 0| >035c xor s7,s7,t1       | 0358 srli t1,s7,0x7  ALU | 0354 xor s7,s7,t1        | 
+   6768 | 0368 andi t2,s7,1        | 0360 slli t1,s7,0x11     | 0| >0360 slli t1,s7,0x11    | 035c xor s7,s7,t1    ALU | 0358 srli t1,s7,0x7      | 
+   6769 | 036c bnez t2,374         | 0364 xor s7,s7,t1        | 0| >0364 xor s7,s7,t1       | 0360 slli t1,s7,0x11 ALU | 035c xor s7,s7,t1        | 
+   6770 | 0370 addi s4,s4,1        | 0368 andi t2,s7,1        | 0| >0368 andi t2,s7,1       | 0364 xor s7,s7,t1    ALU | 0360 slli t1,s7,0x11     | 
+   6771 | 0374 addi s2,s2,-1       | 036c bnez t2,374         | 0| >036c bnez t2,374        | 0368 andi t2,s7,1    ALU | 0364 xor s7,s7,t1        | 
+   6772 | 0378 bnez s2,350         | 0370 addi s4,s4,1        | 0| >0370 addi s4,s4,1       | 036c bnez t2,374     BJU | 0368 andi t2,s7,1        | BR-resolve:N
+   6773 | 0350 slli t1,s7,0xd      | 0374 addi s2,s2,-1       | 0| >0374 addi s2,s2,-1      | 0370 addi s4,s4,1    ALU | 036c bnez t2,374         | BTB-redirect
+   6774 | 0354 xor s7,s7,t1        | 0378 bnez s2,350         | 0| >0378 bnez s2,350        | 0374 addi s2,s2,-1   ALU | 0370 addi s4,s4,1        | 
+   6775 | 0358 srli t1,s7,0x7      | 0350 slli t1,s7,0xd      | 0| >0350 slli t1,s7,0xd     | 0378 bnez s2,350     BJU | 0374 addi s2,s2,-1       | BR-resolve:T
+   6776 | 035c xor s7,s7,t1        | 0354 xor s7,s7,t1        | 0| >0354 xor s7,s7,t1       | 0350 slli t1,s7,0xd  ALU | 0378 bnez s2,350         | 
+   6777 | 0360 slli t1,s7,0x11     | 0358 srli t1,s7,0x7      | 0| >0358 srli t1,s7,0x7     | 0354 xor s7,s7,t1    ALU | 0350 slli t1,s7,0xd      | 
+   6778 | 0364 xor s7,s7,t1        | 035c xor s7,s7,t1        | 0| >035c xor s7,s7,t1       | 0358 srli t1,s7,0x7  ALU | 0354 xor s7,s7,t1        | 
+   6779 | 0368 andi t2,s7,1        | 0360 slli t1,s7,0x11     | 0| >0360 slli t1,s7,0x11    | 035c xor s7,s7,t1    ALU | 0358 srli t1,s7,0x7      | 
+   6780 | 036c bnez t2,374         | 0364 xor s7,s7,t1        | 0| >0364 xor s7,s7,t1       | 0360 slli t1,s7,0x11 ALU | 035c xor s7,s7,t1        | 
+   6781 | 0370 addi s4,s4,1        | 0368 andi t2,s7,1        | 0| >0368 andi t2,s7,1       | 0364 xor s7,s7,t1    ALU | 0360 slli t1,s7,0x11     | 
+   6782 | 0374 addi s2,s2,-1       | 036c bnez t2,374         | 0| >036c bnez t2,374        | 0368 andi t2,s7,1    ALU | 0364 xor s7,s7,t1        | 
+   6783 | 0378 bnez s2,350         | 0370 addi s4,s4,1        | 0| >0370 addi s4,s4,1       | 036c bnez t2,374     BJU | 0368 andi t2,s7,1        | BR-resolve:N
+   6784 | 0350 slli t1,s7,0xd      | 0374 addi s2,s2,-1       | 0| >0374 addi s2,s2,-1      | 0370 addi s4,s4,1    ALU | 036c bnez t2,374         | BTB-redirect
+   6785 | 0354 xor s7,s7,t1        | 0378 bnez s2,350         | 0| >0378 bnez s2,350        | 0374 addi s2,s2,-1   ALU | 0370 addi s4,s4,1        | 
+   6786 | 0358 srli t1,s7,0x7      | 0350 slli t1,s7,0xd      | 0| >0350 slli t1,s7,0xd     | 0378 bnez s2,350     BJU | 0374 addi s2,s2,-1       | BR-resolve:T
+   6787 | 035c xor s7,s7,t1        | 0354 xor s7,s7,t1        | 0| >0354 xor s7,s7,t1       | 0350 slli t1,s7,0xd  ALU | 0378 bnez s2,350         | 
+   6788 | 0360 slli t1,s7,0x11     | 0358 srli t1,s7,0x7      | 0| >0358 srli t1,s7,0x7     | 0354 xor s7,s7,t1    ALU | 0350 slli t1,s7,0xd      | 
+   6789 | 0364 xor s7,s7,t1        | 035c xor s7,s7,t1        | 0| >035c xor s7,s7,t1       | 0358 srli t1,s7,0x7  ALU | 0354 xor s7,s7,t1        | 
+   6790 | 0368 andi t2,s7,1        | 0360 slli t1,s7,0x11     | 0| >0360 slli t1,s7,0x11    | 035c xor s7,s7,t1    ALU | 0358 srli t1,s7,0x7      | 
+   6791 | 036c bnez t2,374         | 0364 xor s7,s7,t1        | 0| >0364 xor s7,s7,t1       | 0360 slli t1,s7,0x11 ALU | 035c xor s7,s7,t1        | 
+   6792 | 0370 addi s4,s4,1        | 0368 andi t2,s7,1        | 0| >0368 andi t2,s7,1       | 0364 xor s7,s7,t1    ALU | 0360 slli t1,s7,0x11     | 
+   6793 | 0374 addi s2,s2,-1       | 036c bnez t2,374         | 0| >036c bnez t2,374        | 0368 andi t2,s7,1    ALU | 0364 xor s7,s7,t1        | 
+   6794 | 0378 bnez s2,350         | 0370 addi s4,s4,1        | 0| >0370 addi s4,s4,1       | 036c bnez t2,374     BJU | 0368 andi t2,s7,1        | BR-resolve:N
+   6795 | 0350 slli t1,s7,0xd      | 0374 addi s2,s2,-1       | 0| >0374 addi s2,s2,-1      | 0370 addi s4,s4,1    ALU | 036c bnez t2,374         | BTB-redirect
+   6796 | 0354 xor s7,s7,t1        | 0378 bnez s2,350         | 0| >0378 bnez s2,350        | 0374 addi s2,s2,-1   ALU | 0370 addi s4,s4,1        | 
+   6797 | 0358 srli t1,s7,0x7      | 0350 slli t1,s7,0xd      | 0| >0350 slli t1,s7,0xd     | 0378 bnez s2,350     BJU | 0374 addi s2,s2,-1       | BR-resolve:T
+   6798 | 035c xor s7,s7,t1        | 0354 xor s7,s7,t1        | 0| >0354 xor s7,s7,t1       | 0350 slli t1,s7,0xd  ALU | 0378 bnez s2,350         | 
+   6799 | 0360 slli t1,s7,0x11     | 0358 srli t1,s7,0x7      | 0| >0358 srli t1,s7,0x7     | 0354 xor s7,s7,t1    ALU | 0350 slli t1,s7,0xd      | 
+   6800 | 0364 xor s7,s7,t1        | 035c xor s7,s7,t1        | 0| >035c xor s7,s7,t1       | 0358 srli t1,s7,0x7  ALU | 0354 xor s7,s7,t1        | 
+   6801 | 0368 andi t2,s7,1        | 0360 slli t1,s7,0x11     | 0| >0360 slli t1,s7,0x11    | 035c xor s7,s7,t1    ALU | 0358 srli t1,s7,0x7      | 
+   6802 | 036c bnez t2,374         | 0364 xor s7,s7,t1        | 0| >0364 xor s7,s7,t1       | 0360 slli t1,s7,0x11 ALU | 035c xor s7,s7,t1        | 
+   6803 | 0370 addi s4,s4,1        | 0368 andi t2,s7,1        | 0| >0368 andi t2,s7,1       | 0364 xor s7,s7,t1    ALU | 0360 slli t1,s7,0x11     | 
+   6804 | 0374 addi s2,s2,-1       | 036c bnez t2,374         | 0| >036c bnez t2,374        | 0368 andi t2,s7,1    ALU | 0364 xor s7,s7,t1        | 
+   6805 | 0378 bnez s2,350         | 0370 addi s4,s4,1        | 0| >0370 addi s4,s4,1       | 036c bnez t2,374     BJU | 0368 andi t2,s7,1        | BR-resolve:N
+   6806 | 0350 slli t1,s7,0xd      | 0374 addi s2,s2,-1       | 0| >0374 addi s2,s2,-1      | 0370 addi s4,s4,1    ALU | 036c bnez t2,374         | BTB-redirect
+   6807 | 0354 xor s7,s7,t1        | 0378 bnez s2,350         | 0| >0378 bnez s2,350        | 0374 addi s2,s2,-1   ALU | 0370 addi s4,s4,1        | 
+   6808 | 0358 srli t1,s7,0x7      | 0350 slli t1,s7,0xd      | 0| >0350 slli t1,s7,0xd     | 0378 bnez s2,350     BJU | 0374 addi s2,s2,-1       | BR-resolve:T
+   6809 | 035c xor s7,s7,t1        | 0354 xor s7,s7,t1        | 0| >0354 xor s7,s7,t1       | 0350 slli t1,s7,0xd  ALU | 0378 bnez s2,350         | 
+   6810 | 0360 slli t1,s7,0x11     | 0358 srli t1,s7,0x7      | 0| >0358 srli t1,s7,0x7     | 0354 xor s7,s7,t1    ALU | 0350 slli t1,s7,0xd      | 
+   6811 | 0364 xor s7,s7,t1        | 035c xor s7,s7,t1        | 0| >035c xor s7,s7,t1       | 0358 srli t1,s7,0x7  ALU | 0354 xor s7,s7,t1        | 
+   6812 | 0368 andi t2,s7,1        | 0360 slli t1,s7,0x11     | 0| >0360 slli t1,s7,0x11    | 035c xor s7,s7,t1    ALU | 0358 srli t1,s7,0x7      | 
+   6813 | 036c bnez t2,374         | 0364 xor s7,s7,t1        | 0| >0364 xor s7,s7,t1       | 0360 slli t1,s7,0x11 ALU | 035c xor s7,s7,t1        | 
+   6814 | 0370 addi s4,s4,1        | 0368 andi t2,s7,1        | 0| >0368 andi t2,s7,1       | 0364 xor s7,s7,t1    ALU | 0360 slli t1,s7,0x11     | 
+   6815 | 0374 addi s2,s2,-1       | 036c bnez t2,374         | 0| >036c bnez t2,374        | 0368 andi t2,s7,1    ALU | 0364 xor s7,s7,t1        | 
+   6816 | 0378 bnez s2,350         | 0370 addi s4,s4,1        | 0| >0370 addi s4,s4,1       | 036c bnez t2,374     BJU | 0368 andi t2,s7,1        | BR-resolve:N
+   6817 | 0350 slli t1,s7,0xd      | 0374 addi s2,s2,-1       | 0| >0374 addi s2,s2,-1      | 0370 addi s4,s4,1    ALU | 036c bnez t2,374         | BTB-redirect
+   6818 | 0354 xor s7,s7,t1        | 0378 bnez s2,350         | 0| >0378 bnez s2,350        | 0374 addi s2,s2,-1   ALU | 0370 addi s4,s4,1        | 
+   6819 | 0358 srli t1,s7,0x7      | 0350 slli t1,s7,0xd      | 0| >0350 slli t1,s7,0xd     | 0378 bnez s2,350     BJU | 0374 addi s2,s2,-1       | BR-resolve:T
+   6820 | 035c xor s7,s7,t1        | 0354 xor s7,s7,t1        | 0| >0354 xor s7,s7,t1       | 0350 slli t1,s7,0xd  ALU | 0378 bnez s2,350         | 
+   6821 | 0360 slli t1,s7,0x11     | 0358 srli t1,s7,0x7      | 0| >0358 srli t1,s7,0x7     | 0354 xor s7,s7,t1    ALU | 0350 slli t1,s7,0xd      | 
+   6822 | 0364 xor s7,s7,t1        | 035c xor s7,s7,t1        | 0| >035c xor s7,s7,t1       | 0358 srli t1,s7,0x7  ALU | 0354 xor s7,s7,t1        | 
+   6823 | 0368 andi t2,s7,1        | 0360 slli t1,s7,0x11     | 0| >0360 slli t1,s7,0x11    | 035c xor s7,s7,t1    ALU | 0358 srli t1,s7,0x7      | 
+   6824 | 036c bnez t2,374         | 0364 xor s7,s7,t1        | 0| >0364 xor s7,s7,t1       | 0360 slli t1,s7,0x11 ALU | 035c xor s7,s7,t1        | 
+   6825 | 0370 addi s4,s4,1        | 0368 andi t2,s7,1        | 0| >0368 andi t2,s7,1       | 0364 xor s7,s7,t1    ALU | 0360 slli t1,s7,0x11     | 
+   6826 | 0374 addi s2,s2,-1       | 036c bnez t2,374         | 0| >036c bnez t2,374        | 0368 andi t2,s7,1    ALU | 0364 xor s7,s7,t1        | 
+   6827 | 0378 bnez s2,350         | 0370 addi s4,s4,1        | 0| >0370 addi s4,s4,1       | 036c bnez t2,374     BJU | 0368 andi t2,s7,1        | BR-resolve:N
+   6828 | 0350 slli t1,s7,0xd      | 0374 addi s2,s2,-1       | 0| >0374 addi s2,s2,-1      | 0370 addi s4,s4,1    ALU | 036c bnez t2,374         | BTB-redirect
+   6829 | 0354 xor s7,s7,t1        | 0378 bnez s2,350         | 0| >0378 bnez s2,350        | 0374 addi s2,s2,-1   ALU | 0370 addi s4,s4,1        | 
+   6830 | 0358 srli t1,s7,0x7      | 0350 slli t1,s7,0xd      | 0| >0350 slli t1,s7,0xd     | 0378 bnez s2,350     BJU | 0374 addi s2,s2,-1       | BR-resolve:T
+   6831 | 035c xor s7,s7,t1        | 0354 xor s7,s7,t1        | 0| >0354 xor s7,s7,t1       | 0350 slli t1,s7,0xd  ALU | 0378 bnez s2,350         | 
+   6832 | 0360 slli t1,s7,0x11     | 0358 srli t1,s7,0x7      | 0| >0358 srli t1,s7,0x7     | 0354 xor s7,s7,t1    ALU | 0350 slli t1,s7,0xd      | 
+   6833 | 0364 xor s7,s7,t1        | 035c xor s7,s7,t1        | 0| >035c xor s7,s7,t1       | 0358 srli t1,s7,0x7  ALU | 0354 xor s7,s7,t1        | 
+   6834 | 0368 andi t2,s7,1        | 0360 slli t1,s7,0x11     | 0| >0360 slli t1,s7,0x11    | 035c xor s7,s7,t1    ALU | 0358 srli t1,s7,0x7      | 
+   6835 | 036c bnez t2,374         | 0364 xor s7,s7,t1        | 0| >0364 xor s7,s7,t1       | 0360 slli t1,s7,0x11 ALU | 035c xor s7,s7,t1        | 
+   6836 | 0370 addi s4,s4,1        | 0368 andi t2,s7,1        | 0| >0368 andi t2,s7,1       | 0364 xor s7,s7,t1    ALU | 0360 slli t1,s7,0x11     | 
+   6837 | 0374 addi s2,s2,-1       | 036c bnez t2,374         | 0| >036c bnez t2,374        | 0368 andi t2,s7,1    ALU | 0364 xor s7,s7,t1        | 
+   6838 | 0378 bnez s2,350         | 0370 addi s4,s4,1        | 0| >0370 addi s4,s4,1       | 036c bnez t2,374     BJU | 0368 andi t2,s7,1        | BR-resolve:N
+   6839 | 0350 slli t1,s7,0xd      | 0374 addi s2,s2,-1       | 0| >0374 addi s2,s2,-1      | 0370 addi s4,s4,1    ALU | 036c bnez t2,374         | BTB-redirect
+   6840 | 0354 xor s7,s7,t1        | 0378 bnez s2,350         | 0| >0378 bnez s2,350        | 0374 addi s2,s2,-1   ALU | 0370 addi s4,s4,1        | 
+   6841 | 0358 srli t1,s7,0x7      | 0350 slli t1,s7,0xd      | 0| >0350 slli t1,s7,0xd     | 0378 bnez s2,350     BJU | 0374 addi s2,s2,-1       | BR-resolve:T
+   6842 | 035c xor s7,s7,t1        | 0354 xor s7,s7,t1        | 0| >0354 xor s7,s7,t1       | 0350 slli t1,s7,0xd  ALU | 0378 bnez s2,350         | 
+   6843 | 0360 slli t1,s7,0x11     | 0358 srli t1,s7,0x7      | 0| >0358 srli t1,s7,0x7     | 0354 xor s7,s7,t1    ALU | 0350 slli t1,s7,0xd      | 
+   6844 | 0364 xor s7,s7,t1        | 035c xor s7,s7,t1        | 0| >035c xor s7,s7,t1       | 0358 srli t1,s7,0x7  ALU | 0354 xor s7,s7,t1        | 
+   6845 | 0368 andi t2,s7,1        | 0360 slli t1,s7,0x11     | 0| >0360 slli t1,s7,0x11    | 035c xor s7,s7,t1    ALU | 0358 srli t1,s7,0x7      | 
+   6846 | 036c bnez t2,374         | 0364 xor s7,s7,t1        | 0| >0364 xor s7,s7,t1       | 0360 slli t1,s7,0x11 ALU | 035c xor s7,s7,t1        | 
+   6847 | 0370 addi s4,s4,1        | 0368 andi t2,s7,1        | 0| >0368 andi t2,s7,1       | 0364 xor s7,s7,t1    ALU | 0360 slli t1,s7,0x11     | 
+   6848 | 0374 addi s2,s2,-1       | 036c bnez t2,374         | 0| >036c bnez t2,374        | 0368 andi t2,s7,1    ALU | 0364 xor s7,s7,t1        | 
+   6849 | 0378 bnez s2,350         | 0370 addi s4,s4,1        | 0| >0370 addi s4,s4,1       | 036c bnez t2,374     BJU | 0368 andi t2,s7,1        | BR-resolve:N
+   6850 | 0350 slli t1,s7,0xd      | 0374 addi s2,s2,-1       | 0| >0374 addi s2,s2,-1      | 0370 addi s4,s4,1    ALU | 036c bnez t2,374         | BTB-redirect
+   6851 | 0354 xor s7,s7,t1        | 0378 bnez s2,350         | 0| >0378 bnez s2,350        | 0374 addi s2,s2,-1   ALU | 0370 addi s4,s4,1        | 
+   6852 | 0358 srli t1,s7,0x7      | 0350 slli t1,s7,0xd      | 0| >0350 slli t1,s7,0xd     | 0378 bnez s2,350     BJU | 0374 addi s2,s2,-1       | BR-resolve:T
+   6853 | 035c xor s7,s7,t1        | 0354 xor s7,s7,t1        | 0| >0354 xor s7,s7,t1       | 0350 slli t1,s7,0xd  ALU | 0378 bnez s2,350         | 
+   6854 | 0360 slli t1,s7,0x11     | 0358 srli t1,s7,0x7      | 0| >0358 srli t1,s7,0x7     | 0354 xor s7,s7,t1    ALU | 0350 slli t1,s7,0xd      | 
+   6855 | 0364 xor s7,s7,t1        | 035c xor s7,s7,t1        | 0| >035c xor s7,s7,t1       | 0358 srli t1,s7,0x7  ALU | 0354 xor s7,s7,t1        | 
+   6856 | 0368 andi t2,s7,1        | 0360 slli t1,s7,0x11     | 0| >0360 slli t1,s7,0x11    | 035c xor s7,s7,t1    ALU | 0358 srli t1,s7,0x7      | 
+   6857 | 036c bnez t2,374         | 0364 xor s7,s7,t1        | 0| >0364 xor s7,s7,t1       | 0360 slli t1,s7,0x11 ALU | 035c xor s7,s7,t1        | 
+   6858 | 0370 addi s4,s4,1        | 0368 andi t2,s7,1        | 0| >0368 andi t2,s7,1       | 0364 xor s7,s7,t1    ALU | 0360 slli t1,s7,0x11     | 
+   6859 | 0374 addi s2,s2,-1       | 036c bnez t2,374         | 0| >036c bnez t2,374        | 0368 andi t2,s7,1    ALU | 0364 xor s7,s7,t1        | 
+   6860 | 0378 bnez s2,350         | 0370 addi s4,s4,1        | 0| >0370 addi s4,s4,1       | 036c bnez t2,374     BJU | 0368 andi t2,s7,1        | BR-resolve:N
+   6861 | 0350 slli t1,s7,0xd      | 0374 addi s2,s2,-1       | 0| >0374 addi s2,s2,-1      | 0370 addi s4,s4,1    ALU | 036c bnez t2,374         | BTB-redirect
+   6862 | 0354 xor s7,s7,t1        | 0378 bnez s2,350         | 0| >0378 bnez s2,350        | 0374 addi s2,s2,-1   ALU | 0370 addi s4,s4,1        | 
+   6863 | 0358 srli t1,s7,0x7      | 0350 slli t1,s7,0xd      | 0| >0350 slli t1,s7,0xd     | 0378 bnez s2,350     BJU | 0374 addi s2,s2,-1       | BR-resolve:T
+   6864 | 035c xor s7,s7,t1        | 0354 xor s7,s7,t1        | 0| >0354 xor s7,s7,t1       | 0350 slli t1,s7,0xd  ALU | 0378 bnez s2,350         | 
+   6865 | 0360 slli t1,s7,0x11     | 0358 srli t1,s7,0x7      | 0| >0358 srli t1,s7,0x7     | 0354 xor s7,s7,t1    ALU | 0350 slli t1,s7,0xd      | 
+   6866 | 0364 xor s7,s7,t1        | 035c xor s7,s7,t1        | 0| >035c xor s7,s7,t1       | 0358 srli t1,s7,0x7  ALU | 0354 xor s7,s7,t1        | 
+   6867 | 0368 andi t2,s7,1        | 0360 slli t1,s7,0x11     | 0| >0360 slli t1,s7,0x11    | 035c xor s7,s7,t1    ALU | 0358 srli t1,s7,0x7      | 
+   6868 | 036c bnez t2,374         | 0364 xor s7,s7,t1        | 0| >0364 xor s7,s7,t1       | 0360 slli t1,s7,0x11 ALU | 035c xor s7,s7,t1        | 
+   6869 | 0370 addi s4,s4,1        | 0368 andi t2,s7,1        | 0| >0368 andi t2,s7,1       | 0364 xor s7,s7,t1    ALU | 0360 slli t1,s7,0x11     | 
+   6870 | 0374 addi s2,s2,-1       | 036c bnez t2,374         | 0| >036c bnez t2,374        | 0368 andi t2,s7,1    ALU | 0364 xor s7,s7,t1        | 
+   6871 | 0378 bnez s2,350         | 0370 addi s4,s4,1        | 0| >0370 addi s4,s4,1       | 036c bnez t2,374     BJU | 0368 andi t2,s7,1        | BR-resolve:N
+   6872 | 0350 slli t1,s7,0xd      | 0374 addi s2,s2,-1       | 0| >0374 addi s2,s2,-1      | 0370 addi s4,s4,1    ALU | 036c bnez t2,374         | BTB-redirect
+   6873 | 0354 xor s7,s7,t1        | 0378 bnez s2,350         | 0| >0378 bnez s2,350        | 0374 addi s2,s2,-1   ALU | 0370 addi s4,s4,1        | 
+   6874 | 0358 srli t1,s7,0x7      | 0350 slli t1,s7,0xd      | 0| >0350 slli t1,s7,0xd     | 0378 bnez s2,350     BJU | 0374 addi s2,s2,-1       | BR-resolve:T
+   6875 | 035c xor s7,s7,t1        | 0354 xor s7,s7,t1        | 0| >0354 xor s7,s7,t1       | 0350 slli t1,s7,0xd  ALU | 0378 bnez s2,350         | 
+   6876 | 0360 slli t1,s7,0x11     | 0358 srli t1,s7,0x7      | 0| >0358 srli t1,s7,0x7     | 0354 xor s7,s7,t1    ALU | 0350 slli t1,s7,0xd      | 
+   6877 | 0364 xor s7,s7,t1        | 035c xor s7,s7,t1        | 0| >035c xor s7,s7,t1       | 0358 srli t1,s7,0x7  ALU | 0354 xor s7,s7,t1        | 
+   6878 | 0368 andi t2,s7,1        | 0360 slli t1,s7,0x11     | 0| >0360 slli t1,s7,0x11    | 035c xor s7,s7,t1    ALU | 0358 srli t1,s7,0x7      | 
+   6879 | 036c bnez t2,374         | 0364 xor s7,s7,t1        | 0| >0364 xor s7,s7,t1       | 0360 slli t1,s7,0x11 ALU | 035c xor s7,s7,t1        | 
+   6880 | 0370 addi s4,s4,1        | 0368 andi t2,s7,1        | 0| >0368 andi t2,s7,1       | 0364 xor s7,s7,t1    ALU | 0360 slli t1,s7,0x11     | 
+   6881 | 0374 addi s2,s2,-1       | 036c bnez t2,374         | 0| >036c bnez t2,374        | 0368 andi t2,s7,1    ALU | 0364 xor s7,s7,t1        | 
+   6882 | 0378 bnez s2,350         | 0370 addi s4,s4,1        | 0| >0370 addi s4,s4,1       | 036c bnez t2,374     BJU | 0368 andi t2,s7,1        | BR-resolve:N
+   6883 | 0350 slli t1,s7,0xd      | 0374 addi s2,s2,-1       | 0| >0374 addi s2,s2,-1      | 0370 addi s4,s4,1    ALU | 036c bnez t2,374         | BTB-redirect
+   6884 | 0354 xor s7,s7,t1        | 0378 bnez s2,350         | 0| >0378 bnez s2,350        | 0374 addi s2,s2,-1   ALU | 0370 addi s4,s4,1        | 
+   6885 | 0358 srli t1,s7,0x7      | 0350 slli t1,s7,0xd      | 0| >0350 slli t1,s7,0xd     | 0378 bnez s2,350     BJU | 0374 addi s2,s2,-1       | BR-resolve:T
+   6886 | 035c xor s7,s7,t1        | 0354 xor s7,s7,t1        | 0| >0354 xor s7,s7,t1       | 0350 slli t1,s7,0xd  ALU | 0378 bnez s2,350         | 
+   6887 | 0360 slli t1,s7,0x11     | 0358 srli t1,s7,0x7      | 0| >0358 srli t1,s7,0x7     | 0354 xor s7,s7,t1    ALU | 0350 slli t1,s7,0xd      | 
+   6888 | 0364 xor s7,s7,t1        | 035c xor s7,s7,t1        | 0| >035c xor s7,s7,t1       | 0358 srli t1,s7,0x7  ALU | 0354 xor s7,s7,t1        | 
+   6889 | 0368 andi t2,s7,1        | 0360 slli t1,s7,0x11     | 0| >0360 slli t1,s7,0x11    | 035c xor s7,s7,t1    ALU | 0358 srli t1,s7,0x7      | 
+   6890 | 036c bnez t2,374         | 0364 xor s7,s7,t1        | 0| >0364 xor s7,s7,t1       | 0360 slli t1,s7,0x11 ALU | 035c xor s7,s7,t1        | 
+   6891 | 0370 addi s4,s4,1        | 0368 andi t2,s7,1        | 0| >0368 andi t2,s7,1       | 0364 xor s7,s7,t1    ALU | 0360 slli t1,s7,0x11     | 
+   6892 | 0374 addi s2,s2,-1       | 036c bnez t2,374         | 0| >036c bnez t2,374        | 0368 andi t2,s7,1    ALU | 0364 xor s7,s7,t1        | 
+   6893 | 0378 bnez s2,350         | 0370 addi s4,s4,1        | 0| >0370 addi s4,s4,1       | 036c bnez t2,374     BJU | 0368 andi t2,s7,1        | BR-resolve:N
+   6894 | 0350 slli t1,s7,0xd      | 0374 addi s2,s2,-1       | 0| >0374 addi s2,s2,-1      | 0370 addi s4,s4,1    ALU | 036c bnez t2,374         | BTB-redirect
+   6895 | 0354 xor s7,s7,t1        | 0378 bnez s2,350         | 0| >0378 bnez s2,350        | 0374 addi s2,s2,-1   ALU | 0370 addi s4,s4,1        | 
+   6896 | 0358 srli t1,s7,0x7      | 0350 slli t1,s7,0xd      | 0| >0350 slli t1,s7,0xd     | 0378 bnez s2,350     BJU | 0374 addi s2,s2,-1       | BR-resolve:T
+   6897 | 035c xor s7,s7,t1        | 0354 xor s7,s7,t1        | 0| >0354 xor s7,s7,t1       | 0350 slli t1,s7,0xd  ALU | 0378 bnez s2,350         | 
+   6898 | 0360 slli t1,s7,0x11     | 0358 srli t1,s7,0x7      | 0| >0358 srli t1,s7,0x7     | 0354 xor s7,s7,t1    ALU | 0350 slli t1,s7,0xd      | 
+   6899 | 0364 xor s7,s7,t1        | 035c xor s7,s7,t1        | 0| >035c xor s7,s7,t1       | 0358 srli t1,s7,0x7  ALU | 0354 xor s7,s7,t1        | 
+   6900 | 0368 andi t2,s7,1        | 0360 slli t1,s7,0x11     | 0| >0360 slli t1,s7,0x11    | 035c xor s7,s7,t1    ALU | 0358 srli t1,s7,0x7      | 
+   6901 | 036c bnez t2,374         | 0364 xor s7,s7,t1        | 0| >0364 xor s7,s7,t1       | 0360 slli t1,s7,0x11 ALU | 035c xor s7,s7,t1        | 
+   6902 | 0370 addi s4,s4,1        | 0368 andi t2,s7,1        | 0| >0368 andi t2,s7,1       | 0364 xor s7,s7,t1    ALU | 0360 slli t1,s7,0x11     | 
+   6903 | 0374 addi s2,s2,-1       | 036c bnez t2,374         | 0| >036c bnez t2,374        | 0368 andi t2,s7,1    ALU | 0364 xor s7,s7,t1        | 
+   6904 | 0378 bnez s2,350         | 0370 addi s4,s4,1        | 0| >0370 addi s4,s4,1       | 036c bnez t2,374     BJU | 0368 andi t2,s7,1        | BR-resolve:N
+   6905 | 0350 slli t1,s7,0xd      | 0374 addi s2,s2,-1       | 0| >0374 addi s2,s2,-1      | 0370 addi s4,s4,1    ALU | 036c bnez t2,374         | BTB-redirect
+   6906 | 0354 xor s7,s7,t1        | 0378 bnez s2,350         | 0| >0378 bnez s2,350        | 0374 addi s2,s2,-1   ALU | 0370 addi s4,s4,1        | 
+   6907 | 0358 srli t1,s7,0x7      | 0350 slli t1,s7,0xd      | 0| >0350 slli t1,s7,0xd     | 0378 bnez s2,350     BJU | 0374 addi s2,s2,-1       | BR-resolve:T
+   6908 | 035c xor s7,s7,t1        | 0354 xor s7,s7,t1        | 0| >0354 xor s7,s7,t1       | 0350 slli t1,s7,0xd  ALU | 0378 bnez s2,350         | 
+   6909 | 0360 slli t1,s7,0x11     | 0358 srli t1,s7,0x7      | 0| >0358 srli t1,s7,0x7     | 0354 xor s7,s7,t1    ALU | 0350 slli t1,s7,0xd      | 
+   6910 | 0364 xor s7,s7,t1        | 035c xor s7,s7,t1        | 0| >035c xor s7,s7,t1       | 0358 srli t1,s7,0x7  ALU | 0354 xor s7,s7,t1        | 
+   6911 | 0368 andi t2,s7,1        | 0360 slli t1,s7,0x11     | 0| >0360 slli t1,s7,0x11    | 035c xor s7,s7,t1    ALU | 0358 srli t1,s7,0x7      | 
+   6912 | 036c bnez t2,374         | 0364 xor s7,s7,t1        | 0| >0364 xor s7,s7,t1       | 0360 slli t1,s7,0x11 ALU | 035c xor s7,s7,t1        | 
+   6913 | 0370 addi s4,s4,1        | 0368 andi t2,s7,1        | 0| >0368 andi t2,s7,1       | 0364 xor s7,s7,t1    ALU | 0360 slli t1,s7,0x11     | 
+   6914 | 0374 addi s2,s2,-1       | 036c bnez t2,374         | 0| >036c bnez t2,374        | 0368 andi t2,s7,1    ALU | 0364 xor s7,s7,t1        | 
+   6915 | 0378 bnez s2,350         | 0370 addi s4,s4,1        | 0| >0370 addi s4,s4,1       | 036c bnez t2,374     BJU | 0368 andi t2,s7,1        | BR-resolve:N
+   6916 | 0350 slli t1,s7,0xd      | 0374 addi s2,s2,-1       | 0| >0374 addi s2,s2,-1      | 0370 addi s4,s4,1    ALU | 036c bnez t2,374         | BTB-redirect
+   6917 | 0354 xor s7,s7,t1        | 0378 bnez s2,350         | 0| >0378 bnez s2,350        | 0374 addi s2,s2,-1   ALU | 0370 addi s4,s4,1        | 
+   6918 | 0358 srli t1,s7,0x7      | 0350 slli t1,s7,0xd      | 0| >0350 slli t1,s7,0xd     | 0378 bnez s2,350     BJU | 0374 addi s2,s2,-1       | BR-resolve:T
+   6919 | 035c xor s7,s7,t1        | 0354 xor s7,s7,t1        | 0| >0354 xor s7,s7,t1       | 0350 slli t1,s7,0xd  ALU | 0378 bnez s2,350         | 
+   6920 | 0360 slli t1,s7,0x11     | 0358 srli t1,s7,0x7      | 0| >0358 srli t1,s7,0x7     | 0354 xor s7,s7,t1    ALU | 0350 slli t1,s7,0xd      | 
+   6921 | 0364 xor s7,s7,t1        | 035c xor s7,s7,t1        | 0| >035c xor s7,s7,t1       | 0358 srli t1,s7,0x7  ALU | 0354 xor s7,s7,t1        | 
+   6922 | 0368 andi t2,s7,1        | 0360 slli t1,s7,0x11     | 0| >0360 slli t1,s7,0x11    | 035c xor s7,s7,t1    ALU | 0358 srli t1,s7,0x7      | 
+   6923 | 036c bnez t2,374         | 0364 xor s7,s7,t1        | 0| >0364 xor s7,s7,t1       | 0360 slli t1,s7,0x11 ALU | 035c xor s7,s7,t1        | 
+   6924 | 0370 addi s4,s4,1        | 0368 andi t2,s7,1        | 0| >0368 andi t2,s7,1       | 0364 xor s7,s7,t1    ALU | 0360 slli t1,s7,0x11     | 
+   6925 | 0374 addi s2,s2,-1       | 036c bnez t2,374         | 0| >036c bnez t2,374        | 0368 andi t2,s7,1    ALU | 0364 xor s7,s7,t1        | 
+   6926 | 0378 bnez s2,350         | 0370 addi s4,s4,1        | 0| >0370 addi s4,s4,1       | 036c bnez t2,374     BJU | 0368 andi t2,s7,1        | BR-resolve:N
+   6927 | 0350 slli t1,s7,0xd      | 0374 addi s2,s2,-1       | 0| >0374 addi s2,s2,-1      | 0370 addi s4,s4,1    ALU | 036c bnez t2,374         | BTB-redirect
+   6928 | 0354 xor s7,s7,t1        | 0378 bnez s2,350         | 0| >0378 bnez s2,350        | 0374 addi s2,s2,-1   ALU | 0370 addi s4,s4,1        | 
+   6929 | 0358 srli t1,s7,0x7      | 0350 slli t1,s7,0xd      | 0| >0350 slli t1,s7,0xd     | 0378 bnez s2,350     BJU | 0374 addi s2,s2,-1       | BR-resolve:T
+   6930 | 035c xor s7,s7,t1        | 0354 xor s7,s7,t1        | 0| >0354 xor s7,s7,t1       | 0350 slli t1,s7,0xd  ALU | 0378 bnez s2,350         | 
+   6931 | 0360 slli t1,s7,0x11     | 0358 srli t1,s7,0x7      | 0| >0358 srli t1,s7,0x7     | 0354 xor s7,s7,t1    ALU | 0350 slli t1,s7,0xd      | 
+   6932 | 0364 xor s7,s7,t1        | 035c xor s7,s7,t1        | 0| >035c xor s7,s7,t1       | 0358 srli t1,s7,0x7  ALU | 0354 xor s7,s7,t1        | 
+   6933 | 0368 andi t2,s7,1        | 0360 slli t1,s7,0x11     | 0| >0360 slli t1,s7,0x11    | 035c xor s7,s7,t1    ALU | 0358 srli t1,s7,0x7      | 
+   6934 | 036c bnez t2,374         | 0364 xor s7,s7,t1        | 0| >0364 xor s7,s7,t1       | 0360 slli t1,s7,0x11 ALU | 035c xor s7,s7,t1        | 
+   6935 | 0370 addi s4,s4,1        | 0368 andi t2,s7,1        | 0| >0368 andi t2,s7,1       | 0364 xor s7,s7,t1    ALU | 0360 slli t1,s7,0x11     | 
+   6936 | 0374 addi s2,s2,-1       | 036c bnez t2,374         | 0| >036c bnez t2,374        | 0368 andi t2,s7,1    ALU | 0364 xor s7,s7,t1        | 
+   6937 | 0378 bnez s2,350         | 0370 addi s4,s4,1        | 0| >0370 addi s4,s4,1       | 036c bnez t2,374     BJU | 0368 andi t2,s7,1        | BR-resolve:N
+   6938 | 0350 slli t1,s7,0xd      | 0374 addi s2,s2,-1       | 0| >0374 addi s2,s2,-1      | 0370 addi s4,s4,1    ALU | 036c bnez t2,374         | BTB-redirect
+   6939 | 0354 xor s7,s7,t1        | 0378 bnez s2,350         | 0| >0378 bnez s2,350        | 0374 addi s2,s2,-1   ALU | 0370 addi s4,s4,1        | 
+   6940 | 0358 srli t1,s7,0x7      | 0350 slli t1,s7,0xd      | 0| >0350 slli t1,s7,0xd     | 0378 bnez s2,350     BJU | 0374 addi s2,s2,-1       | BR-resolve:T
+   6941 | 035c xor s7,s7,t1        | 0354 xor s7,s7,t1        | 0| >0354 xor s7,s7,t1       | 0350 slli t1,s7,0xd  ALU | 0378 bnez s2,350         | 
+   6942 | 0360 slli t1,s7,0x11     | 0358 srli t1,s7,0x7      | 0| >0358 srli t1,s7,0x7     | 0354 xor s7,s7,t1    ALU | 0350 slli t1,s7,0xd      | 
+   6943 | 0364 xor s7,s7,t1        | 035c xor s7,s7,t1        | 0| >035c xor s7,s7,t1       | 0358 srli t1,s7,0x7  ALU | 0354 xor s7,s7,t1        | 
+   6944 | 0368 andi t2,s7,1        | 0360 slli t1,s7,0x11     | 0| >0360 slli t1,s7,0x11    | 035c xor s7,s7,t1    ALU | 0358 srli t1,s7,0x7      | 
+   6945 | 036c bnez t2,374         | 0364 xor s7,s7,t1        | 0| >0364 xor s7,s7,t1       | 0360 slli t1,s7,0x11 ALU | 035c xor s7,s7,t1        | 
+   6946 | 0370 addi s4,s4,1        | 0368 andi t2,s7,1        | 0| >0368 andi t2,s7,1       | 0364 xor s7,s7,t1    ALU | 0360 slli t1,s7,0x11     | 
+   6947 | 0374 addi s2,s2,-1       | 036c bnez t2,374         | 0| >036c bnez t2,374        | 0368 andi t2,s7,1    ALU | 0364 xor s7,s7,t1        | 
+   6948 | 0378 bnez s2,350         | 0370 addi s4,s4,1        | 0| >0370 addi s4,s4,1       | 036c bnez t2,374     BJU | 0368 andi t2,s7,1        | BR-resolve:N
+   6949 | 0350 slli t1,s7,0xd      | 0374 addi s2,s2,-1       | 0| >0374 addi s2,s2,-1      | 0370 addi s4,s4,1    ALU | 036c bnez t2,374         | BTB-redirect
+   6950 | 0354 xor s7,s7,t1        | 0378 bnez s2,350         | 0| >0378 bnez s2,350        | 0374 addi s2,s2,-1   ALU | 0370 addi s4,s4,1        | 
+   6951 | 0358 srli t1,s7,0x7      | 0350 slli t1,s7,0xd      | 0| >0350 slli t1,s7,0xd     | 0378 bnez s2,350     BJU | 0374 addi s2,s2,-1       | BR-resolve:T
+   6952 | 035c xor s7,s7,t1        | 0354 xor s7,s7,t1        | 0| >0354 xor s7,s7,t1       | 0350 slli t1,s7,0xd  ALU | 0378 bnez s2,350         | 
+   6953 | 0360 slli t1,s7,0x11     | 0358 srli t1,s7,0x7      | 0| >0358 srli t1,s7,0x7     | 0354 xor s7,s7,t1    ALU | 0350 slli t1,s7,0xd      | 
+   6954 | 0364 xor s7,s7,t1        | 035c xor s7,s7,t1        | 0| >035c xor s7,s7,t1       | 0358 srli t1,s7,0x7  ALU | 0354 xor s7,s7,t1        | 
+   6955 | 0368 andi t2,s7,1        | 0360 slli t1,s7,0x11     | 0| >0360 slli t1,s7,0x11    | 035c xor s7,s7,t1    ALU | 0358 srli t1,s7,0x7      | 
+   6956 | 036c bnez t2,374         | 0364 xor s7,s7,t1        | 0| >0364 xor s7,s7,t1       | 0360 slli t1,s7,0x11 ALU | 035c xor s7,s7,t1        | 
+   6957 | 0370 addi s4,s4,1        | 0368 andi t2,s7,1        | 0| >0368 andi t2,s7,1       | 0364 xor s7,s7,t1    ALU | 0360 slli t1,s7,0x11     | 
+   6958 | 0374 addi s2,s2,-1       | 036c bnez t2,374         | 0| >036c bnez t2,374        | 0368 andi t2,s7,1    ALU | 0364 xor s7,s7,t1        | 
+   6959 | 0378 bnez s2,350         | 0370 addi s4,s4,1        | 0| >0370 addi s4,s4,1       | 036c bnez t2,374     BJU | 0368 andi t2,s7,1        | BR-resolve:N
+   6960 | 0350 slli t1,s7,0xd      | 0374 addi s2,s2,-1       | 0| >0374 addi s2,s2,-1      | 0370 addi s4,s4,1    ALU | 036c bnez t2,374         | BTB-redirect
+   6961 | 0354 xor s7,s7,t1        | 0378 bnez s2,350         | 0| >0378 bnez s2,350        | 0374 addi s2,s2,-1   ALU | 0370 addi s4,s4,1        | 
+   6962 | 0358 srli t1,s7,0x7      | 0350 slli t1,s7,0xd      | 0| >0350 slli t1,s7,0xd     | 0378 bnez s2,350     BJU | 0374 addi s2,s2,-1       | BR-resolve:T
+   6963 | 035c xor s7,s7,t1        | 0354 xor s7,s7,t1        | 0| >0354 xor s7,s7,t1       | 0350 slli t1,s7,0xd  ALU | 0378 bnez s2,350         | 
+   6964 | 0360 slli t1,s7,0x11     | 0358 srli t1,s7,0x7      | 0| >0358 srli t1,s7,0x7     | 0354 xor s7,s7,t1    ALU | 0350 slli t1,s7,0xd      | 
+   6965 | 0364 xor s7,s7,t1        | 035c xor s7,s7,t1        | 0| >035c xor s7,s7,t1       | 0358 srli t1,s7,0x7  ALU | 0354 xor s7,s7,t1        | 
+   6966 | 0368 andi t2,s7,1        | 0360 slli t1,s7,0x11     | 0| >0360 slli t1,s7,0x11    | 035c xor s7,s7,t1    ALU | 0358 srli t1,s7,0x7      | 
+   6967 | 036c bnez t2,374         | 0364 xor s7,s7,t1        | 0| >0364 xor s7,s7,t1       | 0360 slli t1,s7,0x11 ALU | 035c xor s7,s7,t1        | 
+   6968 | 0370 addi s4,s4,1        | 0368 andi t2,s7,1        | 0| >0368 andi t2,s7,1       | 0364 xor s7,s7,t1    ALU | 0360 slli t1,s7,0x11     | 
+   6969 | 0374 addi s2,s2,-1       | 036c bnez t2,374         | 0| >036c bnez t2,374        | 0368 andi t2,s7,1    ALU | 0364 xor s7,s7,t1        | 
+   6970 | 0378 bnez s2,350         | 0370 addi s4,s4,1        | 0| >0370 addi s4,s4,1       | 036c bnez t2,374     BJU | 0368 andi t2,s7,1        | BR-resolve:N
+   6971 | 0350 slli t1,s7,0xd      | 0374 addi s2,s2,-1       | 0| >0374 addi s2,s2,-1      | 0370 addi s4,s4,1    ALU | 036c bnez t2,374         | BTB-redirect
+   6972 | 0354 xor s7,s7,t1        | 0378 bnez s2,350         | 0| >0378 bnez s2,350        | 0374 addi s2,s2,-1   ALU | 0370 addi s4,s4,1        | 
+   6973 | 0358 srli t1,s7,0x7      | 0350 slli t1,s7,0xd      | 0| >0350 slli t1,s7,0xd     | 0378 bnez s2,350     BJU | 0374 addi s2,s2,-1       | BR-resolve:T
+   6974 | 035c xor s7,s7,t1        | 0354 xor s7,s7,t1        | 0| >0354 xor s7,s7,t1       | 0350 slli t1,s7,0xd  ALU | 0378 bnez s2,350         | 
+   6975 | 0360 slli t1,s7,0x11     | 0358 srli t1,s7,0x7      | 0| >0358 srli t1,s7,0x7     | 0354 xor s7,s7,t1    ALU | 0350 slli t1,s7,0xd      | 
+   6976 | 0364 xor s7,s7,t1        | 035c xor s7,s7,t1        | 0| >035c xor s7,s7,t1       | 0358 srli t1,s7,0x7  ALU | 0354 xor s7,s7,t1        | 
+   6977 | 0368 andi t2,s7,1        | 0360 slli t1,s7,0x11     | 0| >0360 slli t1,s7,0x11    | 035c xor s7,s7,t1    ALU | 0358 srli t1,s7,0x7      | 
+   6978 | 036c bnez t2,374         | 0364 xor s7,s7,t1        | 0| >0364 xor s7,s7,t1       | 0360 slli t1,s7,0x11 ALU | 035c xor s7,s7,t1        | 
+   6979 | 0370 addi s4,s4,1        | 0368 andi t2,s7,1        | 0| >0368 andi t2,s7,1       | 0364 xor s7,s7,t1    ALU | 0360 slli t1,s7,0x11     | 
+   6980 | 0374 addi s2,s2,-1       | 036c bnez t2,374         | 0| >036c bnez t2,374        | 0368 andi t2,s7,1    ALU | 0364 xor s7,s7,t1        | 
+   6981 | 0378 bnez s2,350         | 0370 addi s4,s4,1        | 0| >0370 addi s4,s4,1       | 036c bnez t2,374     BJU | 0368 andi t2,s7,1        | BR-resolve:N
+   6982 | 0350 slli t1,s7,0xd      | 0374 addi s2,s2,-1       | 0| >0374 addi s2,s2,-1      | 0370 addi s4,s4,1    ALU | 036c bnez t2,374         | BTB-redirect
+   6983 | 0354 xor s7,s7,t1        | 0378 bnez s2,350         | 0| >0378 bnez s2,350        | 0374 addi s2,s2,-1   ALU | 0370 addi s4,s4,1        | 
+   6984 | 0358 srli t1,s7,0x7      | 0350 slli t1,s7,0xd      | 0| >0350 slli t1,s7,0xd     | 0378 bnez s2,350     BJU | 0374 addi s2,s2,-1       | BR-resolve:T
+   6985 | 035c xor s7,s7,t1        | 0354 xor s7,s7,t1        | 0| >0354 xor s7,s7,t1       | 0350 slli t1,s7,0xd  ALU | 0378 bnez s2,350         | 
+   6986 | 0360 slli t1,s7,0x11     | 0358 srli t1,s7,0x7      | 0| >0358 srli t1,s7,0x7     | 0354 xor s7,s7,t1    ALU | 0350 slli t1,s7,0xd      | 
+   6987 | 0364 xor s7,s7,t1        | 035c xor s7,s7,t1        | 0| >035c xor s7,s7,t1       | 0358 srli t1,s7,0x7  ALU | 0354 xor s7,s7,t1        | 
+   6988 | 0368 andi t2,s7,1        | 0360 slli t1,s7,0x11     | 0| >0360 slli t1,s7,0x11    | 035c xor s7,s7,t1    ALU | 0358 srli t1,s7,0x7      | 
+   6989 | 036c bnez t2,374         | 0364 xor s7,s7,t1        | 0| >0364 xor s7,s7,t1       | 0360 slli t1,s7,0x11 ALU | 035c xor s7,s7,t1        | 
+   6990 | 0370 addi s4,s4,1        | 0368 andi t2,s7,1        | 0| >0368 andi t2,s7,1       | 0364 xor s7,s7,t1    ALU | 0360 slli t1,s7,0x11     | 
+   6991 | 0374 addi s2,s2,-1       | 036c bnez t2,374         | 0| >036c bnez t2,374        | 0368 andi t2,s7,1    ALU | 0364 xor s7,s7,t1        | 
+   6992 | 0378 bnez s2,350         | 0370 addi s4,s4,1        | 0| >0370 addi s4,s4,1       | 036c bnez t2,374     BJU | 0368 andi t2,s7,1        | BR-resolve:N
+   6993 | 0350 slli t1,s7,0xd      | 0374 addi s2,s2,-1       | 0| >0374 addi s2,s2,-1      | 0370 addi s4,s4,1    ALU | 036c bnez t2,374         | BTB-redirect
+   6994 | 0354 xor s7,s7,t1        | 0378 bnez s2,350         | 0| >0378 bnez s2,350        | 0374 addi s2,s2,-1   ALU | 0370 addi s4,s4,1        | 
+   6995 | 0358 srli t1,s7,0x7      | 0350 slli t1,s7,0xd      | 0| >0350 slli t1,s7,0xd     | 0378 bnez s2,350     BJU | 0374 addi s2,s2,-1       | BR-resolve:T
+   6996 | 035c xor s7,s7,t1        | 0354 xor s7,s7,t1        | 0| >0354 xor s7,s7,t1       | 0350 slli t1,s7,0xd  ALU | 0378 bnez s2,350         | 
+   6997 | 0360 slli t1,s7,0x11     | 0358 srli t1,s7,0x7      | 0| >0358 srli t1,s7,0x7     | 0354 xor s7,s7,t1    ALU | 0350 slli t1,s7,0xd      | 
+   6998 | 0364 xor s7,s7,t1        | 035c xor s7,s7,t1        | 0| >035c xor s7,s7,t1       | 0358 srli t1,s7,0x7  ALU | 0354 xor s7,s7,t1        | 
+   6999 | 0368 andi t2,s7,1        | 0360 slli t1,s7,0x11     | 0| >0360 slli t1,s7,0x11    | 035c xor s7,s7,t1    ALU | 0358 srli t1,s7,0x7      | 
+   7000 | 036c bnez t2,374         | 0364 xor s7,s7,t1        | 0| >0364 xor s7,s7,t1       | 0360 slli t1,s7,0x11 ALU | 035c xor s7,s7,t1        | 
+   7001 | 0370 addi s4,s4,1        | 0368 andi t2,s7,1        | 0| >0368 andi t2,s7,1       | 0364 xor s7,s7,t1    ALU | 0360 slli t1,s7,0x11     | 
+   7002 | 0374 addi s2,s2,-1       | 036c bnez t2,374         | 0| >036c bnez t2,374        | 0368 andi t2,s7,1    ALU | 0364 xor s7,s7,t1        | 
+   ... (2460 more cycles, use --mark 1 --max-rows N)
+----------------------------------------------------------------------------------------------------------------------------------------------------------------
+summary: cycles=2860 retired=2827 IPC=0.988 | btb_redirect=250, ip_curflw=1, ip_redirect=5, iu_redirect=7, mispred_bht=7, retired=2827, stall_CP0/fence=11, stall_RAW=2, stall_WAW=1
+
+================================================================================================================================================================
+MARK 2   cycles 15116 .. 18661  (3546 cycles)
+================================================================================================================================================================
+    cyc | IF (fetch)               | IP (pred)                |IB| ID                       | EX1                      | RETIRE                   | events
+----------------------------------------------------------------------------------------------------------------------------------------------------------------
+  15116 |                          |                          | 0|                          |                          |                          | 
+  15117 |                          |                          | 0|                          |                          |                          | 
+  15118 |                          |                          | 0|                          |                          |                          | 
+  15119 | 0304 jal 3c0             |                          | 0|                          |                          |                          | 
+  15120 | 0308 li t6,0             |                          | 0|                          |                          |                          | 
+  15121 | 030c mv a1,s0            | 0304 jal 3c0             | 0| >0304 jal 3c0            |                          |                          | IP-redirect->03c0
+  15122 | 03c0 li s2,256           |                          | 0|                          | 0304 jal 3c0         BJU |                          | 
+  15123 | 03c4 li s4,0             |                          | 0|                          |                          | 0304 jal 3c0             | 
+  15124 | 03c8 csrr s3,mhpmcounter | 03c0 li s2,256           | 0| >03c0 li s2,256          |                          |                          | 
+  15125 | 03cc csrr s0,mcycle      | 03c4 li s4,0             | 0| >03c4 li s4,0            | 03c0 li s2,256       ALU |                          | 
+  15126 | 03d0 slli t1,s7,0xd      | 03c8 csrr s3,mhpmcounter | 0| .03c8 csrr s3,mhpmcounte | 03c4 li s4,0         ALU | 03c0 li s2,256           | ID-stall:CP0/fence
+  15127 | 03d4 xor s7,s7,t1        | 03cc csrr s0,mcycle      | 0| .03c8 csrr s3,mhpmcounte |                          | 03c4 li s4,0             | ID-stall:CP0/fence
+  15128 | 03d8 srli t1,s7,0x7      | 03d0 slli t1,s7,0xd      | 2| >03c8 csrr s3,mhpmcounte |                          |                          | 
+  15129 | 03dc xor s7,s7,t1        | 03d4 xor s7,s7,t1        | 2| .03cc csrr s0,mcycle     | 03c8 csrr s3,mhpmcou CP0 |                          | ID-stall:CP0/fence
+  15130 | 03e0 slli t1,s7,0x11     | 03d8 srli t1,s7,0x7      | 4| .03cc csrr s0,mcycle     |                          | 03c8 csrr s3,mhpmcounter | ID-stall:CP0/fence
+  15131 |                          | 03dc xor s7,s7,t1        | 6| >03cc csrr s0,mcycle     |                          |                          | 
+  15132 | 03e0 slli t1,s7,0x11     | 03dc xor s7,s7,t1        | 4| >03d0 slli t1,s7,0xd     | 03cc csrr s0,mcycle  CP0 |                          | 
+  15133 | 03e4 xor s7,s7,t1        |                          | 4| >03d4 xor s7,s7,t1       | 03d0 slli t1,s7,0xd  ALU | 03cc csrr s0,mcycle      | 
+  15134 | 03e8 andi t2,s7,1        | 03e0 slli t1,s7,0x11     | 2| >03d8 srli t1,s7,0x7     | 03d4 xor s7,s7,t1    ALU | 03d0 slli t1,s7,0xd      | 
+  15135 | 03ec bnez t2,3f4         | 03e4 xor s7,s7,t1        | 2| >03dc xor s7,s7,t1       | 03d8 srli t1,s7,0x7  ALU | 03d4 xor s7,s7,t1        | 
+  15136 | 03f0 addi s4,s4,1        | 03e8 andi t2,s7,1        | 2| >03e0 slli t1,s7,0x11    | 03dc xor s7,s7,t1    ALU | 03d8 srli t1,s7,0x7      | 
+  15137 | 03f4 addi s2,s2,-1       | 03ec bnez t2,3f4         | 2| >03e4 xor s7,s7,t1       | 03e0 slli t1,s7,0x11 ALU | 03dc xor s7,s7,t1        | 
+  15138 | 03f8 bnez s2,3d0         | 03f0 addi s4,s4,1        | 2| >03e8 andi t2,s7,1       | 03e4 xor s7,s7,t1    ALU | 03e0 slli t1,s7,0x11     | 
+  15139 | 03fc csrr t0,mcycle      | 03f4 addi s2,s2,-1       | 2| >03ec bnez t2,3f4        | 03e8 andi t2,s7,1    ALU | 03e4 xor s7,s7,t1        | 
+  15140 | 0400 sub s0,t0,s0        | 03f8 bnez s2,3d0         | 2| >(flushed) addi s4,s4,1  | 03ec bnez t2,3f4     BJU | 03e8 andi t2,s7,1        | BR-resolve:T MISPRED(BHT) IU-redirect->03f4
+  15141 | 03f4 addi s2,s2,-1       |                          | 0|                          |                          | 03ec bnez t2,3f4         | 
+  15142 | 03f8 bnez s2,3d0         |                          | 0|                          |                          |                          | 
+  15143 | 03fc csrr t0,mcycle      | 03f4 addi s2,s2,-1       | 0| >03f4 addi s2,s2,-1      |                          |                          | 
+  15144 | 0400 sub s0,t0,s0        | 03f8 bnez s2,3d0         | 0| >03f8 bnez s2,3d0        | 03f4 addi s2,s2,-1   ALU |                          | 
+  15145 | 0404 csrr s1,mhpmcounter | 03fc csrr t0,mcycle      | 0| .(flushed) csrr t0,mcycl | 03f8 bnez s2,3d0     BJU | 03f4 addi s2,s2,-1       | ID-stall:CP0/fence BR-resolve:T MISPRED(BHT) IU-redirect->03d0
+  15146 | 03d0 slli t1,s7,0xd      |                          | 0|                          |                          | 03f8 bnez s2,3d0         | 
+  15147 | 03d4 xor s7,s7,t1        |                          | 0|                          |                          |                          | 
+  15148 | 03d8 srli t1,s7,0x7      | 03d0 slli t1,s7,0xd      | 0| >03d0 slli t1,s7,0xd     |                          |                          | 
+  15149 | 03dc xor s7,s7,t1        | 03d4 xor s7,s7,t1        | 0| >03d4 xor s7,s7,t1       | 03d0 slli t1,s7,0xd  ALU |                          | 
+  15150 | 03e0 slli t1,s7,0x11     | 03d8 srli t1,s7,0x7      | 0| >03d8 srli t1,s7,0x7     | 03d4 xor s7,s7,t1    ALU | 03d0 slli t1,s7,0xd      | 
+  15151 | 03e4 xor s7,s7,t1        | 03dc xor s7,s7,t1        | 0| >03dc xor s7,s7,t1       | 03d8 srli t1,s7,0x7  ALU | 03d4 xor s7,s7,t1        | 
+  15152 | 03e8 andi t2,s7,1        | 03e0 slli t1,s7,0x11     | 0| >03e0 slli t1,s7,0x11    | 03dc xor s7,s7,t1    ALU | 03d8 srli t1,s7,0x7      | 
+  15153 | 03ec bnez t2,3f4         | 03e4 xor s7,s7,t1        | 0| >03e4 xor s7,s7,t1       | 03e0 slli t1,s7,0x11 ALU | 03dc xor s7,s7,t1        | 
+  15154 | 03f0 addi s4,s4,1        | 03e8 andi t2,s7,1        | 0| >03e8 andi t2,s7,1       | 03e4 xor s7,s7,t1    ALU | 03e0 slli t1,s7,0x11     | 
+  15155 | 03f4 addi s2,s2,-1       | 03ec bnez t2,3f4         | 0| >03ec bnez t2,3f4        | 03e8 andi t2,s7,1    ALU | 03e4 xor s7,s7,t1        | 
+  15156 | 03f8 bnez s2,3d0         | 03f0 addi s4,s4,1        | 0| >(flushed) addi s4,s4,1  | 03ec bnez t2,3f4     BJU | 03e8 andi t2,s7,1        | BR-resolve:T MISPRED(BHT) IU-redirect->03f4
+  15157 | 03f4 addi s2,s2,-1       |                          | 0|                          |                          | 03ec bnez t2,3f4         | 
+  15158 | 03f8 bnez s2,3d0         |                          | 0|                          |                          |                          | 
+  15159 | 03fc csrr t0,mcycle      | 03f4 addi s2,s2,-1       | 0| >03f4 addi s2,s2,-1      |                          |                          | 
+  15160 | 0400 sub s0,t0,s0        | 03f8 bnez s2,3d0         | 0| >03f8 bnez s2,3d0        | 03f4 addi s2,s2,-1   ALU |                          | 
+  15161 | 0404 csrr s1,mhpmcounter | 03fc csrr t0,mcycle      | 0| .(flushed) csrr t0,mcycl | 03f8 bnez s2,3d0     BJU | 03f4 addi s2,s2,-1       | ID-stall:CP0/fence BR-resolve:T MISPRED(BHT) IU-redirect->03d0
+  15162 | 03d0 slli t1,s7,0xd      |                          | 0|                          |                          | 03f8 bnez s2,3d0         | 
+  15163 | 03d4 xor s7,s7,t1        |                          | 0|                          |                          |                          | 
+  15164 | 03d8 srli t1,s7,0x7      | 03d0 slli t1,s7,0xd      | 0| >03d0 slli t1,s7,0xd     |                          |                          | 
+  15165 | 03dc xor s7,s7,t1        | 03d4 xor s7,s7,t1        | 0| >03d4 xor s7,s7,t1       | 03d0 slli t1,s7,0xd  ALU |                          | 
+  15166 | 03e0 slli t1,s7,0x11     | 03d8 srli t1,s7,0x7      | 0| >03d8 srli t1,s7,0x7     | 03d4 xor s7,s7,t1    ALU | 03d0 slli t1,s7,0xd      | 
+  15167 | 03e4 xor s7,s7,t1        | 03dc xor s7,s7,t1        | 0| >03dc xor s7,s7,t1       | 03d8 srli t1,s7,0x7  ALU | 03d4 xor s7,s7,t1        | 
+  15168 | 03e8 andi t2,s7,1        | 03e0 slli t1,s7,0x11     | 0| >03e0 slli t1,s7,0x11    | 03dc xor s7,s7,t1    ALU | 03d8 srli t1,s7,0x7      | 
+  15169 | 03ec bnez t2,3f4         | 03e4 xor s7,s7,t1        | 0| >03e4 xor s7,s7,t1       | 03e0 slli t1,s7,0x11 ALU | 03dc xor s7,s7,t1        | 
+  15170 | 03f0 addi s4,s4,1        | 03e8 andi t2,s7,1        | 0| >03e8 andi t2,s7,1       | 03e4 xor s7,s7,t1    ALU | 03e0 slli t1,s7,0x11     | 
+  15171 | 03f4 addi s2,s2,-1       | 03ec bnez t2,3f4         | 0| >03ec bnez t2,3f4        | 03e8 andi t2,s7,1    ALU | 03e4 xor s7,s7,t1        | 
+  15172 | 03f8 bnez s2,3d0         | 03f0 addi s4,s4,1        | 0| >03f0 addi s4,s4,1       | 03ec bnez t2,3f4     BJU | 03e8 andi t2,s7,1        | BR-resolve:N
+  15173 | 03fc csrr t0,mcycle      | 03f4 addi s2,s2,-1       | 0| >03f4 addi s2,s2,-1      | 03f0 addi s4,s4,1    ALU | 03ec bnez t2,3f4         | 
+  15174 | 0400 sub s0,t0,s0        | 03f8 bnez s2,3d0         | 0| >03f8 bnez s2,3d0        | 03f4 addi s2,s2,-1   ALU | 03f0 addi s4,s4,1        | 
+  15175 | 0404 csrr s1,mhpmcounter | 03fc csrr t0,mcycle      | 0| .(flushed) csrr t0,mcycl | 03f8 bnez s2,3d0     BJU | 03f4 addi s2,s2,-1       | ID-stall:CP0/fence BR-resolve:T MISPRED(BHT) IU-redirect->03d0
+  15176 | 03d0 slli t1,s7,0xd      |                          | 0|                          |                          | 03f8 bnez s2,3d0         | 
+  15177 | 03d4 xor s7,s7,t1        |                          | 0|                          |                          |                          | 
+  15178 | 03d8 srli t1,s7,0x7      | 03d0 slli t1,s7,0xd      | 0| >03d0 slli t1,s7,0xd     |                          |                          | 
+  15179 | 03dc xor s7,s7,t1        | 03d4 xor s7,s7,t1        | 0| >03d4 xor s7,s7,t1       | 03d0 slli t1,s7,0xd  ALU |                          | 
+  15180 | 03e0 slli t1,s7,0x11     | 03d8 srli t1,s7,0x7      | 0| >03d8 srli t1,s7,0x7     | 03d4 xor s7,s7,t1    ALU | 03d0 slli t1,s7,0xd      | 
+  15181 | 03e4 xor s7,s7,t1        | 03dc xor s7,s7,t1        | 0| >03dc xor s7,s7,t1       | 03d8 srli t1,s7,0x7  ALU | 03d4 xor s7,s7,t1        | 
+  15182 | 03e8 andi t2,s7,1        | 03e0 slli t1,s7,0x11     | 0| >03e0 slli t1,s7,0x11    | 03dc xor s7,s7,t1    ALU | 03d8 srli t1,s7,0x7      | 
+  15183 | 03ec bnez t2,3f4         | 03e4 xor s7,s7,t1        | 0| >03e4 xor s7,s7,t1       | 03e0 slli t1,s7,0x11 ALU | 03dc xor s7,s7,t1        | 
+  15184 | 03f0 addi s4,s4,1        | 03e8 andi t2,s7,1        | 0| >03e8 andi t2,s7,1       | 03e4 xor s7,s7,t1    ALU | 03e0 slli t1,s7,0x11     | 
+  15185 | 03f4 addi s2,s2,-1       | 03ec bnez t2,3f4         | 0| >03ec bnez t2,3f4        | 03e8 andi t2,s7,1    ALU | 03e4 xor s7,s7,t1        | 
+  15186 | 03f8 bnez s2,3d0         | 03f0 addi s4,s4,1        | 0| >(flushed) addi s4,s4,1  | 03ec bnez t2,3f4     BJU | 03e8 andi t2,s7,1        | BR-resolve:T MISPRED(BHT) IU-redirect->03f4
+  15187 | 03f4 addi s2,s2,-1       |                          | 0|                          |                          | 03ec bnez t2,3f4         | 
+  15188 | 03f8 bnez s2,3d0         |                          | 0|                          |                          |                          | 
+  15189 | 03fc csrr t0,mcycle      | 03f4 addi s2,s2,-1       | 0| >03f4 addi s2,s2,-1      |                          |                          | 
+  15190 | 0400 sub s0,t0,s0        | 03f8 bnez s2,3d0         | 0| >03f8 bnez s2,3d0        | 03f4 addi s2,s2,-1   ALU |                          | 
+  15191 | 0404 csrr s1,mhpmcounter | 03fc csrr t0,mcycle      | 0| .(flushed) csrr t0,mcycl | 03f8 bnez s2,3d0     BJU | 03f4 addi s2,s2,-1       | ID-stall:CP0/fence BR-resolve:T MISPRED(BHT) IU-redirect->03d0
+  15192 | 03d0 slli t1,s7,0xd      |                          | 0|                          |                          | 03f8 bnez s2,3d0         | 
+  15193 | 03d4 xor s7,s7,t1        |                          | 0|                          |                          |                          | 
+  15194 | 03d8 srli t1,s7,0x7      | 03d0 slli t1,s7,0xd      | 0| >03d0 slli t1,s7,0xd     |                          |                          | 
+  15195 | 03dc xor s7,s7,t1        | 03d4 xor s7,s7,t1        | 0| >03d4 xor s7,s7,t1       | 03d0 slli t1,s7,0xd  ALU |                          | 
+  15196 | 03e0 slli t1,s7,0x11     | 03d8 srli t1,s7,0x7      | 0| >03d8 srli t1,s7,0x7     | 03d4 xor s7,s7,t1    ALU | 03d0 slli t1,s7,0xd      | 
+  15197 | 03e4 xor s7,s7,t1        | 03dc xor s7,s7,t1        | 0| >03dc xor s7,s7,t1       | 03d8 srli t1,s7,0x7  ALU | 03d4 xor s7,s7,t1        | 
+  15198 | 03e8 andi t2,s7,1        | 03e0 slli t1,s7,0x11     | 0| >03e0 slli t1,s7,0x11    | 03dc xor s7,s7,t1    ALU | 03d8 srli t1,s7,0x7      | 
+  15199 | 03ec bnez t2,3f4         | 03e4 xor s7,s7,t1        | 0| >03e4 xor s7,s7,t1       | 03e0 slli t1,s7,0x11 ALU | 03dc xor s7,s7,t1        | 
+  15200 | 03f0 addi s4,s4,1        | 03e8 andi t2,s7,1        | 0| >03e8 andi t2,s7,1       | 03e4 xor s7,s7,t1    ALU | 03e0 slli t1,s7,0x11     | 
+  15201 | 03f4 addi s2,s2,-1       | 03ec bnez t2,3f4         | 0| >03ec bnez t2,3f4        | 03e8 andi t2,s7,1    ALU | 03e4 xor s7,s7,t1        | 
+  15202 | 03f8 bnez s2,3d0         | 03f0 addi s4,s4,1        | 0| >(flushed) addi s4,s4,1  | 03ec bnez t2,3f4     BJU | 03e8 andi t2,s7,1        | BR-resolve:T MISPRED(BHT) IU-redirect->03f4
+  15203 | 03f4 addi s2,s2,-1       |                          | 0|                          |                          | 03ec bnez t2,3f4         | 
+  15204 | 03f8 bnez s2,3d0         |                          | 0|                          |                          |                          | 
+  15205 | 03fc csrr t0,mcycle      | 03f4 addi s2,s2,-1       | 0| >03f4 addi s2,s2,-1      |                          |                          | 
+  15206 | 0400 sub s0,t0,s0        | 03f8 bnez s2,3d0         | 0| >03f8 bnez s2,3d0        | 03f4 addi s2,s2,-1   ALU |                          | 
+  15207 | 0404 csrr s1,mhpmcounter | 03fc csrr t0,mcycle      | 0| .(flushed) csrr t0,mcycl | 03f8 bnez s2,3d0     BJU | 03f4 addi s2,s2,-1       | ID-stall:CP0/fence BR-resolve:T MISPRED(BHT) IU-redirect->03d0
+  15208 | 03d0 slli t1,s7,0xd      |                          | 0|                          |                          | 03f8 bnez s2,3d0         | 
+  15209 | 03d4 xor s7,s7,t1        |                          | 0|                          |                          |                          | 
+  15210 | 03d8 srli t1,s7,0x7      | 03d0 slli t1,s7,0xd      | 0| >03d0 slli t1,s7,0xd     |                          |                          | 
+  15211 | 03dc xor s7,s7,t1        | 03d4 xor s7,s7,t1        | 0| >03d4 xor s7,s7,t1       | 03d0 slli t1,s7,0xd  ALU |                          | 
+  15212 | 03e0 slli t1,s7,0x11     | 03d8 srli t1,s7,0x7      | 0| >03d8 srli t1,s7,0x7     | 03d4 xor s7,s7,t1    ALU | 03d0 slli t1,s7,0xd      | 
+  15213 | 03e4 xor s7,s7,t1        | 03dc xor s7,s7,t1        | 0| >03dc xor s7,s7,t1       | 03d8 srli t1,s7,0x7  ALU | 03d4 xor s7,s7,t1        | 
+  15214 | 03e8 andi t2,s7,1        | 03e0 slli t1,s7,0x11     | 0| >03e0 slli t1,s7,0x11    | 03dc xor s7,s7,t1    ALU | 03d8 srli t1,s7,0x7      | 
+  15215 | 03ec bnez t2,3f4         | 03e4 xor s7,s7,t1        | 0| >03e4 xor s7,s7,t1       | 03e0 slli t1,s7,0x11 ALU | 03dc xor s7,s7,t1        | 
+  15216 | 03f0 addi s4,s4,1        | 03e8 andi t2,s7,1        | 0| >03e8 andi t2,s7,1       | 03e4 xor s7,s7,t1    ALU | 03e0 slli t1,s7,0x11     | 
+  15217 | 03f4 addi s2,s2,-1       | 03ec bnez t2,3f4         | 0| >03ec bnez t2,3f4        | 03e8 andi t2,s7,1    ALU | 03e4 xor s7,s7,t1        | 
+  15218 | 03f8 bnez s2,3d0         | 03f0 addi s4,s4,1        | 0| >(flushed) addi s4,s4,1  | 03ec bnez t2,3f4     BJU | 03e8 andi t2,s7,1        | BR-resolve:T MISPRED(BHT) IU-redirect->03f4
+  15219 | 03f4 addi s2,s2,-1       |                          | 0|                          |                          | 03ec bnez t2,3f4         | 
+  15220 | 03f8 bnez s2,3d0         |                          | 0|                          |                          |                          | 
+  15221 | 03fc csrr t0,mcycle      | 03f4 addi s2,s2,-1       | 0| >03f4 addi s2,s2,-1      |                          |                          | 
+  15222 | 0400 sub s0,t0,s0        | 03f8 bnez s2,3d0         | 0| >03f8 bnez s2,3d0        | 03f4 addi s2,s2,-1   ALU |                          | 
+  15223 | 0404 csrr s1,mhpmcounter | 03fc csrr t0,mcycle      | 0| .(flushed) csrr t0,mcycl | 03f8 bnez s2,3d0     BJU | 03f4 addi s2,s2,-1       | ID-stall:CP0/fence BR-resolve:T MISPRED(BHT) IU-redirect->03d0
+  15224 | 03d0 slli t1,s7,0xd      |                          | 0|                          |                          | 03f8 bnez s2,3d0         | 
+  15225 | 03d4 xor s7,s7,t1        |                          | 0|                          |                          |                          | 
+  15226 | 03d8 srli t1,s7,0x7      | 03d0 slli t1,s7,0xd      | 0| >03d0 slli t1,s7,0xd     |                          |                          | 
+  15227 | 03dc xor s7,s7,t1        | 03d4 xor s7,s7,t1        | 0| >03d4 xor s7,s7,t1       | 03d0 slli t1,s7,0xd  ALU |                          | 
+  15228 | 03e0 slli t1,s7,0x11     | 03d8 srli t1,s7,0x7      | 0| >03d8 srli t1,s7,0x7     | 03d4 xor s7,s7,t1    ALU | 03d0 slli t1,s7,0xd      | 
+  15229 | 03e4 xor s7,s7,t1        | 03dc xor s7,s7,t1        | 0| >03dc xor s7,s7,t1       | 03d8 srli t1,s7,0x7  ALU | 03d4 xor s7,s7,t1        | 
+  15230 | 03e8 andi t2,s7,1        | 03e0 slli t1,s7,0x11     | 0| >03e0 slli t1,s7,0x11    | 03dc xor s7,s7,t1    ALU | 03d8 srli t1,s7,0x7      | 
+  15231 | 03ec bnez t2,3f4         | 03e4 xor s7,s7,t1        | 0| >03e4 xor s7,s7,t1       | 03e0 slli t1,s7,0x11 ALU | 03dc xor s7,s7,t1        | 
+  15232 | 03f0 addi s4,s4,1        | 03e8 andi t2,s7,1        | 0| >03e8 andi t2,s7,1       | 03e4 xor s7,s7,t1    ALU | 03e0 slli t1,s7,0x11     | 
+  15233 | 03f4 addi s2,s2,-1       | 03ec bnez t2,3f4         | 0| >03ec bnez t2,3f4        | 03e8 andi t2,s7,1    ALU | 03e4 xor s7,s7,t1        | 
+  15234 | 03f8 bnez s2,3d0         | 03f0 addi s4,s4,1        | 0| >03f0 addi s4,s4,1       | 03ec bnez t2,3f4     BJU | 03e8 andi t2,s7,1        | BR-resolve:N
+  15235 | 03fc csrr t0,mcycle      | 03f4 addi s2,s2,-1       | 0| >03f4 addi s2,s2,-1      | 03f0 addi s4,s4,1    ALU | 03ec bnez t2,3f4         | 
+  15236 | 0400 sub s0,t0,s0        | 03f8 bnez s2,3d0         | 0| >03f8 bnez s2,3d0        | 03f4 addi s2,s2,-1   ALU | 03f0 addi s4,s4,1        | 
+  15237 | 0404 csrr s1,mhpmcounter | 03fc csrr t0,mcycle      | 0| .(flushed) csrr t0,mcycl | 03f8 bnez s2,3d0     BJU | 03f4 addi s2,s2,-1       | ID-stall:CP0/fence BR-resolve:T MISPRED(BHT) IU-redirect->03d0
+  15238 | 03d0 slli t1,s7,0xd      |                          | 0|                          |                          | 03f8 bnez s2,3d0         | 
+  15239 | 03d4 xor s7,s7,t1        |                          | 0|                          |                          |                          | 
+  15240 | 03d8 srli t1,s7,0x7      | 03d0 slli t1,s7,0xd      | 0| >03d0 slli t1,s7,0xd     |                          |                          | 
+  15241 | 03dc xor s7,s7,t1        | 03d4 xor s7,s7,t1        | 0| >03d4 xor s7,s7,t1       | 03d0 slli t1,s7,0xd  ALU |                          | 
+  15242 | 03e0 slli t1,s7,0x11     | 03d8 srli t1,s7,0x7      | 0| >03d8 srli t1,s7,0x7     | 03d4 xor s7,s7,t1    ALU | 03d0 slli t1,s7,0xd      | 
+  15243 | 03e4 xor s7,s7,t1        | 03dc xor s7,s7,t1        | 0| >03dc xor s7,s7,t1       | 03d8 srli t1,s7,0x7  ALU | 03d4 xor s7,s7,t1        | 
+  15244 | 03e8 andi t2,s7,1        | 03e0 slli t1,s7,0x11     | 0| >03e0 slli t1,s7,0x11    | 03dc xor s7,s7,t1    ALU | 03d8 srli t1,s7,0x7      | 
+  15245 | 03ec bnez t2,3f4         | 03e4 xor s7,s7,t1        | 0| >03e4 xor s7,s7,t1       | 03e0 slli t1,s7,0x11 ALU | 03dc xor s7,s7,t1        | 
+  15246 | 03f0 addi s4,s4,1        | 03e8 andi t2,s7,1        | 0| >03e8 andi t2,s7,1       | 03e4 xor s7,s7,t1    ALU | 03e0 slli t1,s7,0x11     | 
+  15247 | 03f4 addi s2,s2,-1       | 03ec bnez t2,3f4         | 0| >03ec bnez t2,3f4        | 03e8 andi t2,s7,1    ALU | 03e4 xor s7,s7,t1        | 
+  15248 | 03f8 bnez s2,3d0         | 03f0 addi s4,s4,1        | 0| >03f0 addi s4,s4,1       | 03ec bnez t2,3f4     BJU | 03e8 andi t2,s7,1        | BR-resolve:N
+  15249 | 03fc csrr t0,mcycle      | 03f4 addi s2,s2,-1       | 0| >03f4 addi s2,s2,-1      | 03f0 addi s4,s4,1    ALU | 03ec bnez t2,3f4         | 
+  15250 | 0400 sub s0,t0,s0        | 03f8 bnez s2,3d0         | 0| >03f8 bnez s2,3d0        | 03f4 addi s2,s2,-1   ALU | 03f0 addi s4,s4,1        | IP-redirect->03d0
+  15251 | 03d0 slli t1,s7,0xd      |                          | 0|                          | 03f8 bnez s2,3d0     BJU | 03f4 addi s2,s2,-1       | BR-resolve:T
+  15252 | 03d4 xor s7,s7,t1        |                          | 0|                          |                          | 03f8 bnez s2,3d0         | 
+  15253 | 03d8 srli t1,s7,0x7      | 03d0 slli t1,s7,0xd      | 0| >03d0 slli t1,s7,0xd     |                          |                          | 
+  15254 | 03dc xor s7,s7,t1        | 03d4 xor s7,s7,t1        | 0| >03d4 xor s7,s7,t1       | 03d0 slli t1,s7,0xd  ALU |                          | 
+  15255 | 03e0 slli t1,s7,0x11     | 03d8 srli t1,s7,0x7      | 0| >03d8 srli t1,s7,0x7     | 03d4 xor s7,s7,t1    ALU | 03d0 slli t1,s7,0xd      | 
+  15256 | 03e4 xor s7,s7,t1        | 03dc xor s7,s7,t1        | 0| >03dc xor s7,s7,t1       | 03d8 srli t1,s7,0x7  ALU | 03d4 xor s7,s7,t1        | 
+  15257 | 03e8 andi t2,s7,1        | 03e0 slli t1,s7,0x11     | 0| >03e0 slli t1,s7,0x11    | 03dc xor s7,s7,t1    ALU | 03d8 srli t1,s7,0x7      | 
+  15258 | 03ec bnez t2,3f4         | 03e4 xor s7,s7,t1        | 0| >03e4 xor s7,s7,t1       | 03e0 slli t1,s7,0x11 ALU | 03dc xor s7,s7,t1        | 
+  15259 | 03f0 addi s4,s4,1        | 03e8 andi t2,s7,1        | 0| >03e8 andi t2,s7,1       | 03e4 xor s7,s7,t1    ALU | 03e0 slli t1,s7,0x11     | 
+  15260 | 03f4 addi s2,s2,-1       | 03ec bnez t2,3f4         | 0| >03ec bnez t2,3f4        | 03e8 andi t2,s7,1    ALU | 03e4 xor s7,s7,t1        | IP-redirect->03f4
+  15261 | 03f4 addi s2,s2,-1       |                          | 0|                          | 03ec bnez t2,3f4     BJU | 03e8 andi t2,s7,1        | BR-resolve:N MISPRED(BHT) IU-redirect->03f0
+  15262 | 03f0 addi s4,s4,1        |                          | 0|                          |                          | 03ec bnez t2,3f4         | 
+  15263 | 03f4 addi s2,s2,-1       |                          | 0|                          |                          |                          | 
+  15264 | 03f8 bnez s2,3d0         | 03f0 addi s4,s4,1        | 0| >03f0 addi s4,s4,1       |                          |                          | 
+  15265 | 03d0 slli t1,s7,0xd      | 03f4 addi s2,s2,-1       | 0| >03f4 addi s2,s2,-1      | 03f0 addi s4,s4,1    ALU |                          | BTB-redirect
+  15266 | 03d4 xor s7,s7,t1        | 03f8 bnez s2,3d0         | 0| >03f8 bnez s2,3d0        | 03f4 addi s2,s2,-1   ALU | 03f0 addi s4,s4,1        | IP-redirect->03fc
+  15267 | 03fc csrr t0,mcycle      |                          | 0|                          | 03f8 bnez s2,3d0     BJU | 03f4 addi s2,s2,-1       | BR-resolve:T MISPRED(BHT) IU-redirect->03d0
+  15268 | 03d0 slli t1,s7,0xd      |                          | 0|                          |                          | 03f8 bnez s2,3d0         | 
+  15269 | 03d4 xor s7,s7,t1        |                          | 0|                          |                          |                          | 
+  15270 | 03d8 srli t1,s7,0x7      | 03d0 slli t1,s7,0xd      | 0| >03d0 slli t1,s7,0xd     |                          |                          | 
+  15271 | 03dc xor s7,s7,t1        | 03d4 xor s7,s7,t1        | 0| >03d4 xor s7,s7,t1       | 03d0 slli t1,s7,0xd  ALU |                          | 
+  15272 | 03e0 slli t1,s7,0x11     | 03d8 srli t1,s7,0x7      | 0| >03d8 srli t1,s7,0x7     | 03d4 xor s7,s7,t1    ALU | 03d0 slli t1,s7,0xd      | 
+  15273 | 03e4 xor s7,s7,t1        | 03dc xor s7,s7,t1        | 0| >03dc xor s7,s7,t1       | 03d8 srli t1,s7,0x7  ALU | 03d4 xor s7,s7,t1        | 
+  15274 | 03e8 andi t2,s7,1        | 03e0 slli t1,s7,0x11     | 0| >03e0 slli t1,s7,0x11    | 03dc xor s7,s7,t1    ALU | 03d8 srli t1,s7,0x7      | 
+  15275 | 03ec bnez t2,3f4         | 03e4 xor s7,s7,t1        | 0| >03e4 xor s7,s7,t1       | 03e0 slli t1,s7,0x11 ALU | 03dc xor s7,s7,t1        | 
+  15276 | 03f4 addi s2,s2,-1       | 03e8 andi t2,s7,1        | 0| >03e8 andi t2,s7,1       | 03e4 xor s7,s7,t1    ALU | 03e0 slli t1,s7,0x11     | BTB-redirect
+  15277 | 03f8 bnez s2,3d0         | 03ec bnez t2,3f4         | 0| >03ec bnez t2,3f4        | 03e8 andi t2,s7,1    ALU | 03e4 xor s7,s7,t1        | IP-redirect->03f0
+  15278 | 03f0 addi s4,s4,1        |                          | 0|                          | 03ec bnez t2,3f4     BJU | 03e8 andi t2,s7,1        | BR-resolve:T MISPRED(BHT) IU-redirect->03f4
+  15279 | 03f4 addi s2,s2,-1       |                          | 0|                          |                          | 03ec bnez t2,3f4         | 
+  15280 | 03f8 bnez s2,3d0         |                          | 0|                          |                          |                          | 
+  15281 | 03fc csrr t0,mcycle      | 03f4 addi s2,s2,-1       | 0| >03f4 addi s2,s2,-1      |                          |                          | 
+  15282 | 0400 sub s0,t0,s0        | 03f8 bnez s2,3d0         | 0| >03f8 bnez s2,3d0        | 03f4 addi s2,s2,-1   ALU |                          | 
+  15283 | 0404 csrr s1,mhpmcounter | 03fc csrr t0,mcycle      | 0| .(flushed) csrr t0,mcycl | 03f8 bnez s2,3d0     BJU | 03f4 addi s2,s2,-1       | ID-stall:CP0/fence BR-resolve:T MISPRED(BHT) IU-redirect->03d0
+  15284 | 03d0 slli t1,s7,0xd      |                          | 0|                          |                          | 03f8 bnez s2,3d0         | 
+  15285 | 03d4 xor s7,s7,t1        |                          | 0|                          |                          |                          | 
+  15286 | 03d8 srli t1,s7,0x7      | 03d0 slli t1,s7,0xd      | 0| >03d0 slli t1,s7,0xd     |                          |                          | 
+  15287 | 03dc xor s7,s7,t1        | 03d4 xor s7,s7,t1        | 0| >03d4 xor s7,s7,t1       | 03d0 slli t1,s7,0xd  ALU |                          | 
+  15288 | 03e0 slli t1,s7,0x11     | 03d8 srli t1,s7,0x7      | 0| >03d8 srli t1,s7,0x7     | 03d4 xor s7,s7,t1    ALU | 03d0 slli t1,s7,0xd      | 
+  15289 | 03e4 xor s7,s7,t1        | 03dc xor s7,s7,t1        | 0| >03dc xor s7,s7,t1       | 03d8 srli t1,s7,0x7  ALU | 03d4 xor s7,s7,t1        | 
+  15290 | 03e8 andi t2,s7,1        | 03e0 slli t1,s7,0x11     | 0| >03e0 slli t1,s7,0x11    | 03dc xor s7,s7,t1    ALU | 03d8 srli t1,s7,0x7      | 
+  15291 | 03ec bnez t2,3f4         | 03e4 xor s7,s7,t1        | 0| >03e4 xor s7,s7,t1       | 03e0 slli t1,s7,0x11 ALU | 03dc xor s7,s7,t1        | 
+  15292 | 03f0 addi s4,s4,1        | 03e8 andi t2,s7,1        | 0| >03e8 andi t2,s7,1       | 03e4 xor s7,s7,t1    ALU | 03e0 slli t1,s7,0x11     | 
+  15293 | 03f4 addi s2,s2,-1       | 03ec bnez t2,3f4         | 0| >03ec bnez t2,3f4        | 03e8 andi t2,s7,1    ALU | 03e4 xor s7,s7,t1        | 
+  15294 | 03f8 bnez s2,3d0         | 03f0 addi s4,s4,1        | 0| >03f0 addi s4,s4,1       | 03ec bnez t2,3f4     BJU | 03e8 andi t2,s7,1        | BR-resolve:N
+  15295 | 03fc csrr t0,mcycle      | 03f4 addi s2,s2,-1       | 0| >03f4 addi s2,s2,-1      | 03f0 addi s4,s4,1    ALU | 03ec bnez t2,3f4         | 
+  15296 | 0400 sub s0,t0,s0        | 03f8 bnez s2,3d0         | 0| >03f8 bnez s2,3d0        | 03f4 addi s2,s2,-1   ALU | 03f0 addi s4,s4,1        | IP-redirect->03d0
+  15297 | 03d0 slli t1,s7,0xd      |                          | 0|                          | 03f8 bnez s2,3d0     BJU | 03f4 addi s2,s2,-1       | BR-resolve:T
+  15298 | 03d4 xor s7,s7,t1        |                          | 0|                          |                          | 03f8 bnez s2,3d0         | 
+  15299 | 03d8 srli t1,s7,0x7      | 03d0 slli t1,s7,0xd      | 0| >03d0 slli t1,s7,0xd     |                          |                          | 
+  15300 | 03dc xor s7,s7,t1        | 03d4 xor s7,s7,t1        | 0| >03d4 xor s7,s7,t1       | 03d0 slli t1,s7,0xd  ALU |                          | 
+  15301 | 03e0 slli t1,s7,0x11     | 03d8 srli t1,s7,0x7      | 0| >03d8 srli t1,s7,0x7     | 03d4 xor s7,s7,t1    ALU | 03d0 slli t1,s7,0xd      | 
+  15302 | 03e4 xor s7,s7,t1        | 03dc xor s7,s7,t1        | 0| >03dc xor s7,s7,t1       | 03d8 srli t1,s7,0x7  ALU | 03d4 xor s7,s7,t1        | 
+  15303 | 03e8 andi t2,s7,1        | 03e0 slli t1,s7,0x11     | 0| >03e0 slli t1,s7,0x11    | 03dc xor s7,s7,t1    ALU | 03d8 srli t1,s7,0x7      | 
+  15304 | 03ec bnez t2,3f4         | 03e4 xor s7,s7,t1        | 0| >03e4 xor s7,s7,t1       | 03e0 slli t1,s7,0x11 ALU | 03dc xor s7,s7,t1        | 
+  15305 | 03f0 addi s4,s4,1        | 03e8 andi t2,s7,1        | 0| >03e8 andi t2,s7,1       | 03e4 xor s7,s7,t1    ALU | 03e0 slli t1,s7,0x11     | 
+  15306 | 03f4 addi s2,s2,-1       | 03ec bnez t2,3f4         | 0| >03ec bnez t2,3f4        | 03e8 andi t2,s7,1    ALU | 03e4 xor s7,s7,t1        | 
+  15307 | 03f8 bnez s2,3d0         | 03f0 addi s4,s4,1        | 0| >(flushed) addi s4,s4,1  | 03ec bnez t2,3f4     BJU | 03e8 andi t2,s7,1        | BR-resolve:T MISPRED(BHT) IU-redirect->03f4
+  15308 | 03f4 addi s2,s2,-1       |                          | 0|                          |                          | 03ec bnez t2,3f4         | 
+  15309 | 03f8 bnez s2,3d0         |                          | 0|                          |                          |                          | 
+  15310 | 03d0 slli t1,s7,0xd      | 03f4 addi s2,s2,-1       | 0| >03f4 addi s2,s2,-1      |                          |                          | BTB-redirect
+  15311 | 03d4 xor s7,s7,t1        | 03f8 bnez s2,3d0         | 0| >03f8 bnez s2,3d0        | 03f4 addi s2,s2,-1   ALU |                          | IP-redirect->03fc
+  15312 | 03fc csrr t0,mcycle      |                          | 0|                          | 03f8 bnez s2,3d0     BJU | 03f4 addi s2,s2,-1       | BR-resolve:T MISPRED(BHT) IU-redirect->03d0
+  15313 | 03d0 slli t1,s7,0xd      |                          | 0|                          |                          | 03f8 bnez s2,3d0         | 
+  15314 | 03d4 xor s7,s7,t1        |                          | 0|                          |                          |                          | 
+  15315 | 03d8 srli t1,s7,0x7      | 03d0 slli t1,s7,0xd      | 0| >03d0 slli t1,s7,0xd     |                          |                          | 
+  15316 | 03dc xor s7,s7,t1        | 03d4 xor s7,s7,t1        | 0| >03d4 xor s7,s7,t1       | 03d0 slli t1,s7,0xd  ALU |                          | 
+  15317 | 03e0 slli t1,s7,0x11     | 03d8 srli t1,s7,0x7      | 0| >03d8 srli t1,s7,0x7     | 03d4 xor s7,s7,t1    ALU | 03d0 slli t1,s7,0xd      | 
+  15318 | 03e4 xor s7,s7,t1        | 03dc xor s7,s7,t1        | 0| >03dc xor s7,s7,t1       | 03d8 srli t1,s7,0x7  ALU | 03d4 xor s7,s7,t1        | 
+  15319 | 03e8 andi t2,s7,1        | 03e0 slli t1,s7,0x11     | 0| >03e0 slli t1,s7,0x11    | 03dc xor s7,s7,t1    ALU | 03d8 srli t1,s7,0x7      | 
+  15320 | 03ec bnez t2,3f4         | 03e4 xor s7,s7,t1        | 0| >03e4 xor s7,s7,t1       | 03e0 slli t1,s7,0x11 ALU | 03dc xor s7,s7,t1        | 
+  15321 | 03f0 addi s4,s4,1        | 03e8 andi t2,s7,1        | 0| >03e8 andi t2,s7,1       | 03e4 xor s7,s7,t1    ALU | 03e0 slli t1,s7,0x11     | 
+  15322 | 03f4 addi s2,s2,-1       | 03ec bnez t2,3f4         | 0| >03ec bnez t2,3f4        | 03e8 andi t2,s7,1    ALU | 03e4 xor s7,s7,t1        | 
+  15323 | 03f8 bnez s2,3d0         | 03f0 addi s4,s4,1        | 0| >03f0 addi s4,s4,1       | 03ec bnez t2,3f4     BJU | 03e8 andi t2,s7,1        | BR-resolve:N
+  15324 | 03fc csrr t0,mcycle      | 03f4 addi s2,s2,-1       | 0| >03f4 addi s2,s2,-1      | 03f0 addi s4,s4,1    ALU | 03ec bnez t2,3f4         | 
+  15325 | 0400 sub s0,t0,s0        | 03f8 bnez s2,3d0         | 0| >03f8 bnez s2,3d0        | 03f4 addi s2,s2,-1   ALU | 03f0 addi s4,s4,1        | 
+  15326 | 0404 csrr s1,mhpmcounter | 03fc csrr t0,mcycle      | 0| .(flushed) csrr t0,mcycl | 03f8 bnez s2,3d0     BJU | 03f4 addi s2,s2,-1       | ID-stall:CP0/fence BR-resolve:T MISPRED(BHT) IU-redirect->03d0
+  15327 | 03d0 slli t1,s7,0xd      |                          | 0|                          |                          | 03f8 bnez s2,3d0         | 
+  15328 | 03d4 xor s7,s7,t1        |                          | 0|                          |                          |                          | 
+  15329 | 03d8 srli t1,s7,0x7      | 03d0 slli t1,s7,0xd      | 0| >03d0 slli t1,s7,0xd     |                          |                          | 
+  15330 | 03dc xor s7,s7,t1        | 03d4 xor s7,s7,t1        | 0| >03d4 xor s7,s7,t1       | 03d0 slli t1,s7,0xd  ALU |                          | 
+  15331 | 03e0 slli t1,s7,0x11     | 03d8 srli t1,s7,0x7      | 0| >03d8 srli t1,s7,0x7     | 03d4 xor s7,s7,t1    ALU | 03d0 slli t1,s7,0xd      | 
+  15332 | 03e4 xor s7,s7,t1        | 03dc xor s7,s7,t1        | 0| >03dc xor s7,s7,t1       | 03d8 srli t1,s7,0x7  ALU | 03d4 xor s7,s7,t1        | 
+  15333 | 03e8 andi t2,s7,1        | 03e0 slli t1,s7,0x11     | 0| >03e0 slli t1,s7,0x11    | 03dc xor s7,s7,t1    ALU | 03d8 srli t1,s7,0x7      | 
+  15334 | 03ec bnez t2,3f4         | 03e4 xor s7,s7,t1        | 0| >03e4 xor s7,s7,t1       | 03e0 slli t1,s7,0x11 ALU | 03dc xor s7,s7,t1        | 
+  15335 | 03f0 addi s4,s4,1        | 03e8 andi t2,s7,1        | 0| >03e8 andi t2,s7,1       | 03e4 xor s7,s7,t1    ALU | 03e0 slli t1,s7,0x11     | 
+  15336 | 03f4 addi s2,s2,-1       | 03ec bnez t2,3f4         | 0| >03ec bnez t2,3f4        | 03e8 andi t2,s7,1    ALU | 03e4 xor s7,s7,t1        | 
+  15337 | 03f8 bnez s2,3d0         | 03f0 addi s4,s4,1        | 0| >(flushed) addi s4,s4,1  | 03ec bnez t2,3f4     BJU | 03e8 andi t2,s7,1        | BR-resolve:T MISPRED(BHT) IU-redirect->03f4
+  15338 | 03f4 addi s2,s2,-1       |                          | 0|                          |                          | 03ec bnez t2,3f4         | 
+  15339 | 03f8 bnez s2,3d0         |                          | 0|                          |                          |                          | 
+  15340 | 03fc csrr t0,mcycle      | 03f4 addi s2,s2,-1       | 0| >03f4 addi s2,s2,-1      |                          |                          | 
+  15341 | 0400 sub s0,t0,s0        | 03f8 bnez s2,3d0         | 0| >03f8 bnez s2,3d0        | 03f4 addi s2,s2,-1   ALU |                          | 
+  15342 | 0404 csrr s1,mhpmcounter | 03fc csrr t0,mcycle      | 0| .(flushed) csrr t0,mcycl | 03f8 bnez s2,3d0     BJU | 03f4 addi s2,s2,-1       | ID-stall:CP0/fence BR-resolve:T MISPRED(BHT) IU-redirect->03d0
+  15343 | 03d0 slli t1,s7,0xd      |                          | 0|                          |                          | 03f8 bnez s2,3d0         | 
+  15344 | 03d4 xor s7,s7,t1        |                          | 0|                          |                          |                          | 
+  15345 | 03d8 srli t1,s7,0x7      | 03d0 slli t1,s7,0xd      | 0| >03d0 slli t1,s7,0xd     |                          |                          | 
+  15346 | 03dc xor s7,s7,t1        | 03d4 xor s7,s7,t1        | 0| >03d4 xor s7,s7,t1       | 03d0 slli t1,s7,0xd  ALU |                          | 
+  15347 | 03e0 slli t1,s7,0x11     | 03d8 srli t1,s7,0x7      | 0| >03d8 srli t1,s7,0x7     | 03d4 xor s7,s7,t1    ALU | 03d0 slli t1,s7,0xd      | 
+  15348 | 03e4 xor s7,s7,t1        | 03dc xor s7,s7,t1        | 0| >03dc xor s7,s7,t1       | 03d8 srli t1,s7,0x7  ALU | 03d4 xor s7,s7,t1        | 
+  15349 | 03e8 andi t2,s7,1        | 03e0 slli t1,s7,0x11     | 0| >03e0 slli t1,s7,0x11    | 03dc xor s7,s7,t1    ALU | 03d8 srli t1,s7,0x7      | 
+  15350 | 03ec bnez t2,3f4         | 03e4 xor s7,s7,t1        | 0| >03e4 xor s7,s7,t1       | 03e0 slli t1,s7,0x11 ALU | 03dc xor s7,s7,t1        | 
+  15351 | 03f0 addi s4,s4,1        | 03e8 andi t2,s7,1        | 0| >03e8 andi t2,s7,1       | 03e4 xor s7,s7,t1    ALU | 03e0 slli t1,s7,0x11     | 
+  15352 | 03f4 addi s2,s2,-1       | 03ec bnez t2,3f4         | 0| >03ec bnez t2,3f4        | 03e8 andi t2,s7,1    ALU | 03e4 xor s7,s7,t1        | IP-redirect->03f4
+  15353 | 03f4 addi s2,s2,-1       |                          | 0|                          | 03ec bnez t2,3f4     BJU | 03e8 andi t2,s7,1        | BR-resolve:N MISPRED(BHT) IU-redirect->03f0
+  15354 | 03f0 addi s4,s4,1        |                          | 0|                          |                          | 03ec bnez t2,3f4         | 
+  15355 | 03f4 addi s2,s2,-1       |                          | 0|                          |                          |                          | 
+  15356 | 03f8 bnez s2,3d0         | 03f0 addi s4,s4,1        | 0| >03f0 addi s4,s4,1       |                          |                          | 
+  15357 | 03fc csrr t0,mcycle      | 03f4 addi s2,s2,-1       | 0| >03f4 addi s2,s2,-1      | 03f0 addi s4,s4,1    ALU |                          | 
+  15358 | 0400 sub s0,t0,s0        | 03f8 bnez s2,3d0         | 0| >03f8 bnez s2,3d0        | 03f4 addi s2,s2,-1   ALU | 03f0 addi s4,s4,1        | 
+  15359 | 0404 csrr s1,mhpmcounter | 03fc csrr t0,mcycle      | 0| .(flushed) csrr t0,mcycl | 03f8 bnez s2,3d0     BJU | 03f4 addi s2,s2,-1       | ID-stall:CP0/fence BR-resolve:T MISPRED(BHT) IU-redirect->03d0
+  15360 | 03d0 slli t1,s7,0xd      |                          | 0|                          |                          | 03f8 bnez s2,3d0         | 
+  15361 | 03d4 xor s7,s7,t1        |                          | 0|                          |                          |                          | 
+  15362 | 03d8 srli t1,s7,0x7      | 03d0 slli t1,s7,0xd      | 0| >03d0 slli t1,s7,0xd     |                          |                          | 
+  15363 | 03dc xor s7,s7,t1        | 03d4 xor s7,s7,t1        | 0| >03d4 xor s7,s7,t1       | 03d0 slli t1,s7,0xd  ALU |                          | 
+  15364 | 03e0 slli t1,s7,0x11     | 03d8 srli t1,s7,0x7      | 0| >03d8 srli t1,s7,0x7     | 03d4 xor s7,s7,t1    ALU | 03d0 slli t1,s7,0xd      | 
+  15365 | 03e4 xor s7,s7,t1        | 03dc xor s7,s7,t1        | 0| >03dc xor s7,s7,t1       | 03d8 srli t1,s7,0x7  ALU | 03d4 xor s7,s7,t1        | 
+  15366 | 03e8 andi t2,s7,1        | 03e0 slli t1,s7,0x11     | 0| >03e0 slli t1,s7,0x11    | 03dc xor s7,s7,t1    ALU | 03d8 srli t1,s7,0x7      | 
+  15367 | 03ec bnez t2,3f4         | 03e4 xor s7,s7,t1        | 0| >03e4 xor s7,s7,t1       | 03e0 slli t1,s7,0x11 ALU | 03dc xor s7,s7,t1        | 
+  15368 | 03f4 addi s2,s2,-1       | 03e8 andi t2,s7,1        | 0| >03e8 andi t2,s7,1       | 03e4 xor s7,s7,t1    ALU | 03e0 slli t1,s7,0x11     | BTB-redirect
+  15369 | 03f8 bnez s2,3d0         | 03ec bnez t2,3f4         | 0| >03ec bnez t2,3f4        | 03e8 andi t2,s7,1    ALU | 03e4 xor s7,s7,t1        | IP-redirect->03f0
+  15370 | 03f0 addi s4,s4,1        |                          | 0|                          | 03ec bnez t2,3f4     BJU | 03e8 andi t2,s7,1        | BR-resolve:N
+  15371 | 03f4 addi s2,s2,-1       |                          | 0|                          |                          | 03ec bnez t2,3f4         | 
+  15372 | 03f8 bnez s2,3d0         | 03f0 addi s4,s4,1        | 0| >03f0 addi s4,s4,1       |                          |                          | 
+  15373 | 03fc csrr t0,mcycle      | 03f4 addi s2,s2,-1       | 0| >03f4 addi s2,s2,-1      | 03f0 addi s4,s4,1    ALU |                          | 
+  15374 | 0400 sub s0,t0,s0        | 03f8 bnez s2,3d0         | 0| >03f8 bnez s2,3d0        | 03f4 addi s2,s2,-1   ALU | 03f0 addi s4,s4,1        | 
+  15375 | 0404 csrr s1,mhpmcounter | 03fc csrr t0,mcycle      | 0| .(flushed) csrr t0,mcycl | 03f8 bnez s2,3d0     BJU | 03f4 addi s2,s2,-1       | ID-stall:CP0/fence BR-resolve:T MISPRED(BHT) IU-redirect->03d0
+  15376 | 03d0 slli t1,s7,0xd      |                          | 0|                          |                          | 03f8 bnez s2,3d0         | 
+  15377 | 03d4 xor s7,s7,t1        |                          | 0|                          |                          |                          | 
+  15378 | 03d8 srli t1,s7,0x7      | 03d0 slli t1,s7,0xd      | 0| >03d0 slli t1,s7,0xd     |                          |                          | 
+  15379 | 03dc xor s7,s7,t1        | 03d4 xor s7,s7,t1        | 0| >03d4 xor s7,s7,t1       | 03d0 slli t1,s7,0xd  ALU |                          | 
+  15380 | 03e0 slli t1,s7,0x11     | 03d8 srli t1,s7,0x7      | 0| >03d8 srli t1,s7,0x7     | 03d4 xor s7,s7,t1    ALU | 03d0 slli t1,s7,0xd      | 
+  15381 | 03e4 xor s7,s7,t1        | 03dc xor s7,s7,t1        | 0| >03dc xor s7,s7,t1       | 03d8 srli t1,s7,0x7  ALU | 03d4 xor s7,s7,t1        | 
+  15382 | 03e8 andi t2,s7,1        | 03e0 slli t1,s7,0x11     | 0| >03e0 slli t1,s7,0x11    | 03dc xor s7,s7,t1    ALU | 03d8 srli t1,s7,0x7      | 
+  15383 | 03ec bnez t2,3f4         | 03e4 xor s7,s7,t1        | 0| >03e4 xor s7,s7,t1       | 03e0 slli t1,s7,0x11 ALU | 03dc xor s7,s7,t1        | 
+  15384 | 03f0 addi s4,s4,1        | 03e8 andi t2,s7,1        | 0| >03e8 andi t2,s7,1       | 03e4 xor s7,s7,t1    ALU | 03e0 slli t1,s7,0x11     | 
+  15385 | 03f4 addi s2,s2,-1       | 03ec bnez t2,3f4         | 0| >03ec bnez t2,3f4        | 03e8 andi t2,s7,1    ALU | 03e4 xor s7,s7,t1        | 
+  15386 | 03f8 bnez s2,3d0         | 03f0 addi s4,s4,1        | 0| >03f0 addi s4,s4,1       | 03ec bnez t2,3f4     BJU | 03e8 andi t2,s7,1        | BR-resolve:N
+  15387 | 03fc csrr t0,mcycle      | 03f4 addi s2,s2,-1       | 0| >03f4 addi s2,s2,-1      | 03f0 addi s4,s4,1    ALU | 03ec bnez t2,3f4         | 
+  15388 | 0400 sub s0,t0,s0        | 03f8 bnez s2,3d0         | 0| >03f8 bnez s2,3d0        | 03f4 addi s2,s2,-1   ALU | 03f0 addi s4,s4,1        | 
+  15389 | 0404 csrr s1,mhpmcounter | 03fc csrr t0,mcycle      | 0| .(flushed) csrr t0,mcycl | 03f8 bnez s2,3d0     BJU | 03f4 addi s2,s2,-1       | ID-stall:CP0/fence BR-resolve:T MISPRED(BHT) IU-redirect->03d0
+  15390 | 03d0 slli t1,s7,0xd      |                          | 0|                          |                          | 03f8 bnez s2,3d0         | 
+  15391 | 03d4 xor s7,s7,t1        |                          | 0|                          |                          |                          | 
+  15392 | 03d8 srli t1,s7,0x7      | 03d0 slli t1,s7,0xd      | 0| >03d0 slli t1,s7,0xd     |                          |                          | 
+  15393 | 03dc xor s7,s7,t1        | 03d4 xor s7,s7,t1        | 0| >03d4 xor s7,s7,t1       | 03d0 slli t1,s7,0xd  ALU |                          | 
+  15394 | 03e0 slli t1,s7,0x11     | 03d8 srli t1,s7,0x7      | 0| >03d8 srli t1,s7,0x7     | 03d4 xor s7,s7,t1    ALU | 03d0 slli t1,s7,0xd      | 
+  15395 | 03e4 xor s7,s7,t1        | 03dc xor s7,s7,t1        | 0| >03dc xor s7,s7,t1       | 03d8 srli t1,s7,0x7  ALU | 03d4 xor s7,s7,t1        | 
+  15396 | 03e8 andi t2,s7,1        | 03e0 slli t1,s7,0x11     | 0| >03e0 slli t1,s7,0x11    | 03dc xor s7,s7,t1    ALU | 03d8 srli t1,s7,0x7      | 
+  15397 | 03ec bnez t2,3f4         | 03e4 xor s7,s7,t1        | 0| >03e4 xor s7,s7,t1       | 03e0 slli t1,s7,0x11 ALU | 03dc xor s7,s7,t1        | 
+  15398 | 03f0 addi s4,s4,1        | 03e8 andi t2,s7,1        | 0| >03e8 andi t2,s7,1       | 03e4 xor s7,s7,t1    ALU | 03e0 slli t1,s7,0x11     | 
+  15399 | 03f4 addi s2,s2,-1       | 03ec bnez t2,3f4         | 0| >03ec bnez t2,3f4        | 03e8 andi t2,s7,1    ALU | 03e4 xor s7,s7,t1        | 
+  15400 | 03f8 bnez s2,3d0         | 03f0 addi s4,s4,1        | 0| >(flushed) addi s4,s4,1  | 03ec bnez t2,3f4     BJU | 03e8 andi t2,s7,1        | BR-resolve:T MISPRED(BHT) IU-redirect->03f4
+  15401 | 03f4 addi s2,s2,-1       |                          | 0|                          |                          | 03ec bnez t2,3f4         | 
+  15402 | 03f8 bnez s2,3d0         |                          | 0|                          |                          |                          | 
+  15403 | 03fc csrr t0,mcycle      | 03f4 addi s2,s2,-1       | 0| >03f4 addi s2,s2,-1      |                          |                          | 
+  15404 | 0400 sub s0,t0,s0        | 03f8 bnez s2,3d0         | 0| >03f8 bnez s2,3d0        | 03f4 addi s2,s2,-1   ALU |                          | 
+  15405 | 0404 csrr s1,mhpmcounter | 03fc csrr t0,mcycle      | 0| .(flushed) csrr t0,mcycl | 03f8 bnez s2,3d0     BJU | 03f4 addi s2,s2,-1       | ID-stall:CP0/fence BR-resolve:T MISPRED(BHT) IU-redirect->03d0
+  15406 | 03d0 slli t1,s7,0xd      |                          | 0|                          |                          | 03f8 bnez s2,3d0         | 
+  15407 | 03d4 xor s7,s7,t1        |                          | 0|                          |                          |                          | 
+  15408 | 03d8 srli t1,s7,0x7      | 03d0 slli t1,s7,0xd      | 0| >03d0 slli t1,s7,0xd     |                          |                          | 
+  15409 | 03dc xor s7,s7,t1        | 03d4 xor s7,s7,t1        | 0| >03d4 xor s7,s7,t1       | 03d0 slli t1,s7,0xd  ALU |                          | 
+  15410 | 03e0 slli t1,s7,0x11     | 03d8 srli t1,s7,0x7      | 0| >03d8 srli t1,s7,0x7     | 03d4 xor s7,s7,t1    ALU | 03d0 slli t1,s7,0xd      | 
+  15411 | 03e4 xor s7,s7,t1        | 03dc xor s7,s7,t1        | 0| >03dc xor s7,s7,t1       | 03d8 srli t1,s7,0x7  ALU | 03d4 xor s7,s7,t1        | 
+  15412 | 03e8 andi t2,s7,1        | 03e0 slli t1,s7,0x11     | 0| >03e0 slli t1,s7,0x11    | 03dc xor s7,s7,t1    ALU | 03d8 srli t1,s7,0x7      | 
+  15413 | 03ec bnez t2,3f4         | 03e4 xor s7,s7,t1        | 0| >03e4 xor s7,s7,t1       | 03e0 slli t1,s7,0x11 ALU | 03dc xor s7,s7,t1        | 
+  15414 | 03f0 addi s4,s4,1        | 03e8 andi t2,s7,1        | 0| >03e8 andi t2,s7,1       | 03e4 xor s7,s7,t1    ALU | 03e0 slli t1,s7,0x11     | 
+  15415 | 03f4 addi s2,s2,-1       | 03ec bnez t2,3f4         | 0| >03ec bnez t2,3f4        | 03e8 andi t2,s7,1    ALU | 03e4 xor s7,s7,t1        | 
+  15416 | 03f8 bnez s2,3d0         | 03f0 addi s4,s4,1        | 0| >03f0 addi s4,s4,1       | 03ec bnez t2,3f4     BJU | 03e8 andi t2,s7,1        | BR-resolve:N
+  15417 | 03fc csrr t0,mcycle      | 03f4 addi s2,s2,-1       | 0| >03f4 addi s2,s2,-1      | 03f0 addi s4,s4,1    ALU | 03ec bnez t2,3f4         | 
+  15418 | 0400 sub s0,t0,s0        | 03f8 bnez s2,3d0         | 0| >03f8 bnez s2,3d0        | 03f4 addi s2,s2,-1   ALU | 03f0 addi s4,s4,1        | 
+  15419 | 0404 csrr s1,mhpmcounter | 03fc csrr t0,mcycle      | 0| .(flushed) csrr t0,mcycl | 03f8 bnez s2,3d0     BJU | 03f4 addi s2,s2,-1       | ID-stall:CP0/fence BR-resolve:T MISPRED(BHT) IU-redirect->03d0
+  15420 | 03d0 slli t1,s7,0xd      |                          | 0|                          |                          | 03f8 bnez s2,3d0         | 
+  15421 | 03d4 xor s7,s7,t1        |                          | 0|                          |                          |                          | 
+  15422 | 03d8 srli t1,s7,0x7      | 03d0 slli t1,s7,0xd      | 0| >03d0 slli t1,s7,0xd     |                          |                          | 
+  15423 | 03dc xor s7,s7,t1        | 03d4 xor s7,s7,t1        | 0| >03d4 xor s7,s7,t1       | 03d0 slli t1,s7,0xd  ALU |                          | 
+  15424 | 03e0 slli t1,s7,0x11     | 03d8 srli t1,s7,0x7      | 0| >03d8 srli t1,s7,0x7     | 03d4 xor s7,s7,t1    ALU | 03d0 slli t1,s7,0xd      | 
+  15425 | 03e4 xor s7,s7,t1        | 03dc xor s7,s7,t1        | 0| >03dc xor s7,s7,t1       | 03d8 srli t1,s7,0x7  ALU | 03d4 xor s7,s7,t1        | 
+  15426 | 03e8 andi t2,s7,1        | 03e0 slli t1,s7,0x11     | 0| >03e0 slli t1,s7,0x11    | 03dc xor s7,s7,t1    ALU | 03d8 srli t1,s7,0x7      | 
+  15427 | 03ec bnez t2,3f4         | 03e4 xor s7,s7,t1        | 0| >03e4 xor s7,s7,t1       | 03e0 slli t1,s7,0x11 ALU | 03dc xor s7,s7,t1        | 
+  15428 | 03f0 addi s4,s4,1        | 03e8 andi t2,s7,1        | 0| >03e8 andi t2,s7,1       | 03e4 xor s7,s7,t1    ALU | 03e0 slli t1,s7,0x11     | 
+  15429 | 03f4 addi s2,s2,-1       | 03ec bnez t2,3f4         | 0| >03ec bnez t2,3f4        | 03e8 andi t2,s7,1    ALU | 03e4 xor s7,s7,t1        | 
+  15430 | 03f8 bnez s2,3d0         | 03f0 addi s4,s4,1        | 0| >03f0 addi s4,s4,1       | 03ec bnez t2,3f4     BJU | 03e8 andi t2,s7,1        | BR-resolve:N
+  15431 | 03fc csrr t0,mcycle      | 03f4 addi s2,s2,-1       | 0| >03f4 addi s2,s2,-1      | 03f0 addi s4,s4,1    ALU | 03ec bnez t2,3f4         | 
+  15432 | 0400 sub s0,t0,s0        | 03f8 bnez s2,3d0         | 0| >03f8 bnez s2,3d0        | 03f4 addi s2,s2,-1   ALU | 03f0 addi s4,s4,1        | 
+  15433 | 0404 csrr s1,mhpmcounter | 03fc csrr t0,mcycle      | 0| .(flushed) csrr t0,mcycl | 03f8 bnez s2,3d0     BJU | 03f4 addi s2,s2,-1       | ID-stall:CP0/fence BR-resolve:T MISPRED(BHT) IU-redirect->03d0
+  15434 | 03d0 slli t1,s7,0xd      |                          | 0|                          |                          | 03f8 bnez s2,3d0         | 
+  15435 | 03d4 xor s7,s7,t1        |                          | 0|                          |                          |                          | 
+  15436 | 03d8 srli t1,s7,0x7      | 03d0 slli t1,s7,0xd      | 0| >03d0 slli t1,s7,0xd     |                          |                          | 
+  15437 | 03dc xor s7,s7,t1        | 03d4 xor s7,s7,t1        | 0| >03d4 xor s7,s7,t1       | 03d0 slli t1,s7,0xd  ALU |                          | 
+  15438 | 03e0 slli t1,s7,0x11     | 03d8 srli t1,s7,0x7      | 0| >03d8 srli t1,s7,0x7     | 03d4 xor s7,s7,t1    ALU | 03d0 slli t1,s7,0xd      | 
+  15439 | 03e4 xor s7,s7,t1        | 03dc xor s7,s7,t1        | 0| >03dc xor s7,s7,t1       | 03d8 srli t1,s7,0x7  ALU | 03d4 xor s7,s7,t1        | 
+  15440 | 03e8 andi t2,s7,1        | 03e0 slli t1,s7,0x11     | 0| >03e0 slli t1,s7,0x11    | 03dc xor s7,s7,t1    ALU | 03d8 srli t1,s7,0x7      | 
+  15441 | 03ec bnez t2,3f4         | 03e4 xor s7,s7,t1        | 0| >03e4 xor s7,s7,t1       | 03e0 slli t1,s7,0x11 ALU | 03dc xor s7,s7,t1        | 
+  15442 | 03f0 addi s4,s4,1        | 03e8 andi t2,s7,1        | 0| >03e8 andi t2,s7,1       | 03e4 xor s7,s7,t1    ALU | 03e0 slli t1,s7,0x11     | 
+  15443 | 03f4 addi s2,s2,-1       | 03ec bnez t2,3f4         | 0| >03ec bnez t2,3f4        | 03e8 andi t2,s7,1    ALU | 03e4 xor s7,s7,t1        | 
+  15444 | 03f8 bnez s2,3d0         | 03f0 addi s4,s4,1        | 0| >(flushed) addi s4,s4,1  | 03ec bnez t2,3f4     BJU | 03e8 andi t2,s7,1        | BR-resolve:T MISPRED(BHT) IU-redirect->03f4
+  15445 | 03f4 addi s2,s2,-1       |                          | 0|                          |                          | 03ec bnez t2,3f4         | 
+  15446 | 03f8 bnez s2,3d0         |                          | 0|                          |                          |                          | 
+  15447 | 03fc csrr t0,mcycle      | 03f4 addi s2,s2,-1       | 0| >03f4 addi s2,s2,-1      |                          |                          | 
+  15448 | 0400 sub s0,t0,s0        | 03f8 bnez s2,3d0         | 0| >03f8 bnez s2,3d0        | 03f4 addi s2,s2,-1   ALU |                          | IP-redirect->03d0
+  15449 | 03d0 slli t1,s7,0xd      |                          | 0|                          | 03f8 bnez s2,3d0     BJU | 03f4 addi s2,s2,-1       | BR-resolve:T
+  15450 | 03d4 xor s7,s7,t1        |                          | 0|                          |                          | 03f8 bnez s2,3d0         | 
+  15451 | 03d8 srli t1,s7,0x7      | 03d0 slli t1,s7,0xd      | 0| >03d0 slli t1,s7,0xd     |                          |                          | 
+  15452 | 03dc xor s7,s7,t1        | 03d4 xor s7,s7,t1        | 0| >03d4 xor s7,s7,t1       | 03d0 slli t1,s7,0xd  ALU |                          | 
+  15453 | 03e0 slli t1,s7,0x11     | 03d8 srli t1,s7,0x7      | 0| >03d8 srli t1,s7,0x7     | 03d4 xor s7,s7,t1    ALU | 03d0 slli t1,s7,0xd      | 
+  15454 | 03e4 xor s7,s7,t1        | 03dc xor s7,s7,t1        | 0| >03dc xor s7,s7,t1       | 03d8 srli t1,s7,0x7  ALU | 03d4 xor s7,s7,t1        | 
+  15455 | 03e8 andi t2,s7,1        | 03e0 slli t1,s7,0x11     | 0| >03e0 slli t1,s7,0x11    | 03dc xor s7,s7,t1    ALU | 03d8 srli t1,s7,0x7      | 
+  15456 | 03ec bnez t2,3f4         | 03e4 xor s7,s7,t1        | 0| >03e4 xor s7,s7,t1       | 03e0 slli t1,s7,0x11 ALU | 03dc xor s7,s7,t1        | 
+  15457 | 03f0 addi s4,s4,1        | 03e8 andi t2,s7,1        | 0| >03e8 andi t2,s7,1       | 03e4 xor s7,s7,t1    ALU | 03e0 slli t1,s7,0x11     | 
+  15458 | 03f4 addi s2,s2,-1       | 03ec bnez t2,3f4         | 0| >03ec bnez t2,3f4        | 03e8 andi t2,s7,1    ALU | 03e4 xor s7,s7,t1        | IP-redirect->03f4
+  15459 | 03f4 addi s2,s2,-1       |                          | 0|                          | 03ec bnez t2,3f4     BJU | 03e8 andi t2,s7,1        | BR-resolve:T
+  15460 | 03f8 bnez s2,3d0         |                          | 0|                          |                          | 03ec bnez t2,3f4         | 
+  15461 | 03d0 slli t1,s7,0xd      | 03f4 addi s2,s2,-1       | 0| >03f4 addi s2,s2,-1      |                          |                          | BTB-redirect
+  15462 | 03d4 xor s7,s7,t1        | 03f8 bnez s2,3d0         | 0| >03f8 bnez s2,3d0        | 03f4 addi s2,s2,-1   ALU |                          | 
+  15463 | 03d8 srli t1,s7,0x7      | 03d0 slli t1,s7,0xd      | 0| >03d0 slli t1,s7,0xd     | 03f8 bnez s2,3d0     BJU | 03f4 addi s2,s2,-1       | BR-resolve:T
+  15464 | 03dc xor s7,s7,t1        | 03d4 xor s7,s7,t1        | 0| >03d4 xor s7,s7,t1       | 03d0 slli t1,s7,0xd  ALU | 03f8 bnez s2,3d0         | 
+  15465 | 03e0 slli t1,s7,0x11     | 03d8 srli t1,s7,0x7      | 0| >03d8 srli t1,s7,0x7     | 03d4 xor s7,s7,t1    ALU | 03d0 slli t1,s7,0xd      | 
+  15466 | 03e4 xor s7,s7,t1        | 03dc xor s7,s7,t1        | 0| >03dc xor s7,s7,t1       | 03d8 srli t1,s7,0x7  ALU | 03d4 xor s7,s7,t1        | 
+  15467 | 03e8 andi t2,s7,1        | 03e0 slli t1,s7,0x11     | 0| >03e0 slli t1,s7,0x11    | 03dc xor s7,s7,t1    ALU | 03d8 srli t1,s7,0x7      | 
+  15468 | 03ec bnez t2,3f4         | 03e4 xor s7,s7,t1        | 0| >03e4 xor s7,s7,t1       | 03e0 slli t1,s7,0x11 ALU | 03dc xor s7,s7,t1        | 
+  15469 | 03f4 addi s2,s2,-1       | 03e8 andi t2,s7,1        | 0| >03e8 andi t2,s7,1       | 03e4 xor s7,s7,t1    ALU | 03e0 slli t1,s7,0x11     | BTB-redirect
+  15470 | 03f8 bnez s2,3d0         | 03ec bnez t2,3f4         | 0| >03ec bnez t2,3f4        | 03e8 andi t2,s7,1    ALU | 03e4 xor s7,s7,t1        | 
+  15471 | 03d0 slli t1,s7,0xd      | 03f4 addi s2,s2,-1       | 0| >(flushed) addi s2,s2,-1 | 03ec bnez t2,3f4     BJU | 03e8 andi t2,s7,1        | BTB-redirect BR-resolve:N MISPRED(BHT) IU-redirect->03f0
+  15472 | 03f0 addi s4,s4,1        |                          | 0|                          |                          | 03ec bnez t2,3f4         | 
+  15473 | 03f4 addi s2,s2,-1       |                          | 0|                          |                          |                          | 
+  15474 | 03f8 bnez s2,3d0         | 03f0 addi s4,s4,1        | 0| >03f0 addi s4,s4,1       |                          |                          | 
+  15475 | 03d0 slli t1,s7,0xd      | 03f4 addi s2,s2,-1       | 0| >03f4 addi s2,s2,-1      | 03f0 addi s4,s4,1    ALU |                          | BTB-redirect
+  15476 | 03d4 xor s7,s7,t1        | 03f8 bnez s2,3d0         | 0| >03f8 bnez s2,3d0        | 03f4 addi s2,s2,-1   ALU | 03f0 addi s4,s4,1        | 
+  15477 | 03d8 srli t1,s7,0x7      | 03d0 slli t1,s7,0xd      | 0| >03d0 slli t1,s7,0xd     | 03f8 bnez s2,3d0     BJU | 03f4 addi s2,s2,-1       | BR-resolve:T
+  15478 | 03dc xor s7,s7,t1        | 03d4 xor s7,s7,t1        | 0| >03d4 xor s7,s7,t1       | 03d0 slli t1,s7,0xd  ALU | 03f8 bnez s2,3d0         | 
+  15479 | 03e0 slli t1,s7,0x11     | 03d8 srli t1,s7,0x7      | 0| >03d8 srli t1,s7,0x7     | 03d4 xor s7,s7,t1    ALU | 03d0 slli t1,s7,0xd      | 
+  15480 | 03e4 xor s7,s7,t1        | 03dc xor s7,s7,t1        | 0| >03dc xor s7,s7,t1       | 03d8 srli t1,s7,0x7  ALU | 03d4 xor s7,s7,t1        | 
+  15481 | 03e8 andi t2,s7,1        | 03e0 slli t1,s7,0x11     | 0| >03e0 slli t1,s7,0x11    | 03dc xor s7,s7,t1    ALU | 03d8 srli t1,s7,0x7      | 
+  15482 | 03ec bnez t2,3f4         | 03e4 xor s7,s7,t1        | 0| >03e4 xor s7,s7,t1       | 03e0 slli t1,s7,0x11 ALU | 03dc xor s7,s7,t1        | 
+  15483 | 03f4 addi s2,s2,-1       | 03e8 andi t2,s7,1        | 0| >03e8 andi t2,s7,1       | 03e4 xor s7,s7,t1    ALU | 03e0 slli t1,s7,0x11     | BTB-redirect
+  15484 | 03f8 bnez s2,3d0         | 03ec bnez t2,3f4         | 0| >03ec bnez t2,3f4        | 03e8 andi t2,s7,1    ALU | 03e4 xor s7,s7,t1        | IP-redirect->03f0
+  15485 | 03f0 addi s4,s4,1        |                          | 0|                          | 03ec bnez t2,3f4     BJU | 03e8 andi t2,s7,1        | BR-resolve:T MISPRED(BHT) IU-redirect->03f4
+  15486 | 03f4 addi s2,s2,-1       |                          | 0|                          |                          | 03ec bnez t2,3f4         | 
+  15487 | 03f8 bnez s2,3d0         |                          | 0|                          |                          |                          | 
+  15488 | 03d0 slli t1,s7,0xd      | 03f4 addi s2,s2,-1       | 0| >03f4 addi s2,s2,-1      |                          |                          | BTB-redirect
+  15489 | 03d4 xor s7,s7,t1        | 03f8 bnez s2,3d0         | 0| >03f8 bnez s2,3d0        | 03f4 addi s2,s2,-1   ALU |                          | 
+  15490 | 03d8 srli t1,s7,0x7      | 03d0 slli t1,s7,0xd      | 0| >03d0 slli t1,s7,0xd     | 03f8 bnez s2,3d0     BJU | 03f4 addi s2,s2,-1       | BR-resolve:T
+  15491 | 03dc xor s7,s7,t1        | 03d4 xor s7,s7,t1        | 0| >03d4 xor s7,s7,t1       | 03d0 slli t1,s7,0xd  ALU | 03f8 bnez s2,3d0         | 
+  15492 | 03e0 slli t1,s7,0x11     | 03d8 srli t1,s7,0x7      | 0| >03d8 srli t1,s7,0x7     | 03d4 xor s7,s7,t1    ALU | 03d0 slli t1,s7,0xd      | 
+  15493 | 03e4 xor s7,s7,t1        | 03dc xor s7,s7,t1        | 0| >03dc xor s7,s7,t1       | 03d8 srli t1,s7,0x7  ALU | 03d4 xor s7,s7,t1        | 
+  15494 | 03e8 andi t2,s7,1        | 03e0 slli t1,s7,0x11     | 0| >03e0 slli t1,s7,0x11    | 03dc xor s7,s7,t1    ALU | 03d8 srli t1,s7,0x7      | 
+  15495 | 03ec bnez t2,3f4         | 03e4 xor s7,s7,t1        | 0| >03e4 xor s7,s7,t1       | 03e0 slli t1,s7,0x11 ALU | 03dc xor s7,s7,t1        | 
+  15496 | 03f0 addi s4,s4,1        | 03e8 andi t2,s7,1        | 0| >03e8 andi t2,s7,1       | 03e4 xor s7,s7,t1    ALU | 03e0 slli t1,s7,0x11     | 
+  15497 | 03f4 addi s2,s2,-1       | 03ec bnez t2,3f4         | 0| >03ec bnez t2,3f4        | 03e8 andi t2,s7,1    ALU | 03e4 xor s7,s7,t1        | IP-redirect->03f4
+  15498 | 03f4 addi s2,s2,-1       |                          | 0|                          | 03ec bnez t2,3f4     BJU | 03e8 andi t2,s7,1        | BR-resolve:N MISPRED(BHT) IU-redirect->03f0
+  15499 | 03f0 addi s4,s4,1        |                          | 0|                          |                          | 03ec bnez t2,3f4         | 
+  15500 | 03f4 addi s2,s2,-1       |                          | 0|                          |                          |                          | 
+  15501 | 03f8 bnez s2,3d0         | 03f0 addi s4,s4,1        | 0| >03f0 addi s4,s4,1       |                          |                          | 
+  15502 | 03d0 slli t1,s7,0xd      | 03f4 addi s2,s2,-1       | 0| >03f4 addi s2,s2,-1      | 03f0 addi s4,s4,1    ALU |                          | BTB-redirect
+  15503 | 03d4 xor s7,s7,t1        | 03f8 bnez s2,3d0         | 0| >03f8 bnez s2,3d0        | 03f4 addi s2,s2,-1   ALU | 03f0 addi s4,s4,1        | 
+  15504 | 03d8 srli t1,s7,0x7      | 03d0 slli t1,s7,0xd      | 0| >03d0 slli t1,s7,0xd     | 03f8 bnez s2,3d0     BJU | 03f4 addi s2,s2,-1       | BR-resolve:T
+  15505 | 03dc xor s7,s7,t1        | 03d4 xor s7,s7,t1        | 0| >03d4 xor s7,s7,t1       | 03d0 slli t1,s7,0xd  ALU | 03f8 bnez s2,3d0         | 
+  15506 | 03e0 slli t1,s7,0x11     | 03d8 srli t1,s7,0x7      | 0| >03d8 srli t1,s7,0x7     | 03d4 xor s7,s7,t1    ALU | 03d0 slli t1,s7,0xd      | 
+  15507 | 03e4 xor s7,s7,t1        | 03dc xor s7,s7,t1        | 0| >03dc xor s7,s7,t1       | 03d8 srli t1,s7,0x7  ALU | 03d4 xor s7,s7,t1        | 
+  15508 | 03e8 andi t2,s7,1        | 03e0 slli t1,s7,0x11     | 0| >03e0 slli t1,s7,0x11    | 03dc xor s7,s7,t1    ALU | 03d8 srli t1,s7,0x7      | 
+  15509 | 03ec bnez t2,3f4         | 03e4 xor s7,s7,t1        | 0| >03e4 xor s7,s7,t1       | 03e0 slli t1,s7,0x11 ALU | 03dc xor s7,s7,t1        | 
+  15510 | 03f4 addi s2,s2,-1       | 03e8 andi t2,s7,1        | 0| >03e8 andi t2,s7,1       | 03e4 xor s7,s7,t1    ALU | 03e0 slli t1,s7,0x11     | BTB-redirect
+  15511 | 03f8 bnez s2,3d0         | 03ec bnez t2,3f4         | 0| >03ec bnez t2,3f4        | 03e8 andi t2,s7,1    ALU | 03e4 xor s7,s7,t1        | 
+  15512 | 03d0 slli t1,s7,0xd      | 03f4 addi s2,s2,-1       | 0| >03f4 addi s2,s2,-1      | 03ec bnez t2,3f4     BJU | 03e8 andi t2,s7,1        | BTB-redirect BR-resolve:T
+  15513 | 03d4 xor s7,s7,t1        | 03f8 bnez s2,3d0         | 0| >03f8 bnez s2,3d0        | 03f4 addi s2,s2,-1   ALU | 03ec bnez t2,3f4         | 
+  15514 | 03d8 srli t1,s7,0x7      | 03d0 slli t1,s7,0xd      | 0| >03d0 slli t1,s7,0xd     | 03f8 bnez s2,3d0     BJU | 03f4 addi s2,s2,-1       | BR-resolve:T
+  15515 | 03dc xor s7,s7,t1        | 03d4 xor s7,s7,t1        | 0| >03d4 xor s7,s7,t1       | 03d0 slli t1,s7,0xd  ALU | 03f8 bnez s2,3d0         | 
+   ... (3146 more cycles, use --mark 2 --max-rows N)
+----------------------------------------------------------------------------------------------------------------------------------------------------------------
+summary: cycles=3546 retired=2706 IPC=0.763 | btb_redirect=303, ip_curflw=1, ip_redirect=183, iu_redirect=217, mispred_bht=217, retired=2706, stall_CP0/fence=49, stall_RAW=2, stall_WAW=1
