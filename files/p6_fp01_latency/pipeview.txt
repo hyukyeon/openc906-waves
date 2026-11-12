@@ -1,0 +1,1022 @@
+사용: pipeview.py <out/test 디렉토리> [--mark N] [--max-rows K]
+출력: <dir>/pipeview.txt  (mark 구간별 표 + 구간 요약)
+
+================================================================================================================================================================
+MARK 1   cycles 3301 .. 3392  (92 cycles)
+================================================================================================================================================================
+    cyc | IF (fetch)               | IP (pred)                |IB| ID                       | EX1                      | RETIRE                   | events
+----------------------------------------------------------------------------------------------------------------------------------------------------------------
+   3301 | 02f4 ?                   | 02ec ?                   | 4| .02de csrr s0,mcycle     |                          |                          | ID-stall:CP0/fence
+   3302 |                          | 02f0 ?                   | 6| >02de csrr s0,mcycle     |                          |                          | 
+   3303 | 02f4 ?                   | 02f0 ?                   | 4| >02e2 fadd.d ft1,ft1,ft2 | 02de csrr s0,mcycle  CP0 |                          | 
+   3304 | 02f8 ?                   |                          | 4| >02e6 fadd.d ft1,ft1,ft2 | 02e2 fadd.d ft1,ft1, FP  | 02de csrr s0,mcycle      | 
+   3305 | 02fc ?                   | 02f4 ?                   | 2| >02ea fadd.d ft1,ft1,ft2 | 02e6 fadd.d ft1,ft1, FP  | 02e2 fadd.d ft1,ft1,ft2  | 
+   3306 | 0300 ?                   | 02f8 ?                   | 2| .02ee fadd.d ft1,ft1,ft2 | 02ea fadd.d ft1,ft1, FP  | 02e6 fadd.d ft1,ft1,ft2  | ID-stall:EX1-busy
+   3307 |                          | 02fc ?                   | 4| .02ee fadd.d ft1,ft1,ft2 | 02ea fadd.d ft1,ft1, FP  |                          | ID-stall:EX1-busy
+   3308 |                          |                          | 6| .02ee fadd.d ft1,ft1,ft2 | 02ea fadd.d ft1,ft1, FP  |                          | ID-stall:EX1-busy I$-miss
+   3309 |                          |                          | 6| .02ee fadd.d ft1,ft1,ft2 | 02ea fadd.d ft1,ft1, FP  |                          | ID-stall:EX1-busy
+   3310 |                          |                          | 6| >02ee fadd.d ft1,ft1,ft2 | 02ea fadd.d ft1,ft1, FP  |                          | 
+   3311 |                          |                          | 4| .02f2 fadd.d ft1,ft1,ft2 | 02ee fadd.d ft1,ft1, FP  | 02ea fadd.d ft1,ft1,ft2  | ID-stall:EX1-busy
+   3312 |                          |                          | 4| .02f2 fadd.d ft1,ft1,ft2 | 02ee fadd.d ft1,ft1, FP  |                          | ID-stall:EX1-busy
+   3313 |                          |                          | 4| .02f2 fadd.d ft1,ft1,ft2 | 02ee fadd.d ft1,ft1, FP  |                          | ID-stall:EX1-busy
+   3314 |                          | 0300 ?                   | 4| .02f2 fadd.d ft1,ft1,ft2 | 02ee fadd.d ft1,ft1, FP  |                          | ID-stall:EX1-busy
+   3315 |                          |                          | 6| >02f2 fadd.d ft1,ft1,ft2 | 02ee fadd.d ft1,ft1, FP  |                          | 
+   3316 |                          |                          | 4| .02f6 fadd.d ft1,ft1,ft2 | 02f2 fadd.d ft1,ft1, FP  | 02ee fadd.d ft1,ft1,ft2  | ID-stall:EX1-busy
+   3317 |                          |                          | 4| .02f6 fadd.d ft1,ft1,ft2 | 02f2 fadd.d ft1,ft1, FP  |                          | ID-stall:EX1-busy
+   3318 |                          |                          | 4| .02f6 fadd.d ft1,ft1,ft2 | 02f2 fadd.d ft1,ft1, FP  |                          | ID-stall:EX1-busy
+   3319 |                          |                          | 4| .02f6 fadd.d ft1,ft1,ft2 | 02f2 fadd.d ft1,ft1, FP  |                          | ID-stall:EX1-busy
+   3320 | 0304 ?                   |                          | 4| >02f6 fadd.d ft1,ft1,ft2 | 02f2 fadd.d ft1,ft1, FP  |                          | 
+   3321 | 0308 ?                   |                          | 2| .02fa fadd.d ft1,ft1,ft2 | 02f6 fadd.d ft1,ft1, FP  | 02f2 fadd.d ft1,ft1,ft2  | ID-stall:EX1-busy
+   3322 | 030c ?                   | 0304 ?                   | 2| .02fa fadd.d ft1,ft1,ft2 | 02f6 fadd.d ft1,ft1, FP  |                          | ID-stall:EX1-busy
+   3323 | 0310 ?                   | 0308 ?                   | 4| .02fa fadd.d ft1,ft1,ft2 | 02f6 fadd.d ft1,ft1, FP  |                          | ID-stall:EX1-busy
+   3324 |                          | 030c ?                   | 6| .02fa fadd.d ft1,ft1,ft2 | 02f6 fadd.d ft1,ft1, FP  |                          | ID-stall:EX1-busy
+   3325 |                          | 030c ?                   | 6| >02fa fadd.d ft1,ft1,ft2 | 02f6 fadd.d ft1,ft1, FP  |                          | 
+   3326 | 0310 ?                   | 030c ?                   | 4| .02fe fadd.d ft1,ft1,ft2 | 02fa fadd.d ft1,ft1, FP  | 02f6 fadd.d ft1,ft1,ft2  | ID-stall:EX1-busy
+   3327 | 0314 ?                   |                          | 6| .02fe fadd.d ft1,ft1,ft2 | 02fa fadd.d ft1,ft1, FP  |                          | ID-stall:EX1-busy
+   3328 |                          | 0310 ?                   | 6| .02fe fadd.d ft1,ft1,ft2 | 02fa fadd.d ft1,ft1, FP  |                          | ID-stall:EX1-busy
+   3329 |                          | 0310 ?                   | 6| .02fe fadd.d ft1,ft1,ft2 | 02fa fadd.d ft1,ft1, FP  |                          | ID-stall:EX1-busy
+   3330 |                          | 0310 ?                   | 6| >02fe fadd.d ft1,ft1,ft2 | 02fa fadd.d ft1,ft1, FP  |                          | 
+   3331 | 0314 ?                   | 0310 ?                   | 4| .0302 fadd.d ft1,ft1,ft2 | 02fe fadd.d ft1,ft1, FP  | 02fa fadd.d ft1,ft1,ft2  | ID-stall:EX1-busy
+   3332 | 0318 ?                   |                          | 6| .0302 fadd.d ft1,ft1,ft2 | 02fe fadd.d ft1,ft1, FP  |                          | ID-stall:EX1-busy
+   3333 |                          | 0314 ?                   | 6| .0302 fadd.d ft1,ft1,ft2 | 02fe fadd.d ft1,ft1, FP  |                          | ID-stall:EX1-busy
+   3334 |                          | 0314 ?                   | 6| .0302 fadd.d ft1,ft1,ft2 | 02fe fadd.d ft1,ft1, FP  |                          | ID-stall:EX1-busy
+   3335 |                          | 0314 ?                   | 6| >0302 fadd.d ft1,ft1,ft2 | 02fe fadd.d ft1,ft1, FP  |                          | 
+   3336 | 0318 ?                   | 0314 ?                   | 4| .0306 fadd.d ft1,ft1,ft2 | 0302 fadd.d ft1,ft1, FP  | 02fe fadd.d ft1,ft1,ft2  | ID-stall:EX1-busy
+   3337 | 031c ?                   |                          | 6| .0306 fadd.d ft1,ft1,ft2 | 0302 fadd.d ft1,ft1, FP  |                          | ID-stall:EX1-busy
+   3338 |                          | 0318 ?                   | 6| .0306 fadd.d ft1,ft1,ft2 | 0302 fadd.d ft1,ft1, FP  |                          | ID-stall:EX1-busy
+   3339 |                          | 0318 ?                   | 6| .0306 fadd.d ft1,ft1,ft2 | 0302 fadd.d ft1,ft1, FP  |                          | ID-stall:EX1-busy
+   3340 |                          | 0318 ?                   | 6| >0306 fadd.d ft1,ft1,ft2 | 0302 fadd.d ft1,ft1, FP  |                          | 
+   3341 | 031c ?                   | 0318 ?                   | 4| .030a fadd.d ft1,ft1,ft2 | 0306 fadd.d ft1,ft1, FP  | 0302 fadd.d ft1,ft1,ft2  | ID-stall:EX1-busy
+   3342 | 0320 ?                   |                          | 6| .030a fadd.d ft1,ft1,ft2 | 0306 fadd.d ft1,ft1, FP  |                          | ID-stall:EX1-busy
+   3343 |                          | 031c ?                   | 6| .030a fadd.d ft1,ft1,ft2 | 0306 fadd.d ft1,ft1, FP  |                          | ID-stall:EX1-busy
+   3344 |                          | 031c ?                   | 6| .030a fadd.d ft1,ft1,ft2 | 0306 fadd.d ft1,ft1, FP  |                          | ID-stall:EX1-busy
+   3345 |                          | 031c ?                   | 6| >030a fadd.d ft1,ft1,ft2 | 0306 fadd.d ft1,ft1, FP  |                          | 
+   3346 | 0320 ?                   | 031c ?                   | 4| .030e fadd.d ft1,ft1,ft2 | 030a fadd.d ft1,ft1, FP  | 0306 fadd.d ft1,ft1,ft2  | ID-stall:EX1-busy
+   3347 | 0324 ?                   |                          | 6| .030e fadd.d ft1,ft1,ft2 | 030a fadd.d ft1,ft1, FP  |                          | ID-stall:EX1-busy
+   3348 |                          | 0320 ?                   | 6| .030e fadd.d ft1,ft1,ft2 | 030a fadd.d ft1,ft1, FP  |                          | ID-stall:EX1-busy
+   3349 |                          | 0320 ?                   | 6| .030e fadd.d ft1,ft1,ft2 | 030a fadd.d ft1,ft1, FP  |                          | ID-stall:EX1-busy
+   3350 |                          | 0320 ?                   | 6| >030e fadd.d ft1,ft1,ft2 | 030a fadd.d ft1,ft1, FP  |                          | 
+   3351 | 0324 ?                   | 0320 ?                   | 4| .0312 fadd.d ft1,ft1,ft2 | 030e fadd.d ft1,ft1, FP  | 030a fadd.d ft1,ft1,ft2  | ID-stall:EX1-busy
+   3352 | 0328 ?                   |                          | 6| .0312 fadd.d ft1,ft1,ft2 | 030e fadd.d ft1,ft1, FP  |                          | ID-stall:EX1-busy
+   3353 |                          | 0324 ?                   | 6| .0312 fadd.d ft1,ft1,ft2 | 030e fadd.d ft1,ft1, FP  |                          | ID-stall:EX1-busy
+   3354 |                          | 0324 ?                   | 6| .0312 fadd.d ft1,ft1,ft2 | 030e fadd.d ft1,ft1, FP  |                          | ID-stall:EX1-busy
+   3355 |                          | 0324 ?                   | 6| >0312 fadd.d ft1,ft1,ft2 | 030e fadd.d ft1,ft1, FP  |                          | 
+   3356 | 0328 ?                   | 0324 ?                   | 4| .0316 fadd.d ft1,ft1,ft2 | 0312 fadd.d ft1,ft1, FP  | 030e fadd.d ft1,ft1,ft2  | ID-stall:EX1-busy
+   3357 | 032c ?                   |                          | 6| .0316 fadd.d ft1,ft1,ft2 | 0312 fadd.d ft1,ft1, FP  |                          | ID-stall:EX1-busy
+   3358 |                          | 0328 ?                   | 6| .0316 fadd.d ft1,ft1,ft2 | 0312 fadd.d ft1,ft1, FP  |                          | ID-stall:EX1-busy
+   3359 |                          | 0328 ?                   | 6| .0316 fadd.d ft1,ft1,ft2 | 0312 fadd.d ft1,ft1, FP  |                          | ID-stall:EX1-busy
+   3360 |                          | 0328 ?                   | 6| >0316 fadd.d ft1,ft1,ft2 | 0312 fadd.d ft1,ft1, FP  |                          | 
+   3361 | 032c ?                   | 0328 ?                   | 4| .031a fadd.d ft1,ft1,ft2 | 0316 fadd.d ft1,ft1, FP  | 0312 fadd.d ft1,ft1,ft2  | ID-stall:EX1-busy
+   3362 | 0330 mv a1,s0            |                          | 6| .031a fadd.d ft1,ft1,ft2 | 0316 fadd.d ft1,ft1, FP  |                          | ID-stall:EX1-busy
+   3363 |                          | 032c ?                   | 6| .031a fadd.d ft1,ft1,ft2 | 0316 fadd.d ft1,ft1, FP  |                          | ID-stall:EX1-busy
+   3364 |                          | 032c ?                   | 6| .031a fadd.d ft1,ft1,ft2 | 0316 fadd.d ft1,ft1, FP  |                          | ID-stall:EX1-busy
+   3365 |                          | 032c ?                   | 6| >031a fadd.d ft1,ft1,ft2 | 0316 fadd.d ft1,ft1, FP  |                          | 
+   3366 |                          | 032c ?                   | 4| .031e fadd.d ft1,ft1,ft2 | 031a fadd.d ft1,ft1, FP  | 0316 fadd.d ft1,ft1,ft2  | ID-stall:EX1-busy
+   3367 |                          | 032c ?                   | 4| .031e fadd.d ft1,ft1,ft2 | 031a fadd.d ft1,ft1, FP  |                          | ID-stall:EX1-busy
+   3368 |                          | 032c ?                   | 4| .031e fadd.d ft1,ft1,ft2 | 031a fadd.d ft1,ft1, FP  |                          | ID-stall:EX1-busy
+   3369 |                          | 032c ?                   | 4| .031e fadd.d ft1,ft1,ft2 | 031a fadd.d ft1,ft1, FP  |                          | ID-stall:EX1-busy
+   3370 |                          | 032c ?                   | 4| >031e fadd.d ft1,ft1,ft2 | 031a fadd.d ft1,ft1, FP  |                          | 
+   3371 | 0330 mv a1,s0            | 032c ?                   | 2| .0322 fmv.x.d t1,ft1     | 031e fadd.d ft1,ft1, FP  | 031a fadd.d ft1,ft1,ft2  | ID-stall:EX1-busy
+   3372 | 0334 ?                   |                          | 5| .0322 fmv.x.d t1,ft1     | 031e fadd.d ft1,ft1, FP  |                          | ID-stall:EX1-busy
+   3373 | 0338 ?                   | 0330 mv a1,s0            | 5| .0322 fmv.x.d t1,ft1     | 031e fadd.d ft1,ft1, FP  |                          | ID-stall:EX1-busy
+   3374 |                          | 0334 ?                   | 6| .0322 fmv.x.d t1,ft1     | 031e fadd.d ft1,ft1, FP  |                          | ID-stall:EX1-busy
+   3375 |                          | 0334 ?                   | 6| >0322 fmv.x.d t1,ft1     | 031e fadd.d ft1,ft1, FP  |                          | 
+   3376 | 0338 ?                   | 0334 ?                   | 4| .0326 csrr t0,mcycle     | 0322 fmv.x.d t1,ft1  FP  | 031e fadd.d ft1,ft1,ft2  | ID-stall:EX1-busy,CP0/fence
+   3377 | 033c csrr s0,mcycle      |                          | 6| .0326 csrr t0,mcycle     | 0322 fmv.x.d t1,ft1  FP  |                          | ID-stall:EX1-busy,CP0/fence
+   3378 |                          | 0338 ?                   | 6| .0326 csrr t0,mcycle     | 0322 fmv.x.d t1,ft1  FP  |                          | IP-redirect->021e ID-stall:EX1-busy,CP0/fence
+   3379 |                          | 0338 ?                   | 6| .0326 csrr t0,mcycle     | 0322 fmv.x.d t1,ft1  FP  |                          | IP-redirect->021e ID-stall:EX1-busy,CP0/fence
+   3380 |                          | 0338 ?                   | 6| .0326 csrr t0,mcycle     | 0322 fmv.x.d t1,ft1  FP  |                          | IP-redirect->021e ID-stall:CP0/fence
+   3381 |                          | 0338 ?                   | 6| .0326 csrr t0,mcycle     |                          | 0322 fmv.x.d t1,ft1      | IP-redirect->021e ID-stall:CP0/fence
+   3382 |                          | 0338 ?                   | 6| .0326 csrr t0,mcycle     |                          |                          | IP-redirect->021e ID-stall:CP0/fence
+   3383 |                          | 0338 ?                   | 6| .0326 csrr t0,mcycle     |                          |                          | IP-redirect->021e ID-stall:CP0/fence
+   3384 |                          | 0338 ?                   | 6| .0326 csrr t0,mcycle     |                          |                          | IP-redirect->021e ID-stall:CP0/fence
+   3385 |                          | 0338 ?                   | 6| .0326 csrr t0,mcycle     |                          |                          | IP-redirect->021e ID-stall:CP0/fence
+   3386 |                          | 0338 ?                   | 6| .0326 csrr t0,mcycle     |                          |                          | IP-redirect->021e ID-stall:CP0/fence
+   3387 |                          | 0338 ?                   | 6| >0326 csrr t0,mcycle     |                          |                          | IP-redirect->021e
+   3388 |                          | 0338 ?                   | 4| .032a sub s0,t0,s0       | 0326 csrr t0,mcycle  CP0 |                          | IP-redirect->021e ID-stall:RAW
+   3389 |                          | 0338 ?                   | 4| >032a sub s0,t0,s0       |                          | 0326 csrr t0,mcycle      | IP-redirect->021e
+   3390 | 021e addi sp,sp,-16      | 0338 ?                   | 3| >032e li t6,0            | 032a sub s0,t0,s0    ALU |                          | IP-redirect->021e
+   3391 | 021e addi sp,sp,-16      |                          | 4| >0330 mv a1,s0           | 032e li t6,0         ALU | 032a sub s0,t0,s0        | 
+   3392 | 0220 sd ra,0(sp)         |                          | 2| >033c csrr s0,mcycle     | 0330 mv a1,s0        ALU | 032e li t6,0             | 
+----------------------------------------------------------------------------------------------------------------------------------------------------------------
+summary: cycles=92 retired=21 IPC=0.228 | icache_miss=1, ip_redirect=13, retired=21, stall_CP0/fence=12, stall_EX1-busy=60, stall_RAW=1
+
+================================================================================================================================================================
+MARK 2   cycles 3757 .. 3803  (47 cycles)
+================================================================================================================================================================
+    cyc | IF (fetch)               | IP (pred)                |IB| ID                       | EX1                      | RETIRE                   | events
+----------------------------------------------------------------------------------------------------------------------------------------------------------------
+   3757 |                          |                          | 0| >033c csrr s0,mcycle     |                          |                          | 
+   3758 |                          |                          | 0|                          | 033c csrr s0,mcycle  CP0 |                          | 
+   3759 |                          |                          | 0|                          |                          | 033c csrr s0,mcycle      | 
+   3760 |                          |                          | 0|                          |                          |                          | 
+   3761 |                          | 0340 fadd.d fa0,ft2,ft3  | 0| >0340 fadd.d fa0,ft2,ft3 |                          |                          | 
+   3762 |                          |                          | 0|                          | 0340 fadd.d fa0,ft2, FP  |                          | 
+   3763 |                          |                          | 0|                          |                          | 0340 fadd.d fa0,ft2,ft3  | 
+   3764 |                          |                          | 0|                          |                          |                          | 
+   3765 |                          |                          | 0|                          |                          |                          | 
+   3766 |                          |                          | 0|                          |                          |                          | 
+   3767 | 0344 fadd.d fa1,ft2,ft3  |                          | 0|                          |                          |                          | 
+   3768 | 0348 fadd.d fa2,ft2,ft3  |                          | 0|                          |                          |                          | 
+   3769 | 034c fadd.d fa3,ft2,ft3  | 0344 fadd.d fa1,ft2,ft3  | 0| >0344 fadd.d fa1,ft2,ft3 |                          |                          | 
+   3770 | 0350 fadd.d fa0,ft2,ft3  | 0348 fadd.d fa2,ft2,ft3  | 0| >0348 fadd.d fa2,ft2,ft3 | 0344 fadd.d fa1,ft2, FP  |                          | 
+   3771 | 0354 fadd.d fa1,ft2,ft3  | 034c fadd.d fa3,ft2,ft3  | 0| >034c fadd.d fa3,ft2,ft3 | 0348 fadd.d fa2,ft2, FP  | 0344 fadd.d fa1,ft2,ft3  | 
+   3772 | 0358 fadd.d fa2,ft2,ft3  | 0350 fadd.d fa0,ft2,ft3  | 0| >0350 fadd.d fa0,ft2,ft3 | 034c fadd.d fa3,ft2, FP  | 0348 fadd.d fa2,ft2,ft3  | 
+   3773 | 035c fadd.d fa3,ft2,ft3  | 0354 fadd.d fa1,ft2,ft3  | 0| >0354 fadd.d fa1,ft2,ft3 | 0350 fadd.d fa0,ft2, FP  | 034c fadd.d fa3,ft2,ft3  | 
+   3774 | 0360 fadd.d fa0,ft2,ft3  | 0358 fadd.d fa2,ft2,ft3  | 0| >0358 fadd.d fa2,ft2,ft3 | 0354 fadd.d fa1,ft2, FP  | 0350 fadd.d fa0,ft2,ft3  | 
+   3775 | 0364 fadd.d fa1,ft2,ft3  | 035c fadd.d fa3,ft2,ft3  | 0| .035c fadd.d fa3,ft2,ft3 | 0358 fadd.d fa2,ft2, FP  | 0354 fadd.d fa1,ft2,ft3  | ID-stall:EX1-busy
+   3776 | 0368 fadd.d fa2,ft2,ft3  | 0360 fadd.d fa0,ft2,ft3  | 0| >035c fadd.d fa3,ft2,ft3 | 0358 fadd.d fa2,ft2, FP  |                          | 
+   3777 | 036c fadd.d fa3,ft2,ft3  | 0364 fadd.d fa1,ft2,ft3  | 0| >0360 fadd.d fa0,ft2,ft3 | 035c fadd.d fa3,ft2, FP  | 0358 fadd.d fa2,ft2,ft3  | 
+   3778 | 0370 fadd.d fa0,ft2,ft3  | 0368 fadd.d fa2,ft2,ft3  | 0| >0364 fadd.d fa1,ft2,ft3 | 0360 fadd.d fa0,ft2, FP  | 035c fadd.d fa3,ft2,ft3  | 
+   3779 | 0374 fadd.d fa1,ft2,ft3  | 036c fadd.d fa3,ft2,ft3  | 0| >0368 fadd.d fa2,ft2,ft3 | 0364 fadd.d fa1,ft2, FP  | 0360 fadd.d fa0,ft2,ft3  | 
+   3780 | 0378 fadd.d fa2,ft2,ft3  | 0370 fadd.d fa0,ft2,ft3  | 0| .036c fadd.d fa3,ft2,ft3 | 0368 fadd.d fa2,ft2, FP  | 0364 fadd.d fa1,ft2,ft3  | ID-stall:EX1-busy
+   3781 | 037c fadd.d fa3,ft2,ft3  | 0374 fadd.d fa1,ft2,ft3  | 2| >036c fadd.d fa3,ft2,ft3 | 0368 fadd.d fa2,ft2, FP  |                          | 
+   3782 | 0380 fmv.x.d t1,fa3      | 0378 fadd.d fa2,ft2,ft3  | 2| >0370 fadd.d fa0,ft2,ft3 | 036c fadd.d fa3,ft2, FP  | 0368 fadd.d fa2,ft2,ft3  | 
+   3783 |                          | 037c fadd.d fa3,ft2,ft3  | 2| >0374 fadd.d fa1,ft2,ft3 | 0370 fadd.d fa0,ft2, FP  | 036c fadd.d fa3,ft2,ft3  | 
+   3784 |                          |                          | 2| >0378 fadd.d fa2,ft2,ft3 | 0374 fadd.d fa1,ft2, FP  | 0370 fadd.d fa0,ft2,ft3  | I$-miss
+   3785 |                          |                          | 0| .037c fadd.d fa3,ft2,ft3 | 0378 fadd.d fa2,ft2, FP  | 0374 fadd.d fa1,ft2,ft3  | ID-stall:EX1-busy
+   3786 |                          |                          | 0| >037c fadd.d fa3,ft2,ft3 | 0378 fadd.d fa2,ft2, FP  |                          | 
+   3787 |                          |                          | 0|                          | 037c fadd.d fa3,ft2, FP  | 0378 fadd.d fa2,ft2,ft3  | 
+   3788 |                          |                          | 0|                          |                          | 037c fadd.d fa3,ft2,ft3  | 
+   3789 |                          |                          | 0|                          |                          |                          | 
+   3790 |                          | 0380 fmv.x.d t1,fa3      | 0| >0380 fmv.x.d t1,fa3     |                          |                          | 
+   3791 |                          |                          | 0|                          | 0380 fmv.x.d t1,fa3  FP  |                          | 
+   3792 |                          |                          | 0|                          |                          | 0380 fmv.x.d t1,fa3      | 
+   3793 |                          |                          | 0|                          |                          |                          | 
+   3794 |                          |                          | 0|                          |                          |                          | 
+   3795 |                          |                          | 0|                          |                          |                          | 
+   3796 | 0384 csrr t0,mcycle      |                          | 0|                          |                          |                          | 
+   3797 | 0388 sub s0,t0,s0        |                          | 0|                          |                          |                          | 
+   3798 | 038c li t6,0             | 0384 csrr t0,mcycle      | 0| >0384 csrr t0,mcycle     |                          |                          | 
+   3799 | 0390 li a0,1860          | 0388 sub s0,t0,s0        | 0| .0388 sub s0,t0,s0       | 0384 csrr t0,mcycle  CP0 |                          | ID-stall:RAW
+   3800 | 0394 jal 21e             | 038c li t6,0             | 0| >0388 sub s0,t0,s0       |                          | 0384 csrr t0,mcycle      | 
+   3801 | 0398 fmv.d ft1,ft2       | 0390 li a0,1860          | 1| >038c li t6,0            | 0388 sub s0,t0,s0    ALU |                          | 
+   3802 | 039c li t6,3             | 0394 jal 21e             | 2| >038e mv a1,s0           | 038c li t6,0         ALU | 0388 sub s0,t0,s0        | IP-redirect->021e
+   3803 | 021e addi sp,sp,-16      |                          | 2| >039e csrr s0,mcycle     | 038e mv a1,s0        ALU | 038c li t6,0             | 
+----------------------------------------------------------------------------------------------------------------------------------------------------------------
+summary: cycles=47 retired=21 IPC=0.447 | icache_miss=1, ip_redirect=1, retired=21, stall_EX1-busy=3, stall_RAW=1
+
+================================================================================================================================================================
+MARK 3   cycles 4153 .. 4244  (92 cycles)
+================================================================================================================================================================
+    cyc | IF (fetch)               | IP (pred)                |IB| ID                       | EX1                      | RETIRE                   | events
+----------------------------------------------------------------------------------------------------------------------------------------------------------------
+   4153 | 03b4 ?                   | 03ac ?                   | 4| .039e csrr s0,mcycle     |                          |                          | ID-stall:CP0/fence
+   4154 |                          | 03b0 ?                   | 6| >039e csrr s0,mcycle     |                          |                          | 
+   4155 | 03b4 ?                   | 03b0 ?                   | 4| >03a2 fmul.d ft1,ft1,ft2 | 039e csrr s0,mcycle  CP0 |                          | 
+   4156 | 03b8 ?                   |                          | 4| >03a6 fmul.d ft1,ft1,ft2 | 03a2 fmul.d ft1,ft1, FP  | 039e csrr s0,mcycle      | 
+   4157 | 03bc ?                   | 03b4 ?                   | 2| >03aa fmul.d ft1,ft1,ft2 | 03a6 fmul.d ft1,ft1, FP  | 03a2 fmul.d ft1,ft1,ft2  | 
+   4158 | 03c0 ?                   | 03b8 ?                   | 2| .03ae fmul.d ft1,ft1,ft2 | 03aa fmul.d ft1,ft1, FP  | 03a6 fmul.d ft1,ft1,ft2  | ID-stall:EX1-busy
+   4159 |                          | 03bc ?                   | 4| .03ae fmul.d ft1,ft1,ft2 | 03aa fmul.d ft1,ft1, FP  |                          | ID-stall:EX1-busy
+   4160 |                          |                          | 6| .03ae fmul.d ft1,ft1,ft2 | 03aa fmul.d ft1,ft1, FP  |                          | ID-stall:EX1-busy I$-miss
+   4161 |                          |                          | 6| .03ae fmul.d ft1,ft1,ft2 | 03aa fmul.d ft1,ft1, FP  |                          | ID-stall:EX1-busy
+   4162 |                          |                          | 6| >03ae fmul.d ft1,ft1,ft2 | 03aa fmul.d ft1,ft1, FP  |                          | 
+   4163 |                          |                          | 4| .03b2 fmul.d ft1,ft1,ft2 | 03ae fmul.d ft1,ft1, FP  | 03aa fmul.d ft1,ft1,ft2  | ID-stall:EX1-busy
+   4164 |                          |                          | 4| .03b2 fmul.d ft1,ft1,ft2 | 03ae fmul.d ft1,ft1, FP  |                          | ID-stall:EX1-busy
+   4165 |                          |                          | 4| .03b2 fmul.d ft1,ft1,ft2 | 03ae fmul.d ft1,ft1, FP  |                          | ID-stall:EX1-busy
+   4166 |                          | 03c0 ?                   | 4| .03b2 fmul.d ft1,ft1,ft2 | 03ae fmul.d ft1,ft1, FP  |                          | ID-stall:EX1-busy
+   4167 |                          |                          | 6| >03b2 fmul.d ft1,ft1,ft2 | 03ae fmul.d ft1,ft1, FP  |                          | 
+   4168 |                          |                          | 4| .03b6 fmul.d ft1,ft1,ft2 | 03b2 fmul.d ft1,ft1, FP  | 03ae fmul.d ft1,ft1,ft2  | ID-stall:EX1-busy
+   4169 |                          |                          | 4| .03b6 fmul.d ft1,ft1,ft2 | 03b2 fmul.d ft1,ft1, FP  |                          | ID-stall:EX1-busy
+   4170 |                          |                          | 4| .03b6 fmul.d ft1,ft1,ft2 | 03b2 fmul.d ft1,ft1, FP  |                          | ID-stall:EX1-busy
+   4171 |                          |                          | 4| .03b6 fmul.d ft1,ft1,ft2 | 03b2 fmul.d ft1,ft1, FP  |                          | ID-stall:EX1-busy
+   4172 | 03c4 ?                   |                          | 4| >03b6 fmul.d ft1,ft1,ft2 | 03b2 fmul.d ft1,ft1, FP  |                          | 
+   4173 | 03c8 ?                   |                          | 2| .03ba fmul.d ft1,ft1,ft2 | 03b6 fmul.d ft1,ft1, FP  | 03b2 fmul.d ft1,ft1,ft2  | ID-stall:EX1-busy
+   4174 | 03cc ?                   | 03c4 ?                   | 2| .03ba fmul.d ft1,ft1,ft2 | 03b6 fmul.d ft1,ft1, FP  |                          | ID-stall:EX1-busy
+   4175 | 03d0 ?                   | 03c8 ?                   | 4| .03ba fmul.d ft1,ft1,ft2 | 03b6 fmul.d ft1,ft1, FP  |                          | ID-stall:EX1-busy
+   4176 |                          | 03cc ?                   | 6| .03ba fmul.d ft1,ft1,ft2 | 03b6 fmul.d ft1,ft1, FP  |                          | ID-stall:EX1-busy
+   4177 |                          | 03cc ?                   | 6| >03ba fmul.d ft1,ft1,ft2 | 03b6 fmul.d ft1,ft1, FP  |                          | 
+   4178 | 03d0 ?                   | 03cc ?                   | 4| .03be fmul.d ft1,ft1,ft2 | 03ba fmul.d ft1,ft1, FP  | 03b6 fmul.d ft1,ft1,ft2  | ID-stall:EX1-busy
+   4179 | 03d4 ?                   |                          | 6| .03be fmul.d ft1,ft1,ft2 | 03ba fmul.d ft1,ft1, FP  |                          | ID-stall:EX1-busy
+   4180 |                          | 03d0 ?                   | 6| .03be fmul.d ft1,ft1,ft2 | 03ba fmul.d ft1,ft1, FP  |                          | ID-stall:EX1-busy
+   4181 |                          | 03d0 ?                   | 6| .03be fmul.d ft1,ft1,ft2 | 03ba fmul.d ft1,ft1, FP  |                          | ID-stall:EX1-busy
+   4182 |                          | 03d0 ?                   | 6| >03be fmul.d ft1,ft1,ft2 | 03ba fmul.d ft1,ft1, FP  |                          | 
+   4183 | 03d4 ?                   | 03d0 ?                   | 4| .03c2 fmul.d ft1,ft1,ft2 | 03be fmul.d ft1,ft1, FP  | 03ba fmul.d ft1,ft1,ft2  | ID-stall:EX1-busy
+   4184 | 03d8 ?                   |                          | 6| .03c2 fmul.d ft1,ft1,ft2 | 03be fmul.d ft1,ft1, FP  |                          | ID-stall:EX1-busy
+   4185 |                          | 03d4 ?                   | 6| .03c2 fmul.d ft1,ft1,ft2 | 03be fmul.d ft1,ft1, FP  |                          | ID-stall:EX1-busy
+   4186 |                          | 03d4 ?                   | 6| .03c2 fmul.d ft1,ft1,ft2 | 03be fmul.d ft1,ft1, FP  |                          | ID-stall:EX1-busy
+   4187 |                          | 03d4 ?                   | 6| >03c2 fmul.d ft1,ft1,ft2 | 03be fmul.d ft1,ft1, FP  |                          | 
+   4188 | 03d8 ?                   | 03d4 ?                   | 4| .03c6 fmul.d ft1,ft1,ft2 | 03c2 fmul.d ft1,ft1, FP  | 03be fmul.d ft1,ft1,ft2  | ID-stall:EX1-busy
+   4189 | 03dc ?                   |                          | 6| .03c6 fmul.d ft1,ft1,ft2 | 03c2 fmul.d ft1,ft1, FP  |                          | ID-stall:EX1-busy
+   4190 |                          | 03d8 ?                   | 6| .03c6 fmul.d ft1,ft1,ft2 | 03c2 fmul.d ft1,ft1, FP  |                          | ID-stall:EX1-busy
+   4191 |                          | 03d8 ?                   | 6| .03c6 fmul.d ft1,ft1,ft2 | 03c2 fmul.d ft1,ft1, FP  |                          | ID-stall:EX1-busy
+   4192 |                          | 03d8 ?                   | 6| >03c6 fmul.d ft1,ft1,ft2 | 03c2 fmul.d ft1,ft1, FP  |                          | 
+   4193 | 03dc ?                   | 03d8 ?                   | 4| .03ca fmul.d ft1,ft1,ft2 | 03c6 fmul.d ft1,ft1, FP  | 03c2 fmul.d ft1,ft1,ft2  | ID-stall:EX1-busy
+   4194 | 03e0 ?                   |                          | 6| .03ca fmul.d ft1,ft1,ft2 | 03c6 fmul.d ft1,ft1, FP  |                          | ID-stall:EX1-busy
+   4195 |                          | 03dc ?                   | 6| .03ca fmul.d ft1,ft1,ft2 | 03c6 fmul.d ft1,ft1, FP  |                          | ID-stall:EX1-busy
+   4196 |                          | 03dc ?                   | 6| .03ca fmul.d ft1,ft1,ft2 | 03c6 fmul.d ft1,ft1, FP  |                          | ID-stall:EX1-busy
+   4197 |                          | 03dc ?                   | 6| >03ca fmul.d ft1,ft1,ft2 | 03c6 fmul.d ft1,ft1, FP  |                          | 
+   4198 | 03e0 ?                   | 03dc ?                   | 4| .03ce fmul.d ft1,ft1,ft2 | 03ca fmul.d ft1,ft1, FP  | 03c6 fmul.d ft1,ft1,ft2  | ID-stall:EX1-busy
+   4199 | 03e4 ?                   |                          | 6| .03ce fmul.d ft1,ft1,ft2 | 03ca fmul.d ft1,ft1, FP  |                          | ID-stall:EX1-busy
+   4200 |                          | 03e0 ?                   | 6| .03ce fmul.d ft1,ft1,ft2 | 03ca fmul.d ft1,ft1, FP  |                          | ID-stall:EX1-busy
+   4201 |                          | 03e0 ?                   | 6| .03ce fmul.d ft1,ft1,ft2 | 03ca fmul.d ft1,ft1, FP  |                          | ID-stall:EX1-busy
+   4202 |                          | 03e0 ?                   | 6| >03ce fmul.d ft1,ft1,ft2 | 03ca fmul.d ft1,ft1, FP  |                          | 
+   4203 | 03e4 ?                   | 03e0 ?                   | 4| .03d2 fmul.d ft1,ft1,ft2 | 03ce fmul.d ft1,ft1, FP  | 03ca fmul.d ft1,ft1,ft2  | ID-stall:EX1-busy
+   4204 | 03e8 ?                   |                          | 6| .03d2 fmul.d ft1,ft1,ft2 | 03ce fmul.d ft1,ft1, FP  |                          | ID-stall:EX1-busy
+   4205 |                          | 03e4 ?                   | 6| .03d2 fmul.d ft1,ft1,ft2 | 03ce fmul.d ft1,ft1, FP  |                          | ID-stall:EX1-busy
+   4206 |                          | 03e4 ?                   | 6| .03d2 fmul.d ft1,ft1,ft2 | 03ce fmul.d ft1,ft1, FP  |                          | ID-stall:EX1-busy
+   4207 |                          | 03e4 ?                   | 6| >03d2 fmul.d ft1,ft1,ft2 | 03ce fmul.d ft1,ft1, FP  |                          | 
+   4208 | 03e8 ?                   | 03e4 ?                   | 4| .03d6 fmul.d ft1,ft1,ft2 | 03d2 fmul.d ft1,ft1, FP  | 03ce fmul.d ft1,ft1,ft2  | ID-stall:EX1-busy
+   4209 | 03ec ?                   |                          | 6| .03d6 fmul.d ft1,ft1,ft2 | 03d2 fmul.d ft1,ft1, FP  |                          | ID-stall:EX1-busy
+   4210 |                          | 03e8 ?                   | 6| .03d6 fmul.d ft1,ft1,ft2 | 03d2 fmul.d ft1,ft1, FP  |                          | ID-stall:EX1-busy
+   4211 |                          | 03e8 ?                   | 6| .03d6 fmul.d ft1,ft1,ft2 | 03d2 fmul.d ft1,ft1, FP  |                          | ID-stall:EX1-busy
+   4212 |                          | 03e8 ?                   | 6| >03d6 fmul.d ft1,ft1,ft2 | 03d2 fmul.d ft1,ft1, FP  |                          | 
+   4213 | 03ec ?                   | 03e8 ?                   | 4| .03da fmul.d ft1,ft1,ft2 | 03d6 fmul.d ft1,ft1, FP  | 03d2 fmul.d ft1,ft1,ft2  | ID-stall:EX1-busy
+   4214 | 03f0 mv a1,s0            |                          | 6| .03da fmul.d ft1,ft1,ft2 | 03d6 fmul.d ft1,ft1, FP  |                          | ID-stall:EX1-busy
+   4215 |                          | 03ec ?                   | 6| .03da fmul.d ft1,ft1,ft2 | 03d6 fmul.d ft1,ft1, FP  |                          | ID-stall:EX1-busy
+   4216 |                          | 03ec ?                   | 6| .03da fmul.d ft1,ft1,ft2 | 03d6 fmul.d ft1,ft1, FP  |                          | ID-stall:EX1-busy
+   4217 |                          | 03ec ?                   | 6| >03da fmul.d ft1,ft1,ft2 | 03d6 fmul.d ft1,ft1, FP  |                          | 
+   4218 |                          | 03ec ?                   | 4| .03de fmul.d ft1,ft1,ft2 | 03da fmul.d ft1,ft1, FP  | 03d6 fmul.d ft1,ft1,ft2  | ID-stall:EX1-busy
+   4219 |                          | 03ec ?                   | 4| .03de fmul.d ft1,ft1,ft2 | 03da fmul.d ft1,ft1, FP  |                          | ID-stall:EX1-busy
+   4220 |                          | 03ec ?                   | 4| .03de fmul.d ft1,ft1,ft2 | 03da fmul.d ft1,ft1, FP  |                          | ID-stall:EX1-busy
+   4221 |                          | 03ec ?                   | 4| .03de fmul.d ft1,ft1,ft2 | 03da fmul.d ft1,ft1, FP  |                          | ID-stall:EX1-busy
+   4222 |                          | 03ec ?                   | 4| >03de fmul.d ft1,ft1,ft2 | 03da fmul.d ft1,ft1, FP  |                          | 
+   4223 | 03f0 mv a1,s0            | 03ec ?                   | 2| .03e2 fmv.x.d t1,ft1     | 03de fmul.d ft1,ft1, FP  | 03da fmul.d ft1,ft1,ft2  | ID-stall:EX1-busy
+   4224 | 03f4 ?                   |                          | 5| .03e2 fmv.x.d t1,ft1     | 03de fmul.d ft1,ft1, FP  |                          | ID-stall:EX1-busy
+   4225 | 03f8 ?                   | 03f0 mv a1,s0            | 5| .03e2 fmv.x.d t1,ft1     | 03de fmul.d ft1,ft1, FP  |                          | ID-stall:EX1-busy
+   4226 |                          | 03f4 ?                   | 6| .03e2 fmv.x.d t1,ft1     | 03de fmul.d ft1,ft1, FP  |                          | ID-stall:EX1-busy
+   4227 |                          | 03f4 ?                   | 6| >03e2 fmv.x.d t1,ft1     | 03de fmul.d ft1,ft1, FP  |                          | 
+   4228 | 03f8 ?                   | 03f4 ?                   | 4| .03e6 csrr t0,mcycle     | 03e2 fmv.x.d t1,ft1  FP  | 03de fmul.d ft1,ft1,ft2  | ID-stall:EX1-busy,CP0/fence
+   4229 | 03fc ?                   |                          | 6| .03e6 csrr t0,mcycle     | 03e2 fmv.x.d t1,ft1  FP  |                          | ID-stall:EX1-busy,CP0/fence
+   4230 |                          | 03f8 ?                   | 6| .03e6 csrr t0,mcycle     | 03e2 fmv.x.d t1,ft1  FP  |                          | IP-redirect->021e ID-stall:EX1-busy,CP0/fence
+   4231 |                          | 03f8 ?                   | 6| .03e6 csrr t0,mcycle     | 03e2 fmv.x.d t1,ft1  FP  |                          | IP-redirect->021e ID-stall:EX1-busy,CP0/fence
+   4232 |                          | 03f8 ?                   | 6| .03e6 csrr t0,mcycle     | 03e2 fmv.x.d t1,ft1  FP  |                          | IP-redirect->021e ID-stall:CP0/fence
+   4233 |                          | 03f8 ?                   | 6| .03e6 csrr t0,mcycle     |                          | 03e2 fmv.x.d t1,ft1      | IP-redirect->021e ID-stall:CP0/fence
+   4234 |                          | 03f8 ?                   | 6| .03e6 csrr t0,mcycle     |                          |                          | IP-redirect->021e ID-stall:CP0/fence
+   4235 |                          | 03f8 ?                   | 6| .03e6 csrr t0,mcycle     |                          |                          | IP-redirect->021e ID-stall:CP0/fence
+   4236 |                          | 03f8 ?                   | 6| .03e6 csrr t0,mcycle     |                          |                          | IP-redirect->021e ID-stall:CP0/fence
+   4237 |                          | 03f8 ?                   | 6| .03e6 csrr t0,mcycle     |                          |                          | IP-redirect->021e ID-stall:CP0/fence
+   4238 |                          | 03f8 ?                   | 6| .03e6 csrr t0,mcycle     |                          |                          | IP-redirect->021e ID-stall:CP0/fence
+   4239 |                          | 03f8 ?                   | 6| >03e6 csrr t0,mcycle     |                          |                          | IP-redirect->021e
+   4240 | 021e addi sp,sp,-16      | 03f8 ?                   | 4| .03ea sub s0,t0,s0       | 03e6 csrr t0,mcycle  CP0 |                          | IP-redirect->021e ID-stall:RAW
+   4241 | 021e addi sp,sp,-16      |                          | 6| >03ea sub s0,t0,s0       |                          | 03e6 csrr t0,mcycle      | 
+   4242 | 0220 sd ra,0(sp)         |                          | 5| >03ee li t6,0            | 03ea sub s0,t0,s0    ALU |                          | 
+   4243 | 0224 mv a3,a0            | 021e addi sp,sp,-16      | 4| >03f0 mv a1,s0           | 03ee li t6,0         ALU | 03ea sub s0,t0,s0        | 
+   4244 | 0228 ?                   | 0220 sd ra,0(sp)         | 3| >0400 csrr s0,mcycle     | 03f0 mv a1,s0        ALU | 03ee li t6,0             | 
+----------------------------------------------------------------------------------------------------------------------------------------------------------------
+summary: cycles=92 retired=21 IPC=0.228 | icache_miss=1, ip_redirect=11, retired=21, stall_CP0/fence=12, stall_EX1-busy=60, stall_RAW=1
+
+================================================================================================================================================================
+MARK 4   cycles 4590 .. 4706  (117 cycles)
+================================================================================================================================================================
+    cyc | IF (fetch)               | IP (pred)                |IB| ID                       | EX1                      | RETIRE                   | events
+----------------------------------------------------------------------------------------------------------------------------------------------------------------
+   4590 |                          |                          | 0|                          |                          |                          | 
+   4591 |                          |                          | 0|                          |                          |                          | 
+   4592 |                          |                          | 0|                          |                          |                          | 
+   4593 |                          | 0400 csrr s0,mcycle      | 0| >0400 csrr s0,mcycle     |                          |                          | 
+   4594 |                          |                          | 0|                          | 0400 csrr s0,mcycle  CP0 |                          | 
+   4595 |                          |                          | 0|                          |                          | 0400 csrr s0,mcycle      | 
+   4596 |                          |                          | 0|                          |                          |                          | 
+   4597 |                          |                          | 0|                          |                          |                          | 
+   4598 |                          |                          | 0|                          |                          |                          | 
+   4599 | 0404 fmadd.d ft1,ft1,ft2 |                          | 0|                          |                          |                          | 
+   4600 | 0408 fmadd.d ft1,ft1,ft2 |                          | 0|                          |                          |                          | 
+   4601 | 040c fmadd.d ft1,ft1,ft2 | 0404 fmadd.d ft1,ft1,ft2 | 0| >0404 fmadd.d ft1,ft1,ft |                          |                          | 
+   4602 | 0410 fmadd.d ft1,ft1,ft2 | 0408 fmadd.d ft1,ft1,ft2 | 0| >0408 fmadd.d ft1,ft1,ft | 0404 fmadd.d ft1,ft1 FP  |                          | 
+   4603 | 0414 fmadd.d ft1,ft1,ft2 | 040c fmadd.d ft1,ft1,ft2 | 0| >040c fmadd.d ft1,ft1,ft | 0408 fmadd.d ft1,ft1 FP  | 0404 fmadd.d ft1,ft1,ft2 | 
+   4604 | 0418 fmadd.d ft1,ft1,ft2 | 0410 fmadd.d ft1,ft1,ft2 | 0| .0410 fmadd.d ft1,ft1,ft | 040c fmadd.d ft1,ft1 FP  | 0408 fmadd.d ft1,ft1,ft2 | ID-stall:EX1-busy
+   4605 | 041c fmadd.d ft1,ft1,ft2 | 0414 fmadd.d ft1,ft1,ft2 | 0| .0410 fmadd.d ft1,ft1,ft | 040c fmadd.d ft1,ft1 FP  |                          | ID-stall:EX1-busy
+   4606 | 0420 fmadd.d ft1,ft1,ft2 | 0418 fmadd.d ft1,ft1,ft2 | 2| .0410 fmadd.d ft1,ft1,ft | 040c fmadd.d ft1,ft1 FP  |                          | ID-stall:EX1-busy
+   4607 | 0424 fmadd.d ft1,ft1,ft2 | 041c fmadd.d ft1,ft1,ft2 | 4| .0410 fmadd.d ft1,ft1,ft | 040c fmadd.d ft1,ft1 FP  |                          | ID-stall:EX1-busy
+   4608 |                          | 0420 fmadd.d ft1,ft1,ft2 | 6| .0410 fmadd.d ft1,ft1,ft | 040c fmadd.d ft1,ft1 FP  |                          | ID-stall:EX1-busy
+   4609 |                          | 0420 fmadd.d ft1,ft1,ft2 | 6| >0410 fmadd.d ft1,ft1,ft | 040c fmadd.d ft1,ft1 FP  |                          | 
+   4610 | 0424 fmadd.d ft1,ft1,ft2 | 0420 fmadd.d ft1,ft1,ft2 | 4| .0414 fmadd.d ft1,ft1,ft | 0410 fmadd.d ft1,ft1 FP  | 040c fmadd.d ft1,ft1,ft2 | ID-stall:EX1-busy
+   4611 | 0428 fmadd.d ft1,ft1,ft2 |                          | 6| .0414 fmadd.d ft1,ft1,ft | 0410 fmadd.d ft1,ft1 FP  |                          | ID-stall:EX1-busy
+   4612 |                          | 0424 fmadd.d ft1,ft1,ft2 | 6| .0414 fmadd.d ft1,ft1,ft | 0410 fmadd.d ft1,ft1 FP  |                          | ID-stall:EX1-busy
+   4613 |                          | 0424 fmadd.d ft1,ft1,ft2 | 6| .0414 fmadd.d ft1,ft1,ft | 0410 fmadd.d ft1,ft1 FP  |                          | ID-stall:EX1-busy
+   4614 |                          | 0424 fmadd.d ft1,ft1,ft2 | 6| .0414 fmadd.d ft1,ft1,ft | 0410 fmadd.d ft1,ft1 FP  |                          | ID-stall:EX1-busy
+   4615 |                          | 0424 fmadd.d ft1,ft1,ft2 | 6| >0414 fmadd.d ft1,ft1,ft | 0410 fmadd.d ft1,ft1 FP  |                          | 
+   4616 | 0428 fmadd.d ft1,ft1,ft2 | 0424 fmadd.d ft1,ft1,ft2 | 4| .0418 fmadd.d ft1,ft1,ft | 0414 fmadd.d ft1,ft1 FP  | 0410 fmadd.d ft1,ft1,ft2 | ID-stall:EX1-busy
+   4617 | 042c fmadd.d ft1,ft1,ft2 |                          | 6| .0418 fmadd.d ft1,ft1,ft | 0414 fmadd.d ft1,ft1 FP  |                          | ID-stall:EX1-busy
+   4618 |                          | 0428 fmadd.d ft1,ft1,ft2 | 6| .0418 fmadd.d ft1,ft1,ft | 0414 fmadd.d ft1,ft1 FP  |                          | ID-stall:EX1-busy
+   4619 |                          | 0428 fmadd.d ft1,ft1,ft2 | 6| .0418 fmadd.d ft1,ft1,ft | 0414 fmadd.d ft1,ft1 FP  |                          | ID-stall:EX1-busy
+   4620 |                          | 0428 fmadd.d ft1,ft1,ft2 | 6| .0418 fmadd.d ft1,ft1,ft | 0414 fmadd.d ft1,ft1 FP  |                          | ID-stall:EX1-busy
+   4621 |                          | 0428 fmadd.d ft1,ft1,ft2 | 6| >0418 fmadd.d ft1,ft1,ft | 0414 fmadd.d ft1,ft1 FP  |                          | 
+   4622 | 042c fmadd.d ft1,ft1,ft2 | 0428 fmadd.d ft1,ft1,ft2 | 4| .041c fmadd.d ft1,ft1,ft | 0418 fmadd.d ft1,ft1 FP  | 0414 fmadd.d ft1,ft1,ft2 | ID-stall:EX1-busy
+   4623 | 0430 fmadd.d ft1,ft1,ft2 |                          | 6| .041c fmadd.d ft1,ft1,ft | 0418 fmadd.d ft1,ft1 FP  |                          | ID-stall:EX1-busy
+   4624 |                          | 042c fmadd.d ft1,ft1,ft2 | 6| .041c fmadd.d ft1,ft1,ft | 0418 fmadd.d ft1,ft1 FP  |                          | ID-stall:EX1-busy
+   4625 |                          | 042c fmadd.d ft1,ft1,ft2 | 6| .041c fmadd.d ft1,ft1,ft | 0418 fmadd.d ft1,ft1 FP  |                          | ID-stall:EX1-busy
+   4626 |                          | 042c fmadd.d ft1,ft1,ft2 | 6| .041c fmadd.d ft1,ft1,ft | 0418 fmadd.d ft1,ft1 FP  |                          | ID-stall:EX1-busy
+   4627 |                          | 042c fmadd.d ft1,ft1,ft2 | 6| >041c fmadd.d ft1,ft1,ft | 0418 fmadd.d ft1,ft1 FP  |                          | 
+   4628 | 0430 fmadd.d ft1,ft1,ft2 | 042c fmadd.d ft1,ft1,ft2 | 4| .0420 fmadd.d ft1,ft1,ft | 041c fmadd.d ft1,ft1 FP  | 0418 fmadd.d ft1,ft1,ft2 | ID-stall:EX1-busy
+   4629 | 0434 fmadd.d ft1,ft1,ft2 |                          | 6| .0420 fmadd.d ft1,ft1,ft | 041c fmadd.d ft1,ft1 FP  |                          | ID-stall:EX1-busy
+   4630 |                          | 0430 fmadd.d ft1,ft1,ft2 | 6| .0420 fmadd.d ft1,ft1,ft | 041c fmadd.d ft1,ft1 FP  |                          | ID-stall:EX1-busy
+   4631 |                          | 0430 fmadd.d ft1,ft1,ft2 | 6| .0420 fmadd.d ft1,ft1,ft | 041c fmadd.d ft1,ft1 FP  |                          | ID-stall:EX1-busy
+   4632 |                          | 0430 fmadd.d ft1,ft1,ft2 | 6| .0420 fmadd.d ft1,ft1,ft | 041c fmadd.d ft1,ft1 FP  |                          | ID-stall:EX1-busy
+   4633 |                          | 0430 fmadd.d ft1,ft1,ft2 | 6| >0420 fmadd.d ft1,ft1,ft | 041c fmadd.d ft1,ft1 FP  |                          | 
+   4634 | 0434 fmadd.d ft1,ft1,ft2 | 0430 fmadd.d ft1,ft1,ft2 | 4| .0424 fmadd.d ft1,ft1,ft | 0420 fmadd.d ft1,ft1 FP  | 041c fmadd.d ft1,ft1,ft2 | ID-stall:EX1-busy
+   4635 | 0438 fmadd.d ft1,ft1,ft2 |                          | 6| .0424 fmadd.d ft1,ft1,ft | 0420 fmadd.d ft1,ft1 FP  |                          | ID-stall:EX1-busy
+   4636 |                          | 0434 fmadd.d ft1,ft1,ft2 | 6| .0424 fmadd.d ft1,ft1,ft | 0420 fmadd.d ft1,ft1 FP  |                          | ID-stall:EX1-busy
+   4637 |                          | 0434 fmadd.d ft1,ft1,ft2 | 6| .0424 fmadd.d ft1,ft1,ft | 0420 fmadd.d ft1,ft1 FP  |                          | ID-stall:EX1-busy
+   4638 |                          | 0434 fmadd.d ft1,ft1,ft2 | 6| .0424 fmadd.d ft1,ft1,ft | 0420 fmadd.d ft1,ft1 FP  |                          | ID-stall:EX1-busy
+   4639 |                          | 0434 fmadd.d ft1,ft1,ft2 | 6| >0424 fmadd.d ft1,ft1,ft | 0420 fmadd.d ft1,ft1 FP  |                          | 
+   4640 | 0438 fmadd.d ft1,ft1,ft2 | 0434 fmadd.d ft1,ft1,ft2 | 4| .0428 fmadd.d ft1,ft1,ft | 0424 fmadd.d ft1,ft1 FP  | 0420 fmadd.d ft1,ft1,ft2 | ID-stall:EX1-busy
+   4641 | 043c fmadd.d ft1,ft1,ft2 |                          | 6| .0428 fmadd.d ft1,ft1,ft | 0424 fmadd.d ft1,ft1 FP  |                          | ID-stall:EX1-busy
+   4642 |                          | 0438 fmadd.d ft1,ft1,ft2 | 6| .0428 fmadd.d ft1,ft1,ft | 0424 fmadd.d ft1,ft1 FP  |                          | ID-stall:EX1-busy
+   4643 |                          | 0438 fmadd.d ft1,ft1,ft2 | 6| .0428 fmadd.d ft1,ft1,ft | 0424 fmadd.d ft1,ft1 FP  |                          | ID-stall:EX1-busy
+   4644 |                          | 0438 fmadd.d ft1,ft1,ft2 | 6| .0428 fmadd.d ft1,ft1,ft | 0424 fmadd.d ft1,ft1 FP  |                          | ID-stall:EX1-busy
+   4645 |                          | 0438 fmadd.d ft1,ft1,ft2 | 6| >0428 fmadd.d ft1,ft1,ft | 0424 fmadd.d ft1,ft1 FP  |                          | 
+   4646 | 043c fmadd.d ft1,ft1,ft2 | 0438 fmadd.d ft1,ft1,ft2 | 4| .042c fmadd.d ft1,ft1,ft | 0428 fmadd.d ft1,ft1 FP  | 0424 fmadd.d ft1,ft1,ft2 | ID-stall:EX1-busy
+   4647 | 0440 fmadd.d ft1,ft1,ft2 |                          | 6| .042c fmadd.d ft1,ft1,ft | 0428 fmadd.d ft1,ft1 FP  |                          | ID-stall:EX1-busy
+   4648 |                          | 043c fmadd.d ft1,ft1,ft2 | 6| .042c fmadd.d ft1,ft1,ft | 0428 fmadd.d ft1,ft1 FP  |                          | ID-stall:EX1-busy
+   4649 |                          | 043c fmadd.d ft1,ft1,ft2 | 6| .042c fmadd.d ft1,ft1,ft | 0428 fmadd.d ft1,ft1 FP  |                          | ID-stall:EX1-busy I$-miss
+   4650 |                          | 043c fmadd.d ft1,ft1,ft2 | 6| .042c fmadd.d ft1,ft1,ft | 0428 fmadd.d ft1,ft1 FP  |                          | ID-stall:EX1-busy
+   4651 |                          | 043c fmadd.d ft1,ft1,ft2 | 6| >042c fmadd.d ft1,ft1,ft | 0428 fmadd.d ft1,ft1 FP  |                          | 
+   4652 |                          | 043c fmadd.d ft1,ft1,ft2 | 4| .0430 fmadd.d ft1,ft1,ft | 042c fmadd.d ft1,ft1 FP  | 0428 fmadd.d ft1,ft1,ft2 | ID-stall:EX1-busy
+   4653 |                          |                          | 6| .0430 fmadd.d ft1,ft1,ft | 042c fmadd.d ft1,ft1 FP  |                          | ID-stall:EX1-busy
+   4654 |                          |                          | 6| .0430 fmadd.d ft1,ft1,ft | 042c fmadd.d ft1,ft1 FP  |                          | ID-stall:EX1-busy
+   4655 |                          | 0440 fmadd.d ft1,ft1,ft2 | 6| .0430 fmadd.d ft1,ft1,ft | 042c fmadd.d ft1,ft1 FP  |                          | ID-stall:EX1-busy
+   4656 |                          | 0440 fmadd.d ft1,ft1,ft2 | 6| .0430 fmadd.d ft1,ft1,ft | 042c fmadd.d ft1,ft1 FP  |                          | ID-stall:EX1-busy
+   4657 |                          | 0440 fmadd.d ft1,ft1,ft2 | 6| >0430 fmadd.d ft1,ft1,ft | 042c fmadd.d ft1,ft1 FP  |                          | 
+   4658 |                          | 0440 fmadd.d ft1,ft1,ft2 | 4| .0434 fmadd.d ft1,ft1,ft | 0430 fmadd.d ft1,ft1 FP  | 042c fmadd.d ft1,ft1,ft2 | ID-stall:EX1-busy
+   4659 |                          |                          | 6| .0434 fmadd.d ft1,ft1,ft | 0430 fmadd.d ft1,ft1 FP  |                          | ID-stall:EX1-busy
+   4660 |                          |                          | 6| .0434 fmadd.d ft1,ft1,ft | 0430 fmadd.d ft1,ft1 FP  |                          | ID-stall:EX1-busy
+   4661 | 0444 fmv.x.d t1,ft1      |                          | 6| .0434 fmadd.d ft1,ft1,ft | 0430 fmadd.d ft1,ft1 FP  |                          | ID-stall:EX1-busy
+   4662 | 0448 csrr t0,mcycle      |                          | 6| .0434 fmadd.d ft1,ft1,ft | 0430 fmadd.d ft1,ft1 FP  |                          | ID-stall:EX1-busy
+   4663 |                          | 0444 fmv.x.d t1,ft1      | 6| >0434 fmadd.d ft1,ft1,ft | 0430 fmadd.d ft1,ft1 FP  |                          | 
+   4664 | 0448 csrr t0,mcycle      | 0444 fmv.x.d t1,ft1      | 4| .0438 fmadd.d ft1,ft1,ft | 0434 fmadd.d ft1,ft1 FP  | 0430 fmadd.d ft1,ft1,ft2 | ID-stall:EX1-busy
+   4665 | 044c sub s0,t0,s0        |                          | 6| .0438 fmadd.d ft1,ft1,ft | 0434 fmadd.d ft1,ft1 FP  |                          | ID-stall:EX1-busy
+   4666 |                          | 0448 csrr t0,mcycle      | 6| .0438 fmadd.d ft1,ft1,ft | 0434 fmadd.d ft1,ft1 FP  |                          | ID-stall:EX1-busy
+   4667 |                          | 0448 csrr t0,mcycle      | 6| .0438 fmadd.d ft1,ft1,ft | 0434 fmadd.d ft1,ft1 FP  |                          | ID-stall:EX1-busy
+   4668 |                          | 0448 csrr t0,mcycle      | 6| .0438 fmadd.d ft1,ft1,ft | 0434 fmadd.d ft1,ft1 FP  |                          | ID-stall:EX1-busy
+   4669 |                          | 0448 csrr t0,mcycle      | 6| >0438 fmadd.d ft1,ft1,ft | 0434 fmadd.d ft1,ft1 FP  |                          | 
+   4670 | 044c sub s0,t0,s0        | 0448 csrr t0,mcycle      | 4| .043c fmadd.d ft1,ft1,ft | 0438 fmadd.d ft1,ft1 FP  | 0434 fmadd.d ft1,ft1,ft2 | ID-stall:EX1-busy
+   4671 | 0450 li t6,0             |                          | 6| .043c fmadd.d ft1,ft1,ft | 0438 fmadd.d ft1,ft1 FP  |                          | ID-stall:EX1-busy
+   4672 |                          | 044c sub s0,t0,s0        | 6| .043c fmadd.d ft1,ft1,ft | 0438 fmadd.d ft1,ft1 FP  |                          | ID-stall:EX1-busy
+   4673 |                          | 044c sub s0,t0,s0        | 6| .043c fmadd.d ft1,ft1,ft | 0438 fmadd.d ft1,ft1 FP  |                          | ID-stall:EX1-busy
+   4674 |                          | 044c sub s0,t0,s0        | 6| .043c fmadd.d ft1,ft1,ft | 0438 fmadd.d ft1,ft1 FP  |                          | ID-stall:EX1-busy
+   4675 |                          | 044c sub s0,t0,s0        | 6| >043c fmadd.d ft1,ft1,ft | 0438 fmadd.d ft1,ft1 FP  |                          | 
+   4676 | 0450 li t6,0             | 044c sub s0,t0,s0        | 4| .0440 fmadd.d ft1,ft1,ft | 043c fmadd.d ft1,ft1 FP  | 0438 fmadd.d ft1,ft1,ft2 | ID-stall:EX1-busy
+   4677 | 0454 li a0,1896          |                          | 6| .0440 fmadd.d ft1,ft1,ft | 043c fmadd.d ft1,ft1 FP  |                          | ID-stall:EX1-busy
+   4678 |                          | 0450 li t6,0             | 6| .0440 fmadd.d ft1,ft1,ft | 043c fmadd.d ft1,ft1 FP  |                          | ID-stall:EX1-busy
+   4679 |                          | 0450 li t6,0             | 6| .0440 fmadd.d ft1,ft1,ft | 043c fmadd.d ft1,ft1 FP  |                          | ID-stall:EX1-busy
+   4680 |                          | 0450 li t6,0             | 6| .0440 fmadd.d ft1,ft1,ft | 043c fmadd.d ft1,ft1 FP  |                          | ID-stall:EX1-busy
+   4681 |                          | 0450 li t6,0             | 6| >0440 fmadd.d ft1,ft1,ft | 043c fmadd.d ft1,ft1 FP  |                          | 
+   4682 | 0454 li a0,1896          | 0450 li t6,0             | 4| .0444 fmv.x.d t1,ft1     | 0440 fmadd.d ft1,ft1 FP  | 043c fmadd.d ft1,ft1,ft2 | ID-stall:EX1-busy
+   4683 | 0458 jal 21e             |                          | 6| .0444 fmv.x.d t1,ft1     | 0440 fmadd.d ft1,ft1 FP  |                          | ID-stall:EX1-busy
+   4684 |                          | 0454 li a0,1896          | 6| .0444 fmv.x.d t1,ft1     | 0440 fmadd.d ft1,ft1 FP  |                          | ID-stall:EX1-busy
+   4685 |                          | 0454 li a0,1896          | 6| .0444 fmv.x.d t1,ft1     | 0440 fmadd.d ft1,ft1 FP  |                          | ID-stall:EX1-busy
+   4686 |                          | 0454 li a0,1896          | 6| .0444 fmv.x.d t1,ft1     | 0440 fmadd.d ft1,ft1 FP  |                          | ID-stall:EX1-busy
+   4687 |                          | 0454 li a0,1896          | 6| >0444 fmv.x.d t1,ft1     | 0440 fmadd.d ft1,ft1 FP  |                          | 
+   4688 | 0458 jal 21e             | 0454 li a0,1896          | 4| .0448 csrr t0,mcycle     | 0444 fmv.x.d t1,ft1  FP  | 0440 fmadd.d ft1,ft1,ft2 | ID-stall:EX1-busy,CP0/fence
+   4689 | 045c li t6,5             |                          | 6| .0448 csrr t0,mcycle     | 0444 fmv.x.d t1,ft1  FP  |                          | ID-stall:EX1-busy,CP0/fence
+   4690 |                          | 0458 jal 21e             | 6| .0448 csrr t0,mcycle     | 0444 fmv.x.d t1,ft1  FP  |                          | IP-redirect->021e ID-stall:EX1-busy,CP0/fence
+   4691 |                          | 0458 jal 21e             | 6| .0448 csrr t0,mcycle     | 0444 fmv.x.d t1,ft1  FP  |                          | IP-redirect->021e ID-stall:EX1-busy,CP0/fence
+   4692 |                          | 0458 jal 21e             | 6| .0448 csrr t0,mcycle     | 0444 fmv.x.d t1,ft1  FP  |                          | IP-redirect->021e ID-stall:EX1-busy,CP0/fence
+   4693 |                          | 0458 jal 21e             | 6| .0448 csrr t0,mcycle     | 0444 fmv.x.d t1,ft1  FP  |                          | IP-redirect->021e ID-stall:CP0/fence
+   4694 |                          | 0458 jal 21e             | 6| .0448 csrr t0,mcycle     |                          | 0444 fmv.x.d t1,ft1      | IP-redirect->021e ID-stall:CP0/fence
+   4695 |                          | 0458 jal 21e             | 6| .0448 csrr t0,mcycle     |                          |                          | IP-redirect->021e ID-stall:CP0/fence
+   4696 |                          | 0458 jal 21e             | 6| .0448 csrr t0,mcycle     |                          |                          | IP-redirect->021e ID-stall:CP0/fence
+   4697 |                          | 0458 jal 21e             | 6| .0448 csrr t0,mcycle     |                          |                          | IP-redirect->021e ID-stall:CP0/fence
+   4698 |                          | 0458 jal 21e             | 6| .0448 csrr t0,mcycle     |                          |                          | IP-redirect->021e ID-stall:CP0/fence
+   4699 |                          | 0458 jal 21e             | 6| .0448 csrr t0,mcycle     |                          |                          | IP-redirect->021e ID-stall:CP0/fence
+   4700 |                          | 0458 jal 21e             | 6| .0448 csrr t0,mcycle     |                          |                          | IP-redirect->021e ID-stall:CP0/fence
+   4701 |                          | 0458 jal 21e             | 6| >0448 csrr t0,mcycle     |                          |                          | IP-redirect->021e
+   4702 | 021e addi sp,sp,-16      | 0458 jal 21e             | 4| .044c sub s0,t0,s0       | 0448 csrr t0,mcycle  CP0 |                          | IP-redirect->021e ID-stall:RAW
+   4703 | 021e addi sp,sp,-16      |                          | 6| >044c sub s0,t0,s0       |                          | 0448 csrr t0,mcycle      | 
+   4704 | 0220 sd ra,0(sp)         |                          | 5| >0450 li t6,0            | 044c sub s0,t0,s0    ALU |                          | 
+   4705 | 0224 mv a3,a0            | 021e addi sp,sp,-16      | 4| >0452 mv a1,s0           | 0450 li t6,0         ALU | 044c sub s0,t0,s0        | 
+   4706 | 0228 ?                   | 0220 sd ra,0(sp)         | 3| >045e csrr s0,mcycle     | 0452 mv a1,s0        ALU | 0450 li t6,0             | 
+----------------------------------------------------------------------------------------------------------------------------------------------------------------
+summary: cycles=117 retired=21 IPC=0.179 | icache_miss=1, ip_redirect=13, retired=21, stall_CP0/fence=13, stall_EX1-busy=75, stall_RAW=1
+
+================================================================================================================================================================
+MARK 5   cycles 5089 .. 6130  (1042 cycles)
+================================================================================================================================================================
+    cyc | IF (fetch)               | IP (pred)                |IB| ID                       | EX1                      | RETIRE                   | events
+----------------------------------------------------------------------------------------------------------------------------------------------------------------
+   5089 | 0474 li a0,1915          | 046c ?                   | 4| >045e csrr s0,mcycle     |                          |                          | 
+   5090 |                          | 0470 ?                   | 4| >0462 fdiv.d ft1,ft2,ft4 | 045e csrr s0,mcycle  CP0 |                          | 
+   5091 | 0474 li a0,1915          | 0470 ?                   | 2| >0466 fmv.x.d t1,ft1     | 0462 fdiv.d ft1,ft2, FP  | 045e csrr s0,mcycle      | 
+   5092 | 0478 jal 21e             |                          | 3| .046a csrr t0,mcycle     | 0466 fmv.x.d t1,ft1  FP  | 0462 fdiv.d ft1,ft2,ft4  | ID-stall:CP0/fence
+   5093 | 047c csrr s0,mcycle      | 0474 li a0,1915          | 3| .046a csrr t0,mcycle     |                          | 0466 fmv.x.d t1,ft1      | ID-stall:CP0/fence
+   5094 |                          | 0478 jal 21e             | 5| .046a csrr t0,mcycle     |                          |                          | IP-redirect->021e ID-stall:CP0/fence
+   5095 |                          | 0478 jal 21e             | 5| .046a csrr t0,mcycle     |                          |                          | IP-redirect->021e ID-stall:CP0/fence
+   5096 |                          | 0478 jal 21e             | 5| .046a csrr t0,mcycle     |                          |                          | IP-redirect->021e ID-stall:CP0/fence
+   5097 |                          | 0478 jal 21e             | 5| .046a csrr t0,mcycle     |                          |                          | IP-redirect->021e ID-stall:CP0/fence
+   5098 |                          | 0478 jal 21e             | 5| .046a csrr t0,mcycle     |                          |                          | IP-redirect->021e ID-stall:CP0/fence
+   5099 |                          | 0478 jal 21e             | 5| .046a csrr t0,mcycle     |                          |                          | IP-redirect->021e ID-stall:CP0/fence
+   5100 |                          | 0478 jal 21e             | 5| .046a csrr t0,mcycle     |                          |                          | IP-redirect->021e ID-stall:CP0/fence
+   5101 |                          | 0478 jal 21e             | 5| .046a csrr t0,mcycle     |                          |                          | IP-redirect->021e ID-stall:CP0/fence
+   5102 |                          | 0478 jal 21e             | 5| .046a csrr t0,mcycle     |                          |                          | IP-redirect->021e ID-stall:CP0/fence
+   5103 |                          | 0478 jal 21e             | 5| .046a csrr t0,mcycle     |                          |                          | IP-redirect->021e ID-stall:CP0/fence
+   5104 |                          | 0478 jal 21e             | 5| .046a csrr t0,mcycle     |                          |                          | IP-redirect->021e ID-stall:CP0/fence
+   5105 |                          | 0478 jal 21e             | 5| .046a csrr t0,mcycle     |                          |                          | IP-redirect->021e ID-stall:CP0/fence
+   5106 |                          | 0478 jal 21e             | 5| .046a csrr t0,mcycle     |                          |                          | IP-redirect->021e ID-stall:CP0/fence
+   5107 |                          | 0478 jal 21e             | 5| .046a csrr t0,mcycle     |                          |                          | IP-redirect->021e ID-stall:CP0/fence
+   5108 |                          | 0478 jal 21e             | 5| .046a csrr t0,mcycle     |                          |                          | IP-redirect->021e ID-stall:CP0/fence
+   5109 |                          | 0478 jal 21e             | 5| .046a csrr t0,mcycle     |                          |                          | IP-redirect->021e ID-stall:CP0/fence
+   5110 |                          | 0478 jal 21e             | 5| .046a csrr t0,mcycle     |                          |                          | IP-redirect->021e ID-stall:CP0/fence
+   5111 |                          | 0478 jal 21e             | 5| .046a csrr t0,mcycle     |                          |                          | IP-redirect->021e ID-stall:CP0/fence
+   5112 |                          | 0478 jal 21e             | 5| .046a csrr t0,mcycle     |                          |                          | IP-redirect->021e ID-stall:CP0/fence
+   5113 |                          | 0478 jal 21e             | 5| .046a csrr t0,mcycle     |                          |                          | IP-redirect->021e ID-stall:CP0/fence
+   5114 |                          | 0478 jal 21e             | 5| .046a csrr t0,mcycle     |                          |                          | IP-redirect->021e ID-stall:CP0/fence
+   5115 |                          | 0478 jal 21e             | 5| .046a csrr t0,mcycle     |                          |                          | IP-redirect->021e ID-stall:CP0/fence
+   5116 |                          | 0478 jal 21e             | 5| .046a csrr t0,mcycle     |                          |                          | IP-redirect->021e ID-stall:CP0/fence
+   5117 |                          | 0478 jal 21e             | 5| .046a csrr t0,mcycle     |                          |                          | IP-redirect->021e ID-stall:CP0/fence
+   5118 |                          | 0478 jal 21e             | 5| .046a csrr t0,mcycle     |                          |                          | IP-redirect->021e ID-stall:CP0/fence
+   5119 |                          | 0478 jal 21e             | 5| .046a csrr t0,mcycle     |                          |                          | IP-redirect->021e ID-stall:CP0/fence
+   5120 |                          | 0478 jal 21e             | 5| .046a csrr t0,mcycle     |                          |                          | IP-redirect->021e ID-stall:CP0/fence
+   5121 |                          | 0478 jal 21e             | 5| .046a csrr t0,mcycle     |                          |                          | IP-redirect->021e ID-stall:CP0/fence
+   5122 |                          | 0478 jal 21e             | 5| .046a csrr t0,mcycle     |                          |                          | IP-redirect->021e ID-stall:CP0/fence
+   5123 |                          | 0478 jal 21e             | 5| .046a csrr t0,mcycle     |                          |                          | IP-redirect->021e ID-stall:CP0/fence
+   5124 |                          | 0478 jal 21e             | 5| .046a csrr t0,mcycle     |                          |                          | IP-redirect->021e ID-stall:CP0/fence
+   5125 |                          | 0478 jal 21e             | 5| .046a csrr t0,mcycle     |                          |                          | IP-redirect->021e ID-stall:CP0/fence
+   5126 |                          | 0478 jal 21e             | 5| .046a csrr t0,mcycle     |                          |                          | IP-redirect->021e ID-stall:CP0/fence
+   5127 |                          | 0478 jal 21e             | 5| .046a csrr t0,mcycle     |                          |                          | IP-redirect->021e ID-stall:CP0/fence
+   5128 |                          | 0478 jal 21e             | 5| >046a csrr t0,mcycle     |                          |                          | IP-redirect->021e
+   5129 | 021e addi sp,sp,-16      | 0478 jal 21e             | 3| .046e sub s0,t0,s0       | 046a csrr t0,mcycle  CP0 |                          | IP-redirect->021e ID-stall:RAW
+   5130 | 021e addi sp,sp,-16      |                          | 5| >046e sub s0,t0,s0       |                          | 046a csrr t0,mcycle      | 
+   5131 | 0220 sd ra,0(sp)         |                          | 4| >0472 mv a1,s0           | 046e sub s0,t0,s0    ALU |                          | 
+   5132 | 0224 mv a3,a0            | 021e addi sp,sp,-16      | 2| >0474 li a0,1915         | 0472 mv a1,s0        ALU | 046e sub s0,t0,s0        | 
+   5133 | 0228 ?                   | 0220 sd ra,0(sp)         | 1| >0478 jal 21e            | 0474 li a0,1915      ALU | 0472 mv a1,s0            | 
+   5134 | 022c ?                   | 0224 mv a3,a0            | 2| >021e addi sp,sp,-16     | 0478 jal 21e         BJU | 0474 li a0,1915          | 
+   5135 | 0230 ?                   | 0228 ?                   | 2| >0220 sd ra,0(sp)        | 021e addi sp,sp,-16  ALU | 0478 jal 21e             | 
+   5136 | 0234 ?                   | 022c ?                   | 3| >0222 sd a1,8(sp)        | 0220 sd ra,0(sp)     LSU | 021e addi sp,sp,-16      | 
+   5137 | 0238 ?                   | 0230 ?                   | 4| >0224 mv a3,a0           | 0222 sd a1,8(sp)     LSU | 0220 sd ra,0(sp)         | DC:ST hit
+   5138 | 023c jal 1a2             | 0234 ?                   | 4| >0226 li a0,64           | 0224 mv a3,a0        ALU | 0222 sd a1,8(sp)         | DC:ST hit
+   5139 |                          | 0238 ?                   | 4| .022a csrw mscratch,a0   | 0226 li a0,64        ALU | 0224 mv a3,a0            | BTB-redirect ID-stall:CP0/fence
+   5140 |                          | 0238 ?                   | 4| .022a csrw mscratch,a0   |                          | 0226 li a0,64            | IP-redirect->023c ID-stall:CP0/fence
+   5141 |                          | 0238 ?                   | 4| >022a csrw mscratch,a0   |                          |                          | 
+   5142 | 023c jal 1a2             | 0238 ?                   | 2| .(flushed) csrw mscratch | 022a csrw mscratch,a CP0 |                          | ID-stall:CP0/fence
+   5143 | 0240 li a0,32            |                          | 5| .(flushed) csrw mscratch |                          | 022a csrw mscratch,a0    | ID-stall:CP0/fence RT-redirect->022e
+   5144 | 022e csrw mscratch,a0    |                          | 0|                          |                          |                          | 
+   5145 | 0230 ?                   |                          | 0|                          |                          |                          | ID-stall:other FLUSH
+   5146 | 0234 ?                   |                          | 0|                          |                          |                          | 
+   5147 | 0238 ?                   | 0230 ?                   | 0| >022e csrw mscratch,a0   |                          |                          | 
+   5148 | 023c jal 1a2             | 0234 ?                   | 0| >0232 li a0,32           | 022e csrw mscratch,a CP0 |                          | 
+   5149 | 01a2 mv t1,a0            | 0238 ?                   | 0| .(flushed) csrw mscratch | 0232 li a0,32        ALU | 022e csrw mscratch,a0    | BTB-redirect ID-stall:CP0/fence RT-redirect->0232
+   5150 | 0232 li a0,32            |                          | 0|                          |                          |                          | 
+   5151 | 0234 ?                   |                          | 0|                          |                          |                          | ID-stall:other FLUSH
+   5152 | 0238 ?                   |                          | 0|                          |                          |                          | 
+   5153 | 023c jal 1a2             | 0234 ?                   | 0| >0232 li a0,32           |                          |                          | 
+   5154 | 01a2 mv t1,a0            | 0238 ?                   | 0| .0236 csrw mscratch,a0   | 0232 li a0,32        ALU |                          | BTB-redirect ID-stall:CP0/fence
+   5155 | 01a4 lbu t2,0(t1)        | 023c jal 1a2             | 1| .0236 csrw mscratch,a0   |                          | 0232 li a0,32            | ID-stall:CP0/fence
+   5156 | 01a8 beqz t2,1b4         | 01a2 mv t1,a0            | 3| >0236 csrw mscratch,a0   |                          |                          | 
+   5157 | 01ac csrw mscratch,t2    | 01a4 lbu t2,0(t1)        | 3| >023a mv a0,a3           | 0236 csrw mscratch,a CP0 |                          | 
+   5158 | 01b0 addi t1,t1,1        | 01a8 beqz t2,1b4         | 3| >023a mv a0,a3           | 023a mv a0,a3        ALU | 0236 csrw mscratch,a0    | RT-redirect->023a
+   5159 | 023a mv a0,a3            |                          | 0|                          | 023a mv a0,a3        BJU |                          | BTB-redirect
+   5160 | 023c jal 1a2             |                          | 0|                          |                          |                          | ID-stall:other
+   5161 | 01a2 mv t1,a0            | 023a mv a0,a3            | 0| .(flushed) mv a0,a3      |                          |                          | BTB-redirect ID-stall:other FLUSH
+   5162 | 01a4 lbu t2,0(t1)        | 023c jal 1a2             | 0| >023a mv a0,a3           |                          |                          | 
+   5163 | 01a8 beqz t2,1b4         | 01a2 mv t1,a0            | 0| >023c jal 1a2            | 023a mv a0,a3        ALU |                          | 
+   5164 | 01ac csrw mscratch,t2    | 01a4 lbu t2,0(t1)        | 0| >01a2 mv t1,a0           | 023c jal 1a2         BJU | 023a mv a0,a3            | 
+   5165 | 01b0 addi t1,t1,1        | 01a8 beqz t2,1b4         | 0| >01a4 lbu t2,0(t1)       | 01a2 mv t1,a0        ALU | 023c jal 1a2             | 
+   5166 | 01a4 lbu t2,0(t1)        | 01ac csrw mscratch,t2    | 0| >01a8 beqz t2,1b4        | 01a4 lbu t2,0(t1)    LSU | 01a2 mv t1,a0            | BTB-redirect
+   5167 | 01a8 beqz t2,1b4         | 01b0 addi t1,t1,1        | 0| .01ac csrw mscratch,t2   | 01a8 beqz t2,1b4     BJU | 01a4 lbu t2,0(t1)        | ID-stall:CP0/fence DC:LD hit
+   5168 | 01ac csrw mscratch,t2    | 01a4 lbu t2,0(t1)        | 2| .01ac csrw mscratch,t2   |                          | 01a8 beqz t2,1b4         | ID-stall:CP0/fence BR-resolve:N
+   5169 | 01b0 addi t1,t1,1        | 01a8 beqz t2,1b4         | 4| >01ac csrw mscratch,t2   |                          |                          | 
+   5170 |                          | 01ac csrw mscratch,t2    | 5| >01b0 addi t1,t1,1       | 01ac csrw mscratch,t CP0 |                          | BTB-redirect
+   5171 | 01b0 addi t1,t1,1        | 01ac csrw mscratch,t2    | 4| >01b0 addi t1,t1,1       | 01b0 addi t1,t1,1    ALU | 01ac csrw mscratch,t2    | IP-redirect->01b0 RT-redirect->01b0
+   5172 | 01b0 addi t1,t1,1        |                          | 0|                          | 01b0 addi t1,t1,1    BJU |                          | 
+   5173 | 01a4 lbu t2,0(t1)        |                          | 0|                          |                          |                          | BTB-redirect ID-stall:other
+   5174 | 01a8 beqz t2,1b4         | 01b0 addi t1,t1,1        | 0| .(flushed) addi t1,t1,1  |                          |                          | ID-stall:other FLUSH
+   5175 | 01ac csrw mscratch,t2    | 01a4 lbu t2,0(t1)        | 1| >01b0 addi t1,t1,1       |                          |                          | 
+   5176 | 01b0 addi t1,t1,1        | 01a8 beqz t2,1b4         | 2| >01b2 j 1a4              | 01b0 addi t1,t1,1    ALU |                          | 
+   5177 | 01a4 lbu t2,0(t1)        | 01ac csrw mscratch,t2    | 2| >01a4 lbu t2,0(t1)       | 01b2 j 1a4           BJU | 01b0 addi t1,t1,1        | BTB-redirect
+   5178 | 01a8 beqz t2,1b4         | 01b0 addi t1,t1,1        | 2| >01a8 beqz t2,1b4        | 01a4 lbu t2,0(t1)    LSU | 01b2 j 1a4               | 
+   5179 | 01ac csrw mscratch,t2    | 01a4 lbu t2,0(t1)        | 2| .01ac csrw mscratch,t2   | 01a8 beqz t2,1b4     BJU | 01a4 lbu t2,0(t1)        | ID-stall:CP0/fence DC:LD hit
+   5180 | 01b0 addi t1,t1,1        | 01a8 beqz t2,1b4         | 4| .01ac csrw mscratch,t2   |                          | 01a8 beqz t2,1b4         | ID-stall:CP0/fence BR-resolve:N
+   5181 |                          | 01ac csrw mscratch,t2    | 6| >01ac csrw mscratch,t2   |                          |                          | BTB-redirect
+   5182 |                          | 01ac csrw mscratch,t2    | 5| >01b0 addi t1,t1,1       | 01ac csrw mscratch,t CP0 |                          | IP-redirect->01b0
+   5183 | 01b0 addi t1,t1,1        | 01ac csrw mscratch,t2    | 4| >01b0 addi t1,t1,1       | 01b0 addi t1,t1,1    ALU | 01ac csrw mscratch,t2    | RT-redirect->01b0
+   5184 | 01b0 addi t1,t1,1        |                          | 0|                          | 01b0 addi t1,t1,1    BJU |                          | 
+   5185 | 01a4 lbu t2,0(t1)        |                          | 0|                          |                          |                          | BTB-redirect ID-stall:other
+   5186 | 01a8 beqz t2,1b4         | 01b0 addi t1,t1,1        | 0| .(flushed) addi t1,t1,1  |                          |                          | ID-stall:other FLUSH
+   5187 | 01ac csrw mscratch,t2    | 01a4 lbu t2,0(t1)        | 1| >01b0 addi t1,t1,1       |                          |                          | 
+   5188 | 01b0 addi t1,t1,1        | 01a8 beqz t2,1b4         | 2| >01b2 j 1a4              | 01b0 addi t1,t1,1    ALU |                          | 
+   5189 | 01a4 lbu t2,0(t1)        | 01ac csrw mscratch,t2    | 2| >01a4 lbu t2,0(t1)       | 01b2 j 1a4           BJU | 01b0 addi t1,t1,1        | BTB-redirect
+   5190 | 01a8 beqz t2,1b4         | 01b0 addi t1,t1,1        | 2| >01a8 beqz t2,1b4        | 01a4 lbu t2,0(t1)    LSU | 01b2 j 1a4               | 
+   5191 | 01ac csrw mscratch,t2    | 01a4 lbu t2,0(t1)        | 2| .01ac csrw mscratch,t2   | 01a8 beqz t2,1b4     BJU | 01a4 lbu t2,0(t1)        | ID-stall:CP0/fence DC:LD hit
+   5192 | 01b0 addi t1,t1,1        | 01a8 beqz t2,1b4         | 4| .01ac csrw mscratch,t2   |                          | 01a8 beqz t2,1b4         | ID-stall:CP0/fence BR-resolve:N
+   5193 |                          | 01ac csrw mscratch,t2    | 6| >01ac csrw mscratch,t2   |                          |                          | BTB-redirect
+   5194 |                          | 01ac csrw mscratch,t2    | 5| >01b0 addi t1,t1,1       | 01ac csrw mscratch,t CP0 |                          | IP-redirect->01b0
+   5195 | 01b0 addi t1,t1,1        | 01ac csrw mscratch,t2    | 4| >01b0 addi t1,t1,1       | 01b0 addi t1,t1,1    ALU | 01ac csrw mscratch,t2    | RT-redirect->01b0
+   5196 | 01b0 addi t1,t1,1        |                          | 0|                          | 01b0 addi t1,t1,1    BJU |                          | 
+   5197 | 01a4 lbu t2,0(t1)        |                          | 0|                          |                          |                          | BTB-redirect ID-stall:other
+   5198 | 01a8 beqz t2,1b4         | 01b0 addi t1,t1,1        | 0| .(flushed) addi t1,t1,1  |                          |                          | ID-stall:other FLUSH
+   5199 | 01ac csrw mscratch,t2    | 01a4 lbu t2,0(t1)        | 1| >01b0 addi t1,t1,1       |                          |                          | 
+   5200 | 01b0 addi t1,t1,1        | 01a8 beqz t2,1b4         | 2| >01b2 j 1a4              | 01b0 addi t1,t1,1    ALU |                          | 
+   5201 | 01a4 lbu t2,0(t1)        | 01ac csrw mscratch,t2    | 2| >01a4 lbu t2,0(t1)       | 01b2 j 1a4           BJU | 01b0 addi t1,t1,1        | BTB-redirect
+   5202 | 01a8 beqz t2,1b4         | 01b0 addi t1,t1,1        | 2| >01a8 beqz t2,1b4        | 01a4 lbu t2,0(t1)    LSU | 01b2 j 1a4               | 
+   5203 | 01ac csrw mscratch,t2    | 01a4 lbu t2,0(t1)        | 2| .01ac csrw mscratch,t2   | 01a8 beqz t2,1b4     BJU | 01a4 lbu t2,0(t1)        | ID-stall:CP0/fence DC:LD hit
+   5204 | 01b0 addi t1,t1,1        | 01a8 beqz t2,1b4         | 4| .01ac csrw mscratch,t2   |                          | 01a8 beqz t2,1b4         | ID-stall:CP0/fence BR-resolve:N
+   5205 |                          | 01ac csrw mscratch,t2    | 6| >01ac csrw mscratch,t2   |                          |                          | BTB-redirect
+   5206 |                          | 01ac csrw mscratch,t2    | 5| >01b0 addi t1,t1,1       | 01ac csrw mscratch,t CP0 |                          | IP-redirect->01b0
+   5207 | 01b0 addi t1,t1,1        | 01ac csrw mscratch,t2    | 4| >01b0 addi t1,t1,1       | 01b0 addi t1,t1,1    ALU | 01ac csrw mscratch,t2    | RT-redirect->01b0
+   5208 | 01b0 addi t1,t1,1        |                          | 0|                          | 01b0 addi t1,t1,1    BJU |                          | 
+   5209 | 01a4 lbu t2,0(t1)        |                          | 0|                          |                          |                          | BTB-redirect ID-stall:other
+   5210 | 01a8 beqz t2,1b4         | 01b0 addi t1,t1,1        | 0| .(flushed) addi t1,t1,1  |                          |                          | ID-stall:other FLUSH
+   5211 | 01ac csrw mscratch,t2    | 01a4 lbu t2,0(t1)        | 1| >01b0 addi t1,t1,1       |                          |                          | 
+   5212 | 01b0 addi t1,t1,1        | 01a8 beqz t2,1b4         | 2| >01b2 j 1a4              | 01b0 addi t1,t1,1    ALU |                          | 
+   5213 | 01a4 lbu t2,0(t1)        | 01ac csrw mscratch,t2    | 2| >01a4 lbu t2,0(t1)       | 01b2 j 1a4           BJU | 01b0 addi t1,t1,1        | BTB-redirect
+   5214 | 01a8 beqz t2,1b4         | 01b0 addi t1,t1,1        | 2| >01a8 beqz t2,1b4        | 01a4 lbu t2,0(t1)    LSU | 01b2 j 1a4               | 
+   5215 | 01ac csrw mscratch,t2    | 01a4 lbu t2,0(t1)        | 2| .01ac csrw mscratch,t2   | 01a8 beqz t2,1b4     BJU | 01a4 lbu t2,0(t1)        | ID-stall:CP0/fence DC:LD hit
+   5216 | 01b0 addi t1,t1,1        | 01a8 beqz t2,1b4         | 4| .01ac csrw mscratch,t2   |                          | 01a8 beqz t2,1b4         | ID-stall:CP0/fence BR-resolve:N
+   5217 |                          | 01ac csrw mscratch,t2    | 6| >01ac csrw mscratch,t2   |                          |                          | BTB-redirect
+   5218 |                          | 01ac csrw mscratch,t2    | 5| >01b0 addi t1,t1,1       | 01ac csrw mscratch,t CP0 |                          | IP-redirect->01b0
+   5219 | 01b0 addi t1,t1,1        | 01ac csrw mscratch,t2    | 4| >01b0 addi t1,t1,1       | 01b0 addi t1,t1,1    ALU | 01ac csrw mscratch,t2    | RT-redirect->01b0
+   5220 | 01b0 addi t1,t1,1        |                          | 0|                          | 01b0 addi t1,t1,1    BJU |                          | 
+   5221 | 01a4 lbu t2,0(t1)        |                          | 0|                          |                          |                          | BTB-redirect ID-stall:other
+   5222 | 01a8 beqz t2,1b4         | 01b0 addi t1,t1,1        | 0| .(flushed) addi t1,t1,1  |                          |                          | ID-stall:other FLUSH
+   5223 | 01ac csrw mscratch,t2    | 01a4 lbu t2,0(t1)        | 1| >01b0 addi t1,t1,1       |                          |                          | 
+   5224 | 01b0 addi t1,t1,1        | 01a8 beqz t2,1b4         | 2| >01b2 j 1a4              | 01b0 addi t1,t1,1    ALU |                          | 
+   5225 | 01a4 lbu t2,0(t1)        | 01ac csrw mscratch,t2    | 2| >01a4 lbu t2,0(t1)       | 01b2 j 1a4           BJU | 01b0 addi t1,t1,1        | BTB-redirect
+   5226 | 01a8 beqz t2,1b4         | 01b0 addi t1,t1,1        | 2| >01a8 beqz t2,1b4        | 01a4 lbu t2,0(t1)    LSU | 01b2 j 1a4               | 
+   5227 | 01ac csrw mscratch,t2    | 01a4 lbu t2,0(t1)        | 2| .01ac csrw mscratch,t2   | 01a8 beqz t2,1b4     BJU | 01a4 lbu t2,0(t1)        | ID-stall:RAW,CP0/fence DC:LD MISS
+   5228 | 01b0 addi t1,t1,1        | 01a8 beqz t2,1b4         | 4| .01ac csrw mscratch,t2   |                          |                          | ID-stall:RAW,CP0/fence
+   5229 |                          | 01ac csrw mscratch,t2    | 6| .01ac csrw mscratch,t2   |                          |                          | BTB-redirect ID-stall:RAW,CP0/fence
+   5230 |                          | 01ac csrw mscratch,t2    | 6| .01ac csrw mscratch,t2   |                          |                          | IP-redirect->01b0 ID-stall:RAW,CP0/fence
+   5231 |                          | 01ac csrw mscratch,t2    | 6| .01ac csrw mscratch,t2   |                          |                          | ID-stall:RAW,CP0/fence
+   5232 |                          | 01ac csrw mscratch,t2    | 6| .01ac csrw mscratch,t2   |                          |                          | ID-stall:RAW,CP0/fence
+   5233 |                          | 01ac csrw mscratch,t2    | 6| .01ac csrw mscratch,t2   |                          |                          | ID-stall:RAW,CP0/fence
+   5234 |                          | 01ac csrw mscratch,t2    | 6| .01ac csrw mscratch,t2   |                          |                          | ID-stall:RAW,CP0/fence
+   5235 |                          | 01ac csrw mscratch,t2    | 6| .01ac csrw mscratch,t2   |                          |                          | ID-stall:RAW,CP0/fence
+   5236 |                          | 01ac csrw mscratch,t2    | 6| .01ac csrw mscratch,t2   |                          |                          | ID-stall:RAW,CP0/fence
+   5237 |                          | 01ac csrw mscratch,t2    | 6| .01ac csrw mscratch,t2   |                          |                          | ID-stall:RAW,CP0/fence
+   5238 |                          | 01ac csrw mscratch,t2    | 6| .01ac csrw mscratch,t2   |                          |                          | ID-stall:CP0/fence
+   5239 |                          | 01ac csrw mscratch,t2    | 6| .01ac csrw mscratch,t2   |                          | 01a8 beqz t2,1b4         | ID-stall:CP0/fence BR-resolve:N
+   5240 |                          | 01ac csrw mscratch,t2    | 6| .01ac csrw mscratch,t2   |                          |                          | ID-stall:CP0/fence
+   5241 |                          | 01ac csrw mscratch,t2    | 6| .01ac csrw mscratch,t2   |                          |                          | ID-stall:CP0/fence
+   5242 |                          | 01ac csrw mscratch,t2    | 6| .01ac csrw mscratch,t2   |                          |                          | ID-stall:CP0/fence
+   5243 |                          | 01ac csrw mscratch,t2    | 6| .01ac csrw mscratch,t2   |                          |                          | ID-stall:CP0/fence
+   5244 |                          | 01ac csrw mscratch,t2    | 6| .01ac csrw mscratch,t2   |                          |                          | ID-stall:CP0/fence
+   5245 |                          | 01ac csrw mscratch,t2    | 6| >01ac csrw mscratch,t2   |                          |                          | 
+   5246 |                          | 01ac csrw mscratch,t2    | 5| >01b0 addi t1,t1,1       | 01ac csrw mscratch,t CP0 |                          | 
+   5247 | 01b0 addi t1,t1,1        | 01ac csrw mscratch,t2    | 4| >01b0 addi t1,t1,1       | 01b0 addi t1,t1,1    ALU | 01ac csrw mscratch,t2    | RT-redirect->01b0
+   5248 | 01b0 addi t1,t1,1        |                          | 0|                          | 01b0 addi t1,t1,1    BJU |                          | 
+   5249 | 01a4 lbu t2,0(t1)        |                          | 0|                          |                          |                          | BTB-redirect ID-stall:other
+   5250 | 01a8 beqz t2,1b4         | 01b0 addi t1,t1,1        | 0| .(flushed) addi t1,t1,1  |                          |                          | ID-stall:other FLUSH
+   5251 | 01ac csrw mscratch,t2    | 01a4 lbu t2,0(t1)        | 1| >01b0 addi t1,t1,1       |                          |                          | 
+   5252 | 01b0 addi t1,t1,1        | 01a8 beqz t2,1b4         | 2| >01b2 j 1a4              | 01b0 addi t1,t1,1    ALU |                          | 
+   5253 | 01a4 lbu t2,0(t1)        | 01ac csrw mscratch,t2    | 2| >01a4 lbu t2,0(t1)       | 01b2 j 1a4           BJU | 01b0 addi t1,t1,1        | BTB-redirect
+   5254 | 01a8 beqz t2,1b4         | 01b0 addi t1,t1,1        | 2| >01a8 beqz t2,1b4        | 01a4 lbu t2,0(t1)    LSU | 01b2 j 1a4               | 
+   5255 | 01ac csrw mscratch,t2    | 01a4 lbu t2,0(t1)        | 2| .01ac csrw mscratch,t2   | 01a8 beqz t2,1b4     BJU | 01a4 lbu t2,0(t1)        | ID-stall:CP0/fence DC:LD hit
+   5256 | 01b0 addi t1,t1,1        | 01a8 beqz t2,1b4         | 4| .01ac csrw mscratch,t2   |                          | 01a8 beqz t2,1b4         | ID-stall:CP0/fence BR-resolve:N
+   5257 |                          | 01ac csrw mscratch,t2    | 6| >01ac csrw mscratch,t2   |                          |                          | BTB-redirect
+   5258 |                          | 01ac csrw mscratch,t2    | 5| >01b0 addi t1,t1,1       | 01ac csrw mscratch,t CP0 |                          | IP-redirect->01b0
+   5259 | 01b0 addi t1,t1,1        | 01ac csrw mscratch,t2    | 4| >01b0 addi t1,t1,1       | 01b0 addi t1,t1,1    ALU | 01ac csrw mscratch,t2    | RT-redirect->01b0
+   5260 | 01b0 addi t1,t1,1        |                          | 0|                          | 01b0 addi t1,t1,1    BJU |                          | 
+   5261 | 01a4 lbu t2,0(t1)        |                          | 0|                          |                          |                          | BTB-redirect ID-stall:other
+   5262 | 01a8 beqz t2,1b4         | 01b0 addi t1,t1,1        | 0| .(flushed) addi t1,t1,1  |                          |                          | ID-stall:other FLUSH
+   5263 | 01ac csrw mscratch,t2    | 01a4 lbu t2,0(t1)        | 1| >01b0 addi t1,t1,1       |                          |                          | 
+   5264 | 01b0 addi t1,t1,1        | 01a8 beqz t2,1b4         | 2| >01b2 j 1a4              | 01b0 addi t1,t1,1    ALU |                          | 
+   5265 | 01a4 lbu t2,0(t1)        | 01ac csrw mscratch,t2    | 2| >01a4 lbu t2,0(t1)       | 01b2 j 1a4           BJU | 01b0 addi t1,t1,1        | BTB-redirect
+   5266 | 01a8 beqz t2,1b4         | 01b0 addi t1,t1,1        | 2| >01a8 beqz t2,1b4        | 01a4 lbu t2,0(t1)    LSU | 01b2 j 1a4               | 
+   5267 | 01ac csrw mscratch,t2    | 01a4 lbu t2,0(t1)        | 2| .01ac csrw mscratch,t2   | 01a8 beqz t2,1b4     BJU | 01a4 lbu t2,0(t1)        | ID-stall:CP0/fence DC:LD hit
+   5268 | 01b0 addi t1,t1,1        | 01a8 beqz t2,1b4         | 4| .01ac csrw mscratch,t2   |                          | 01a8 beqz t2,1b4         | ID-stall:CP0/fence BR-resolve:N
+   5269 |                          | 01ac csrw mscratch,t2    | 6| >01ac csrw mscratch,t2   |                          |                          | BTB-redirect
+   5270 |                          | 01ac csrw mscratch,t2    | 5| >01b0 addi t1,t1,1       | 01ac csrw mscratch,t CP0 |                          | IP-redirect->01b0
+   5271 | 01b0 addi t1,t1,1        | 01ac csrw mscratch,t2    | 4| >01b0 addi t1,t1,1       | 01b0 addi t1,t1,1    ALU | 01ac csrw mscratch,t2    | RT-redirect->01b0
+   5272 | 01b0 addi t1,t1,1        |                          | 0|                          | 01b0 addi t1,t1,1    BJU |                          | 
+   5273 | 01a4 lbu t2,0(t1)        |                          | 0|                          |                          |                          | BTB-redirect ID-stall:other
+   5274 | 01a8 beqz t2,1b4         | 01b0 addi t1,t1,1        | 0| .(flushed) addi t1,t1,1  |                          |                          | ID-stall:other FLUSH
+   5275 | 01ac csrw mscratch,t2    | 01a4 lbu t2,0(t1)        | 1| >01b0 addi t1,t1,1       |                          |                          | 
+   5276 | 01b0 addi t1,t1,1        | 01a8 beqz t2,1b4         | 2| >01b2 j 1a4              | 01b0 addi t1,t1,1    ALU |                          | 
+   5277 | 01a4 lbu t2,0(t1)        | 01ac csrw mscratch,t2    | 2| >01a4 lbu t2,0(t1)       | 01b2 j 1a4           BJU | 01b0 addi t1,t1,1        | BTB-redirect
+   5278 | 01a8 beqz t2,1b4         | 01b0 addi t1,t1,1        | 2| >01a8 beqz t2,1b4        | 01a4 lbu t2,0(t1)    LSU | 01b2 j 1a4               | 
+   5279 | 01ac csrw mscratch,t2    | 01a4 lbu t2,0(t1)        | 2| .01ac csrw mscratch,t2   | 01a8 beqz t2,1b4     BJU | 01a4 lbu t2,0(t1)        | ID-stall:CP0/fence DC:LD hit
+   5280 | 01b0 addi t1,t1,1        | 01a8 beqz t2,1b4         | 4| .01ac csrw mscratch,t2   |                          | 01a8 beqz t2,1b4         | ID-stall:CP0/fence BR-resolve:N
+   5281 |                          | 01ac csrw mscratch,t2    | 6| >01ac csrw mscratch,t2   |                          |                          | BTB-redirect
+   5282 |                          | 01ac csrw mscratch,t2    | 5| >01b0 addi t1,t1,1       | 01ac csrw mscratch,t CP0 |                          | IP-redirect->01b0
+   5283 | 01b0 addi t1,t1,1        | 01ac csrw mscratch,t2    | 4| >01b0 addi t1,t1,1       | 01b0 addi t1,t1,1    ALU | 01ac csrw mscratch,t2    | RT-redirect->01b0
+   5284 | 01b0 addi t1,t1,1        |                          | 0|                          | 01b0 addi t1,t1,1    BJU |                          | 
+   5285 | 01a4 lbu t2,0(t1)        |                          | 0|                          |                          |                          | BTB-redirect ID-stall:other
+   5286 | 01a8 beqz t2,1b4         | 01b0 addi t1,t1,1        | 0| .(flushed) addi t1,t1,1  |                          |                          | ID-stall:other FLUSH
+   5287 | 01ac csrw mscratch,t2    | 01a4 lbu t2,0(t1)        | 1| >01b0 addi t1,t1,1       |                          |                          | 
+   5288 | 01b0 addi t1,t1,1        | 01a8 beqz t2,1b4         | 2| >01b2 j 1a4              | 01b0 addi t1,t1,1    ALU |                          | 
+   5289 | 01a4 lbu t2,0(t1)        | 01ac csrw mscratch,t2    | 2| >01a4 lbu t2,0(t1)       | 01b2 j 1a4           BJU | 01b0 addi t1,t1,1        | BTB-redirect
+   5290 | 01a8 beqz t2,1b4         | 01b0 addi t1,t1,1        | 2| >01a8 beqz t2,1b4        | 01a4 lbu t2,0(t1)    LSU | 01b2 j 1a4               | 
+   5291 | 01ac csrw mscratch,t2    | 01a4 lbu t2,0(t1)        | 2| .01ac csrw mscratch,t2   | 01a8 beqz t2,1b4     BJU | 01a4 lbu t2,0(t1)        | ID-stall:CP0/fence DC:LD hit
+   5292 | 01b0 addi t1,t1,1        | 01a8 beqz t2,1b4         | 4| .01ac csrw mscratch,t2   |                          | 01a8 beqz t2,1b4         | ID-stall:CP0/fence BR-resolve:N
+   5293 |                          | 01ac csrw mscratch,t2    | 6| >01ac csrw mscratch,t2   |                          |                          | BTB-redirect
+   5294 |                          | 01ac csrw mscratch,t2    | 5| >01b0 addi t1,t1,1       | 01ac csrw mscratch,t CP0 |                          | IP-redirect->01b0
+   5295 | 01b0 addi t1,t1,1        | 01ac csrw mscratch,t2    | 4| >01b0 addi t1,t1,1       | 01b0 addi t1,t1,1    ALU | 01ac csrw mscratch,t2    | RT-redirect->01b0
+   5296 | 01b0 addi t1,t1,1        |                          | 0|                          | 01b0 addi t1,t1,1    BJU |                          | 
+   5297 | 01a4 lbu t2,0(t1)        |                          | 0|                          |                          |                          | BTB-redirect ID-stall:other
+   5298 | 01a8 beqz t2,1b4         | 01b0 addi t1,t1,1        | 0| .(flushed) addi t1,t1,1  |                          |                          | ID-stall:other FLUSH
+   5299 | 01ac csrw mscratch,t2    | 01a4 lbu t2,0(t1)        | 1| >01b0 addi t1,t1,1       |                          |                          | 
+   5300 | 01b0 addi t1,t1,1        | 01a8 beqz t2,1b4         | 2| >01b2 j 1a4              | 01b0 addi t1,t1,1    ALU |                          | 
+   5301 | 01a4 lbu t2,0(t1)        | 01ac csrw mscratch,t2    | 2| >01a4 lbu t2,0(t1)       | 01b2 j 1a4           BJU | 01b0 addi t1,t1,1        | BTB-redirect
+   5302 | 01a8 beqz t2,1b4         | 01b0 addi t1,t1,1        | 2| >01a8 beqz t2,1b4        | 01a4 lbu t2,0(t1)    LSU | 01b2 j 1a4               | 
+   5303 | 01ac csrw mscratch,t2    | 01a4 lbu t2,0(t1)        | 2| .01ac csrw mscratch,t2   | 01a8 beqz t2,1b4     BJU | 01a4 lbu t2,0(t1)        | ID-stall:CP0/fence DC:LD hit
+   5304 | 01b0 addi t1,t1,1        | 01a8 beqz t2,1b4         | 4| .01ac csrw mscratch,t2   |                          | 01a8 beqz t2,1b4         | ID-stall:CP0/fence BR-resolve:N
+   5305 |                          | 01ac csrw mscratch,t2    | 6| >01ac csrw mscratch,t2   |                          |                          | BTB-redirect
+   5306 |                          | 01ac csrw mscratch,t2    | 5| >01b0 addi t1,t1,1       | 01ac csrw mscratch,t CP0 |                          | IP-redirect->01b0
+   5307 | 01b0 addi t1,t1,1        | 01ac csrw mscratch,t2    | 4| >01b0 addi t1,t1,1       | 01b0 addi t1,t1,1    ALU | 01ac csrw mscratch,t2    | RT-redirect->01b0
+   5308 | 01b0 addi t1,t1,1        |                          | 0|                          | 01b0 addi t1,t1,1    BJU |                          | 
+   5309 | 01a4 lbu t2,0(t1)        |                          | 0|                          |                          |                          | BTB-redirect ID-stall:other
+   5310 | 01a8 beqz t2,1b4         | 01b0 addi t1,t1,1        | 0| .(flushed) addi t1,t1,1  |                          |                          | ID-stall:other FLUSH
+   5311 | 01ac csrw mscratch,t2    | 01a4 lbu t2,0(t1)        | 1| >01b0 addi t1,t1,1       |                          |                          | 
+   5312 | 01b0 addi t1,t1,1        | 01a8 beqz t2,1b4         | 2| >01b2 j 1a4              | 01b0 addi t1,t1,1    ALU |                          | 
+   5313 | 01a4 lbu t2,0(t1)        | 01ac csrw mscratch,t2    | 2| >01a4 lbu t2,0(t1)       | 01b2 j 1a4           BJU | 01b0 addi t1,t1,1        | BTB-redirect
+   5314 | 01a8 beqz t2,1b4         | 01b0 addi t1,t1,1        | 2| >01a8 beqz t2,1b4        | 01a4 lbu t2,0(t1)    LSU | 01b2 j 1a4               | 
+   5315 | 01ac csrw mscratch,t2    | 01a4 lbu t2,0(t1)        | 2| .01ac csrw mscratch,t2   | 01a8 beqz t2,1b4     BJU | 01a4 lbu t2,0(t1)        | ID-stall:CP0/fence DC:LD hit
+   5316 | 01b0 addi t1,t1,1        | 01a8 beqz t2,1b4         | 4| .01ac csrw mscratch,t2   |                          | 01a8 beqz t2,1b4         | ID-stall:CP0/fence BR-resolve:N
+   5317 |                          | 01ac csrw mscratch,t2    | 6| >01ac csrw mscratch,t2   |                          |                          | BTB-redirect
+   5318 |                          | 01ac csrw mscratch,t2    | 5| >01b0 addi t1,t1,1       | 01ac csrw mscratch,t CP0 |                          | IP-redirect->01b0
+   5319 | 01b0 addi t1,t1,1        | 01ac csrw mscratch,t2    | 4| >01b0 addi t1,t1,1       | 01b0 addi t1,t1,1    ALU | 01ac csrw mscratch,t2    | RT-redirect->01b0
+   5320 | 01b0 addi t1,t1,1        |                          | 0|                          | 01b0 addi t1,t1,1    BJU |                          | 
+   5321 | 01a4 lbu t2,0(t1)        |                          | 0|                          |                          |                          | BTB-redirect ID-stall:other
+   5322 | 01a8 beqz t2,1b4         | 01b0 addi t1,t1,1        | 0| .(flushed) addi t1,t1,1  |                          |                          | ID-stall:other FLUSH
+   5323 | 01ac csrw mscratch,t2    | 01a4 lbu t2,0(t1)        | 1| >01b0 addi t1,t1,1       |                          |                          | 
+   5324 | 01b0 addi t1,t1,1        | 01a8 beqz t2,1b4         | 2| >01b2 j 1a4              | 01b0 addi t1,t1,1    ALU |                          | 
+   5325 | 01a4 lbu t2,0(t1)        | 01ac csrw mscratch,t2    | 2| >01a4 lbu t2,0(t1)       | 01b2 j 1a4           BJU | 01b0 addi t1,t1,1        | BTB-redirect
+   5326 | 01a8 beqz t2,1b4         | 01b0 addi t1,t1,1        | 2| >01a8 beqz t2,1b4        | 01a4 lbu t2,0(t1)    LSU | 01b2 j 1a4               | 
+   5327 | 01ac csrw mscratch,t2    | 01a4 lbu t2,0(t1)        | 2| .01ac csrw mscratch,t2   | 01a8 beqz t2,1b4     BJU | 01a4 lbu t2,0(t1)        | ID-stall:CP0/fence DC:LD hit
+   5328 | 01b0 addi t1,t1,1        | 01a8 beqz t2,1b4         | 4| .01ac csrw mscratch,t2   |                          | 01a8 beqz t2,1b4         | ID-stall:CP0/fence BR-resolve:N
+   5329 |                          | 01ac csrw mscratch,t2    | 6| >01ac csrw mscratch,t2   |                          |                          | BTB-redirect
+   5330 |                          | 01ac csrw mscratch,t2    | 5| >01b0 addi t1,t1,1       | 01ac csrw mscratch,t CP0 |                          | IP-redirect->01b0
+   5331 | 01b0 addi t1,t1,1        | 01ac csrw mscratch,t2    | 4| >01b0 addi t1,t1,1       | 01b0 addi t1,t1,1    ALU | 01ac csrw mscratch,t2    | RT-redirect->01b0
+   5332 | 01b0 addi t1,t1,1        |                          | 0|                          | 01b0 addi t1,t1,1    BJU |                          | 
+   5333 | 01a4 lbu t2,0(t1)        |                          | 0|                          |                          |                          | BTB-redirect ID-stall:other
+   5334 | 01a8 beqz t2,1b4         | 01b0 addi t1,t1,1        | 0| .(flushed) addi t1,t1,1  |                          |                          | ID-stall:other FLUSH
+   5335 | 01ac csrw mscratch,t2    | 01a4 lbu t2,0(t1)        | 1| >01b0 addi t1,t1,1       |                          |                          | 
+   5336 | 01b0 addi t1,t1,1        | 01a8 beqz t2,1b4         | 2| >01b2 j 1a4              | 01b0 addi t1,t1,1    ALU |                          | 
+   5337 | 01a4 lbu t2,0(t1)        | 01ac csrw mscratch,t2    | 2| >01a4 lbu t2,0(t1)       | 01b2 j 1a4           BJU | 01b0 addi t1,t1,1        | BTB-redirect
+   5338 | 01a8 beqz t2,1b4         | 01b0 addi t1,t1,1        | 2| >01a8 beqz t2,1b4        | 01a4 lbu t2,0(t1)    LSU | 01b2 j 1a4               | 
+   5339 | 01ac csrw mscratch,t2    | 01a4 lbu t2,0(t1)        | 2| .(flushed) csrw mscratch | 01a8 beqz t2,1b4     BJU | 01a4 lbu t2,0(t1)        | ID-stall:CP0/fence DC:LD hit
+   5340 | 01b0 addi t1,t1,1        | 01a8 beqz t2,1b4         | 4| .(flushed) csrw mscratch |                          | 01a8 beqz t2,1b4         | ID-stall:CP0/fence BR-resolve:T MISPRED(BHT) IU-redirect->01b4
+   5341 | 01b4 ret                 |                          | 0|                          |                          |                          | 
+   5342 | 01b8 mv t1,sp            |                          | 0|                          |                          |                          | ID-stall:other FLUSH
+   5343 | 0240 li a0,32            | 01b4 ret                 | 0| >01b4 ret                |                          |                          | IP-curflw(RAS/delay)
+   5344 | 0244 csrw mscratch,a0    |                          | 0|                          | 01b4 ret             BJU |                          | 
+   5345 | 0248 li a0,61            | 0240 li a0,32            | 0| >0240 li a0,32           |                          | 01b4 ret                 | 
+   5346 | 024c csrw mscratch,a0    | 0244 csrw mscratch,a0    | 0| .0244 csrw mscratch,a0   | 0240 li a0,32        ALU |                          | ID-stall:CP0/fence
+   5347 | 0250 li a0,32            | 0248 li a0,61            | 0| .0244 csrw mscratch,a0   |                          | 0240 li a0,32            | ID-stall:CP0/fence
+   5348 | 0254 csrw mscratch,a0    | 024c csrw mscratch,a0    | 2| >0244 csrw mscratch,a0   |                          |                          | 
+   5349 | 0258 ld a0,8(sp)         | 0250 li a0,32            | 2| >0248 li a0,61           | 0244 csrw mscratch,a CP0 |                          | 
+   5350 | 025c ?                   | 0254 csrw mscratch,a0    | 2| .(flushed) csrw mscratch | 0248 li a0,61        ALU | 0244 csrw mscratch,a0    | ID-stall:CP0/fence RT-redirect->0248
+   5351 | 0248 li a0,61            |                          | 0|                          |                          |                          | BTB-redirect
+   5352 | 024c csrw mscratch,a0    |                          | 0|                          |                          |                          | ID-stall:other FLUSH
+   5353 | 0250 li a0,32            | 0248 li a0,61            | 0| >0248 li a0,61           |                          |                          | 
+   5354 | 0254 csrw mscratch,a0    | 024c csrw mscratch,a0    | 0| .024c csrw mscratch,a0   | 0248 li a0,61        ALU |                          | ID-stall:CP0/fence
+   5355 | 0258 ld a0,8(sp)         | 0250 li a0,32            | 0| .024c csrw mscratch,a0   |                          | 0248 li a0,61            | ID-stall:CP0/fence
+   5356 | 025c ?                   | 0254 csrw mscratch,a0    | 2| >024c csrw mscratch,a0   |                          |                          | 
+   5357 | 01b6 addi sp,sp,-32      | 0258 ld a0,8(sp)         | 2| >0250 li a0,32           | 024c csrw mscratch,a CP0 |                          | BTB-redirect
+   5358 | 01b8 mv t1,sp            | 025c ?                   | 1| .(flushed) csrw mscratch | 0250 li a0,32        ALU | 024c csrw mscratch,a0    | ID-stall:CP0/fence RT-redirect->0250
+   5359 | 0250 li a0,32            |                          | 0|                          |                          |                          | 
+   5360 | 0254 csrw mscratch,a0    |                          | 0|                          |                          |                          | ID-stall:other FLUSH
+   5361 | 0258 ld a0,8(sp)         | 0250 li a0,32            | 0| >0250 li a0,32           |                          |                          | 
+   5362 | 025c ?                   | 0254 csrw mscratch,a0    | 0| .0254 csrw mscratch,a0   | 0250 li a0,32        ALU |                          | ID-stall:CP0/fence
+   5363 | 01b6 addi sp,sp,-32      | 0258 ld a0,8(sp)         | 0| .0254 csrw mscratch,a0   |                          | 0250 li a0,32            | BTB-redirect ID-stall:CP0/fence
+   5364 | 01b8 mv t1,sp            | 025c ?                   | 1| >0254 csrw mscratch,a0   |                          |                          | 
+   5365 | 01bc sb zero,0(t1)       | 01b6 addi sp,sp,-32      | 2| >0258 ld a0,8(sp)        | 0254 csrw mscratch,a CP0 |                          | 
+   5366 | 01c0 li t2,10            | 01b8 mv t1,sp            | 1| >0258 ld a0,8(sp)        | 0258 ld a0,8(sp)     LSU | 0254 csrw mscratch,a0    | RT-redirect->0258
+   5367 | 0258 ld a0,8(sp)         |                          | 0|                          | 0258 ld a0,8(sp)     BJU |                          | 
+   5368 | 025c ?                   |                          | 0|                          |                          |                          | ID-stall:other
+   5369 | 01b6 addi sp,sp,-32      | 0258 ld a0,8(sp)         | 0| .(flushed) ld a0,8(sp)   |                          |                          | BTB-redirect ID-stall:other FLUSH
+   5370 | 01b8 mv t1,sp            | 025c ?                   | 0| >0258 ld a0,8(sp)        |                          |                          | 
+   5371 | 01bc sb zero,0(t1)       | 01b6 addi sp,sp,-32      | 0| >025a jal 1b6            | 0258 ld a0,8(sp)     LSU |                          | 
+   5372 | 01c0 li t2,10            | 01b8 mv t1,sp            | 0| >01b6 addi sp,sp,-32     | 025a jal 1b6         BJU | 0258 ld a0,8(sp)         | DC:LD hit
+   5373 | 01c4 ?                   | 01bc sb zero,0(t1)       | 1| >01b8 mv t1,sp           | 01b6 addi sp,sp,-32  ALU | 025a jal 1b6             | 
+   5374 | 01c8 ?                   | 01c0 li t2,10            | 2| >01ba addi t1,t1,31      | 01b8 mv t1,sp        ALU | 01b6 addi sp,sp,-32      | 
+   5375 | 01cc ?                   | 01c4 ?                   | 1| >01bc sb zero,0(t1)      | 01ba addi t1,t1,31   ALU | 01b8 mv t1,sp            | 
+   5376 | 01d0 sb a1,0(t1)         | 01c8 ?                   | 2| >01c0 li t2,10           | 01bc sb zero,0(t1)   LSU | 01ba addi t1,t1,31       | 
+   5377 | 01d4 bnez a0,1c2         | 01cc ?                   | 2| >01c2 remu a1,a0,t2      | 01c0 li t2,10        ALU | 01bc sb zero,0(t1)       | DC:ST hit
+   5378 | 01d8 ?                   | 01d0 sb a1,0(t1)         | 3| >01c6 divu a0,a0,t2      | 01c2 remu a1,a0,t2   DIV | 01c0 li t2,10            | 
+   5379 | 01dc csrw mscratch,a1    | 01d4 bnez a0,1c2         | 3| .01ca addi a1,a1,48      | 01c6 divu a0,a0,t2   DIV | 01c2 remu a1,a0,t2       | IP-redirect->01c2 ID-stall:RAW,WAW,EX1-busy
+   5380 | 01c2 remu a1,a0,t2       |                          | 4| .01ca addi a1,a1,48      | 01c6 divu a0,a0,t2   DIV |                          | ID-stall:RAW,WAW,EX1-busy
+   5381 | 01c4 ?                   |                          | 4| .01ca addi a1,a1,48      | 01c6 divu a0,a0,t2   DIV |                          | ID-stall:RAW,WAW,EX1-busy
+   5382 | 01c8 ?                   |                          | 4| .01ca addi a1,a1,48      | 01c6 divu a0,a0,t2   DIV |                          | ID-stall:RAW,WAW,EX1-busy
+   5383 | 01cc ?                   | 01c4 ?                   | 4| .01ca addi a1,a1,48      | 01c6 divu a0,a0,t2   DIV |                          | ID-stall:RAW,WAW
+   5384 |                          | 01c8 ?                   | 6| >01ca addi a1,a1,48      |                          | 01c6 divu a0,a0,t2       | 
+   5385 |                          | 01c8 ?                   | 5| >01ce addi t1,t1,-1      | 01ca addi a1,a1,48   ALU |                          | 
+   5386 | 01cc ?                   | 01c8 ?                   | 3| >01d0 sb a1,0(t1)        | 01ce addi t1,t1,-1   ALU | 01ca addi a1,a1,48       | 
+   5387 | 01d0 sb a1,0(t1)         |                          | 4| >01d4 bnez a0,1c2        | 01d0 sb a1,0(t1)     LSU | 01ce addi t1,t1,-1       | 
+   5388 | 01d4 bnez a0,1c2         | 01cc ?                   | 2| >01c2 remu a1,a0,t2      | 01d4 bnez a0,1c2     BJU | 01d0 sb a1,0(t1)         | BR-resolve:T DC:ST hit
+   5389 | 01d8 ?                   | 01d0 sb a1,0(t1)         | 3| >01c6 divu a0,a0,t2      | 01c2 remu a1,a0,t2   DIV | 01d4 bnez a0,1c2         | 
+   5390 | 01dc csrw mscratch,a1    | 01d4 bnez a0,1c2         | 3| .01ca addi a1,a1,48      | 01c6 divu a0,a0,t2   DIV | 01c2 remu a1,a0,t2       | ID-stall:RAW,WAW,EX1-busy
+   5391 |                          | 01d8 ?                   | 4| .01ca addi a1,a1,48      | 01c6 divu a0,a0,t2   DIV |                          | ID-stall:RAW,WAW,EX1-busy
+   5392 |                          | 01d8 ?                   | 4| .01ca addi a1,a1,48      | 01c6 divu a0,a0,t2   DIV |                          | ID-stall:RAW,WAW,EX1-busy
+   5393 |                          | 01d8 ?                   | 4| .01ca addi a1,a1,48      | 01c6 divu a0,a0,t2   DIV |                          | ID-stall:RAW,WAW
+   5394 |                          | 01d8 ?                   | 4| >01ca addi a1,a1,48      |                          | 01c6 divu a0,a0,t2       | 
+   5395 | 01dc csrw mscratch,a1    | 01d8 ?                   | 3| >01ce addi t1,t1,-1      | 01ca addi a1,a1,48   ALU |                          | 
+   5396 | 01e0 addi t1,t1,1        |                          | 4| >01d0 sb a1,0(t1)        | 01ce addi t1,t1,-1   ALU | 01ca addi a1,a1,48       | 
+   5397 | 01d6 lbu a1,0(t1)        | 01dc csrw mscratch,a1    | 3| >01d4 bnez a0,1c2        | 01d0 sb a1,0(t1)     LSU | 01ce addi t1,t1,-1       | BTB-redirect
+   5398 | 01d8 ?                   | 01e0 addi t1,t1,1        | 3| >01d6 lbu a1,0(t1)       | 01d4 bnez a0,1c2     BJU | 01d0 sb a1,0(t1)         | BR-resolve:N DC:ST hit
+   5399 | 01dc csrw mscratch,a1    |                          | 4| >01da beqz a1,1e4        | 01d6 lbu a1,0(t1)    LSU | 01d4 bnez a0,1c2         | 
+   5400 | 01e0 addi t1,t1,1        | 01d8 ?                   | 2| .01dc csrw mscratch,a1   | 01da beqz a1,1e4     BJU | 01d6 lbu a1,0(t1)        | IP-redirect->01e4 ID-stall:CP0/fence DC:LD hit STB-fwd
+   5401 | 01e4 addi sp,sp,32       |                          | 5| .01dc csrw mscratch,a1   |                          | 01da beqz a1,1e4         | BTB-redirect ID-stall:CP0/fence BR-resolve:N
+   5402 | 01e8 li a1,48            |                          | 5| >01dc csrw mscratch,a1   |                          |                          | 
+   5403 | 025e li a0,10            | 01e4 addi sp,sp,32       | 4| >01e0 addi t1,t1,1       | 01dc csrw mscratch,a CP0 |                          | IP-curflw(RAS/delay)
+   5404 | 0260 csrw mscratch,a0    |                          | 5| >01e0 addi t1,t1,1       | 01e0 addi t1,t1,1    ALU | 01dc csrw mscratch,a1    | RT-redirect->01e0
+   5405 | 01e0 addi t1,t1,1        |                          | 0|                          | 01e0 addi t1,t1,1    BJU |                          | 
+   5406 | 01d6 lbu a1,0(t1)        |                          | 0|                          |                          |                          | BTB-redirect ID-stall:other
+   5407 | 01d8 ?                   | 01e0 addi t1,t1,1        | 0| .(flushed) addi t1,t1,1  |                          |                          | ID-stall:other FLUSH
+   5408 | 01e4 addi sp,sp,32       |                          | 1| >01e0 addi t1,t1,1       |                          |                          | BTB-redirect
+   5409 | 01e8 li a1,48            | 01d8 ?                   | 0| >01e2 j 1d6              | 01e0 addi t1,t1,1    ALU |                          | IP-redirect->01dc
+   5410 | 01dc csrw mscratch,a1    |                          | 1| >01d6 lbu a1,0(t1)       | 01e2 j 1d6           BJU | 01e0 addi t1,t1,1        | 
+   5411 | 01e0 addi t1,t1,1        |                          | 0| >01da beqz a1,1e4        | 01d6 lbu a1,0(t1)    LSU | 01e2 j 1d6               | 
+   5412 | 01d6 lbu a1,0(t1)        | 01dc csrw mscratch,a1    | 0| .01dc csrw mscratch,a1   | 01da beqz a1,1e4     BJU | 01d6 lbu a1,0(t1)        | BTB-redirect ID-stall:CP0/fence DC:LD hit
+   5413 | 01d8 ?                   | 01e0 addi t1,t1,1        | 0| .01dc csrw mscratch,a1   |                          | 01da beqz a1,1e4         | ID-stall:CP0/fence BR-resolve:N
+   5414 | 01dc csrw mscratch,a1    |                          | 2| >01dc csrw mscratch,a1   |                          |                          | 
+   5415 | 01e0 addi t1,t1,1        | 01d8 ?                   | 1| >01e0 addi t1,t1,1       | 01dc csrw mscratch,a CP0 |                          | 
+   5416 | 01d6 lbu a1,0(t1)        | 01dc csrw mscratch,a1    | 3| >01e0 addi t1,t1,1       | 01e0 addi t1,t1,1    ALU | 01dc csrw mscratch,a1    | BTB-redirect RT-redirect->01e0
+   5417 | 01e0 addi t1,t1,1        |                          | 0|                          | 01e0 addi t1,t1,1    BJU |                          | 
+   5418 | 01d6 lbu a1,0(t1)        |                          | 0|                          |                          |                          | BTB-redirect ID-stall:other
+   5419 | 01d8 ?                   | 01e0 addi t1,t1,1        | 0| .(flushed) addi t1,t1,1  |                          |                          | ID-stall:other FLUSH
+   5420 | 01dc csrw mscratch,a1    |                          | 1| >01e0 addi t1,t1,1       |                          |                          | 
+   5421 | 01e0 addi t1,t1,1        | 01d8 ?                   | 0| >01e2 j 1d6              | 01e0 addi t1,t1,1    ALU |                          | 
+   5422 | 01d6 lbu a1,0(t1)        | 01dc csrw mscratch,a1    | 1| >01d6 lbu a1,0(t1)       | 01e2 j 1d6           BJU | 01e0 addi t1,t1,1        | BTB-redirect
+   5423 | 01d8 ?                   | 01e0 addi t1,t1,1        | 2| >01da beqz a1,1e4        | 01d6 lbu a1,0(t1)    LSU | 01e2 j 1d6               | 
+   5424 | 01dc csrw mscratch,a1    |                          | 2| .(flushed) csrw mscratch | 01da beqz a1,1e4     BJU | 01d6 lbu a1,0(t1)        | ID-stall:CP0/fence DC:LD hit
+   5425 | 01e0 addi t1,t1,1        | 01d8 ?                   | 2| .(flushed) csrw mscratch |                          | 01da beqz a1,1e4         | ID-stall:CP0/fence BR-resolve:T MISPRED(BHT) IU-redirect->01e4
+   5426 | 01e4 addi sp,sp,32       |                          | 0|                          |                          |                          | 
+   5427 | 01e8 li a1,48            |                          | 0|                          |                          |                          | ID-stall:other FLUSH
+   5428 | 025e li a0,10            | 01e4 addi sp,sp,32       | 0| >01e4 addi sp,sp,32      |                          |                          | IP-curflw(RAS/delay)
+   5429 | 0260 csrw mscratch,a0    |                          | 0| >01e6 ret                | 01e4 addi sp,sp,32   ALU |                          | 
+   5430 | 0264 ld ra,0(sp)         | 025e li a0,10            | 0| >025e li a0,10           | 01e6 ret             BJU | 01e4 addi sp,sp,32       | 
+   5431 | 0268 ret                 | 0260 csrw mscratch,a0    | 0| .0260 csrw mscratch,a0   | 025e li a0,10        ALU | 01e6 ret                 | ID-stall:CP0/fence
+   5432 | 026c ?                   | 0264 ld ra,0(sp)         | 0| .0260 csrw mscratch,a0   |                          | 025e li a0,10            | ID-stall:CP0/fence
+   5433 | 047c csrr s0,mcycle      | 0268 ret                 | 2| >0260 csrw mscratch,a0   |                          |                          | IP-curflw(RAS/delay)
+   5434 | 0480 fdiv.d ft1,ft3,ft3  |                          | 2| >0264 ld ra,0(sp)        | 0260 csrw mscratch,a CP0 |                          | 
+   5435 | 0484 fmv.x.d t1,ft1      | 047c csrr s0,mcycle      | 1| >0264 ld ra,0(sp)        | 0264 ld ra,0(sp)     LSU | 0260 csrw mscratch,a0    | RT-redirect->0264
+   5436 | 0264 ld ra,0(sp)         |                          | 0|                          | 0264 ld ra,0(sp)     ALU |                          | 
+   5437 | 0268 ret                 |                          | 0|                          |                          |                          | ID-stall:other
+   5438 | 026c ?                   | 0264 ld ra,0(sp)         | 0| .(flushed) ld ra,0(sp)   |                          |                          | ID-stall:other FLUSH
+   5439 | 047c csrr s0,mcycle      | 0268 ret                 | 1| >0264 ld ra,0(sp)        |                          |                          | IP-curflw(RAS/delay)
+   5440 | 0480 fdiv.d ft1,ft3,ft3  |                          | 1| >0266 addi sp,sp,16      | 0264 ld ra,0(sp)     LSU |                          | 
+   5441 |                          | 047c csrr s0,mcycle      | 0| >0268 ret                | 0266 addi sp,sp,16   ALU | 0264 ld ra,0(sp)         | DC:LD hit
+   5442 |                          |                          | 0| .047c csrr s0,mcycle     | 0268 ret             BJU | 0266 addi sp,sp,16       | ID-stall:CP0/fence I$-miss
+   5443 |                          |                          | 0| .047c csrr s0,mcycle     |                          | 0268 ret                 | ID-stall:CP0/fence
+   5444 |                          |                          | 0| >047c csrr s0,mcycle     |                          |                          | 
+   5445 |                          |                          | 0|                          | 047c csrr s0,mcycle  CP0 |                          | 
+   5446 |                          |                          | 0|                          |                          | 047c csrr s0,mcycle      | 
+   5447 |                          |                          | 0|                          |                          |                          | 
+   5448 |                          | 0480 fdiv.d ft1,ft3,ft3  | 0| >0480 fdiv.d ft1,ft3,ft3 |                          |                          | 
+   5449 |                          |                          | 0|                          | 0480 fdiv.d ft1,ft3, FP  |                          | 
+   5450 |                          |                          | 0|                          |                          | 0480 fdiv.d ft1,ft3,ft3  | 
+   5451 |                          |                          | 0|                          |                          |                          | 
+   5452 |                          |                          | 0|                          |                          |                          | 
+   5453 |                          |                          | 0|                          |                          |                          | 
+   5454 | 0484 fmv.x.d t1,ft1      |                          | 0|                          |                          |                          | 
+   5455 | 0488 csrr t0,mcycle      |                          | 0|                          |                          |                          | 
+   5456 | 048c sub s0,t0,s0        | 0484 fmv.x.d t1,ft1      | 0| >0484 fmv.x.d t1,ft1     |                          |                          | 
+   5457 | 0490 mv a1,s0            | 0488 csrr t0,mcycle      | 0| .0488 csrr t0,mcycle     | 0484 fmv.x.d t1,ft1  FP  |                          | ID-stall:CP0/fence
+   5458 | 0494 ?                   | 048c sub s0,t0,s0        | 0| .0488 csrr t0,mcycle     |                          | 0484 fmv.x.d t1,ft1      | ID-stall:CP0/fence
+   5459 | 0498 ?                   | 0490 mv a1,s0            | 2| .0488 csrr t0,mcycle     |                          |                          | ID-stall:CP0/fence
+   5460 | 049c ?                   | 0494 ?                   | 3| .0488 csrr t0,mcycle     |                          |                          | ID-stall:CP0/fence
+   5461 |                          | 0498 ?                   | 5| >0488 csrr t0,mcycle     |                          |                          | IP-redirect->021e
+   5462 | 021e addi sp,sp,-16      | 0498 ?                   | 3| .048c sub s0,t0,s0       | 0488 csrr t0,mcycle  CP0 |                          | IP-redirect->021e ID-stall:RAW
+   5463 | 021e addi sp,sp,-16      |                          | 5| >048c sub s0,t0,s0       |                          | 0488 csrr t0,mcycle      | 
+   5464 | 0220 sd ra,0(sp)         |                          | 4| >0490 mv a1,s0           | 048c sub s0,t0,s0    ALU |                          | 
+   5465 | 0224 mv a3,a0            | 021e addi sp,sp,-16      | 2| >0492 li a0,1929         | 0490 mv a1,s0        ALU | 048c sub s0,t0,s0        | 
+   5466 | 0228 ?                   | 0220 sd ra,0(sp)         | 1| >0496 jal 21e            | 0492 li a0,1929      ALU | 0490 mv a1,s0            | 
+   5467 | 022c ?                   | 0224 mv a3,a0            | 2| >021e addi sp,sp,-16     | 0496 jal 21e         BJU | 0492 li a0,1929          | 
+   5468 | 0230 ?                   | 0228 ?                   | 2| >0220 sd ra,0(sp)        | 021e addi sp,sp,-16  ALU | 0496 jal 21e             | 
+   5469 | 0234 ?                   | 022c ?                   | 3| >0222 sd a1,8(sp)        | 0220 sd ra,0(sp)     LSU | 021e addi sp,sp,-16      | 
+   5470 | 0238 ?                   | 0230 ?                   | 4| >0224 mv a3,a0           | 0222 sd a1,8(sp)     LSU | 0220 sd ra,0(sp)         | DC:ST hit
+   5471 | 023c jal 1a2             | 0234 ?                   | 4| >0226 li a0,64           | 0224 mv a3,a0        ALU | 0222 sd a1,8(sp)         | DC:ST hit
+   5472 |                          | 0238 ?                   | 4| .022a csrw mscratch,a0   | 0226 li a0,64        ALU | 0224 mv a3,a0            | BTB-redirect ID-stall:CP0/fence
+   5473 |                          | 0238 ?                   | 4| .022a csrw mscratch,a0   |                          | 0226 li a0,64            | IP-redirect->023c ID-stall:CP0/fence
+   5474 |                          | 0238 ?                   | 4| >022a csrw mscratch,a0   |                          |                          | 
+   5475 | 023c jal 1a2             | 0238 ?                   | 2| .(flushed) csrw mscratch | 022a csrw mscratch,a CP0 |                          | ID-stall:CP0/fence
+   5476 | 0240 li a0,32            |                          | 5| .(flushed) csrw mscratch |                          | 022a csrw mscratch,a0    | ID-stall:CP0/fence RT-redirect->022e
+   5477 | 022e csrw mscratch,a0    |                          | 0|                          |                          |                          | 
+   5478 | 0230 ?                   |                          | 0|                          |                          |                          | ID-stall:other FLUSH
+   5479 | 0234 ?                   |                          | 0|                          |                          |                          | 
+   5480 | 0238 ?                   | 0230 ?                   | 0| >022e csrw mscratch,a0   |                          |                          | 
+   5481 | 023c jal 1a2             | 0234 ?                   | 0| >0232 li a0,32           | 022e csrw mscratch,a CP0 |                          | 
+   5482 | 01a2 mv t1,a0            | 0238 ?                   | 0| .(flushed) csrw mscratch | 0232 li a0,32        ALU | 022e csrw mscratch,a0    | BTB-redirect ID-stall:CP0/fence RT-redirect->0232
+   5483 | 0232 li a0,32            |                          | 0|                          |                          |                          | 
+   5484 | 0234 ?                   |                          | 0|                          |                          |                          | ID-stall:other FLUSH
+   5485 | 0238 ?                   |                          | 0|                          |                          |                          | 
+   5486 | 023c jal 1a2             | 0234 ?                   | 0| >0232 li a0,32           |                          |                          | 
+   5487 | 01a2 mv t1,a0            | 0238 ?                   | 0| .0236 csrw mscratch,a0   | 0232 li a0,32        ALU |                          | BTB-redirect ID-stall:CP0/fence
+   5488 | 01a4 lbu t2,0(t1)        | 023c jal 1a2             | 1| .0236 csrw mscratch,a0   |                          | 0232 li a0,32            | ID-stall:CP0/fence
+   ... (642 more cycles, use --mark 5 --max-rows N)
+----------------------------------------------------------------------------------------------------------------------------------------------------------------
+summary: cycles=1042 retired=399 IPC=0.383 | btb_redirect=177, dc_miss=1, div_busy_cycles=20, flush=74, icache_miss=2, ip_curflw=20, ip_redirect=146, iu_redirect=9, mispred_bht=9, retired=399, stall_CP0/fence=254, stall_EX1-busy=27, stall_RAW=41, stall_WAW=26, stall_other=127, stb_fwd=3
+
+================================================================================================================================================================
+MARK 6   cycles 6426 .. 6537  (112 cycles)
+================================================================================================================================================================
+    cyc | IF (fetch)               | IP (pred)                |IB| ID                       | EX1                      | RETIRE                   | events
+----------------------------------------------------------------------------------------------------------------------------------------------------------------
+   6426 | 04f8 ?                   | 04f0 ?                   | 4| >04e2 fsflags zero       |                          |                          | 
+   6427 | 04fc ?                   | 04f4 ?                   | 4| >04e6 fdiv.d ft1,ft2,ft7 | 04e2 fsflags zero    CP0 |                          | 
+   6428 | 0500 ?                   | 04f8 ?                   | 4| .(flushed) frflags s1    | 04e6 fdiv.d ft1,ft2, FP  | 04e2 fsflags zero        | ID-stall:CP0/fence RT-redirect->04e6
+   6429 | 04e6 fdiv.d ft1,ft2,ft7  |                          | 0|                          |                          |                          | 
+   6430 | 04e8 ?                   |                          | 0|                          |                          |                          | ID-stall:other FLUSH
+   6431 | 04ec ?                   |                          | 0|                          |                          |                          | 
+   6432 | 04f0 ?                   | 04e8 ?                   | 0| >04e6 fdiv.d ft1,ft2,ft7 |                          |                          | 
+   6433 | 04f4 ?                   | 04ec ?                   | 0| .04ea frflags s1         | 04e6 fdiv.d ft1,ft2, FP  |                          | ID-stall:CP0/fence
+   6434 | 04f8 ?                   | 04f0 ?                   | 0| .04ea frflags s1         |                          | 04e6 fdiv.d ft1,ft2,ft7  | ID-stall:CP0/fence
+   6435 | 04fc ?                   | 04f4 ?                   | 2| .04ea frflags s1         |                          |                          | ID-stall:CP0/fence
+   6436 | 0500 ?                   | 04f8 ?                   | 4| .04ea frflags s1         |                          |                          | ID-stall:CP0/fence
+   6437 |                          | 04fc ?                   | 6| .04ea frflags s1         |                          |                          | ID-stall:CP0/fence
+   6438 |                          | 04fc ?                   | 6| .04ea frflags s1         |                          |                          | ID-stall:CP0/fence I$-miss
+   6439 |                          | 04fc ?                   | 6| >04ea frflags s1         |                          |                          | 
+   6440 |                          | 04fc ?                   | 4| .04ee fsflags zero       | 04ea frflags s1      CP0 |                          | ID-stall:CP0/fence
+   6441 |                          |                          | 6| .04ee fsflags zero       |                          | 04ea frflags s1          | ID-stall:CP0/fence
+   6442 |                          |                          | 6| >04ee fsflags zero       |                          |                          | 
+   6443 |                          |                          | 4| >04f2 fdiv.d ft1,ft7,ft7 | 04ee fsflags zero    CP0 |                          | 
+   6444 |                          | 0500 ?                   | 2| .(flushed) frflags s2    | 04f2 fdiv.d ft1,ft7, FP  | 04ee fsflags zero        | ID-stall:CP0/fence RT-redirect->04f2
+   6445 |                          |                          | 0|                          |                          |                          | 
+   6446 |                          |                          | 0|                          |                          |                          | ID-stall:other FLUSH
+   6447 |                          |                          | 0|                          |                          |                          | 
+   6448 |                          |                          | 0|                          |                          |                          | 
+   6449 |                          |                          | 0|                          |                          |                          | 
+   6450 | 04f2 fdiv.d ft1,ft7,ft7  |                          | 0|                          |                          |                          | 
+   6451 | 04f4 ?                   |                          | 0|                          |                          |                          | 
+   6452 | 04f8 ?                   |                          | 0|                          |                          |                          | 
+   6453 | 04fc ?                   | 04f4 ?                   | 0| >04f2 fdiv.d ft1,ft7,ft7 |                          |                          | 
+   6454 | 0500 ?                   | 04f8 ?                   | 0| .04f6 frflags s2         | 04f2 fdiv.d ft1,ft7, FP  |                          | ID-stall:CP0/fence
+   6455 | 0504 ?                   | 04fc ?                   | 0| .04f6 frflags s2         |                          | 04f2 fdiv.d ft1,ft7,ft7  | ID-stall:CP0/fence
+   6456 | 0508 ?                   | 0500 ?                   | 2| .04f6 frflags s2         |                          |                          | ID-stall:CP0/fence
+   6457 | 050c ?                   | 0504 ?                   | 4| .04f6 frflags s2         |                          |                          | ID-stall:CP0/fence
+   6458 |                          | 0508 ?                   | 6| .04f6 frflags s2         |                          |                          | ID-stall:CP0/fence
+   6459 |                          | 0508 ?                   | 6| .04f6 frflags s2         |                          |                          | ID-stall:CP0/fence
+   6460 |                          | 0508 ?                   | 6| >04f6 frflags s2         |                          |                          | 
+   6461 | 050c ?                   | 0508 ?                   | 4| .04fa fsflags zero       | 04f6 frflags s2      CP0 |                          | ID-stall:CP0/fence
+   6462 | 0510 ?                   |                          | 6| .04fa fsflags zero       |                          | 04f6 frflags s2          | ID-stall:CP0/fence
+   6463 |                          | 050c ?                   | 6| >04fa fsflags zero       |                          |                          | 
+   6464 | 0510 ?                   | 050c ?                   | 4| >04fe fdiv.d ft1,ft2,ft4 | 04fa fsflags zero    CP0 |                          | 
+   6465 | 0514 ?                   |                          | 4| .(flushed) frflags s3    | 04fe fdiv.d ft1,ft2, FP  | 04fa fsflags zero        | ID-stall:CP0/fence RT-redirect->04fe
+   6466 | 04fe fdiv.d ft1,ft2,ft4  |                          | 0|                          |                          |                          | 
+   6467 | 0500 ?                   |                          | 0|                          |                          |                          | ID-stall:other FLUSH
+   6468 | 0504 ?                   |                          | 0|                          |                          |                          | 
+   6469 | 0508 ?                   | 0500 ?                   | 0| >04fe fdiv.d ft1,ft2,ft4 |                          |                          | 
+   6470 | 050c ?                   | 0504 ?                   | 0| .0502 frflags s3         | 04fe fdiv.d ft1,ft2, FP  |                          | ID-stall:CP0/fence
+   6471 | 0510 ?                   | 0508 ?                   | 0| .0502 frflags s3         |                          | 04fe fdiv.d ft1,ft2,ft4  | ID-stall:CP0/fence
+   6472 | 0514 ?                   | 050c ?                   | 2| .0502 frflags s3         |                          |                          | ID-stall:CP0/fence
+   6473 | 0518 ?                   | 0510 ?                   | 4| .0502 frflags s3         |                          |                          | ID-stall:CP0/fence
+   6474 |                          | 0514 ?                   | 6| .0502 frflags s3         |                          |                          | ID-stall:CP0/fence
+   6475 |                          | 0514 ?                   | 6| .0502 frflags s3         |                          |                          | ID-stall:CP0/fence
+   6476 |                          | 0514 ?                   | 6| .0502 frflags s3         |                          |                          | ID-stall:CP0/fence
+   6477 |                          | 0514 ?                   | 6| .0502 frflags s3         |                          |                          | ID-stall:CP0/fence
+   6478 |                          | 0514 ?                   | 6| .0502 frflags s3         |                          |                          | ID-stall:CP0/fence
+   6479 |                          | 0514 ?                   | 6| .0502 frflags s3         |                          |                          | ID-stall:CP0/fence
+   6480 |                          | 0514 ?                   | 6| .0502 frflags s3         |                          |                          | ID-stall:CP0/fence
+   6481 |                          | 0514 ?                   | 6| .0502 frflags s3         |                          |                          | ID-stall:CP0/fence
+   6482 |                          | 0514 ?                   | 6| .0502 frflags s3         |                          |                          | ID-stall:CP0/fence
+   6483 |                          | 0514 ?                   | 6| .0502 frflags s3         |                          |                          | ID-stall:CP0/fence
+   6484 |                          | 0514 ?                   | 6| .0502 frflags s3         |                          |                          | ID-stall:CP0/fence
+   6485 |                          | 0514 ?                   | 6| .0502 frflags s3         |                          |                          | ID-stall:CP0/fence
+   6486 |                          | 0514 ?                   | 6| .0502 frflags s3         |                          |                          | ID-stall:CP0/fence
+   6487 |                          | 0514 ?                   | 6| .0502 frflags s3         |                          |                          | ID-stall:CP0/fence
+   6488 |                          | 0514 ?                   | 6| .0502 frflags s3         |                          |                          | ID-stall:CP0/fence
+   6489 |                          | 0514 ?                   | 6| .0502 frflags s3         |                          |                          | ID-stall:CP0/fence
+   6490 |                          | 0514 ?                   | 6| .0502 frflags s3         |                          |                          | ID-stall:CP0/fence
+   6491 |                          | 0514 ?                   | 6| .0502 frflags s3         |                          |                          | ID-stall:CP0/fence
+   6492 |                          | 0514 ?                   | 6| .0502 frflags s3         |                          |                          | ID-stall:CP0/fence
+   6493 |                          | 0514 ?                   | 6| .0502 frflags s3         |                          |                          | ID-stall:CP0/fence
+   6494 |                          | 0514 ?                   | 6| .0502 frflags s3         |                          |                          | ID-stall:CP0/fence
+   6495 |                          | 0514 ?                   | 6| .0502 frflags s3         |                          |                          | ID-stall:CP0/fence
+   6496 |                          | 0514 ?                   | 6| .0502 frflags s3         |                          |                          | ID-stall:CP0/fence
+   6497 |                          | 0514 ?                   | 6| .0502 frflags s3         |                          |                          | ID-stall:CP0/fence
+   6498 |                          | 0514 ?                   | 6| .0502 frflags s3         |                          |                          | ID-stall:CP0/fence
+   6499 |                          | 0514 ?                   | 6| .0502 frflags s3         |                          |                          | ID-stall:CP0/fence
+   6500 |                          | 0514 ?                   | 6| .0502 frflags s3         |                          |                          | ID-stall:CP0/fence
+   6501 |                          | 0514 ?                   | 6| .0502 frflags s3         |                          |                          | ID-stall:CP0/fence
+   6502 |                          | 0514 ?                   | 6| .0502 frflags s3         |                          |                          | ID-stall:CP0/fence
+   6503 |                          | 0514 ?                   | 6| .0502 frflags s3         |                          |                          | ID-stall:CP0/fence
+   6504 |                          | 0514 ?                   | 6| >0502 frflags s3         |                          |                          | 
+   6505 | 0518 ?                   | 0514 ?                   | 4| .0506 fsflags zero       | 0502 frflags s3      CP0 |                          | ID-stall:CP0/fence
+   6506 | 051c ?                   |                          | 6| .0506 fsflags zero       |                          | 0502 frflags s3          | ID-stall:CP0/fence
+   6507 |                          | 0518 ?                   | 6| >0506 fsflags zero       |                          |                          | 
+   6508 | 051c ?                   | 0518 ?                   | 4| >050a fmul.d ft1,ft5,ft5 | 0506 fsflags zero    CP0 |                          | 
+   6509 | 0520 li t0,8             |                          | 4| .(flushed) frflags s4    | 050a fmul.d ft1,ft5, FP  | 0506 fsflags zero        | ID-stall:CP0/fence RT-redirect->050a
+   6510 | 050a fmul.d ft1,ft5,ft5  |                          | 0|                          |                          |                          | 
+   6511 | 050c ?                   |                          | 0|                          |                          |                          | ID-stall:other FLUSH
+   6512 | 0510 ?                   |                          | 0|                          |                          |                          | 
+   6513 | 0514 ?                   | 050c ?                   | 0| >050a fmul.d ft1,ft5,ft5 |                          |                          | 
+   6514 | 0518 ?                   | 0510 ?                   | 0| .050e frflags s4         | 050a fmul.d ft1,ft5, FP  |                          | ID-stall:CP0/fence
+   6515 | 051c ?                   | 0514 ?                   | 0| .050e frflags s4         |                          | 050a fmul.d ft1,ft5,ft5  | ID-stall:CP0/fence
+   6516 | 0520 li t0,8             | 0518 ?                   | 2| .050e frflags s4         |                          |                          | ID-stall:CP0/fence
+   6517 |                          | 051c ?                   | 4| .050e frflags s4         |                          |                          | ID-stall:CP0/fence
+   6518 |                          | 051c ?                   | 4| >050e frflags s4         |                          |                          | 
+   6519 | 0520 li t0,8             | 051c ?                   | 2| .0512 fsflags zero       | 050e frflags s4      CP0 |                          | ID-stall:CP0/fence
+   6520 | 0524 ?                   |                          | 5| .0512 fsflags zero       |                          | 050e frflags s4          | ID-stall:CP0/fence
+   6521 | 0528 ?                   | 0520 li t0,8             | 5| >0512 fsflags zero       |                          |                          | 
+   6522 | 052c beq s2,t0,534       | 0524 ?                   | 4| >0516 fmul.d ft1,ft6,ft6 | 0512 fsflags zero    CP0 |                          | 
+   6523 |                          | 0528 ?                   | 4| .(flushed) frflags s5    | 0516 fmul.d ft1,ft6, FP  | 0512 fsflags zero        | IP-redirect->0122 ID-stall:CP0/fence RT-redirect->0516
+   6524 | 0516 fmul.d ft1,ft6,ft6  |                          | 0|                          |                          |                          | 
+   6525 | 0518 ?                   |                          | 0|                          |                          |                          | ID-stall:other FLUSH
+   6526 | 051c ?                   |                          | 0|                          |                          |                          | 
+   6527 | 0520 li t0,8             | 0518 ?                   | 0| >0516 fmul.d ft1,ft6,ft6 |                          |                          | 
+   6528 | 0524 ?                   | 051c ?                   | 0| .051a frflags s5         | 0516 fmul.d ft1,ft6, FP  |                          | ID-stall:CP0/fence
+   6529 | 0528 ?                   | 0520 li t0,8             | 1| .051a frflags s5         |                          | 0516 fmul.d ft1,ft6,ft6  | ID-stall:CP0/fence
+   6530 | 052c beq s2,t0,534       | 0524 ?                   | 2| .051a frflags s5         |                          |                          | ID-stall:CP0/fence
+   6531 |                          | 0528 ?                   | 4| .051a frflags s5         |                          |                          | IP-redirect->0122 ID-stall:CP0/fence
+   6532 |                          | 0528 ?                   | 4| .051a frflags s5         |                          |                          | IP-redirect->0122 ID-stall:CP0/fence
+   6533 |                          | 0528 ?                   | 4| .051a frflags s5         |                          |                          | IP-redirect->0122 ID-stall:CP0/fence
+   6534 |                          | 0528 ?                   | 4| >051a frflags s5         |                          |                          | IP-redirect->0122
+   6535 | 0122 csrr s0,mepc        | 0528 ?                   | 3| >051e li t6,0            | 051a frflags s5      CP0 |                          | IP-redirect->0122
+   6536 | 0122 csrr s0,mepc        |                          | 4| >0520 li t0,8            | 051e li t6,0         ALU | 051a frflags s5          | 
+   6537 | 0124 ?                   |                          | 2| >0596 csrr t1,mstatus    | 0520 li t0,8         ALU | 051e li t6,0             | 
+----------------------------------------------------------------------------------------------------------------------------------------------------------------
+summary: cycles=112 retired=16 IPC=0.143 | flush=5, icache_miss=1, ip_redirect=6, retired=16, stall_CP0/fence=69, stall_other=5
+
+================================================================================================================================================================
+MARK 7   cycles 8079 .. 8181  (103 cycles)
+================================================================================================================================================================
+    cyc | IF (fetch)               | IP (pred)                |IB| ID                       | EX1                      | RETIRE                   | events
+----------------------------------------------------------------------------------------------------------------------------------------------------------------
+   8079 | 05ac csrs mstatus,t0     | 05a4 ?                   | 4| >0596 csrr t1,mstatus    |                          |                          | 
+   8080 |                          | 05a8 ?                   | 4| .059a srli s1,t1,0xd     | 0596 csrr t1,mstatus CP0 |                          | ID-stall:RAW
+   8081 |                          | 05a8 ?                   | 4| >059a srli s1,t1,0xd     |                          | 0596 csrr t1,mstatus     | 
+   8082 | 05ac csrs mstatus,t0     | 05a8 ?                   | 3| >059e andi s1,s1,3       | 059a srli s1,t1,0xd  ALU |                          | 
+   8083 | 05b0 csrr t1,mstatus     |                          | 5| >05a0 lui t0,0x6         | 059e andi s1,s1,3    ALU | 059a srli s1,t1,0xd      | 
+   8084 | 05b4 srli s2,t1,0xd      | 05ac csrs mstatus,t0     | 3| .05a2 csrc mstatus,t0    | 05a0 lui t0,0x6      ALU | 059e andi s1,s1,3        | ID-stall:CP0/fence
+   8085 |                          | 05b0 csrr t1,mstatus     | 5| .05a2 csrc mstatus,t0    |                          | 05a0 lui t0,0x6          | ID-stall:CP0/fence
+   8086 |                          | 05b0 csrr t1,mstatus     | 5| >05a2 csrc mstatus,t0    |                          |                          | 
+   8087 | 05b4 srli s2,t1,0xd      | 05b0 csrr t1,mstatus     | 3| >05a6 fadd.d ft1,ft2,ft2 | 05a2 csrc mstatus,t0 CP0 |                          | 
+   8088 | 05b8 andi s2,s2,3        |                          | 4| >05a6 fadd.d ft1,ft2,ft2 | 05a6 fadd.d ft1,ft2, FP  | 05a2 csrc mstatus,t0     | RT-redirect->05a6
+   8089 | 05a6 fadd.d ft1,ft2,ft2  |                          | 0|                          | 05a6 fadd.d ft1,ft2, ALU |                          | 
+   8090 | 05a8 ?                   |                          | 0|                          |                          |                          | ID-stall:other
+   8091 | 05ac csrs mstatus,t0     |                          | 0|                          |                          |                          | ID-stall:other FLUSH
+   8092 | 05b0 csrr t1,mstatus     | 05a8 ?                   | 0| >05a6 fadd.d ft1,ft2,ft2 |                          |                          | 
+   8093 | 05b4 srli s2,t1,0xd      | 05ac csrs mstatus,t0     | 0| >05aa lui t0,0x2         | 05a6 fadd.d ft1,ft2, CP0 |                          | 
+   8094 | 05b8 andi s2,s2,3        | 05b0 csrr t1,mstatus     | 0| .(flushed) csrs mstatus, | 05aa lui t0,0x2      ALU | 05a6 fadd.d ft1,ft2,ft2  | ID-stall:CP0/fence TRAP
+   8095 | 05bc fadd.d ft1,ft2,ft2  | 05b4 srli s2,t1,0xd      | 2| >(flushed) csrs mstatus, |                          |                          | RT-redirect->0140
+   8096 | 0140 j 680               |                          | 0|                          |                          |                          | ID-stall:other FLUSH
+   8097 |                          |                          | 0|                          |                          |                          | 
+   8098 |                          |                          | 0|                          |                          |                          | I$-miss
+   8099 |                          |                          | 0|                          |                          |                          | 
+   8100 |                          |                          | 0|                          |                          |                          | 
+   8101 |                          |                          | 0|                          |                          |                          | 
+   8102 |                          |                          | 0|                          |                          |                          | 
+   8103 |                          |                          | 0|                          |                          |                          | 
+   8104 |                          | 0140 j 680               | 0| >0140 j 680              |                          |                          | IP-redirect->0680
+   8105 |                          |                          | 0|                          | 0140 j 680           BJU |                          | 
+   8106 |                          |                          | 0|                          |                          | 0140 j 680               | 
+   8107 |                          |                          | 0|                          |                          |                          | 
+   8108 |                          |                          | 0|                          |                          |                          | 
+   8109 |                          |                          | 0|                          |                          |                          | 
+   8110 | 0680 csrr s8,mcause      |                          | 0|                          |                          |                          | 
+   8111 |                          |                          | 0|                          |                          |                          | 
+   8112 |                          |                          | 0|                          |                          |                          | I$-miss
+   8113 |                          |                          | 0|                          |                          |                          | 
+   8114 |                          |                          | 0|                          |                          |                          | 
+   8115 |                          |                          | 0|                          |                          |                          | 
+   8116 |                          |                          | 0|                          |                          |                          | 
+   8117 |                          |                          | 0|                          |                          |                          | 
+   8118 |                          | 0680 csrr s8,mcause      | 0| >0680 csrr s8,mcause     |                          |                          | 
+   8119 |                          |                          | 0|                          | 0680 csrr s8,mcause  CP0 |                          | 
+   8120 |                          |                          | 0|                          |                          | 0680 csrr s8,mcause      | 
+   8121 |                          |                          | 0|                          |                          |                          | 
+   8122 |                          |                          | 0|                          |                          |                          | 
+   8123 |                          |                          | 0|                          |                          |                          | 
+   8124 | 0684 csrr s9,mepc        |                          | 0|                          |                          |                          | 
+   8125 | 0688 csrr s10,mtval      |                          | 0|                          |                          |                          | 
+   8126 | 068c addi s11,s11,1      | 0684 csrr s9,mepc        | 0| >0684 csrr s9,mepc       |                          |                          | 
+   8127 | 0690 ?                   | 0688 csrr s10,mtval      | 0| .0688 csrr s10,mtval     | 0684 csrr s9,mepc    CP0 |                          | ID-stall:CP0/fence
+   8128 | 0694 ?                   | 068c addi s11,s11,1      | 0| .0688 csrr s10,mtval     |                          | 0684 csrr s9,mepc        | ID-stall:CP0/fence
+   8129 | 0698 ?                   | 0690 ?                   | 1| >0688 csrr s10,mtval     |                          |                          | 
+   8130 | 069c ?                   | 0694 ?                   | 2| >068c addi s11,s11,1     | 0688 csrr s10,mtval  CP0 |                          | 
+   8131 | 06a0 ?                   | 0698 ?                   | 2| >068e addi t3,s9,4       | 068c addi s11,s11,1  ALU | 0688 csrr s10,mtval      | 
+   8132 | 06a4 ?                   | 069c ?                   | 3| .0692 csrw mepc,t3       | 068e addi t3,s9,4    ALU | 068c addi s11,s11,1      | ID-stall:CP0/fence
+   8133 |                          | 06a0 ?                   | 5| .0692 csrw mepc,t3       |                          | 068e addi t3,s9,4        | ID-stall:CP0/fence
+   8134 |                          | 06a0 ?                   | 5| >0692 csrw mepc,t3       |                          |                          | 
+   8135 | 06a4 ?                   | 06a0 ?                   | 3| .(flushed) mret          | 0692 csrw mepc,t3    CP0 |                          | ID-stall:CP0/fence
+   8136 | 06a8 ?                   |                          | 5| .(flushed) mret          |                          | 0692 csrw mepc,t3        | ID-stall:CP0/fence RT-redirect->0696
+   8137 | 0696 mret                |                          | 0|                          |                          |                          | 
+   8138 | 0698 ?                   |                          | 0|                          |                          |                          | ID-stall:other FLUSH
+   8139 | 069c ?                   |                          | 0|                          |                          |                          | 
+   8140 | 06a0 ?                   | 0698 ?                   | 0| >0696 mret               |                          |                          | 
+   8141 | 06a4 ?                   | 069c ?                   | 0| >069a ?                  | 0696 mret            CP0 |                          | 
+   8142 | 06a8 ?                   | 06a0 ?                   | 1| >05aa lui t0,0x2         | 069a ?               CP0 | 0696 mret                | RT-redirect->05aa
+   8143 | 05aa lui t0,0x2          |                          | 0|                          | 05aa lui t0,0x2      CP0 |                          | 
+   8144 | 05ac csrs mstatus,t0     |                          | 0|                          |                          |                          | ID-stall:other
+   8145 | 05b0 csrr t1,mstatus     | 05aa lui t0,0x2          | 0| .(flushed) lui t0,0x2    |                          |                          | ID-stall:other FLUSH
+   8146 | 05b4 srli s2,t1,0xd      | 05ac csrs mstatus,t0     | 0| >05aa lui t0,0x2         |                          |                          | 
+   8147 | 05b8 andi s2,s2,3        | 05b0 csrr t1,mstatus     | 0| .05ac csrs mstatus,t0    | 05aa lui t0,0x2      ALU |                          | ID-stall:CP0/fence
+   8148 | 05bc fadd.d ft1,ft2,ft2  | 05b4 srli s2,t1,0xd      | 2| .05ac csrs mstatus,t0    |                          | 05aa lui t0,0x2          | ID-stall:CP0/fence
+   8149 | 05c0 csrr t1,mstatus     | 05b8 andi s2,s2,3        | 4| >05ac csrs mstatus,t0    |                          |                          | 
+   8150 |                          | 05bc fadd.d ft1,ft2,ft2  | 4| .(flushed) csrr t1,mstat | 05ac csrs mstatus,t0 CP0 |                          | ID-stall:CP0/fence
+   8151 |                          |                          | 6| .(flushed) csrr t1,mstat |                          | 05ac csrs mstatus,t0     | ID-stall:CP0/fence I$-miss RT-redirect->05b0
+   8152 |                          |                          | 0|                          |                          |                          | 
+   8153 |                          |                          | 0|                          |                          |                          | ID-stall:other FLUSH
+   8154 |                          |                          | 0|                          |                          |                          | 
+   8155 |                          |                          | 0|                          |                          |                          | 
+   8156 |                          |                          | 0|                          |                          |                          | 
+   8157 |                          |                          | 0|                          |                          |                          | 
+   8158 |                          |                          | 0|                          |                          |                          | 
+   8159 |                          |                          | 0|                          |                          |                          | 
+   8160 |                          |                          | 0|                          |                          |                          | 
+   8161 |                          |                          | 0|                          |                          |                          | 
+   8162 |                          |                          | 0|                          |                          |                          | 
+   8163 | 05b0 csrr t1,mstatus     |                          | 0|                          |                          |                          | 
+   8164 | 05b4 srli s2,t1,0xd      |                          | 0|                          |                          |                          | 
+   8165 | 05b8 andi s2,s2,3        | 05b0 csrr t1,mstatus     | 0| >05b0 csrr t1,mstatus    |                          |                          | 
+   8166 | 05bc fadd.d ft1,ft2,ft2  | 05b4 srli s2,t1,0xd      | 0| .05b4 srli s2,t1,0xd     | 05b0 csrr t1,mstatus CP0 |                          | ID-stall:RAW
+   8167 | 05c0 csrr t1,mstatus     | 05b8 andi s2,s2,3        | 0| >05b4 srli s2,t1,0xd     |                          | 05b0 csrr t1,mstatus     | 
+   8168 | 05c4 srli s3,t1,0xd      | 05bc fadd.d ft1,ft2,ft2  | 0| >05b8 andi s2,s2,3       | 05b4 srli s2,t1,0xd  ALU |                          | 
+   8169 | 05c8 andi s3,s3,3        | 05c0 csrr t1,mstatus     | 0| >05bc fadd.d ft1,ft2,ft2 | 05b8 andi s2,s2,3    ALU | 05b4 srli s2,t1,0xd      | 
+   8170 | 05cc li t6,0             | 05c4 srli s3,t1,0xd      | 0| .05c0 csrr t1,mstatus    | 05bc fadd.d ft1,ft2, FP  | 05b8 andi s2,s2,3        | ID-stall:CP0/fence
+   8171 | 05d0 beq s1,t0,5d8       | 05c8 andi s3,s3,3        | 2| .05c0 csrr t1,mstatus    |                          | 05bc fadd.d ft1,ft2,ft2  | ID-stall:CP0/fence
+   8172 | 05d4 j 122               | 05cc li t6,0             | 4| .05c0 csrr t1,mstatus    |                          |                          | ID-stall:CP0/fence
+   8173 |                          | 05d0 beq s1,t0,5d8       | 6| .05c0 csrr t1,mstatus    |                          |                          | ID-stall:CP0/fence
+   8174 |                          | 05d0 beq s1,t0,5d8       | 6| .05c0 csrr t1,mstatus    |                          |                          | ID-stall:CP0/fence
+   8175 |                          | 05d0 beq s1,t0,5d8       | 6| >05c0 csrr t1,mstatus    |                          |                          | 
+   8176 | 05d4 j 122               | 05d0 beq s1,t0,5d8       | 4| .05c4 srli s3,t1,0xd     | 05c0 csrr t1,mstatus CP0 |                          | ID-stall:RAW
+   8177 | 05d8 li t0,2             |                          | 6| >05c4 srli s3,t1,0xd     |                          | 05c0 csrr t1,mstatus     | 
+   8178 | 05dc ?                   | 05d4 j 122               | 4| >05c8 andi s3,s3,3       | 05c4 srli s3,t1,0xd  ALU |                          | IP-redirect->0122
+   8179 | 0122 csrr s0,mepc        |                          | 5| >05cc li t6,0            | 05c8 andi s3,s3,3    ALU | 05c4 srli s3,t1,0xd      | 
+   8180 | 0124 ?                   |                          | 4| >05ce li t0,3            | 05cc li t6,0         ALU | 05c8 andi s3,s3,3        | 
+   8181 | 0128 ?                   |                          | 2| >(flushed) beq s1,t0,52a | 05ce li t0,3         ALU | 05cc li t6,0             | 
+----------------------------------------------------------------------------------------------------------------------------------------------------------------
+summary: cycles=103 retired=24 IPC=0.233 | flush=5, icache_miss=3, ip_redirect=2, retired=24, stall_CP0/fence=18, stall_RAW=3, stall_other=7, trap=1

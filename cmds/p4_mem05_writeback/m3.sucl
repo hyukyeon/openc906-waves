@@ -80,6 +80,10 @@ variable_add TOP.sim_top.study_probe.bus_awlen
 item_focus co
 item_set_format Unsigned
 item_unfocus
+variable_add TOP.sim_top.study_probe.bus_awburst
+item_focus cp
+item_set_format Unsigned
+item_unfocus
 variable_add TOP.sim_top.study_probe.bus_wvalid
 variable_add TOP.sim_top.study_probe.bus_wready
 variable_add TOP.sim_top.study_probe.bus_wdata_lo
@@ -88,7 +92,7 @@ variable_add TOP.sim_top.study_probe.bus_wlast
 variable_add TOP.sim_top.study_probe.bus_bvalid
 variable_add TOP.sim_top.study_probe.bus_bready
 variable_add TOP.sim_top.study_probe.bus_bresp
-item_focus dg
+item_focus dh
 item_set_format Unsigned
 item_unfocus
 marker_set M1 268050
