@@ -130,6 +130,8 @@ variable_add TOP.sim_top.study_probe.bus_arlen
 item_focus ei
 item_set_format Unsigned
 item_unfocus
+variable_add TOP.sim_top.study_probe.ic_arvalid
+variable_add TOP.sim_top.study_probe.ic_arready
 variable_add TOP.sim_top.study_probe.bus_rvalid
 variable_add TOP.sim_top.study_probe.bus_rlast
 variable_add TOP.sim_top.study_probe.bus_awvalid

@@ -1,0 +1,333 @@
+사용: pipeview.py <out/test 디렉토리> [--mark N] [--max-rows K]
+출력: <dir>/pipeview.txt  (mark 구간별 표 + 구간 요약)
+
+================================================================================================================================================================
+MARK 1   cycles 2660 .. 2685  (26 cycles)
+================================================================================================================================================================
+    cyc | IF (fetch)               | IP (pred)                |IB| ID                       | EX1                      | RETIRE                   | events
+----------------------------------------------------------------------------------------------------------------------------------------------------------------
+   2660 | 0280 addiw s3,s3,1656    | 0278 addiw s2,s2,64      | 2| .0272 mv t1,t1           |                          |                          | ID-stall:RAW,WAW
+   2661 |                          | 027c lui s3,0x12345      | 4| .0272 mv t1,t1           |                          |                          | ID-stall:RAW,WAW
+   2662 |                          |                          | 6| .0272 mv t1,t1           |                          |                          | ID-stall:RAW,WAW I$-miss
+   2663 |                          |                          | 6| .0272 mv t1,t1           |                          |                          | ID-stall:RAW,WAW
+   2664 |                          |                          | 6| .0272 mv t1,t1           |                          |                          | ID-stall:RAW,WAW
+   2665 |                          |                          | 6| .0272 mv t1,t1           |                          |                          | ID-stall:RAW,WAW
+   2666 |                          |                          | 6| .0272 mv t1,t1           |                          |                          | ID-stall:RAW,WAW
+   2667 |                          |                          | 6| .0272 mv t1,t1           |                          |                          | ID-stall:RAW,WAW
+   2668 |                          | 0280 addiw s3,s3,1656    | 6| .0272 mv t1,t1           |                          |                          | ID-stall:RAW,WAW
+   2669 |                          | 0280 addiw s3,s3,1656    | 6| .0272 mv t1,t1           |                          |                          | ID-stall:RAW,WAW
+   2670 |                          | 0280 addiw s3,s3,1656    | 6| .0272 mv t1,t1           |                          | 026e ld t1,8(s1)         | ID-stall:RAW,WAW DC:LD MISS
+   2671 |                          | 0280 addiw s3,s3,1656    | 6| .0272 mv t1,t1           |                          |                          | ID-stall:RAW,WAW
+   2672 |                          | 0280 addiw s3,s3,1656    | 6| .0272 mv t1,t1           |                          |                          | ID-stall:RAW,WAW
+   2673 |                          | 0280 addiw s3,s3,1656    | 6| .0272 mv t1,t1           |                          |                          | ID-stall:RAW,WAW
+   2674 |                          | 0280 addiw s3,s3,1656    | 6| .0272 mv t1,t1           |                          |                          | ID-stall:RAW,WAW
+   2675 |                          | 0280 addiw s3,s3,1656    | 6| .0272 mv t1,t1           |                          |                          | ID-stall:RAW,WAW
+   2676 |                          | 0280 addiw s3,s3,1656    | 6| .0272 mv t1,t1           |                          |                          | ID-stall:RAW,WAW
+   2677 |                          | 0280 addiw s3,s3,1656    | 6| .0272 mv t1,t1           |                          |                          | ID-stall:RAW,WAW
+   2678 |                          | 0280 addiw s3,s3,1656    | 6| .0272 mv t1,t1           |                          |                          | ID-stall:RAW,WAW
+   2679 |                          | 0280 addiw s3,s3,1656    | 6| .0272 mv t1,t1           |                          |                          | ID-stall:RAW,WAW
+   2680 |                          | 0280 addiw s3,s3,1656    | 6| .0272 mv t1,t1           |                          |                          | ID-stall:RAW,WAW
+   2681 |                          | 0280 addiw s3,s3,1656    | 6| .0272 mv t1,t1           |                          |                          | ID-stall:WAW
+   2682 |                          | 0280 addiw s3,s3,1656    | 6| >0272 mv t1,t1           |                          |                          | 
+   2683 |                          | 0280 addiw s3,s3,1656    | 5| >0274 li t6,0            | 0272 mv t1,t1        ALU |                          | 
+   2684 | 0284 csrci 0x7c1,2       | 0280 addiw s3,s3,1656    | 4| >0276 lui s2,0x10        | 0274 li t6,0         ALU | 0272 mv t1,t1            | 
+   2685 | 0288 li t6,2             |                          | 4| >028e fence              | 0276 lui s2,0x10     ALU | 0274 li t6,0             | 
+----------------------------------------------------------------------------------------------------------------------------------------------------------------
+summary: cycles=26 retired=3 IPC=0.115 | dc_miss=1, icache_miss=1, retired=3, stall_RAW=21, stall_WAW=22
+
+================================================================================================================================================================
+MARK 2   cycles 2699 .. 2719  (21 cycles)
+================================================================================================================================================================
+    cyc | IF (fetch)               | IP (pred)                |IB| ID                       | EX1                      | RETIRE                   | events
+----------------------------------------------------------------------------------------------------------------------------------------------------------------
+   2699 | 02a0 ?                   | 0298 li t6,0             | 1| >0292 lw s4,0(s2)        | 028e fence           CP0 | 028a sw s3,0(s2)         | DC:ST MISS
+   2700 | 02a4 ?                   | 029c ?                   | 1| .0296 mv s4,s4           | 0292 lw s4,0(s2)     LSU | 028e fence               | ID-stall:RAW,WAW
+   2701 | 02a8 ?                   | 02a0 ?                   | 3| .0296 mv s4,s4           |                          | 0292 lw s4,0(s2)         | ID-stall:RAW,WAW DC:LD MISS STB-fwd
+   2702 |                          | 02a4 ?                   | 5| .0296 mv s4,s4           |                          |                          | IP-redirect->0122 ID-stall:RAW,WAW
+   2703 |                          | 02a4 ?                   | 5| .0296 mv s4,s4           |                          |                          | IP-redirect->0122 ID-stall:RAW,WAW
+   2704 |                          | 02a4 ?                   | 5| .0296 mv s4,s4           |                          |                          | IP-redirect->0122 ID-stall:RAW,WAW DC:LD MISS STB-partial
+   2705 |                          | 02a4 ?                   | 5| .0296 mv s4,s4           |                          |                          | IP-redirect->0122 ID-stall:RAW,WAW
+   2706 |                          | 02a4 ?                   | 5| .0296 mv s4,s4           |                          |                          | IP-redirect->0122 ID-stall:RAW,WAW DC:LD MISS
+   2707 |                          | 02a4 ?                   | 5| .0296 mv s4,s4           |                          |                          | IP-redirect->0122 ID-stall:RAW,WAW
+   2708 |                          | 02a4 ?                   | 5| .0296 mv s4,s4           |                          |                          | IP-redirect->0122 ID-stall:RAW,WAW
+   2709 |                          | 02a4 ?                   | 5| .0296 mv s4,s4           |                          |                          | IP-redirect->0122 ID-stall:RAW,WAW
+   2710 |                          | 02a4 ?                   | 5| .0296 mv s4,s4           |                          |                          | IP-redirect->0122 ID-stall:RAW,WAW
+   2711 |                          | 02a4 ?                   | 5| .0296 mv s4,s4           |                          |                          | IP-redirect->0122 ID-stall:RAW,WAW
+   2712 |                          | 02a4 ?                   | 5| .0296 mv s4,s4           |                          |                          | IP-redirect->0122 ID-stall:RAW,WAW
+   2713 |                          | 02a4 ?                   | 5| .0296 mv s4,s4           |                          |                          | IP-redirect->0122 ID-stall:RAW,WAW
+   2714 |                          | 02a4 ?                   | 5| .0296 mv s4,s4           |                          |                          | IP-redirect->0122 ID-stall:RAW,WAW
+   2715 |                          | 02a4 ?                   | 5| .0296 mv s4,s4           |                          |                          | IP-redirect->0122 ID-stall:WAW
+   2716 |                          | 02a4 ?                   | 5| >0296 mv s4,s4           |                          |                          | IP-redirect->0122
+   2717 | 0122 csrr s0,mepc        | 02a4 ?                   | 4| >0298 li t6,0            | 0296 mv s4,s4        ALU |                          | IP-redirect->0122
+   2718 | 0122 csrr s0,mepc        |                          | 4| .02ba lw s7,0(s5)        | 0298 li t6,0         ALU | 0296 mv s4,s4            | ID-stall:CP0/fence
+   2719 | 0124 ?                   |                          | 4| .02ba lw s7,0(s5)        |                          | 0298 li t6,0             | ID-stall:CP0/fence
+----------------------------------------------------------------------------------------------------------------------------------------------------------------
+summary: cycles=21 retired=5 IPC=0.238 | dc_miss=4, ip_redirect=16, retired=5, stall_CP0/fence=2, stall_RAW=15, stall_WAW=16, stb_fwd=1, stb_partial=1
+
+================================================================================================================================================================
+MARK 3   cycles 2754 .. 2959  (206 cycles)
+================================================================================================================================================================
+    cyc | IF (fetch)               | IP (pred)                |IB| ID                       | EX1                      | RETIRE                   | events
+----------------------------------------------------------------------------------------------------------------------------------------------------------------
+   2754 | 02c4 ?                   | 02bc ?                   | 0| .02ba lw s7,0(s5)        | 02b2 sw s6,0(s5)     CP0 |                          | ID-stall:EX1-busy
+   2755 | 02c8 beq s7,t0,2d0       | 02c0 li t6,0             | 1| .02ba lw s7,0(s5)        | 02b2 sw s6,0(s5)     CP0 |                          | ID-stall:EX1-busy
+   2756 | 02cc j 122               | 02c4 ?                   | 2| .02ba lw s7,0(s5)        | 02b2 sw s6,0(s5)     CP0 |                          | ID-stall:EX1-busy
+   2757 |                          | 02c8 beq s7,t0,2d0       | 5| .02ba lw s7,0(s5)        | 02b2 sw s6,0(s5)     CP0 |                          | ID-stall:EX1-busy
+   2758 |                          | 02c8 beq s7,t0,2d0       | 5| .02ba lw s7,0(s5)        | 02b2 sw s6,0(s5)     CP0 |                          | ID-stall:EX1-busy
+   2759 |                          | 02c8 beq s7,t0,2d0       | 5| .02ba lw s7,0(s5)        | 02b2 sw s6,0(s5)     CP0 |                          | ID-stall:EX1-busy
+   2760 |                          | 02c8 beq s7,t0,2d0       | 5| .02ba lw s7,0(s5)        | 02b2 sw s6,0(s5)     CP0 |                          | ID-stall:EX1-busy
+   2761 |                          | 02c8 beq s7,t0,2d0       | 5| .02ba lw s7,0(s5)        | 02b2 sw s6,0(s5)     CP0 |                          | ID-stall:EX1-busy
+   2762 |                          | 02c8 beq s7,t0,2d0       | 5| .02ba lw s7,0(s5)        | 02b2 sw s6,0(s5)     CP0 |                          | ID-stall:EX1-busy
+   2763 |                          | 02c8 beq s7,t0,2d0       | 5| >02ba lw s7,0(s5)        | 02b6 fence           CP0 | 02b2 sw s6,0(s5)         | DC:ST MISS
+   2764 | 02cc j 122               | 02c8 beq s7,t0,2d0       | 4| .02be mv s7,s7           | 02ba lw s7,0(s5)     LSU | 02b6 fence               | ID-stall:RAW,WAW
+   2765 | 02d0 addiw s8,zero,1     |                          | 6| .02be mv s7,s7           |                          | 02ba lw s7,0(s5)         | ID-stall:RAW,WAW DC:LD MISS STB-fwd
+   2766 |                          | 02cc j 122               | 6| .02be mv s7,s7           |                          |                          | IP-redirect->0122 ID-stall:RAW,WAW
+   2767 |                          | 02cc j 122               | 6| .02be mv s7,s7           |                          |                          | IP-redirect->0122 ID-stall:RAW,WAW
+   2768 |                          | 02cc j 122               | 6| .02be mv s7,s7           |                          |                          | IP-redirect->0122 ID-stall:RAW,WAW DC:LD MISS STB-partial
+   2769 |                          | 02cc j 122               | 6| .02be mv s7,s7           |                          |                          | IP-redirect->0122 ID-stall:RAW,WAW
+   2770 |                          | 02cc j 122               | 6| .02be mv s7,s7           |                          |                          | IP-redirect->0122 ID-stall:RAW,WAW DC:LD MISS
+   2771 |                          | 02cc j 122               | 6| .02be mv s7,s7           |                          |                          | IP-redirect->0122 ID-stall:RAW,WAW
+   2772 |                          | 02cc j 122               | 6| .02be mv s7,s7           |                          |                          | IP-redirect->0122 ID-stall:RAW,WAW
+   2773 |                          | 02cc j 122               | 6| .02be mv s7,s7           |                          |                          | IP-redirect->0122 ID-stall:RAW,WAW
+   2774 |                          | 02cc j 122               | 6| .02be mv s7,s7           |                          |                          | IP-redirect->0122 ID-stall:RAW,WAW
+   2775 |                          | 02cc j 122               | 6| .02be mv s7,s7           |                          |                          | IP-redirect->0122 ID-stall:RAW,WAW
+   2776 |                          | 02cc j 122               | 6| .02be mv s7,s7           |                          |                          | IP-redirect->0122 ID-stall:RAW,WAW
+   2777 |                          | 02cc j 122               | 6| .02be mv s7,s7           |                          |                          | IP-redirect->0122 ID-stall:RAW,WAW
+   2778 |                          | 02cc j 122               | 6| .02be mv s7,s7           |                          |                          | IP-redirect->0122 ID-stall:RAW,WAW
+   2779 |                          | 02cc j 122               | 6| .02be mv s7,s7           |                          |                          | IP-redirect->0122 ID-stall:RAW,WAW
+   2780 |                          | 02cc j 122               | 6| .02be mv s7,s7           |                          |                          | IP-redirect->0122 ID-stall:RAW,WAW
+   2781 |                          | 02cc j 122               | 6| .02be mv s7,s7           |                          |                          | IP-redirect->0122 ID-stall:RAW,WAW
+   2782 |                          | 02cc j 122               | 6| .02be mv s7,s7           |                          |                          | IP-redirect->0122 ID-stall:RAW,WAW
+   2783 |                          | 02cc j 122               | 6| .02be mv s7,s7           |                          |                          | IP-redirect->0122 ID-stall:RAW,WAW
+   2784 |                          | 02cc j 122               | 6| .02be mv s7,s7           |                          |                          | IP-redirect->0122 ID-stall:RAW,WAW
+   2785 |                          | 02cc j 122               | 6| .02be mv s7,s7           |                          |                          | IP-redirect->0122 ID-stall:RAW,WAW
+   2786 |                          | 02cc j 122               | 6| .02be mv s7,s7           |                          |                          | IP-redirect->0122 ID-stall:RAW,WAW
+   2787 |                          | 02cc j 122               | 6| .02be mv s7,s7           |                          |                          | IP-redirect->0122 ID-stall:RAW,WAW
+   2788 |                          | 02cc j 122               | 6| .02be mv s7,s7           |                          |                          | IP-redirect->0122 ID-stall:RAW,WAW
+   2789 |                          | 02cc j 122               | 6| .02be mv s7,s7           |                          |                          | IP-redirect->0122 ID-stall:RAW,WAW
+   2790 |                          | 02cc j 122               | 6| .02be mv s7,s7           |                          |                          | IP-redirect->0122 ID-stall:RAW,WAW
+   2791 |                          | 02cc j 122               | 6| .02be mv s7,s7           |                          |                          | IP-redirect->0122 ID-stall:RAW,WAW
+   2792 |                          | 02cc j 122               | 6| .02be mv s7,s7           |                          |                          | IP-redirect->0122 ID-stall:RAW,WAW
+   2793 |                          | 02cc j 122               | 6| .02be mv s7,s7           |                          |                          | IP-redirect->0122 ID-stall:RAW,WAW
+   2794 |                          | 02cc j 122               | 6| .02be mv s7,s7           |                          |                          | IP-redirect->0122 ID-stall:RAW,WAW
+   2795 |                          | 02cc j 122               | 6| .02be mv s7,s7           |                          |                          | IP-redirect->0122 ID-stall:RAW,WAW
+   2796 |                          | 02cc j 122               | 6| .02be mv s7,s7           |                          |                          | IP-redirect->0122 ID-stall:RAW,WAW
+   2797 |                          | 02cc j 122               | 6| .02be mv s7,s7           |                          |                          | IP-redirect->0122 ID-stall:RAW,WAW
+   2798 |                          | 02cc j 122               | 6| .02be mv s7,s7           |                          |                          | IP-redirect->0122 ID-stall:RAW,WAW
+   2799 |                          | 02cc j 122               | 6| .02be mv s7,s7           |                          |                          | IP-redirect->0122 ID-stall:RAW,WAW
+   2800 |                          | 02cc j 122               | 6| .02be mv s7,s7           |                          |                          | IP-redirect->0122 ID-stall:RAW,WAW
+   2801 |                          | 02cc j 122               | 6| .02be mv s7,s7           |                          |                          | IP-redirect->0122 ID-stall:RAW,WAW
+   2802 |                          | 02cc j 122               | 6| .02be mv s7,s7           |                          |                          | IP-redirect->0122 ID-stall:RAW,WAW
+   2803 |                          | 02cc j 122               | 6| .02be mv s7,s7           |                          |                          | IP-redirect->0122 ID-stall:RAW,WAW
+   2804 |                          | 02cc j 122               | 6| .02be mv s7,s7           |                          |                          | IP-redirect->0122 ID-stall:RAW,WAW
+   2805 |                          | 02cc j 122               | 6| .02be mv s7,s7           |                          |                          | IP-redirect->0122 ID-stall:RAW,WAW
+   2806 |                          | 02cc j 122               | 6| .02be mv s7,s7           |                          |                          | IP-redirect->0122 ID-stall:RAW,WAW
+   2807 |                          | 02cc j 122               | 6| .02be mv s7,s7           |                          |                          | IP-redirect->0122 ID-stall:RAW,WAW
+   2808 |                          | 02cc j 122               | 6| .02be mv s7,s7           |                          |                          | IP-redirect->0122 ID-stall:RAW,WAW
+   2809 |                          | 02cc j 122               | 6| .02be mv s7,s7           |                          |                          | IP-redirect->0122 ID-stall:RAW,WAW
+   2810 |                          | 02cc j 122               | 6| .02be mv s7,s7           |                          |                          | IP-redirect->0122 ID-stall:RAW,WAW
+   2811 |                          | 02cc j 122               | 6| .02be mv s7,s7           |                          |                          | IP-redirect->0122 ID-stall:RAW,WAW
+   2812 |                          | 02cc j 122               | 6| .02be mv s7,s7           |                          |                          | IP-redirect->0122 ID-stall:RAW,WAW
+   2813 |                          | 02cc j 122               | 6| .02be mv s7,s7           |                          |                          | IP-redirect->0122 ID-stall:RAW,WAW
+   2814 |                          | 02cc j 122               | 6| .02be mv s7,s7           |                          |                          | IP-redirect->0122 ID-stall:RAW,WAW
+   2815 |                          | 02cc j 122               | 6| .02be mv s7,s7           |                          |                          | IP-redirect->0122 ID-stall:RAW,WAW
+   2816 |                          | 02cc j 122               | 6| .02be mv s7,s7           |                          |                          | IP-redirect->0122 ID-stall:RAW,WAW
+   2817 |                          | 02cc j 122               | 6| .02be mv s7,s7           |                          |                          | IP-redirect->0122 ID-stall:RAW,WAW
+   2818 |                          | 02cc j 122               | 6| .02be mv s7,s7           |                          |                          | IP-redirect->0122 ID-stall:RAW,WAW
+   2819 |                          | 02cc j 122               | 6| .02be mv s7,s7           |                          |                          | IP-redirect->0122 ID-stall:RAW,WAW
+   2820 |                          | 02cc j 122               | 6| .02be mv s7,s7           |                          |                          | IP-redirect->0122 ID-stall:RAW,WAW
+   2821 |                          | 02cc j 122               | 6| .02be mv s7,s7           |                          |                          | IP-redirect->0122 ID-stall:RAW,WAW
+   2822 |                          | 02cc j 122               | 6| .02be mv s7,s7           |                          |                          | IP-redirect->0122 ID-stall:RAW,WAW
+   2823 |                          | 02cc j 122               | 6| .02be mv s7,s7           |                          |                          | IP-redirect->0122 ID-stall:RAW,WAW
+   2824 |                          | 02cc j 122               | 6| .02be mv s7,s7           |                          |                          | IP-redirect->0122 ID-stall:RAW,WAW
+   2825 |                          | 02cc j 122               | 6| .02be mv s7,s7           |                          |                          | IP-redirect->0122 ID-stall:RAW,WAW
+   2826 |                          | 02cc j 122               | 6| .02be mv s7,s7           |                          |                          | IP-redirect->0122 ID-stall:RAW,WAW
+   2827 |                          | 02cc j 122               | 6| .02be mv s7,s7           |                          |                          | IP-redirect->0122 ID-stall:RAW,WAW
+   2828 |                          | 02cc j 122               | 6| .02be mv s7,s7           |                          |                          | IP-redirect->0122 ID-stall:RAW,WAW
+   2829 |                          | 02cc j 122               | 6| .02be mv s7,s7           |                          |                          | IP-redirect->0122 ID-stall:RAW,WAW
+   2830 |                          | 02cc j 122               | 6| .02be mv s7,s7           |                          |                          | IP-redirect->0122 ID-stall:RAW,WAW
+   2831 |                          | 02cc j 122               | 6| .02be mv s7,s7           |                          |                          | IP-redirect->0122 ID-stall:RAW,WAW
+   2832 |                          | 02cc j 122               | 6| .02be mv s7,s7           |                          |                          | IP-redirect->0122 ID-stall:RAW,WAW
+   2833 |                          | 02cc j 122               | 6| .02be mv s7,s7           |                          |                          | IP-redirect->0122 ID-stall:RAW,WAW
+   2834 |                          | 02cc j 122               | 6| .02be mv s7,s7           |                          |                          | IP-redirect->0122 ID-stall:RAW,WAW
+   2835 |                          | 02cc j 122               | 6| .02be mv s7,s7           |                          |                          | IP-redirect->0122 ID-stall:RAW,WAW
+   2836 |                          | 02cc j 122               | 6| .02be mv s7,s7           |                          |                          | IP-redirect->0122 ID-stall:RAW,WAW
+   2837 |                          | 02cc j 122               | 6| .02be mv s7,s7           |                          |                          | IP-redirect->0122 ID-stall:RAW,WAW
+   2838 |                          | 02cc j 122               | 6| .02be mv s7,s7           |                          |                          | IP-redirect->0122 ID-stall:RAW,WAW
+   2839 |                          | 02cc j 122               | 6| .02be mv s7,s7           |                          |                          | IP-redirect->0122 ID-stall:RAW,WAW
+   2840 |                          | 02cc j 122               | 6| .02be mv s7,s7           |                          |                          | IP-redirect->0122 ID-stall:RAW,WAW
+   2841 |                          | 02cc j 122               | 6| .02be mv s7,s7           |                          |                          | IP-redirect->0122 ID-stall:RAW,WAW
+   2842 |                          | 02cc j 122               | 6| .02be mv s7,s7           |                          |                          | IP-redirect->0122 ID-stall:RAW,WAW
+   2843 |                          | 02cc j 122               | 6| .02be mv s7,s7           |                          |                          | IP-redirect->0122 ID-stall:RAW,WAW
+   2844 |                          | 02cc j 122               | 6| .02be mv s7,s7           |                          |                          | IP-redirect->0122 ID-stall:RAW,WAW
+   2845 |                          | 02cc j 122               | 6| .02be mv s7,s7           |                          |                          | IP-redirect->0122 ID-stall:RAW,WAW
+   2846 |                          | 02cc j 122               | 6| .02be mv s7,s7           |                          |                          | IP-redirect->0122 ID-stall:RAW,WAW
+   2847 |                          | 02cc j 122               | 6| .02be mv s7,s7           |                          |                          | IP-redirect->0122 ID-stall:RAW,WAW
+   2848 |                          | 02cc j 122               | 6| .02be mv s7,s7           |                          |                          | IP-redirect->0122 ID-stall:RAW,WAW
+   2849 |                          | 02cc j 122               | 6| .02be mv s7,s7           |                          |                          | IP-redirect->0122 ID-stall:RAW,WAW
+   2850 |                          | 02cc j 122               | 6| .02be mv s7,s7           |                          |                          | IP-redirect->0122 ID-stall:RAW,WAW
+   2851 |                          | 02cc j 122               | 6| .02be mv s7,s7           |                          |                          | IP-redirect->0122 ID-stall:RAW,WAW
+   2852 |                          | 02cc j 122               | 6| .02be mv s7,s7           |                          |                          | IP-redirect->0122 ID-stall:RAW,WAW
+   2853 |                          | 02cc j 122               | 6| .02be mv s7,s7           |                          |                          | IP-redirect->0122 ID-stall:RAW,WAW
+   2854 |                          | 02cc j 122               | 6| .02be mv s7,s7           |                          |                          | IP-redirect->0122 ID-stall:RAW,WAW
+   2855 |                          | 02cc j 122               | 6| .02be mv s7,s7           |                          |                          | IP-redirect->0122 ID-stall:RAW,WAW
+   2856 |                          | 02cc j 122               | 6| .02be mv s7,s7           |                          |                          | IP-redirect->0122 ID-stall:RAW,WAW
+   2857 |                          | 02cc j 122               | 6| .02be mv s7,s7           |                          |                          | IP-redirect->0122 ID-stall:RAW,WAW
+   2858 |                          | 02cc j 122               | 6| .02be mv s7,s7           |                          |                          | IP-redirect->0122 ID-stall:RAW,WAW
+   2859 |                          | 02cc j 122               | 6| .02be mv s7,s7           |                          |                          | IP-redirect->0122 ID-stall:RAW,WAW
+   2860 |                          | 02cc j 122               | 6| .02be mv s7,s7           |                          |                          | IP-redirect->0122 ID-stall:RAW,WAW
+   2861 |                          | 02cc j 122               | 6| .02be mv s7,s7           |                          |                          | IP-redirect->0122 ID-stall:RAW,WAW
+   2862 |                          | 02cc j 122               | 6| .02be mv s7,s7           |                          |                          | IP-redirect->0122 ID-stall:RAW,WAW
+   2863 |                          | 02cc j 122               | 6| .02be mv s7,s7           |                          |                          | IP-redirect->0122 ID-stall:RAW,WAW
+   2864 |                          | 02cc j 122               | 6| .02be mv s7,s7           |                          |                          | IP-redirect->0122 ID-stall:RAW,WAW
+   2865 |                          | 02cc j 122               | 6| .02be mv s7,s7           |                          |                          | IP-redirect->0122 ID-stall:RAW,WAW
+   2866 |                          | 02cc j 122               | 6| .02be mv s7,s7           |                          |                          | IP-redirect->0122 ID-stall:RAW,WAW
+   2867 |                          | 02cc j 122               | 6| .02be mv s7,s7           |                          |                          | IP-redirect->0122 ID-stall:RAW,WAW
+   2868 |                          | 02cc j 122               | 6| .02be mv s7,s7           |                          |                          | IP-redirect->0122 ID-stall:RAW,WAW
+   2869 |                          | 02cc j 122               | 6| .02be mv s7,s7           |                          |                          | IP-redirect->0122 ID-stall:RAW,WAW
+   2870 |                          | 02cc j 122               | 6| .02be mv s7,s7           |                          |                          | IP-redirect->0122 ID-stall:RAW,WAW
+   2871 |                          | 02cc j 122               | 6| .02be mv s7,s7           |                          |                          | IP-redirect->0122 ID-stall:RAW,WAW
+   2872 |                          | 02cc j 122               | 6| .02be mv s7,s7           |                          |                          | IP-redirect->0122 ID-stall:RAW,WAW
+   2873 |                          | 02cc j 122               | 6| .02be mv s7,s7           |                          |                          | IP-redirect->0122 ID-stall:RAW,WAW
+   2874 |                          | 02cc j 122               | 6| .02be mv s7,s7           |                          |                          | IP-redirect->0122 ID-stall:RAW,WAW
+   2875 |                          | 02cc j 122               | 6| .02be mv s7,s7           |                          |                          | IP-redirect->0122 ID-stall:RAW,WAW
+   2876 |                          | 02cc j 122               | 6| .02be mv s7,s7           |                          |                          | IP-redirect->0122 ID-stall:RAW,WAW
+   2877 |                          | 02cc j 122               | 6| .02be mv s7,s7           |                          |                          | IP-redirect->0122 ID-stall:RAW,WAW
+   2878 |                          | 02cc j 122               | 6| .02be mv s7,s7           |                          |                          | IP-redirect->0122 ID-stall:RAW,WAW
+   2879 |                          | 02cc j 122               | 6| .02be mv s7,s7           |                          |                          | IP-redirect->0122 ID-stall:RAW,WAW
+   2880 |                          | 02cc j 122               | 6| .02be mv s7,s7           |                          |                          | IP-redirect->0122 ID-stall:RAW,WAW
+   2881 |                          | 02cc j 122               | 6| .02be mv s7,s7           |                          |                          | IP-redirect->0122 ID-stall:RAW,WAW
+   2882 |                          | 02cc j 122               | 6| .02be mv s7,s7           |                          |                          | IP-redirect->0122 ID-stall:RAW,WAW
+   2883 |                          | 02cc j 122               | 6| .02be mv s7,s7           |                          |                          | IP-redirect->0122 ID-stall:RAW,WAW
+   2884 |                          | 02cc j 122               | 6| .02be mv s7,s7           |                          |                          | IP-redirect->0122 ID-stall:RAW,WAW
+   2885 |                          | 02cc j 122               | 6| .02be mv s7,s7           |                          |                          | IP-redirect->0122 ID-stall:RAW,WAW
+   2886 |                          | 02cc j 122               | 6| .02be mv s7,s7           |                          |                          | IP-redirect->0122 ID-stall:RAW,WAW
+   2887 |                          | 02cc j 122               | 6| .02be mv s7,s7           |                          |                          | IP-redirect->0122 ID-stall:RAW,WAW
+   2888 |                          | 02cc j 122               | 6| .02be mv s7,s7           |                          |                          | IP-redirect->0122 ID-stall:RAW,WAW
+   2889 |                          | 02cc j 122               | 6| .02be mv s7,s7           |                          |                          | IP-redirect->0122 ID-stall:RAW,WAW
+   2890 |                          | 02cc j 122               | 6| .02be mv s7,s7           |                          |                          | IP-redirect->0122 ID-stall:RAW,WAW
+   2891 |                          | 02cc j 122               | 6| .02be mv s7,s7           |                          |                          | IP-redirect->0122 ID-stall:RAW,WAW
+   2892 |                          | 02cc j 122               | 6| .02be mv s7,s7           |                          |                          | IP-redirect->0122 ID-stall:RAW,WAW
+   2893 |                          | 02cc j 122               | 6| .02be mv s7,s7           |                          |                          | IP-redirect->0122 ID-stall:RAW,WAW
+   2894 |                          | 02cc j 122               | 6| .02be mv s7,s7           |                          |                          | IP-redirect->0122 ID-stall:RAW,WAW
+   2895 |                          | 02cc j 122               | 6| .02be mv s7,s7           |                          |                          | IP-redirect->0122 ID-stall:RAW,WAW
+   2896 |                          | 02cc j 122               | 6| .02be mv s7,s7           |                          |                          | IP-redirect->0122 ID-stall:RAW,WAW
+   2897 |                          | 02cc j 122               | 6| .02be mv s7,s7           |                          |                          | IP-redirect->0122 ID-stall:RAW,WAW
+   2898 |                          | 02cc j 122               | 6| .02be mv s7,s7           |                          |                          | IP-redirect->0122 ID-stall:RAW,WAW
+   2899 |                          | 02cc j 122               | 6| .02be mv s7,s7           |                          |                          | IP-redirect->0122 ID-stall:RAW,WAW
+   2900 |                          | 02cc j 122               | 6| .02be mv s7,s7           |                          |                          | IP-redirect->0122 ID-stall:RAW,WAW
+   2901 |                          | 02cc j 122               | 6| .02be mv s7,s7           |                          |                          | IP-redirect->0122 ID-stall:RAW,WAW
+   2902 |                          | 02cc j 122               | 6| .02be mv s7,s7           |                          |                          | IP-redirect->0122 ID-stall:RAW,WAW
+   2903 |                          | 02cc j 122               | 6| .02be mv s7,s7           |                          |                          | IP-redirect->0122 ID-stall:RAW,WAW
+   2904 |                          | 02cc j 122               | 6| .02be mv s7,s7           |                          |                          | IP-redirect->0122 ID-stall:RAW,WAW
+   2905 |                          | 02cc j 122               | 6| .02be mv s7,s7           |                          |                          | IP-redirect->0122 ID-stall:RAW,WAW
+   2906 |                          | 02cc j 122               | 6| .02be mv s7,s7           |                          |                          | IP-redirect->0122 ID-stall:RAW,WAW
+   2907 |                          | 02cc j 122               | 6| .02be mv s7,s7           |                          |                          | IP-redirect->0122 ID-stall:RAW,WAW
+   2908 |                          | 02cc j 122               | 6| .02be mv s7,s7           |                          |                          | IP-redirect->0122 ID-stall:RAW,WAW
+   2909 |                          | 02cc j 122               | 6| .02be mv s7,s7           |                          |                          | IP-redirect->0122 ID-stall:RAW,WAW
+   2910 |                          | 02cc j 122               | 6| .02be mv s7,s7           |                          |                          | IP-redirect->0122 ID-stall:RAW,WAW
+   2911 |                          | 02cc j 122               | 6| .02be mv s7,s7           |                          |                          | IP-redirect->0122 ID-stall:RAW,WAW
+   2912 |                          | 02cc j 122               | 6| .02be mv s7,s7           |                          |                          | IP-redirect->0122 ID-stall:RAW,WAW
+   2913 |                          | 02cc j 122               | 6| .02be mv s7,s7           |                          |                          | IP-redirect->0122 ID-stall:RAW,WAW
+   2914 |                          | 02cc j 122               | 6| .02be mv s7,s7           |                          |                          | IP-redirect->0122 ID-stall:RAW,WAW
+   2915 |                          | 02cc j 122               | 6| .02be mv s7,s7           |                          |                          | IP-redirect->0122 ID-stall:RAW,WAW
+   2916 |                          | 02cc j 122               | 6| .02be mv s7,s7           |                          |                          | IP-redirect->0122 ID-stall:RAW,WAW
+   2917 |                          | 02cc j 122               | 6| .02be mv s7,s7           |                          |                          | IP-redirect->0122 ID-stall:RAW,WAW
+   2918 |                          | 02cc j 122               | 6| .02be mv s7,s7           |                          |                          | IP-redirect->0122 ID-stall:RAW,WAW
+   2919 |                          | 02cc j 122               | 6| .02be mv s7,s7           |                          |                          | IP-redirect->0122 ID-stall:RAW,WAW
+   2920 |                          | 02cc j 122               | 6| .02be mv s7,s7           |                          |                          | IP-redirect->0122 ID-stall:RAW,WAW
+   2921 |                          | 02cc j 122               | 6| .02be mv s7,s7           |                          |                          | IP-redirect->0122 ID-stall:RAW,WAW
+   2922 |                          | 02cc j 122               | 6| .02be mv s7,s7           |                          |                          | IP-redirect->0122 ID-stall:RAW,WAW
+   2923 |                          | 02cc j 122               | 6| .02be mv s7,s7           |                          |                          | IP-redirect->0122 ID-stall:RAW,WAW
+   2924 |                          | 02cc j 122               | 6| .02be mv s7,s7           |                          |                          | IP-redirect->0122 ID-stall:RAW,WAW
+   2925 |                          | 02cc j 122               | 6| .02be mv s7,s7           |                          |                          | IP-redirect->0122 ID-stall:RAW,WAW
+   2926 |                          | 02cc j 122               | 6| .02be mv s7,s7           |                          |                          | IP-redirect->0122 ID-stall:RAW,WAW
+   2927 |                          | 02cc j 122               | 6| .02be mv s7,s7           |                          |                          | IP-redirect->0122 ID-stall:RAW,WAW
+   2928 |                          | 02cc j 122               | 6| .02be mv s7,s7           |                          |                          | IP-redirect->0122 ID-stall:RAW,WAW
+   2929 |                          | 02cc j 122               | 6| .02be mv s7,s7           |                          |                          | IP-redirect->0122 ID-stall:RAW,WAW
+   2930 |                          | 02cc j 122               | 6| .02be mv s7,s7           |                          |                          | IP-redirect->0122 ID-stall:RAW,WAW
+   2931 |                          | 02cc j 122               | 6| .02be mv s7,s7           |                          |                          | IP-redirect->0122 ID-stall:RAW,WAW
+   2932 |                          | 02cc j 122               | 6| .02be mv s7,s7           |                          |                          | IP-redirect->0122 ID-stall:RAW,WAW
+   2933 |                          | 02cc j 122               | 6| .02be mv s7,s7           |                          |                          | IP-redirect->0122 ID-stall:RAW,WAW
+   2934 |                          | 02cc j 122               | 6| .02be mv s7,s7           |                          |                          | IP-redirect->0122 ID-stall:RAW,WAW
+   2935 |                          | 02cc j 122               | 6| .02be mv s7,s7           |                          |                          | IP-redirect->0122 ID-stall:RAW,WAW
+   2936 |                          | 02cc j 122               | 6| .02be mv s7,s7           |                          |                          | IP-redirect->0122 ID-stall:RAW,WAW
+   2937 |                          | 02cc j 122               | 6| .02be mv s7,s7           |                          |                          | IP-redirect->0122 ID-stall:RAW,WAW
+   2938 |                          | 02cc j 122               | 6| .02be mv s7,s7           |                          |                          | IP-redirect->0122 ID-stall:RAW,WAW
+   2939 |                          | 02cc j 122               | 6| .02be mv s7,s7           |                          |                          | IP-redirect->0122 ID-stall:RAW,WAW
+   2940 |                          | 02cc j 122               | 6| .02be mv s7,s7           |                          |                          | IP-redirect->0122 ID-stall:RAW,WAW
+   2941 |                          | 02cc j 122               | 6| .02be mv s7,s7           |                          |                          | IP-redirect->0122 ID-stall:RAW,WAW
+   2942 |                          | 02cc j 122               | 6| .02be mv s7,s7           |                          |                          | IP-redirect->0122 ID-stall:RAW,WAW
+   2943 |                          | 02cc j 122               | 6| .02be mv s7,s7           |                          |                          | IP-redirect->0122 ID-stall:RAW,WAW
+   2944 |                          | 02cc j 122               | 6| .02be mv s7,s7           |                          |                          | IP-redirect->0122 ID-stall:RAW,WAW
+   2945 |                          | 02cc j 122               | 6| .02be mv s7,s7           |                          |                          | IP-redirect->0122 ID-stall:RAW,WAW
+   2946 |                          | 02cc j 122               | 6| .02be mv s7,s7           |                          |                          | IP-redirect->0122 ID-stall:RAW,WAW
+   2947 |                          | 02cc j 122               | 6| .02be mv s7,s7           |                          |                          | IP-redirect->0122 ID-stall:RAW,WAW
+   2948 |                          | 02cc j 122               | 6| .02be mv s7,s7           |                          |                          | IP-redirect->0122 ID-stall:RAW,WAW
+   2949 |                          | 02cc j 122               | 6| .02be mv s7,s7           |                          |                          | IP-redirect->0122 ID-stall:RAW,WAW
+   2950 |                          | 02cc j 122               | 6| .02be mv s7,s7           |                          |                          | IP-redirect->0122 ID-stall:RAW,WAW
+   2951 |                          | 02cc j 122               | 6| .02be mv s7,s7           |                          |                          | IP-redirect->0122 ID-stall:RAW,WAW
+   2952 |                          | 02cc j 122               | 6| .02be mv s7,s7           |                          |                          | IP-redirect->0122 ID-stall:RAW,WAW
+   2953 |                          | 02cc j 122               | 6| .02be mv s7,s7           |                          |                          | IP-redirect->0122 ID-stall:RAW,WAW
+   2954 |                          | 02cc j 122               | 6| .02be mv s7,s7           |                          |                          | IP-redirect->0122 ID-stall:RAW,WAW
+   2955 |                          | 02cc j 122               | 6| .02be mv s7,s7           |                          |                          | IP-redirect->0122 ID-stall:WAW
+   2956 |                          | 02cc j 122               | 6| >02be mv s7,s7           |                          |                          | IP-redirect->0122
+   2957 |                          | 02cc j 122               | 5| >02c0 li t6,0            | 02be mv s7,s7        ALU |                          | IP-redirect->0122
+   2958 | 0122 csrr s0,mepc        | 02cc j 122               | 3| .02e6 lw s10,0(s8)       | 02c0 li t6,0         ALU | 02be mv s7,s7            | IP-redirect->0122 ID-stall:CP0/fence
+   2959 | 0122 csrr s0,mepc        |                          | 5| .02e6 lw s10,0(s8)       |                          | 02c0 li t6,0             | ID-stall:CP0/fence
+----------------------------------------------------------------------------------------------------------------------------------------------------------------
+summary: cycles=206 retired=5 IPC=0.024 | dc_miss=4, ip_redirect=193, retired=5, stall_CP0/fence=2, stall_EX1-busy=9, stall_RAW=191, stall_WAW=192, stb_fwd=1, stb_partial=1
+
+================================================================================================================================================================
+MARK 4   cycles 2978 .. 3023  (46 cycles)
+================================================================================================================================================================
+    cyc | IF (fetch)               | IP (pred)                |IB| ID                       | EX1                      | RETIRE                   | events
+----------------------------------------------------------------------------------------------------------------------------------------------------------------
+   2978 | 02f4 j 122               | 02ec li t6,0             | 1| .02e6 lw s10,0(s8)       | 02de sw s9,0(s8)     CP0 |                          | ID-stall:EX1-busy
+   2979 | 02f8 sw zero,0(s8)       | 02f0 beq s10,t0,2f8      | 3| .02e6 lw s10,0(s8)       | 02de sw s9,0(s8)     CP0 |                          | ID-stall:EX1-busy
+   2980 |                          | 02f4 j 122               | 5| .02e6 lw s10,0(s8)       | 02de sw s9,0(s8)     CP0 |                          | IP-redirect->0122 ID-stall:EX1-busy
+   2981 |                          | 02f4 j 122               | 5| .02e6 lw s10,0(s8)       | 02de sw s9,0(s8)     CP0 |                          | IP-redirect->0122 ID-stall:EX1-busy
+   2982 |                          | 02f4 j 122               | 5| .02e6 lw s10,0(s8)       | 02de sw s9,0(s8)     CP0 |                          | IP-redirect->0122 ID-stall:EX1-busy
+   2983 |                          | 02f4 j 122               | 5| .02e6 lw s10,0(s8)       | 02de sw s9,0(s8)     CP0 |                          | IP-redirect->0122 ID-stall:EX1-busy
+   2984 |                          | 02f4 j 122               | 5| .02e6 lw s10,0(s8)       | 02de sw s9,0(s8)     CP0 |                          | IP-redirect->0122 ID-stall:EX1-busy
+   2985 |                          | 02f4 j 122               | 5| .02e6 lw s10,0(s8)       | 02de sw s9,0(s8)     CP0 |                          | IP-redirect->0122 ID-stall:EX1-busy
+   2986 |                          | 02f4 j 122               | 5| .02e6 lw s10,0(s8)       | 02de sw s9,0(s8)     CP0 |                          | IP-redirect->0122 ID-stall:EX1-busy
+   2987 |                          | 02f4 j 122               | 5| >02e6 lw s10,0(s8)       | 02e2 fence           CP0 | 02de sw s9,0(s8)         | IP-redirect->0122 DC:ST MISS
+   2988 | 0122 csrr s0,mepc        | 02f4 j 122               | 4| .02ea mv s10,s10         | 02e6 lw s10,0(s8)    LSU | 02e2 fence               | IP-redirect->0122 ID-stall:RAW,WAW
+   2989 | 0122 csrr s0,mepc        |                          | 6| .02ea mv s10,s10         |                          | 02e6 lw s10,0(s8)        | ID-stall:RAW,WAW DC:LD MISS STB-partial
+   2990 | 0124 ?                   |                          | 6| .02ea mv s10,s10         |                          |                          | ID-stall:RAW,WAW
+   2991 | 0128 ?                   |                          | 6| .02ea mv s10,s10         |                          |                          | ID-stall:RAW,WAW
+   2992 |                          | 0124 ?                   | 6| .02ea mv s10,s10         |                          |                          | ID-stall:RAW,WAW
+   2993 |                          | 0124 ?                   | 6| .02ea mv s10,s10         |                          |                          | ID-stall:RAW,WAW DC:LD MISS
+   2994 |                          | 0124 ?                   | 6| .02ea mv s10,s10         |                          |                          | ID-stall:RAW,WAW
+   2995 |                          | 0124 ?                   | 6| .02ea mv s10,s10         |                          |                          | ID-stall:RAW,WAW
+   2996 |                          | 0124 ?                   | 6| .02ea mv s10,s10         |                          |                          | ID-stall:RAW,WAW
+   2997 |                          | 0124 ?                   | 6| .02ea mv s10,s10         |                          |                          | ID-stall:RAW,WAW
+   2998 |                          | 0124 ?                   | 6| .02ea mv s10,s10         |                          |                          | ID-stall:RAW,WAW
+   2999 |                          | 0124 ?                   | 6| .02ea mv s10,s10         |                          |                          | ID-stall:RAW,WAW
+   3000 |                          | 0124 ?                   | 6| .02ea mv s10,s10         |                          |                          | ID-stall:RAW,WAW
+   3001 |                          | 0124 ?                   | 6| .02ea mv s10,s10         |                          |                          | ID-stall:RAW,WAW
+   3002 |                          | 0124 ?                   | 6| .02ea mv s10,s10         |                          |                          | ID-stall:RAW,WAW
+   3003 |                          | 0124 ?                   | 6| .02ea mv s10,s10         |                          |                          | ID-stall:RAW,WAW
+   3004 |                          | 0124 ?                   | 6| .02ea mv s10,s10         |                          |                          | ID-stall:RAW,WAW
+   3005 |                          | 0124 ?                   | 6| .02ea mv s10,s10         |                          |                          | ID-stall:RAW,WAW
+   3006 |                          | 0124 ?                   | 6| .02ea mv s10,s10         |                          |                          | ID-stall:RAW,WAW
+   3007 |                          | 0124 ?                   | 6| .02ea mv s10,s10         |                          |                          | ID-stall:RAW,WAW
+   3008 |                          | 0124 ?                   | 6| .02ea mv s10,s10         |                          |                          | ID-stall:RAW,WAW
+   3009 |                          | 0124 ?                   | 6| .02ea mv s10,s10         |                          |                          | ID-stall:RAW,WAW
+   3010 |                          | 0124 ?                   | 6| .02ea mv s10,s10         |                          |                          | ID-stall:RAW,WAW
+   3011 |                          | 0124 ?                   | 6| .02ea mv s10,s10         |                          |                          | ID-stall:RAW,WAW
+   3012 |                          | 0124 ?                   | 6| .02ea mv s10,s10         |                          |                          | ID-stall:RAW,WAW
+   3013 |                          | 0124 ?                   | 6| .02ea mv s10,s10         |                          |                          | ID-stall:RAW,WAW
+   3014 |                          | 0124 ?                   | 6| .02ea mv s10,s10         |                          |                          | ID-stall:RAW,WAW
+   3015 |                          | 0124 ?                   | 6| .02ea mv s10,s10         |                          |                          | ID-stall:RAW,WAW
+   3016 |                          | 0124 ?                   | 6| .02ea mv s10,s10         |                          |                          | ID-stall:RAW,WAW
+   3017 |                          | 0124 ?                   | 6| .02ea mv s10,s10         |                          |                          | ID-stall:RAW,WAW
+   3018 |                          | 0124 ?                   | 6| .02ea mv s10,s10         |                          |                          | ID-stall:RAW,WAW
+   3019 |                          | 0124 ?                   | 6| .02ea mv s10,s10         |                          |                          | ID-stall:WAW
+   3020 |                          | 0124 ?                   | 6| >02ea mv s10,s10         |                          |                          | 
+   3021 |                          | 0124 ?                   | 5| >02ec li t6,0            | 02ea mv s10,s10      ALU |                          | 
+   3022 | 0128 ?                   | 0124 ?                   | 4| >02ee li t0,3            | 02ec li t6,0         ALU | 02ea mv s10,s10          | 
+   3023 | 012c ?                   |                          | 4| >(flushed) beq s10,t0,2f | 02ee li t0,3         ALU | 02ec li t6,0             | 
+----------------------------------------------------------------------------------------------------------------------------------------------------------------
+summary: cycles=46 retired=5 IPC=0.109 | dc_miss=3, ip_redirect=9, retired=5, stall_EX1-busy=9, stall_RAW=31, stall_WAW=32, stb_partial=1
