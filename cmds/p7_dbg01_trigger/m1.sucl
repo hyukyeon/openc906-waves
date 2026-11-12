@@ -17,40 +17,38 @@ divider_add group
 item_focus e
 item_rename Debug trigger (DTU)
 item_unfocus
+variable_add TOP.sim_top.study_probe.dbg_tcontrol
 variable_add TOP.sim_top.study_probe.dbg_ifu_trig
 variable_add TOP.sim_top.study_probe.dbg_lsu_trig_en
-variable_add TOP.sim_top.study_probe.dbg_lsu_trig
-variable_add TOP.sim_top.study_probe.dbg_tval
-variable_add TOP.sim_top.study_probe.dbg_tcontrol
 variable_add TOP.sim_top.study_probe.asm_rt
-item_focus k
+item_focus i
 item_set_format ASCII
 item_unfocus
 variable_add TOP.sim_top.study_probe.rt_expt
 variable_add TOP.sim_top.study_probe.cp0_mcause_code
-item_focus m
+item_focus k
 item_set_format Unsigned
 item_unfocus
 variable_add TOP.sim_top.study_probe.cp0_mepc
 divider_add group
-item_focus o
+item_focus m
 item_rename Retire / Write-back / Flush
 item_unfocus
 variable_add TOP.sim_top.study_probe.rt_vld
 variable_add TOP.sim_top.study_probe.rt_pc
 variable_add TOP.sim_top.study_probe.asm_rt
-item_focus bb
+item_focus p
 item_set_format ASCII
 item_unfocus
 variable_add TOP.sim_top.study_probe.wb0_vld
 variable_add TOP.sim_top.study_probe.wb0_reg
-item_focus bd
+item_focus bb
 item_set_format Unsigned
 item_unfocus
 variable_add TOP.sim_top.study_probe.wb0_data
 variable_add TOP.sim_top.study_probe.wb1_vld
 variable_add TOP.sim_top.study_probe.wb1_reg
-item_focus bg
+item_focus be
 item_set_format Unsigned
 item_unfocus
 variable_add TOP.sim_top.study_probe.wb1_data

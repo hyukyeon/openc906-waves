@@ -40,19 +40,21 @@ variable_add TOP.sim_top.study_probe.clint_ssip
 variable_add TOP.sim_top.study_probe.mip_meip
 variable_add TOP.sim_top.study_probe.mip_seip
 variable_add TOP.sim_top.study_probe.mip_msip
+variable_add TOP.sim_top.study_probe.mip_mtip
 variable_add TOP.sim_top.study_probe.mip_ssip
 variable_add TOP.sim_top.study_probe.mie_meie
 variable_add TOP.sim_top.study_probe.mie_seie
 variable_add TOP.sim_top.study_probe.mie_msie
+variable_add TOP.sim_top.study_probe.mie_mtie
 variable_add TOP.sim_top.study_probe.mie_ssie
 variable_add TOP.sim_top.study_probe.int_req
 variable_add TOP.sim_top.study_probe.int_vec
-item_focus bj
+item_focus bl
 item_set_format Unsigned
 item_unfocus
 variable_add TOP.sim_top.study_probe.fe_if_pc
 variable_add TOP.sim_top.study_probe.asm_rt
-item_focus bl
+item_focus bn
 item_set_format ASCII
 item_unfocus
 variable_add TOP.sim_top.study_probe.rt_pc
@@ -60,31 +62,31 @@ variable_add TOP.sim_top.study_probe.rt_expt
 variable_add TOP.sim_top.study_probe.rt_redirect
 variable_add TOP.sim_top.study_probe.rt_redirect_pc
 divider_add group
-item_focus ca
+item_focus cc
 item_rename Trap CSRs: M (mtvec/mepc/mcause/mstatus) vs S (stvec/sepc/scause/sstatus)
 item_unfocus
 variable_add TOP.sim_top.study_probe.cp0_priv
-item_focus cb
+item_focus cd
 item_set_format Binary
 item_unfocus
 variable_add TOP.sim_top.study_probe.cp0_mtvec
 variable_add TOP.sim_top.study_probe.cp0_mepc
 variable_add TOP.sim_top.study_probe.cp0_mcause_int
 variable_add TOP.sim_top.study_probe.cp0_mcause_code
-item_focus cf
+item_focus ch
 item_set_format Unsigned
 item_unfocus
 variable_add TOP.sim_top.study_probe.cp0_mstatus_mie
 variable_add TOP.sim_top.study_probe.cp0_mstatus_mpie
 variable_add TOP.sim_top.study_probe.cp0_mstatus_mpp
-item_focus ci
+item_focus ck
 item_set_format Binary
 item_unfocus
 variable_add TOP.sim_top.study_probe.cp0_stvec
 variable_add TOP.sim_top.study_probe.cp0_sepc
 variable_add TOP.sim_top.study_probe.cp0_scause_int
 variable_add TOP.sim_top.study_probe.cp0_scause_code
-item_focus cm
+item_focus co
 item_set_format Unsigned
 item_unfocus
 variable_add TOP.sim_top.study_probe.cp0_sstatus_sie
