@@ -1,512 +1,512 @@
 사용: pipeview.py <out/test 디렉토리> [--mark N] [--max-rows K]
 출력: <dir>/pipeview.txt  (mark 구간별 표 + 구간 요약)
 
-================================================================================================================================================================
+================================================================================================================================================================================================
 MARK 1   cycles 2660 .. 2775  (110 cycles)
-================================================================================================================================================================
-    cyc | IF (fetch)               | IP (pred)                |IB| ID                       | EX1                      | RETIRE                   | events
-----------------------------------------------------------------------------------------------------------------------------------------------------------------
-   2660 | 0298 sub s0,t0,s0        | 0290 ecall               | 2| >0288 csrr s0,mcycle     |                          |                          | 
-   2661 | 029c li t6,0             | 0294 csrr t0,mcycle      | 2| .028c mv s7,s0           | 0288 csrr s0,mcycle  CP0 |                          | ID-stall:RAW
-   2662 | 02a0 addi s6,s6,-1       | 0298 sub s0,t0,s0        | 4| >028c mv s7,s0           |                          | 0288 csrr s0,mcycle      | 
-   2663 | 02a4 bnez s6,284         | 029c li t6,0             | 4| .0290 ecall              | 028c mv s7,s0        ALU |                          | ID-stall:CP0/fence
-   2664 |                          | 02a0 addi s6,s6,-1       | 6| .0290 ecall              |                          | 028c mv s7,s0            | ID-stall:CP0/fence
-   2665 |                          | 02a0 addi s6,s6,-1       | 6| >0290 ecall              |                          |                          | 
-   2666 | 02a4 bnez s6,284         | 02a0 addi s6,s6,-1       | 4| .(flushed) csrr t0,mcycl | 0290 ecall           CP0 |                          | ID-stall:CP0/fence
-   2667 | 02a8 auipc t1,0x0        |                          | 6| .(flushed) csrr t0,mcycl |                          | 0290 ecall               | ID-stall:CP0/fence TRAP
-   2668 |                          | 02a4 bnez s6,284         | 6| >(flushed) csrr t0,mcycl |                          |                          | RT-redirect->0140
-   2669 | 0140 j 440               |                          | 0|                          |                          |                          | ID-stall:other FLUSH
-   2670 |                          |                          | 0|                          |                          |                          | 
-   2671 |                          |                          | 0|                          |                          |                          | I$-miss
-   2672 |                          |                          | 0|                          |                          |                          | 
-   2673 |                          |                          | 0|                          |                          |                          | 
-   2674 |                          |                          | 0|                          |                          |                          | 
-   2675 |                          |                          | 0|                          |                          |                          | 
-   2676 |                          |                          | 0|                          |                          |                          | 
-   2677 |                          | 0140 j 440               | 0| >0140 j 440              |                          |                          | IP-redirect->0440
-   2678 |                          |                          | 0|                          | 0140 j 440           BJU |                          | 
-   2679 |                          |                          | 0|                          |                          | 0140 j 440               | 
-   2680 |                          |                          | 0|                          |                          |                          | 
-   2681 |                          |                          | 0|                          |                          |                          | 
-   2682 |                          |                          | 0|                          |                          |                          | 
-   2683 | 0440 csrr s11,mcycle     |                          | 0|                          |                          |                          | 
-   2684 |                          |                          | 0|                          |                          |                          | 
-   2685 |                          |                          | 0|                          |                          |                          | I$-miss
-   2686 |                          |                          | 0|                          |                          |                          | 
-   2687 |                          |                          | 0|                          |                          |                          | 
-   2688 |                          |                          | 0|                          |                          |                          | 
-   2689 |                          |                          | 0|                          |                          |                          | 
-   2690 |                          |                          | 0|                          |                          |                          | 
-   2691 |                          | 0440 csrr s11,mcycle     | 0| >0440 csrr s11,mcycle    |                          |                          | 
-   2692 |                          |                          | 0|                          | 0440 csrr s11,mcycle CP0 |                          | 
-   2693 |                          |                          | 0|                          |                          | 0440 csrr s11,mcycle     | 
-   2694 |                          |                          | 0|                          |                          |                          | 
-   2695 |                          |                          | 0|                          |                          |                          | 
-   2696 |                          |                          | 0|                          |                          |                          | 
-   2697 | 0444 csrr s8,mcause      |                          | 0|                          |                          |                          | 
-   2698 | 0448 csrr s9,mepc        |                          | 0|                          |                          |                          | 
-   2699 | 044c csrr s10,mtval      | 0444 csrr s8,mcause      | 0| >0444 csrr s8,mcause     |                          |                          | 
-   2700 | 0450 addi t3,s9,4        | 0448 csrr s9,mepc        | 0| .0448 csrr s9,mepc       | 0444 csrr s8,mcause  CP0 |                          | ID-stall:CP0/fence
-   2701 | 0454 csrw mepc,t3        | 044c csrr s10,mtval      | 0| .0448 csrr s9,mepc       |                          | 0444 csrr s8,mcause      | ID-stall:CP0/fence
-   2702 | 0458 mret                | 0450 addi t3,s9,4        | 2| >0448 csrr s9,mepc       |                          |                          | 
-   2703 | 045c ?                   | 0454 csrw mepc,t3        | 2| .044c csrr s10,mtval     | 0448 csrr s9,mepc    CP0 |                          | ID-stall:CP0/fence
-   2704 | 0460 ?                   | 0458 mret                | 4| .044c csrr s10,mtval     |                          | 0448 csrr s9,mepc        | ID-stall:CP0/fence
-   2705 |                          | 045c ?                   | 6| >044c csrr s10,mtval     |                          |                          | 
-   2706 | 0460 ?                   | 045c ?                   | 4| >0450 addi t3,s9,4       | 044c csrr s10,mtval  CP0 |                          | 
-   2707 | 0464 ?                   |                          | 4| .0454 csrw mepc,t3       | 0450 addi t3,s9,4    ALU | 044c csrr s10,mtval      | ID-stall:CP0/fence
-   2708 | 0468 ?                   | 0460 ?                   | 4| .0454 csrw mepc,t3       |                          | 0450 addi t3,s9,4        | ID-stall:CP0/fence
-   2709 |                          | 0464 ?                   | 6| >0454 csrw mepc,t3       |                          |                          | 
-   2710 | 0468 ?                   | 0464 ?                   | 4| .(flushed) mret          | 0454 csrw mepc,t3    CP0 |                          | ID-stall:CP0/fence
-   2711 | 046c ?                   |                          | 6| .(flushed) mret          |                          | 0454 csrw mepc,t3        | ID-stall:CP0/fence RT-redirect->0458
-   2712 | 0458 mret                |                          | 0|                          |                          |                          | 
-   2713 | 045c ?                   |                          | 0|                          |                          |                          | ID-stall:other FLUSH
-   2714 | 0460 ?                   | 0458 mret                | 0| >0458 mret               |                          |                          | 
-   2715 | 0464 ?                   | 045c ?                   | 0| >045c ?                  | 0458 mret            CP0 |                          | 
-   2716 | 0468 ?                   | 0460 ?                   | 0| >0294 csrr t0,mcycle     | 045c ?               CP0 | 0458 mret                | RT-redirect->0294
-   2717 | 0294 csrr t0,mcycle      |                          | 0|                          | 0294 csrr t0,mcycle  CP0 |                          | 
-   2718 | 0298 sub s0,t0,s0        |                          | 0|                          |                          |                          | ID-stall:other
-   2719 | 029c li t6,0             | 0294 csrr t0,mcycle      | 0| .(flushed) csrr t0,mcycl |                          |                          | ID-stall:other FLUSH
-   2720 | 02a0 addi s6,s6,-1       | 0298 sub s0,t0,s0        | 0| >0294 csrr t0,mcycle     |                          |                          | 
-   2721 | 02a4 bnez s6,284         | 029c li t6,0             | 0| .0298 sub s0,t0,s0       | 0294 csrr t0,mcycle  CP0 |                          | ID-stall:RAW
-   2722 | 02a8 auipc t1,0x0        | 02a0 addi s6,s6,-1       | 2| >0298 sub s0,t0,s0       |                          | 0294 csrr t0,mcycle      | 
-   2723 | 02ac addi t1,t1,-24      | 02a4 bnez s6,284         | 2| >029c li t6,0            | 0298 sub s0,t0,s0    ALU |                          | 
-   2724 | 02b0 sub s9,s9,t1        | 02a8 auipc t1,0x0        | 2| >02a0 addi s6,s6,-1      | 029c li t6,0         ALU | 0298 sub s0,t0,s0        | 
-   2725 | 02b4 sub s11,s11,s7      | 02ac addi t1,t1,-24      | 2| >0288 csrr s0,mcycle     | 02a0 addi s6,s6,-1   ALU | 029c li t6,0             | 
-   2732 | 0298 sub s0,t0,s0        | 0290 ecall               | 2| >0288 csrr s0,mcycle     |                          |                          | 
-   2733 | 029c li t6,0             | 0294 csrr t0,mcycle      | 2| .028c mv s7,s0           | 0288 csrr s0,mcycle  CP0 |                          | ID-stall:RAW
-   2734 | 02a0 addi s6,s6,-1       | 0298 sub s0,t0,s0        | 4| >028c mv s7,s0           |                          | 0288 csrr s0,mcycle      | 
-   2735 | 02a4 bnez s6,284         | 029c li t6,0             | 4| .0290 ecall              | 028c mv s7,s0        ALU |                          | ID-stall:CP0/fence
-   2736 |                          | 02a0 addi s6,s6,-1       | 6| .0290 ecall              |                          | 028c mv s7,s0            | ID-stall:CP0/fence
-   2737 |                          | 02a0 addi s6,s6,-1       | 6| >0290 ecall              |                          |                          | 
-   2738 | 02a4 bnez s6,284         | 02a0 addi s6,s6,-1       | 4| .(flushed) csrr t0,mcycl | 0290 ecall           CP0 |                          | ID-stall:CP0/fence
-   2739 | 02a8 auipc t1,0x0        |                          | 6| .(flushed) csrr t0,mcycl |                          | 0290 ecall               | ID-stall:CP0/fence TRAP
-   2740 |                          | 02a4 bnez s6,284         | 6| >(flushed) csrr t0,mcycl |                          |                          | RT-redirect->0140
-   2741 | 0140 j 440               |                          | 0|                          |                          |                          | ID-stall:other FLUSH
-   2742 | 0144 csrr s0,mcause      |                          | 0|                          |                          |                          | 
-   2743 | 0148 csrr s1,mepc        | 0140 j 440               | 0| >0140 j 440              |                          |                          | IP-redirect->0440
-   2744 | 0440 csrr s11,mcycle     |                          | 0|                          | 0140 j 440           BJU |                          | 
-   2745 | 0444 csrr s8,mcause      |                          | 0|                          |                          | 0140 j 440               | 
-   2746 | 0448 csrr s9,mepc        | 0440 csrr s11,mcycle     | 0| >0440 csrr s11,mcycle    |                          |                          | 
-   2747 | 044c csrr s10,mtval      | 0444 csrr s8,mcause      | 0| .0444 csrr s8,mcause     | 0440 csrr s11,mcycle CP0 |                          | ID-stall:CP0/fence
-   2748 | 0450 addi t3,s9,4        | 0448 csrr s9,mepc        | 0| .0444 csrr s8,mcause     |                          | 0440 csrr s11,mcycle     | ID-stall:CP0/fence
-   2749 | 0454 csrw mepc,t3        | 044c csrr s10,mtval      | 2| >0444 csrr s8,mcause     |                          |                          | 
-   2750 | 0458 mret                | 0450 addi t3,s9,4        | 2| .0448 csrr s9,mepc       | 0444 csrr s8,mcause  CP0 |                          | ID-stall:CP0/fence
-   2751 | 045c ?                   | 0454 csrw mepc,t3        | 4| .0448 csrr s9,mepc       |                          | 0444 csrr s8,mcause      | ID-stall:CP0/fence
-   2752 |                          | 0458 mret                | 6| >0448 csrr s9,mepc       |                          |                          | 
-   2753 | 045c ?                   | 0458 mret                | 4| .044c csrr s10,mtval     | 0448 csrr s9,mepc    CP0 |                          | ID-stall:CP0/fence
-   2754 | 0460 ?                   |                          | 6| .044c csrr s10,mtval     |                          | 0448 csrr s9,mepc        | ID-stall:CP0/fence
-   2755 |                          | 045c ?                   | 6| >044c csrr s10,mtval     |                          |                          | 
-   2756 | 0460 ?                   | 045c ?                   | 4| >0450 addi t3,s9,4       | 044c csrr s10,mtval  CP0 |                          | 
-   2757 | 0464 ?                   |                          | 4| .0454 csrw mepc,t3       | 0450 addi t3,s9,4    ALU | 044c csrr s10,mtval      | ID-stall:CP0/fence
-   2758 | 0468 ?                   | 0460 ?                   | 4| .0454 csrw mepc,t3       |                          | 0450 addi t3,s9,4        | ID-stall:CP0/fence
-   2759 |                          | 0464 ?                   | 6| >0454 csrw mepc,t3       |                          |                          | 
-   2760 | 0468 ?                   | 0464 ?                   | 4| .(flushed) mret          | 0454 csrw mepc,t3    CP0 |                          | ID-stall:CP0/fence
-   2761 | 046c ?                   |                          | 6| .(flushed) mret          |                          | 0454 csrw mepc,t3        | ID-stall:CP0/fence RT-redirect->0458
-   2762 | 0458 mret                |                          | 0|                          |                          |                          | 
-   2763 | 045c ?                   |                          | 0|                          |                          |                          | ID-stall:other FLUSH
-   2764 | 0460 ?                   | 0458 mret                | 0| >0458 mret               |                          |                          | 
-   2765 | 0464 ?                   | 045c ?                   | 0| >045c ?                  | 0458 mret            CP0 |                          | 
-   2766 | 0468 ?                   | 0460 ?                   | 0| >0294 csrr t0,mcycle     | 045c ?               CP0 | 0458 mret                | RT-redirect->0294
-   2767 | 0294 csrr t0,mcycle      |                          | 0|                          | 0294 csrr t0,mcycle  CP0 |                          | 
-   2768 | 0298 sub s0,t0,s0        |                          | 0|                          |                          |                          | ID-stall:other
-   2769 | 029c li t6,0             | 0294 csrr t0,mcycle      | 0| .(flushed) csrr t0,mcycl |                          |                          | ID-stall:other FLUSH
-   2770 | 02a0 addi s6,s6,-1       | 0298 sub s0,t0,s0        | 0| >0294 csrr t0,mcycle     |                          |                          | 
-   2771 | 02a4 bnez s6,284         | 029c li t6,0             | 0| .0298 sub s0,t0,s0       | 0294 csrr t0,mcycle  CP0 |                          | ID-stall:RAW
-   2772 | 02a8 auipc t1,0x0        | 02a0 addi s6,s6,-1       | 2| >0298 sub s0,t0,s0       |                          | 0294 csrr t0,mcycle      | 
-   2773 | 02ac addi t1,t1,-24      | 02a4 bnez s6,284         | 2| >029c li t6,0            | 0298 sub s0,t0,s0    ALU |                          | 
-   2774 | 02b0 sub s9,s9,t1        | 02a8 auipc t1,0x0        | 2| >02a0 addi s6,s6,-1      | 029c li t6,0         ALU | 0298 sub s0,t0,s0        | 
-   2775 | 02b4 sub s11,s11,s7      | 02ac addi t1,t1,-24      | 2| >02ec unimp              | 02a0 addi s6,s6,-1   ALU | 029c li t6,0             | 
-----------------------------------------------------------------------------------------------------------------------------------------------------------------
+================================================================================================================================================================================================
+    cyc | IF (fetch)               | IP (pred)                |IB| ID                       | EX1                      | RETIRE                   | BACK        | WB              | events
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+   2660 | 0298 sub s0,t0,s0        | 0290 ecall               | 2| >0288 csrr s0,mcycle     |                          |                          |             |                 | 
+   2661 | 029c li t6,0             | 0294 csrr t0,mcycle      | 2| .028c mv s7,s0           | 0288 csrr s0,mcycle  CP0 |                          |             |                 | ID-stall:RAW
+   2662 | 02a0 addi s6,s6,-1       | 0298 sub s0,t0,s0        | 4| >028c mv s7,s0           |                          | 0288 csrr s0,mcycle      |             | w0:s0           | 
+   2663 | 02a4 bnez s6,284         | 029c li t6,0             | 4| .0290 ecall              | 028c mv s7,s0        ALU |                          |             |                 | ID-stall:CP0/fence
+   2664 |                          | 02a0 addi s6,s6,-1       | 6| .0290 ecall              |                          | 028c mv s7,s0            |             | w0:s7           | ID-stall:CP0/fence
+   2665 |                          | 02a0 addi s6,s6,-1       | 6| >0290 ecall              |                          |                          |             |                 | 
+   2666 | 02a4 bnez s6,284         | 02a0 addi s6,s6,-1       | 4| .(flushed) csrr t0,mcycl | 0290 ecall           CP0 |                          |             |                 | ID-stall:CP0/fence
+   2667 | 02a8 auipc t1,0x0        |                          | 6| .(flushed) csrr t0,mcycl |                          | 0290 ecall               |             |                 | ID-stall:CP0/fence TRAP
+   2668 |                          | 02a4 bnez s6,284         | 6| >(flushed) csrr t0,mcycl |                          |                          |             |                 | RT-redirect->0140
+   2669 | 0140 j 440               |                          | 0|                          |                          |                          |             |                 | ID-stall:other FLUSH
+   2670 |                          |                          | 0|                          |                          |                          |             |                 | 
+   2671 |                          |                          | 0|                          |                          |                          |             |                 | I$-miss
+   2672 |                          |                          | 0|                          |                          |                          |             |                 | 
+   2673 |                          |                          | 0|                          |                          |                          |             |                 | 
+   2674 |                          |                          | 0|                          |                          |                          |             |                 | 
+   2675 |                          |                          | 0|                          |                          |                          |             |                 | 
+   2676 |                          |                          | 0|                          |                          |                          |             |                 | 
+   2677 |                          | 0140 j 440               | 0| >0140 j 440              |                          |                          |             |                 | IP-redirect->0440
+   2678 |                          |                          | 0|                          | 0140 j 440           BJU |                          |             |                 | 
+   2679 |                          |                          | 0|                          |                          | 0140 j 440               |             | w0:zero         | 
+   2680 |                          |                          | 0|                          |                          |                          |             |                 | 
+   2681 |                          |                          | 0|                          |                          |                          |             |                 | 
+   2682 |                          |                          | 0|                          |                          |                          |             |                 | 
+   2683 | 0440 csrr s11,mcycle     |                          | 0|                          |                          |                          |             |                 | 
+   2684 |                          |                          | 0|                          |                          |                          |             |                 | 
+   2685 |                          |                          | 0|                          |                          |                          |             |                 | I$-miss
+   2686 |                          |                          | 0|                          |                          |                          |             |                 | 
+   2687 |                          |                          | 0|                          |                          |                          |             |                 | 
+   2688 |                          |                          | 0|                          |                          |                          |             |                 | 
+   2689 |                          |                          | 0|                          |                          |                          |             |                 | 
+   2690 |                          |                          | 0|                          |                          |                          |             |                 | 
+   2691 |                          | 0440 csrr s11,mcycle     | 0| >0440 csrr s11,mcycle    |                          |                          |             |                 | 
+   2692 |                          |                          | 0|                          | 0440 csrr s11,mcycle CP0 |                          |             |                 | 
+   2693 |                          |                          | 0|                          |                          | 0440 csrr s11,mcycle     |             | w0:s11          | 
+   2694 |                          |                          | 0|                          |                          |                          |             |                 | 
+   2695 |                          |                          | 0|                          |                          |                          |             |                 | 
+   2696 |                          |                          | 0|                          |                          |                          |             |                 | 
+   2697 | 0444 csrr s8,mcause      |                          | 0|                          |                          |                          |             |                 | 
+   2698 | 0448 csrr s9,mepc        |                          | 0|                          |                          |                          |             |                 | 
+   2699 | 044c csrr s10,mtval      | 0444 csrr s8,mcause      | 0| >0444 csrr s8,mcause     |                          |                          |             |                 | 
+   2700 | 0450 addi t3,s9,4        | 0448 csrr s9,mepc        | 0| .0448 csrr s9,mepc       | 0444 csrr s8,mcause  CP0 |                          |             |                 | ID-stall:CP0/fence
+   2701 | 0454 csrw mepc,t3        | 044c csrr s10,mtval      | 0| .0448 csrr s9,mepc       |                          | 0444 csrr s8,mcause      |             | w0:s8           | ID-stall:CP0/fence
+   2702 | 0458 mret                | 0450 addi t3,s9,4        | 2| >0448 csrr s9,mepc       |                          |                          |             |                 | 
+   2703 | 045c ?                   | 0454 csrw mepc,t3        | 2| .044c csrr s10,mtval     | 0448 csrr s9,mepc    CP0 |                          |             |                 | ID-stall:CP0/fence
+   2704 | 0460 ?                   | 0458 mret                | 4| .044c csrr s10,mtval     |                          | 0448 csrr s9,mepc        |             | w0:s9           | ID-stall:CP0/fence
+   2705 |                          | 045c ?                   | 6| >044c csrr s10,mtval     |                          |                          |             |                 | 
+   2706 | 0460 ?                   | 045c ?                   | 4| >0450 addi t3,s9,4       | 044c csrr s10,mtval  CP0 |                          |             |                 | 
+   2707 | 0464 ?                   |                          | 4| .0454 csrw mepc,t3       | 0450 addi t3,s9,4    ALU | 044c csrr s10,mtval      |             | w0:s10          | ID-stall:CP0/fence
+   2708 | 0468 ?                   | 0460 ?                   | 4| .0454 csrw mepc,t3       |                          | 0450 addi t3,s9,4        |             | w0:t3           | ID-stall:CP0/fence
+   2709 |                          | 0464 ?                   | 6| >0454 csrw mepc,t3       |                          |                          |             |                 | 
+   2710 | 0468 ?                   | 0464 ?                   | 4| .(flushed) mret          | 0454 csrw mepc,t3    CP0 |                          |             |                 | ID-stall:CP0/fence
+   2711 | 046c ?                   |                          | 6| .(flushed) mret          |                          | 0454 csrw mepc,t3        |             | w0:zero         | ID-stall:CP0/fence RT-redirect->0458
+   2712 | 0458 mret                |                          | 0|                          |                          |                          |             |                 | 
+   2713 | 045c ?                   |                          | 0|                          |                          |                          |             |                 | ID-stall:other FLUSH
+   2714 | 0460 ?                   | 0458 mret                | 0| >0458 mret               |                          |                          |             |                 | 
+   2715 | 0464 ?                   | 045c ?                   | 0| >045c ?                  | 0458 mret            CP0 |                          |             |                 | 
+   2716 | 0468 ?                   | 0460 ?                   | 0| >0294 csrr t0,mcycle     | 045c ?               CP0 | 0458 mret                |             |                 | RT-redirect->0294
+   2717 | 0294 csrr t0,mcycle      |                          | 0|                          | 0294 csrr t0,mcycle  CP0 |                          |             |                 | 
+   2718 | 0298 sub s0,t0,s0        |                          | 0|                          |                          |                          |             |                 | ID-stall:other
+   2719 | 029c li t6,0             | 0294 csrr t0,mcycle      | 0| .(flushed) csrr t0,mcycl |                          |                          |             |                 | ID-stall:other FLUSH
+   2720 | 02a0 addi s6,s6,-1       | 0298 sub s0,t0,s0        | 0| >0294 csrr t0,mcycle     |                          |                          |             |                 | 
+   2721 | 02a4 bnez s6,284         | 029c li t6,0             | 0| .0298 sub s0,t0,s0       | 0294 csrr t0,mcycle  CP0 |                          |             |                 | ID-stall:RAW
+   2722 | 02a8 auipc t1,0x0        | 02a0 addi s6,s6,-1       | 2| >0298 sub s0,t0,s0       |                          | 0294 csrr t0,mcycle      |             | w0:t0           | 
+   2723 | 02ac addi t1,t1,-24      | 02a4 bnez s6,284         | 2| >029c li t6,0            | 0298 sub s0,t0,s0    ALU |                          |             |                 | 
+   2724 | 02b0 sub s9,s9,t1        | 02a8 auipc t1,0x0        | 2| >02a0 addi s6,s6,-1      | 029c li t6,0         ALU | 0298 sub s0,t0,s0        |             | w0:s0           | 
+   2725 | 02b4 sub s11,s11,s7      | 02ac addi t1,t1,-24      | 2| >0288 csrr s0,mcycle     | 02a0 addi s6,s6,-1   ALU | 029c li t6,0             |             | w0:t6           | 
+   2732 | 0298 sub s0,t0,s0        | 0290 ecall               | 2| >0288 csrr s0,mcycle     |                          |                          |             |                 | 
+   2733 | 029c li t6,0             | 0294 csrr t0,mcycle      | 2| .028c mv s7,s0           | 0288 csrr s0,mcycle  CP0 |                          |             |                 | ID-stall:RAW
+   2734 | 02a0 addi s6,s6,-1       | 0298 sub s0,t0,s0        | 4| >028c mv s7,s0           |                          | 0288 csrr s0,mcycle      |             | w0:s0           | 
+   2735 | 02a4 bnez s6,284         | 029c li t6,0             | 4| .0290 ecall              | 028c mv s7,s0        ALU |                          |             |                 | ID-stall:CP0/fence
+   2736 |                          | 02a0 addi s6,s6,-1       | 6| .0290 ecall              |                          | 028c mv s7,s0            |             | w0:s7           | ID-stall:CP0/fence
+   2737 |                          | 02a0 addi s6,s6,-1       | 6| >0290 ecall              |                          |                          |             |                 | 
+   2738 | 02a4 bnez s6,284         | 02a0 addi s6,s6,-1       | 4| .(flushed) csrr t0,mcycl | 0290 ecall           CP0 |                          |             |                 | ID-stall:CP0/fence
+   2739 | 02a8 auipc t1,0x0        |                          | 6| .(flushed) csrr t0,mcycl |                          | 0290 ecall               |             |                 | ID-stall:CP0/fence TRAP
+   2740 |                          | 02a4 bnez s6,284         | 6| >(flushed) csrr t0,mcycl |                          |                          |             |                 | RT-redirect->0140
+   2741 | 0140 j 440               |                          | 0|                          |                          |                          |             |                 | ID-stall:other FLUSH
+   2742 | 0144 csrr s0,mcause      |                          | 0|                          |                          |                          |             |                 | 
+   2743 | 0148 csrr s1,mepc        | 0140 j 440               | 0| >0140 j 440              |                          |                          |             |                 | IP-redirect->0440
+   2744 | 0440 csrr s11,mcycle     |                          | 0|                          | 0140 j 440           BJU |                          |             |                 | 
+   2745 | 0444 csrr s8,mcause      |                          | 0|                          |                          | 0140 j 440               |             | w0:zero         | 
+   2746 | 0448 csrr s9,mepc        | 0440 csrr s11,mcycle     | 0| >0440 csrr s11,mcycle    |                          |                          |             |                 | 
+   2747 | 044c csrr s10,mtval      | 0444 csrr s8,mcause      | 0| .0444 csrr s8,mcause     | 0440 csrr s11,mcycle CP0 |                          |             |                 | ID-stall:CP0/fence
+   2748 | 0450 addi t3,s9,4        | 0448 csrr s9,mepc        | 0| .0444 csrr s8,mcause     |                          | 0440 csrr s11,mcycle     |             | w0:s11          | ID-stall:CP0/fence
+   2749 | 0454 csrw mepc,t3        | 044c csrr s10,mtval      | 2| >0444 csrr s8,mcause     |                          |                          |             |                 | 
+   2750 | 0458 mret                | 0450 addi t3,s9,4        | 2| .0448 csrr s9,mepc       | 0444 csrr s8,mcause  CP0 |                          |             |                 | ID-stall:CP0/fence
+   2751 | 045c ?                   | 0454 csrw mepc,t3        | 4| .0448 csrr s9,mepc       |                          | 0444 csrr s8,mcause      |             | w0:s8           | ID-stall:CP0/fence
+   2752 |                          | 0458 mret                | 6| >0448 csrr s9,mepc       |                          |                          |             |                 | 
+   2753 | 045c ?                   | 0458 mret                | 4| .044c csrr s10,mtval     | 0448 csrr s9,mepc    CP0 |                          |             |                 | ID-stall:CP0/fence
+   2754 | 0460 ?                   |                          | 6| .044c csrr s10,mtval     |                          | 0448 csrr s9,mepc        |             | w0:s9           | ID-stall:CP0/fence
+   2755 |                          | 045c ?                   | 6| >044c csrr s10,mtval     |                          |                          |             |                 | 
+   2756 | 0460 ?                   | 045c ?                   | 4| >0450 addi t3,s9,4       | 044c csrr s10,mtval  CP0 |                          |             |                 | 
+   2757 | 0464 ?                   |                          | 4| .0454 csrw mepc,t3       | 0450 addi t3,s9,4    ALU | 044c csrr s10,mtval      |             | w0:s10          | ID-stall:CP0/fence
+   2758 | 0468 ?                   | 0460 ?                   | 4| .0454 csrw mepc,t3       |                          | 0450 addi t3,s9,4        |             | w0:t3           | ID-stall:CP0/fence
+   2759 |                          | 0464 ?                   | 6| >0454 csrw mepc,t3       |                          |                          |             |                 | 
+   2760 | 0468 ?                   | 0464 ?                   | 4| .(flushed) mret          | 0454 csrw mepc,t3    CP0 |                          |             |                 | ID-stall:CP0/fence
+   2761 | 046c ?                   |                          | 6| .(flushed) mret          |                          | 0454 csrw mepc,t3        |             | w0:zero         | ID-stall:CP0/fence RT-redirect->0458
+   2762 | 0458 mret                |                          | 0|                          |                          |                          |             |                 | 
+   2763 | 045c ?                   |                          | 0|                          |                          |                          |             |                 | ID-stall:other FLUSH
+   2764 | 0460 ?                   | 0458 mret                | 0| >0458 mret               |                          |                          |             |                 | 
+   2765 | 0464 ?                   | 045c ?                   | 0| >045c ?                  | 0458 mret            CP0 |                          |             |                 | 
+   2766 | 0468 ?                   | 0460 ?                   | 0| >0294 csrr t0,mcycle     | 045c ?               CP0 | 0458 mret                |             |                 | RT-redirect->0294
+   2767 | 0294 csrr t0,mcycle      |                          | 0|                          | 0294 csrr t0,mcycle  CP0 |                          |             |                 | 
+   2768 | 0298 sub s0,t0,s0        |                          | 0|                          |                          |                          |             |                 | ID-stall:other
+   2769 | 029c li t6,0             | 0294 csrr t0,mcycle      | 0| .(flushed) csrr t0,mcycl |                          |                          |             |                 | ID-stall:other FLUSH
+   2770 | 02a0 addi s6,s6,-1       | 0298 sub s0,t0,s0        | 0| >0294 csrr t0,mcycle     |                          |                          |             |                 | 
+   2771 | 02a4 bnez s6,284         | 029c li t6,0             | 0| .0298 sub s0,t0,s0       | 0294 csrr t0,mcycle  CP0 |                          |             |                 | ID-stall:RAW
+   2772 | 02a8 auipc t1,0x0        | 02a0 addi s6,s6,-1       | 2| >0298 sub s0,t0,s0       |                          | 0294 csrr t0,mcycle      |             | w0:t0           | 
+   2773 | 02ac addi t1,t1,-24      | 02a4 bnez s6,284         | 2| >029c li t6,0            | 0298 sub s0,t0,s0    ALU |                          |             |                 | 
+   2774 | 02b0 sub s9,s9,t1        | 02a8 auipc t1,0x0        | 2| >02a0 addi s6,s6,-1      | 029c li t6,0         ALU | 0298 sub s0,t0,s0        |             | w0:s0           | 
+   2775 | 02b4 sub s11,s11,s7      | 02ac addi t1,t1,-24      | 2| >02ec unimp              | 02a0 addi s6,s6,-1   ALU | 029c li t6,0             |             | w0:t6           | 
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 summary: cycles=110 retired=28 IPC=0.255 | flush=6, icache_miss=2, ip_redirect=2, retired=28, stall_CP0/fence=26, stall_RAW=4, stall_other=8, trap=2
 
-================================================================================================================================================================
+================================================================================================================================================================================================
 MARK 2   cycles 4456 .. 4501  (46 cycles)
-================================================================================================================================================================
-    cyc | IF (fetch)               | IP (pred)                |IB| ID                       | EX1                      | RETIRE                   | events
-----------------------------------------------------------------------------------------------------------------------------------------------------------------
-   4456 | 0300 mv a1,s8            | 02f8 addi t1,t1,-8       | 4| >02ec unimp              |                          |                          | 
-   4457 |                          | 02fc sub s9,s9,t1        | 4| >02f0 li t6,0            | 02ec unimp           CP0 |                          | 
-   4458 |                          |                          | 4| >02f0 li t6,0            | 02f0 li t6,0         ALU | 02ec unimp               | I$-miss TRAP
-   4459 |                          |                          | 2| >(flushed) addi t1,t1,-8 | 02f0 li t6,0         BJU |                          | RT-redirect->0140
-   4460 |                          |                          | 0|                          |                          |                          | ID-stall:other
-   4461 |                          |                          | 0|                          |                          |                          | ID-stall:other FLUSH
-   4462 |                          |                          | 0|                          |                          |                          | 
-   4463 |                          |                          | 0|                          |                          |                          | 
-   4464 |                          |                          | 0|                          |                          |                          | 
-   4465 |                          |                          | 0|                          |                          |                          | 
-   4466 |                          |                          | 0|                          |                          |                          | 
-   4467 |                          |                          | 0|                          |                          |                          | 
-   4468 |                          |                          | 0|                          |                          |                          | 
-   4469 |                          |                          | 0|                          |                          |                          | 
-   4470 | 0140 j 440               |                          | 0|                          |                          |                          | 
-   4471 | 0144 csrr s0,mcause      |                          | 0|                          |                          |                          | 
-   4472 | 0148 csrr s1,mepc        | 0140 j 440               | 0| >0140 j 440              |                          |                          | IP-redirect->0440
-   4473 | 0440 csrr s11,mcycle     |                          | 0|                          | 0140 j 440           BJU |                          | 
-   4474 | 0444 csrr s8,mcause      |                          | 0|                          |                          | 0140 j 440               | 
-   4475 | 0448 csrr s9,mepc        | 0440 csrr s11,mcycle     | 0| >0440 csrr s11,mcycle    |                          |                          | 
-   4476 | 044c csrr s10,mtval      | 0444 csrr s8,mcause      | 0| .0444 csrr s8,mcause     | 0440 csrr s11,mcycle CP0 |                          | ID-stall:CP0/fence
-   4477 | 0450 addi t3,s9,4        | 0448 csrr s9,mepc        | 0| .0444 csrr s8,mcause     |                          | 0440 csrr s11,mcycle     | ID-stall:CP0/fence
-   4478 | 0454 csrw mepc,t3        | 044c csrr s10,mtval      | 2| >0444 csrr s8,mcause     |                          |                          | 
-   4479 | 0458 mret                | 0450 addi t3,s9,4        | 2| .0448 csrr s9,mepc       | 0444 csrr s8,mcause  CP0 |                          | ID-stall:CP0/fence
-   4480 | 045c ?                   | 0454 csrw mepc,t3        | 4| .0448 csrr s9,mepc       |                          | 0444 csrr s8,mcause      | ID-stall:CP0/fence
-   4481 |                          | 0458 mret                | 6| >0448 csrr s9,mepc       |                          |                          | 
-   4482 | 045c ?                   | 0458 mret                | 4| .044c csrr s10,mtval     | 0448 csrr s9,mepc    CP0 |                          | ID-stall:CP0/fence
-   4483 | 0460 ?                   |                          | 6| .044c csrr s10,mtval     |                          | 0448 csrr s9,mepc        | ID-stall:CP0/fence
-   4484 |                          | 045c ?                   | 6| >044c csrr s10,mtval     |                          |                          | 
-   4485 | 0460 ?                   | 045c ?                   | 4| >0450 addi t3,s9,4       | 044c csrr s10,mtval  CP0 |                          | 
-   4486 | 0464 ?                   |                          | 4| .0454 csrw mepc,t3       | 0450 addi t3,s9,4    ALU | 044c csrr s10,mtval      | ID-stall:CP0/fence
-   4487 | 0468 ?                   | 0460 ?                   | 4| .0454 csrw mepc,t3       |                          | 0450 addi t3,s9,4        | ID-stall:CP0/fence
-   4488 |                          | 0464 ?                   | 6| >0454 csrw mepc,t3       |                          |                          | 
-   4489 | 0468 ?                   | 0464 ?                   | 4| .(flushed) mret          | 0454 csrw mepc,t3    CP0 |                          | ID-stall:CP0/fence
-   4490 | 046c ?                   |                          | 6| .(flushed) mret          |                          | 0454 csrw mepc,t3        | ID-stall:CP0/fence RT-redirect->0458
-   4491 | 0458 mret                |                          | 0|                          |                          |                          | 
-   4492 | 045c ?                   |                          | 0|                          |                          |                          | ID-stall:other FLUSH
-   4493 | 0460 ?                   | 0458 mret                | 0| >0458 mret               |                          |                          | 
-   4494 | 0464 ?                   | 045c ?                   | 0| >045c ?                  | 0458 mret            CP0 |                          | 
-   4495 | 0468 ?                   | 0460 ?                   | 0| >02f0 li t6,0            | 045c ?               CP0 | 0458 mret                | RT-redirect->02f0
-   4496 | 02f0 li t6,0             |                          | 0|                          | 02f0 li t6,0         CP0 |                          | 
-   4497 | 02f4 auipc t1,0x0        |                          | 0|                          |                          |                          | ID-stall:other
-   4498 | 02f8 addi t1,t1,-8       | 02f0 li t6,0             | 0| .(flushed) li t6,0       |                          |                          | ID-stall:other FLUSH
-   4499 | 02fc sub s9,s9,t1        | 02f4 auipc t1,0x0        | 0| >02f0 li t6,0            |                          |                          | 
-   4500 | 0300 mv a1,s8            | 02f8 addi t1,t1,-8       | 0| >02f4 auipc t1,0x0       | 02f0 li t6,0         ALU |                          | 
-   4501 | 0304 li a0,1327          | 02fc sub s9,s9,t1        | 0| >0340 ebreak             | 02f4 auipc t1,0x0    BJU | 02f0 li t6,0             | 
-----------------------------------------------------------------------------------------------------------------------------------------------------------------
+================================================================================================================================================================================================
+    cyc | IF (fetch)               | IP (pred)                |IB| ID                       | EX1                      | RETIRE                   | BACK        | WB              | events
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+   4456 | 0300 mv a1,s8            | 02f8 addi t1,t1,-8       | 4| >02ec unimp              |                          |                          |             |                 | 
+   4457 |                          | 02fc sub s9,s9,t1        | 4| >02f0 li t6,0            | 02ec unimp           CP0 |                          |             |                 | 
+   4458 |                          |                          | 4| >02f0 li t6,0            | 02f0 li t6,0         ALU | 02ec unimp               |             |                 | I$-miss TRAP
+   4459 |                          |                          | 2| >(flushed) addi t1,t1,-8 | 02f0 li t6,0         BJU |                          |             |                 | RT-redirect->0140
+   4460 |                          |                          | 0|                          |                          |                          |             |                 | ID-stall:other
+   4461 |                          |                          | 0|                          |                          |                          |             |                 | ID-stall:other FLUSH
+   4462 |                          |                          | 0|                          |                          |                          |             |                 | 
+   4463 |                          |                          | 0|                          |                          |                          |             |                 | 
+   4464 |                          |                          | 0|                          |                          |                          |             |                 | 
+   4465 |                          |                          | 0|                          |                          |                          |             |                 | 
+   4466 |                          |                          | 0|                          |                          |                          |             |                 | 
+   4467 |                          |                          | 0|                          |                          |                          |             |                 | 
+   4468 |                          |                          | 0|                          |                          |                          |             |                 | 
+   4469 |                          |                          | 0|                          |                          |                          |             |                 | 
+   4470 | 0140 j 440               |                          | 0|                          |                          |                          |             |                 | 
+   4471 | 0144 csrr s0,mcause      |                          | 0|                          |                          |                          |             |                 | 
+   4472 | 0148 csrr s1,mepc        | 0140 j 440               | 0| >0140 j 440              |                          |                          |             |                 | IP-redirect->0440
+   4473 | 0440 csrr s11,mcycle     |                          | 0|                          | 0140 j 440           BJU |                          |             |                 | 
+   4474 | 0444 csrr s8,mcause      |                          | 0|                          |                          | 0140 j 440               |             | w0:zero         | 
+   4475 | 0448 csrr s9,mepc        | 0440 csrr s11,mcycle     | 0| >0440 csrr s11,mcycle    |                          |                          |             |                 | 
+   4476 | 044c csrr s10,mtval      | 0444 csrr s8,mcause      | 0| .0444 csrr s8,mcause     | 0440 csrr s11,mcycle CP0 |                          |             |                 | ID-stall:CP0/fence
+   4477 | 0450 addi t3,s9,4        | 0448 csrr s9,mepc        | 0| .0444 csrr s8,mcause     |                          | 0440 csrr s11,mcycle     |             | w0:s11          | ID-stall:CP0/fence
+   4478 | 0454 csrw mepc,t3        | 044c csrr s10,mtval      | 2| >0444 csrr s8,mcause     |                          |                          |             |                 | 
+   4479 | 0458 mret                | 0450 addi t3,s9,4        | 2| .0448 csrr s9,mepc       | 0444 csrr s8,mcause  CP0 |                          |             |                 | ID-stall:CP0/fence
+   4480 | 045c ?                   | 0454 csrw mepc,t3        | 4| .0448 csrr s9,mepc       |                          | 0444 csrr s8,mcause      |             | w0:s8           | ID-stall:CP0/fence
+   4481 |                          | 0458 mret                | 6| >0448 csrr s9,mepc       |                          |                          |             |                 | 
+   4482 | 045c ?                   | 0458 mret                | 4| .044c csrr s10,mtval     | 0448 csrr s9,mepc    CP0 |                          |             |                 | ID-stall:CP0/fence
+   4483 | 0460 ?                   |                          | 6| .044c csrr s10,mtval     |                          | 0448 csrr s9,mepc        |             | w0:s9           | ID-stall:CP0/fence
+   4484 |                          | 045c ?                   | 6| >044c csrr s10,mtval     |                          |                          |             |                 | 
+   4485 | 0460 ?                   | 045c ?                   | 4| >0450 addi t3,s9,4       | 044c csrr s10,mtval  CP0 |                          |             |                 | 
+   4486 | 0464 ?                   |                          | 4| .0454 csrw mepc,t3       | 0450 addi t3,s9,4    ALU | 044c csrr s10,mtval      |             | w0:s10          | ID-stall:CP0/fence
+   4487 | 0468 ?                   | 0460 ?                   | 4| .0454 csrw mepc,t3       |                          | 0450 addi t3,s9,4        |             | w0:t3           | ID-stall:CP0/fence
+   4488 |                          | 0464 ?                   | 6| >0454 csrw mepc,t3       |                          |                          |             |                 | 
+   4489 | 0468 ?                   | 0464 ?                   | 4| .(flushed) mret          | 0454 csrw mepc,t3    CP0 |                          |             |                 | ID-stall:CP0/fence
+   4490 | 046c ?                   |                          | 6| .(flushed) mret          |                          | 0454 csrw mepc,t3        |             | w0:zero         | ID-stall:CP0/fence RT-redirect->0458
+   4491 | 0458 mret                |                          | 0|                          |                          |                          |             |                 | 
+   4492 | 045c ?                   |                          | 0|                          |                          |                          |             |                 | ID-stall:other FLUSH
+   4493 | 0460 ?                   | 0458 mret                | 0| >0458 mret               |                          |                          |             |                 | 
+   4494 | 0464 ?                   | 045c ?                   | 0| >045c ?                  | 0458 mret            CP0 |                          |             |                 | 
+   4495 | 0468 ?                   | 0460 ?                   | 0| >02f0 li t6,0            | 045c ?               CP0 | 0458 mret                |             |                 | RT-redirect->02f0
+   4496 | 02f0 li t6,0             |                          | 0|                          | 02f0 li t6,0         CP0 |                          |             |                 | 
+   4497 | 02f4 auipc t1,0x0        |                          | 0|                          |                          |                          |             |                 | ID-stall:other
+   4498 | 02f8 addi t1,t1,-8       | 02f0 li t6,0             | 0| .(flushed) li t6,0       |                          |                          |             |                 | ID-stall:other FLUSH
+   4499 | 02fc sub s9,s9,t1        | 02f4 auipc t1,0x0        | 0| >02f0 li t6,0            |                          |                          |             |                 | 
+   4500 | 0300 mv a1,s8            | 02f8 addi t1,t1,-8       | 0| >02f4 auipc t1,0x0       | 02f0 li t6,0         ALU |                          |             |                 | 
+   4501 | 0304 li a0,1327          | 02fc sub s9,s9,t1        | 0| >0340 ebreak             | 02f4 auipc t1,0x0    BJU | 02f0 li t6,0             |             | w0:t6           | 
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 summary: cycles=46 retired=10 IPC=0.217 | flush=3, icache_miss=1, ip_redirect=1, retired=10, stall_CP0/fence=10, stall_other=5, trap=1
 
-================================================================================================================================================================
+================================================================================================================================================================================================
 MARK 3   cycles 6472 .. 6512  (41 cycles)
-================================================================================================================================================================
-    cyc | IF (fetch)               | IP (pred)                |IB| ID                       | EX1                      | RETIRE                   | events
-----------------------------------------------------------------------------------------------------------------------------------------------------------------
-   6472 |                          |                          | 0|                          |                          |                          | 
-   6473 |                          |                          | 0|                          |                          |                          | 
-   6474 |                          |                          | 0|                          |                          |                          | 
-   6475 |                          | 0340 ebreak              | 0| >0340 ebreak             |                          |                          | 
-   6476 |                          |                          | 0|                          | 0340 ebreak          CP0 |                          | 
-   6477 |                          |                          | 0|                          |                          | 0340 ebreak              | TRAP
-   6478 |                          |                          | 0|                          |                          |                          | RT-redirect->0140
-   6479 |                          |                          | 0|                          |                          |                          | ID-stall:other FLUSH
-   6480 |                          |                          | 0|                          |                          |                          | 
-   6481 | 0140 j 440               |                          | 0|                          |                          |                          | 
-   6482 | 0144 csrr s0,mcause      |                          | 0|                          |                          |                          | 
-   6483 | 0148 csrr s1,mepc        | 0140 j 440               | 0| >0140 j 440              |                          |                          | IP-redirect->0440
-   6484 | 0440 csrr s11,mcycle     |                          | 0|                          | 0140 j 440           BJU |                          | 
-   6485 | 0444 csrr s8,mcause      |                          | 0|                          |                          | 0140 j 440               | 
-   6486 | 0448 csrr s9,mepc        | 0440 csrr s11,mcycle     | 0| >0440 csrr s11,mcycle    |                          |                          | 
-   6487 | 044c csrr s10,mtval      | 0444 csrr s8,mcause      | 0| .0444 csrr s8,mcause     | 0440 csrr s11,mcycle CP0 |                          | ID-stall:CP0/fence
-   6488 | 0450 addi t3,s9,4        | 0448 csrr s9,mepc        | 0| .0444 csrr s8,mcause     |                          | 0440 csrr s11,mcycle     | ID-stall:CP0/fence
-   6489 | 0454 csrw mepc,t3        | 044c csrr s10,mtval      | 2| >0444 csrr s8,mcause     |                          |                          | 
-   6490 | 0458 mret                | 0450 addi t3,s9,4        | 2| .0448 csrr s9,mepc       | 0444 csrr s8,mcause  CP0 |                          | ID-stall:CP0/fence
-   6491 | 045c ?                   | 0454 csrw mepc,t3        | 4| .0448 csrr s9,mepc       |                          | 0444 csrr s8,mcause      | ID-stall:CP0/fence
-   6492 |                          | 0458 mret                | 6| >0448 csrr s9,mepc       |                          |                          | 
-   6493 | 045c ?                   | 0458 mret                | 4| .044c csrr s10,mtval     | 0448 csrr s9,mepc    CP0 |                          | ID-stall:CP0/fence
-   6494 | 0460 ?                   |                          | 6| .044c csrr s10,mtval     |                          | 0448 csrr s9,mepc        | ID-stall:CP0/fence
-   6495 |                          | 045c ?                   | 6| >044c csrr s10,mtval     |                          |                          | 
-   6496 | 0460 ?                   | 045c ?                   | 4| >0450 addi t3,s9,4       | 044c csrr s10,mtval  CP0 |                          | 
-   6497 | 0464 ?                   |                          | 4| .0454 csrw mepc,t3       | 0450 addi t3,s9,4    ALU | 044c csrr s10,mtval      | ID-stall:CP0/fence
-   6498 | 0468 ?                   | 0460 ?                   | 4| .0454 csrw mepc,t3       |                          | 0450 addi t3,s9,4        | ID-stall:CP0/fence
-   6499 |                          | 0464 ?                   | 6| >0454 csrw mepc,t3       |                          |                          | 
-   6500 | 0468 ?                   | 0464 ?                   | 4| .(flushed) mret          | 0454 csrw mepc,t3    CP0 |                          | ID-stall:CP0/fence
-   6501 | 046c ?                   |                          | 6| .(flushed) mret          |                          | 0454 csrw mepc,t3        | ID-stall:CP0/fence RT-redirect->0458
-   6502 | 0458 mret                |                          | 0|                          |                          |                          | 
-   6503 | 045c ?                   |                          | 0|                          |                          |                          | ID-stall:other FLUSH
-   6504 | 0460 ?                   | 0458 mret                | 0| >0458 mret               |                          |                          | 
-   6505 | 0464 ?                   | 045c ?                   | 0| >045c ?                  | 0458 mret            CP0 |                          | 
-   6506 | 0468 ?                   | 0460 ?                   | 0| >0344 li t6,0            | 045c ?               CP0 | 0458 mret                | RT-redirect->0344
-   6507 | 0344 li t6,0             |                          | 0|                          | 0344 li t6,0         CP0 |                          | 
-   6508 | 0348 auipc t1,0x0        |                          | 0|                          |                          |                          | ID-stall:other
-   6509 | 034c addi t1,t1,-8       | 0344 li t6,0             | 0| .(flushed) li t6,0       |                          |                          | ID-stall:other FLUSH
-   6510 | 0350 sub s9,s9,t1        | 0348 auipc t1,0x0        | 0| >0344 li t6,0            |                          |                          | 
-   6511 | 0354 mv a1,s8            | 034c addi t1,t1,-8       | 0| >0348 auipc t1,0x0       | 0344 li t6,0         ALU |                          | 
-   6512 | 0358 li a0,1402          | 0350 sub s9,s9,t1        | 0| >0398 csrr s0,mcycle     | 0348 auipc t1,0x0    BJU | 0344 li t6,0             | 
-----------------------------------------------------------------------------------------------------------------------------------------------------------------
+================================================================================================================================================================================================
+    cyc | IF (fetch)               | IP (pred)                |IB| ID                       | EX1                      | RETIRE                   | BACK        | WB              | events
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+   6472 |                          |                          | 0|                          |                          |                          |             |                 | 
+   6473 |                          |                          | 0|                          |                          |                          |             |                 | 
+   6474 |                          |                          | 0|                          |                          |                          |             |                 | 
+   6475 |                          | 0340 ebreak              | 0| >0340 ebreak             |                          |                          |             |                 | 
+   6476 |                          |                          | 0|                          | 0340 ebreak          CP0 |                          |             |                 | 
+   6477 |                          |                          | 0|                          |                          | 0340 ebreak              |             |                 | TRAP
+   6478 |                          |                          | 0|                          |                          |                          |             |                 | RT-redirect->0140
+   6479 |                          |                          | 0|                          |                          |                          |             |                 | ID-stall:other FLUSH
+   6480 |                          |                          | 0|                          |                          |                          |             |                 | 
+   6481 | 0140 j 440               |                          | 0|                          |                          |                          |             |                 | 
+   6482 | 0144 csrr s0,mcause      |                          | 0|                          |                          |                          |             |                 | 
+   6483 | 0148 csrr s1,mepc        | 0140 j 440               | 0| >0140 j 440              |                          |                          |             |                 | IP-redirect->0440
+   6484 | 0440 csrr s11,mcycle     |                          | 0|                          | 0140 j 440           BJU |                          |             |                 | 
+   6485 | 0444 csrr s8,mcause      |                          | 0|                          |                          | 0140 j 440               |             | w0:zero         | 
+   6486 | 0448 csrr s9,mepc        | 0440 csrr s11,mcycle     | 0| >0440 csrr s11,mcycle    |                          |                          |             |                 | 
+   6487 | 044c csrr s10,mtval      | 0444 csrr s8,mcause      | 0| .0444 csrr s8,mcause     | 0440 csrr s11,mcycle CP0 |                          |             |                 | ID-stall:CP0/fence
+   6488 | 0450 addi t3,s9,4        | 0448 csrr s9,mepc        | 0| .0444 csrr s8,mcause     |                          | 0440 csrr s11,mcycle     |             | w0:s11          | ID-stall:CP0/fence
+   6489 | 0454 csrw mepc,t3        | 044c csrr s10,mtval      | 2| >0444 csrr s8,mcause     |                          |                          |             |                 | 
+   6490 | 0458 mret                | 0450 addi t3,s9,4        | 2| .0448 csrr s9,mepc       | 0444 csrr s8,mcause  CP0 |                          |             |                 | ID-stall:CP0/fence
+   6491 | 045c ?                   | 0454 csrw mepc,t3        | 4| .0448 csrr s9,mepc       |                          | 0444 csrr s8,mcause      |             | w0:s8           | ID-stall:CP0/fence
+   6492 |                          | 0458 mret                | 6| >0448 csrr s9,mepc       |                          |                          |             |                 | 
+   6493 | 045c ?                   | 0458 mret                | 4| .044c csrr s10,mtval     | 0448 csrr s9,mepc    CP0 |                          |             |                 | ID-stall:CP0/fence
+   6494 | 0460 ?                   |                          | 6| .044c csrr s10,mtval     |                          | 0448 csrr s9,mepc        |             | w0:s9           | ID-stall:CP0/fence
+   6495 |                          | 045c ?                   | 6| >044c csrr s10,mtval     |                          |                          |             |                 | 
+   6496 | 0460 ?                   | 045c ?                   | 4| >0450 addi t3,s9,4       | 044c csrr s10,mtval  CP0 |                          |             |                 | 
+   6497 | 0464 ?                   |                          | 4| .0454 csrw mepc,t3       | 0450 addi t3,s9,4    ALU | 044c csrr s10,mtval      |             | w0:s10          | ID-stall:CP0/fence
+   6498 | 0468 ?                   | 0460 ?                   | 4| .0454 csrw mepc,t3       |                          | 0450 addi t3,s9,4        |             | w0:t3           | ID-stall:CP0/fence
+   6499 |                          | 0464 ?                   | 6| >0454 csrw mepc,t3       |                          |                          |             |                 | 
+   6500 | 0468 ?                   | 0464 ?                   | 4| .(flushed) mret          | 0454 csrw mepc,t3    CP0 |                          |             |                 | ID-stall:CP0/fence
+   6501 | 046c ?                   |                          | 6| .(flushed) mret          |                          | 0454 csrw mepc,t3        |             | w0:zero         | ID-stall:CP0/fence RT-redirect->0458
+   6502 | 0458 mret                |                          | 0|                          |                          |                          |             |                 | 
+   6503 | 045c ?                   |                          | 0|                          |                          |                          |             |                 | ID-stall:other FLUSH
+   6504 | 0460 ?                   | 0458 mret                | 0| >0458 mret               |                          |                          |             |                 | 
+   6505 | 0464 ?                   | 045c ?                   | 0| >045c ?                  | 0458 mret            CP0 |                          |             |                 | 
+   6506 | 0468 ?                   | 0460 ?                   | 0| >0344 li t6,0            | 045c ?               CP0 | 0458 mret                |             |                 | RT-redirect->0344
+   6507 | 0344 li t6,0             |                          | 0|                          | 0344 li t6,0         CP0 |                          |             |                 | 
+   6508 | 0348 auipc t1,0x0        |                          | 0|                          |                          |                          |             |                 | ID-stall:other
+   6509 | 034c addi t1,t1,-8       | 0344 li t6,0             | 0| .(flushed) li t6,0       |                          |                          |             |                 | ID-stall:other FLUSH
+   6510 | 0350 sub s9,s9,t1        | 0348 auipc t1,0x0        | 0| >0344 li t6,0            |                          |                          |             |                 | 
+   6511 | 0354 mv a1,s8            | 034c addi t1,t1,-8       | 0| >0348 auipc t1,0x0       | 0344 li t6,0         ALU |                          |             |                 | 
+   6512 | 0358 li a0,1402          | 0350 sub s9,s9,t1        | 0| >0398 csrr s0,mcycle     | 0348 auipc t1,0x0    BJU | 0344 li t6,0             |             | w0:t6           | 
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 summary: cycles=41 retired=10 IPC=0.244 | flush=3, ip_redirect=1, retired=10, stall_CP0/fence=10, stall_other=4, trap=1
 
-================================================================================================================================================================
+================================================================================================================================================================================================
 MARK 4   cycles 7469 .. 7691  (207 cycles)
-================================================================================================================================================================
-    cyc | IF (fetch)               | IP (pred)                |IB| ID                       | EX1                      | RETIRE                   | events
-----------------------------------------------------------------------------------------------------------------------------------------------------------------
-   7469 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          | ID-stall:CP0/fence
-   7470 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          | ID-stall:CP0/fence
-   7471 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          | ID-stall:CP0/fence
-   7472 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          | ID-stall:CP0/fence
-   7473 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          | ID-stall:CP0/fence
-   7474 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          | ID-stall:CP0/fence
-   7475 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          | ID-stall:CP0/fence
-   7476 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          | ID-stall:CP0/fence
-   7477 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          | ID-stall:CP0/fence
-   7478 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          | ID-stall:CP0/fence
-   7479 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          | ID-stall:CP0/fence
-   7480 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          | ID-stall:CP0/fence
-   7481 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          | ID-stall:CP0/fence
-   7482 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          | ID-stall:CP0/fence
-   7483 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          | ID-stall:CP0/fence
-   7484 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          | ID-stall:CP0/fence
-   7485 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          | ID-stall:CP0/fence
-   7486 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          | ID-stall:CP0/fence
-   7487 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          | ID-stall:CP0/fence
-   7488 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          | ID-stall:CP0/fence
-   7489 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          | ID-stall:CP0/fence
-   7490 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          | ID-stall:CP0/fence
-   7491 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          | ID-stall:CP0/fence
-   7492 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          | ID-stall:CP0/fence
-   7493 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          | ID-stall:CP0/fence
-   7494 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          | ID-stall:CP0/fence
-   7495 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          | ID-stall:CP0/fence
-   7496 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          | ID-stall:CP0/fence
-   7497 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          | ID-stall:CP0/fence
-   7498 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          | ID-stall:CP0/fence
-   7499 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          | ID-stall:CP0/fence
-   7500 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          | ID-stall:CP0/fence
-   7501 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          | ID-stall:CP0/fence
-   7502 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          | ID-stall:CP0/fence
-   7503 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          | ID-stall:CP0/fence
-   7504 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          | ID-stall:CP0/fence
-   7505 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          | ID-stall:CP0/fence
-   7506 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          | ID-stall:CP0/fence
-   7507 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          | ID-stall:CP0/fence
-   7508 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          | ID-stall:CP0/fence
-   7509 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          | ID-stall:CP0/fence
-   7510 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          | ID-stall:CP0/fence
-   7511 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          | ID-stall:CP0/fence
-   7512 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          | ID-stall:CP0/fence
-   7513 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          | ID-stall:CP0/fence
-   7514 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          | ID-stall:CP0/fence
-   7515 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          | ID-stall:CP0/fence
-   7516 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          | ID-stall:CP0/fence
-   7517 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          | ID-stall:CP0/fence
-   7518 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          | ID-stall:CP0/fence
-   7519 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          | ID-stall:CP0/fence
-   7520 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          | ID-stall:CP0/fence
-   7521 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          | ID-stall:CP0/fence
-   7522 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          | ID-stall:CP0/fence
-   7523 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          | ID-stall:CP0/fence
-   7524 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          | ID-stall:CP0/fence
-   7525 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          | ID-stall:CP0/fence
-   7526 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          | ID-stall:CP0/fence
-   7527 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          | ID-stall:CP0/fence
-   7528 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          | ID-stall:CP0/fence
-   7529 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          | ID-stall:CP0/fence
-   7530 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          | ID-stall:CP0/fence
-   7531 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          | ID-stall:CP0/fence
-   7532 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          | ID-stall:CP0/fence
-   7533 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          | ID-stall:CP0/fence
-   7534 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          | ID-stall:CP0/fence
-   7535 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          | ID-stall:CP0/fence
-   7536 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          | ID-stall:CP0/fence
-   7537 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          | ID-stall:CP0/fence
-   7538 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          | ID-stall:CP0/fence
-   7539 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          | ID-stall:CP0/fence
-   7540 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          | ID-stall:CP0/fence
-   7541 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          | ID-stall:CP0/fence
-   7542 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          | ID-stall:CP0/fence
-   7543 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          | ID-stall:CP0/fence
-   7544 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          | ID-stall:CP0/fence
-   7545 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          | ID-stall:CP0/fence
-   7546 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          | ID-stall:CP0/fence
-   7547 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          | ID-stall:CP0/fence
-   7548 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          | ID-stall:CP0/fence
-   7549 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          | ID-stall:CP0/fence
-   7550 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          | ID-stall:CP0/fence
-   7551 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          | ID-stall:CP0/fence
-   7552 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          | ID-stall:CP0/fence
-   7553 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          | ID-stall:CP0/fence
-   7554 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          | ID-stall:CP0/fence
-   7555 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          | ID-stall:CP0/fence
-   7556 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          | ID-stall:CP0/fence
-   7557 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          | ID-stall:CP0/fence
-   7558 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          | ID-stall:CP0/fence
-   7559 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          | ID-stall:CP0/fence
-   7560 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          | ID-stall:CP0/fence
-   7561 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          | ID-stall:CP0/fence
-   7562 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          | ID-stall:CP0/fence
-   7563 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          | ID-stall:CP0/fence
-   7564 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          | ID-stall:CP0/fence
-   7565 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          | ID-stall:CP0/fence
-   7566 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          | ID-stall:CP0/fence
-   7567 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          | ID-stall:CP0/fence
-   7568 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          | ID-stall:CP0/fence
-   7569 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          | ID-stall:CP0/fence
-   7570 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          | ID-stall:CP0/fence
-   7571 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          | ID-stall:CP0/fence
-   7572 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          | ID-stall:CP0/fence
-   7573 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          | ID-stall:CP0/fence
-   7574 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          | ID-stall:CP0/fence
-   7575 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          | ID-stall:CP0/fence
-   7576 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          | ID-stall:CP0/fence
-   7577 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          | ID-stall:CP0/fence
-   7578 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          | ID-stall:CP0/fence
-   7579 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          | ID-stall:CP0/fence
-   7580 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          | ID-stall:CP0/fence
-   7581 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          | ID-stall:CP0/fence
-   7582 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          | ID-stall:CP0/fence
-   7583 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          | ID-stall:CP0/fence
-   7584 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          | ID-stall:CP0/fence
-   7585 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          | ID-stall:CP0/fence
-   7586 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          | ID-stall:CP0/fence
-   7587 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          | ID-stall:CP0/fence
-   7588 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          | ID-stall:CP0/fence
-   7589 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          | ID-stall:CP0/fence
-   7590 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          | ID-stall:CP0/fence
-   7591 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          | ID-stall:CP0/fence
-   7592 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          | ID-stall:CP0/fence
-   7593 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          | ID-stall:CP0/fence
-   7594 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          | ID-stall:CP0/fence
-   7595 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          | ID-stall:CP0/fence
-   7596 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          | ID-stall:CP0/fence
-   7597 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          | ID-stall:CP0/fence
-   7598 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          | ID-stall:CP0/fence
-   7599 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          | ID-stall:CP0/fence
-   7600 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          | ID-stall:CP0/fence
-   7601 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          | ID-stall:CP0/fence
-   7602 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          | ID-stall:CP0/fence
-   7603 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          | ID-stall:CP0/fence
-   7604 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          | ID-stall:CP0/fence
-   7605 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          | ID-stall:CP0/fence
-   7606 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          | ID-stall:CP0/fence
-   7607 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          | ID-stall:CP0/fence
-   7608 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          | ID-stall:CP0/fence
-   7609 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          | ID-stall:CP0/fence
-   7610 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          | ID-stall:CP0/fence
-   7611 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          | ID-stall:CP0/fence
-   7612 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          | ID-stall:CP0/fence
-   7613 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          | ID-stall:CP0/fence
-   7614 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          | ID-stall:CP0/fence
-   7615 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          | ID-stall:CP0/fence
-   7616 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          | ID-stall:CP0/fence
-   7617 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          | ID-stall:CP0/fence
-   7618 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          | ID-stall:CP0/fence
-   7619 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          | ID-stall:CP0/fence
-   7620 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          | ID-stall:CP0/fence
-   7621 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          | ID-stall:CP0/fence
-   7622 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          | ID-stall:CP0/fence
-   7623 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          | ID-stall:CP0/fence
-   7624 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          | ID-stall:CP0/fence
-   7625 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          | ID-stall:CP0/fence
-   7626 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          | ID-stall:CP0/fence
-   7627 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          | ID-stall:CP0/fence
-   7628 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          | ID-stall:CP0/fence
-   7629 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          | ID-stall:CP0/fence
-   7630 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          | ID-stall:CP0/fence
-   7631 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          | ID-stall:CP0/fence
-   7632 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          | ID-stall:CP0/fence
-   7633 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          | ID-stall:CP0/fence
-   7634 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          | ID-stall:CP0/fence
-   7635 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          | ID-stall:CP0/fence
-   7636 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          | ID-stall:CP0/fence
-   7637 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          | ID-stall:CP0/fence
-   7638 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          | ID-stall:CP0/fence
-   7639 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          | ID-stall:CP0/fence
-   7640 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          | ID-stall:CP0/fence
-   7641 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          | ID-stall:CP0/fence
-   7642 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          | ID-stall:CP0/fence DC:LD MISS
-   7643 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          | ID-stall:CP0/fence
-   7644 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          | ID-stall:CP0/fence
-   7645 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          | ID-stall:CP0/fence
-   7646 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          | ID-stall:CP0/fence
-   7647 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          | ID-stall:CP0/fence
-   7648 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          | ID-stall:CP0/fence DC:LD hit
-   7649 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          | ID-stall:CP0/fence
-   7650 |                          | 03a8 sub s0,t0,s0        | 6| >0398 csrr s0,mcycle     |                          |                          | 
-   7651 | 03ac li t6,0             | 03a8 sub s0,t0,s0        | 4| >039c ld a4,0(s6)        | 0398 csrr s0,mcycle  CP0 |                          | 
-   7652 | 03b0 addi s7,s7,-1       |                          | 4| .03a0 mv a5,a4           | 039c ld a4,0(s6)     LSU | 0398 csrr s0,mcycle      | ID-stall:RAW
-   7653 | 03b4 bnez s7,394         | 03ac li t6,0             | 4| .03a0 mv a5,a4           |                          |                          | ID-stall:RAW DC:LD hit
-   7654 |                          | 03b0 addi s7,s7,-1       | 6| >03a0 mv a5,a4           |                          | 039c ld a4,0(s6)         | DC:LD hit
-   7655 | 03b4 bnez s7,394         | 03b0 addi s7,s7,-1       | 4| .03a4 csrr t0,mcycle     | 03a0 mv a5,a4        ALU |                          | ID-stall:CP0/fence
-   7656 | 03b8 mv a1,s0            |                          | 6| .03a4 csrr t0,mcycle     |                          | 03a0 mv a5,a4            | ID-stall:CP0/fence
-   7657 |                          | 03b4 bnez s7,394         | 6| >03a4 csrr t0,mcycle     |                          |                          | 
-   7658 | 03b8 mv a1,s0            | 03b4 bnez s7,394         | 4| .03a8 sub s0,t0,s0       | 03a4 csrr t0,mcycle  CP0 |                          | ID-stall:RAW
-   7659 | 03bc li a0,1452          |                          | 6| >03a8 sub s0,t0,s0       |                          | 03a4 csrr t0,mcycle      | 
-   7660 | 03c0 jal 21e             | 03b8 mv a1,s0            | 4| >03ac li t6,0            | 03a8 sub s0,t0,s0    ALU |                          | 
-   7661 |                          | 03bc li a0,1452          | 4| >03b0 addi s7,s7,-1      | 03ac li t6,0         ALU | 03a8 sub s0,t0,s0        | 
-   7662 |                          |                          | 4| >0398 csrr s0,mcycle     | 03b0 addi s7,s7,-1   ALU | 03ac li t6,0             | I$-miss
-   7679 | 03a8 sub s0,t0,s0        | 03a0 mv a5,a4            | 2| >0398 csrr s0,mcycle     |                          |                          | 
-   7680 | 03ac li t6,0             | 03a4 csrr t0,mcycle      | 2| >039c ld a4,0(s6)        | 0398 csrr s0,mcycle  CP0 |                          | 
-   7681 | 03b0 addi s7,s7,-1       | 03a8 sub s0,t0,s0        | 2| .03a0 mv a5,a4           | 039c ld a4,0(s6)     LSU | 0398 csrr s0,mcycle      | ID-stall:RAW
-   7682 | 03b4 bnez s7,394         | 03ac li t6,0             | 4| .03a0 mv a5,a4           |                          |                          | ID-stall:RAW DC:LD hit
-   7683 |                          | 03b0 addi s7,s7,-1       | 6| >03a0 mv a5,a4           |                          | 039c ld a4,0(s6)         | DC:LD hit
-   7684 | 03b4 bnez s7,394         | 03b0 addi s7,s7,-1       | 4| .03a4 csrr t0,mcycle     | 03a0 mv a5,a4        ALU |                          | ID-stall:CP0/fence
-   7685 | 03b8 mv a1,s0            |                          | 6| .03a4 csrr t0,mcycle     |                          | 03a0 mv a5,a4            | ID-stall:CP0/fence
-   7686 |                          | 03b4 bnez s7,394         | 6| >03a4 csrr t0,mcycle     |                          |                          | 
-   7687 | 03b8 mv a1,s0            | 03b4 bnez s7,394         | 4| .03a8 sub s0,t0,s0       | 03a4 csrr t0,mcycle  CP0 |                          | ID-stall:RAW
-   7688 | 03bc li a0,1452          |                          | 6| >03a8 sub s0,t0,s0       |                          | 03a4 csrr t0,mcycle      | 
-   7689 | 03c0 jal 21e             | 03b8 mv a1,s0            | 4| >03ac li t6,0            | 03a8 sub s0,t0,s0    ALU |                          | 
-   7690 | 03c4 mv a1,s8            | 03bc li a0,1452          | 4| >03b0 addi s7,s7,-1      | 03ac li t6,0         ALU | 03a8 sub s0,t0,s0        | 
-   7691 | 03c8 li a0,1477          | 03c0 jal 21e             | 4| >03e0 li t6,0            | 03b0 addi s7,s7,-1   ALU | 03ac li t6,0             | IP-redirect->021e
-----------------------------------------------------------------------------------------------------------------------------------------------------------------
+================================================================================================================================================================================================
+    cyc | IF (fetch)               | IP (pred)                |IB| ID                       | EX1                      | RETIRE                   | BACK        | WB              | events
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+   7469 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          |             |                 | ID-stall:CP0/fence
+   7470 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          |             |                 | ID-stall:CP0/fence
+   7471 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          |             |                 | ID-stall:CP0/fence
+   7472 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          |             |                 | ID-stall:CP0/fence
+   7473 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          |             |                 | ID-stall:CP0/fence
+   7474 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          |             |                 | ID-stall:CP0/fence
+   7475 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          |             |                 | ID-stall:CP0/fence
+   7476 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          |             |                 | ID-stall:CP0/fence
+   7477 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          |             |                 | ID-stall:CP0/fence
+   7478 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          |             |                 | ID-stall:CP0/fence
+   7479 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          |             |                 | ID-stall:CP0/fence
+   7480 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          |             |                 | ID-stall:CP0/fence
+   7481 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          |             |                 | ID-stall:CP0/fence
+   7482 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          |             |                 | ID-stall:CP0/fence
+   7483 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          |             |                 | ID-stall:CP0/fence
+   7484 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          |             |                 | ID-stall:CP0/fence
+   7485 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          |             |                 | ID-stall:CP0/fence
+   7486 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          |             |                 | ID-stall:CP0/fence
+   7487 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          |             |                 | ID-stall:CP0/fence
+   7488 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          |             |                 | ID-stall:CP0/fence
+   7489 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          |             |                 | ID-stall:CP0/fence
+   7490 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          |             |                 | ID-stall:CP0/fence
+   7491 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          |             |                 | ID-stall:CP0/fence
+   7492 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          |             |                 | ID-stall:CP0/fence
+   7493 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          |             |                 | ID-stall:CP0/fence
+   7494 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          |             |                 | ID-stall:CP0/fence
+   7495 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          |             |                 | ID-stall:CP0/fence
+   7496 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          |             |                 | ID-stall:CP0/fence
+   7497 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          |             |                 | ID-stall:CP0/fence
+   7498 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          |             |                 | ID-stall:CP0/fence
+   7499 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          |             |                 | ID-stall:CP0/fence
+   7500 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          |             |                 | ID-stall:CP0/fence
+   7501 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          |             |                 | ID-stall:CP0/fence
+   7502 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          |             |                 | ID-stall:CP0/fence
+   7503 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          |             |                 | ID-stall:CP0/fence
+   7504 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          |             |                 | ID-stall:CP0/fence
+   7505 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          |             |                 | ID-stall:CP0/fence
+   7506 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          |             |                 | ID-stall:CP0/fence
+   7507 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          |             |                 | ID-stall:CP0/fence
+   7508 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          |             |                 | ID-stall:CP0/fence
+   7509 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          |             |                 | ID-stall:CP0/fence
+   7510 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          |             |                 | ID-stall:CP0/fence
+   7511 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          |             |                 | ID-stall:CP0/fence
+   7512 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          |             |                 | ID-stall:CP0/fence
+   7513 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          |             |                 | ID-stall:CP0/fence
+   7514 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          |             |                 | ID-stall:CP0/fence
+   7515 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          |             |                 | ID-stall:CP0/fence
+   7516 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          |             |                 | ID-stall:CP0/fence
+   7517 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          |             |                 | ID-stall:CP0/fence
+   7518 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          |             |                 | ID-stall:CP0/fence
+   7519 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          |             |                 | ID-stall:CP0/fence
+   7520 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          |             |                 | ID-stall:CP0/fence
+   7521 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          |             |                 | ID-stall:CP0/fence
+   7522 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          |             |                 | ID-stall:CP0/fence
+   7523 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          |             |                 | ID-stall:CP0/fence
+   7524 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          |             |                 | ID-stall:CP0/fence
+   7525 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          |             |                 | ID-stall:CP0/fence
+   7526 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          |             |                 | ID-stall:CP0/fence
+   7527 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          |             |                 | ID-stall:CP0/fence
+   7528 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          |             |                 | ID-stall:CP0/fence
+   7529 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          |             |                 | ID-stall:CP0/fence
+   7530 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          |             |                 | ID-stall:CP0/fence
+   7531 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          |             |                 | ID-stall:CP0/fence
+   7532 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          |             |                 | ID-stall:CP0/fence
+   7533 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          |             |                 | ID-stall:CP0/fence
+   7534 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          |             |                 | ID-stall:CP0/fence
+   7535 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          |             |                 | ID-stall:CP0/fence
+   7536 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          |             |                 | ID-stall:CP0/fence
+   7537 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          |             |                 | ID-stall:CP0/fence
+   7538 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          |             |                 | ID-stall:CP0/fence
+   7539 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          |             |                 | ID-stall:CP0/fence
+   7540 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          |             |                 | ID-stall:CP0/fence
+   7541 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          |             |                 | ID-stall:CP0/fence
+   7542 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          |             |                 | ID-stall:CP0/fence
+   7543 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          |             |                 | ID-stall:CP0/fence
+   7544 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          |             |                 | ID-stall:CP0/fence
+   7545 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          |             |                 | ID-stall:CP0/fence
+   7546 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          |             |                 | ID-stall:CP0/fence
+   7547 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          |             |                 | ID-stall:CP0/fence
+   7548 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          |             |                 | ID-stall:CP0/fence
+   7549 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          |             |                 | ID-stall:CP0/fence
+   7550 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          |             |                 | ID-stall:CP0/fence
+   7551 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          |             |                 | ID-stall:CP0/fence
+   7552 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          |             |                 | ID-stall:CP0/fence
+   7553 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          |             |                 | ID-stall:CP0/fence
+   7554 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          |             |                 | ID-stall:CP0/fence
+   7555 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          |             |                 | ID-stall:CP0/fence
+   7556 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          |             |                 | ID-stall:CP0/fence
+   7557 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          |             |                 | ID-stall:CP0/fence
+   7558 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          |             |                 | ID-stall:CP0/fence
+   7559 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          |             |                 | ID-stall:CP0/fence
+   7560 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          |             |                 | ID-stall:CP0/fence
+   7561 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          |             |                 | ID-stall:CP0/fence
+   7562 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          |             |                 | ID-stall:CP0/fence
+   7563 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          |             |                 | ID-stall:CP0/fence
+   7564 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          |             |                 | ID-stall:CP0/fence
+   7565 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          |             |                 | ID-stall:CP0/fence
+   7566 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          |             |                 | ID-stall:CP0/fence
+   7567 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          |             |                 | ID-stall:CP0/fence
+   7568 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          |             |                 | ID-stall:CP0/fence
+   7569 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          |             |                 | ID-stall:CP0/fence
+   7570 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          |             |                 | ID-stall:CP0/fence
+   7571 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          |             |                 | ID-stall:CP0/fence
+   7572 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          |             |                 | ID-stall:CP0/fence
+   7573 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          |             |                 | ID-stall:CP0/fence
+   7574 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          |             |                 | ID-stall:CP0/fence
+   7575 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          |             |                 | ID-stall:CP0/fence
+   7576 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          |             |                 | ID-stall:CP0/fence
+   7577 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          |             |                 | ID-stall:CP0/fence
+   7578 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          |             |                 | ID-stall:CP0/fence
+   7579 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          |             |                 | ID-stall:CP0/fence
+   7580 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          |             |                 | ID-stall:CP0/fence
+   7581 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          |             |                 | ID-stall:CP0/fence
+   7582 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          |             |                 | ID-stall:CP0/fence
+   7583 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          |             |                 | ID-stall:CP0/fence
+   7584 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          |             |                 | ID-stall:CP0/fence
+   7585 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          |             |                 | ID-stall:CP0/fence
+   7586 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          |             |                 | ID-stall:CP0/fence
+   7587 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          |             |                 | ID-stall:CP0/fence
+   7588 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          |             |                 | ID-stall:CP0/fence
+   7589 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          |             |                 | ID-stall:CP0/fence
+   7590 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          |             |                 | ID-stall:CP0/fence
+   7591 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          |             |                 | ID-stall:CP0/fence
+   7592 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          |             |                 | ID-stall:CP0/fence
+   7593 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          |             |                 | ID-stall:CP0/fence
+   7594 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          |             |                 | ID-stall:CP0/fence
+   7595 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          |             |                 | ID-stall:CP0/fence
+   7596 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          |             |                 | ID-stall:CP0/fence
+   7597 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          |             |                 | ID-stall:CP0/fence
+   7598 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          |             |                 | ID-stall:CP0/fence
+   7599 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          |             |                 | ID-stall:CP0/fence
+   7600 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          |             |                 | ID-stall:CP0/fence
+   7601 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          |             |                 | ID-stall:CP0/fence
+   7602 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          |             |                 | ID-stall:CP0/fence
+   7603 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          |             |                 | ID-stall:CP0/fence
+   7604 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          |             |                 | ID-stall:CP0/fence
+   7605 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          |             |                 | ID-stall:CP0/fence
+   7606 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          |             |                 | ID-stall:CP0/fence
+   7607 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          |             |                 | ID-stall:CP0/fence
+   7608 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          |             |                 | ID-stall:CP0/fence
+   7609 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          |             |                 | ID-stall:CP0/fence
+   7610 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          |             |                 | ID-stall:CP0/fence
+   7611 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          |             |                 | ID-stall:CP0/fence
+   7612 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          |             |                 | ID-stall:CP0/fence
+   7613 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          |             |                 | ID-stall:CP0/fence
+   7614 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          |             |                 | ID-stall:CP0/fence
+   7615 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          |             |                 | ID-stall:CP0/fence
+   7616 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          |             |                 | ID-stall:CP0/fence
+   7617 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          |             |                 | ID-stall:CP0/fence
+   7618 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          |             |                 | ID-stall:CP0/fence
+   7619 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          |             |                 | ID-stall:CP0/fence
+   7620 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          |             |                 | ID-stall:CP0/fence
+   7621 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          |             |                 | ID-stall:CP0/fence
+   7622 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          |             |                 | ID-stall:CP0/fence
+   7623 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          |             |                 | ID-stall:CP0/fence
+   7624 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          |             |                 | ID-stall:CP0/fence
+   7625 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          |             |                 | ID-stall:CP0/fence
+   7626 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          |             |                 | ID-stall:CP0/fence
+   7627 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          |             |                 | ID-stall:CP0/fence
+   7628 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          |             |                 | ID-stall:CP0/fence
+   7629 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          |             |                 | ID-stall:CP0/fence
+   7630 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          |             |                 | ID-stall:CP0/fence
+   7631 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          |             |                 | ID-stall:CP0/fence
+   7632 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          |             |                 | ID-stall:CP0/fence
+   7633 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          |             |                 | ID-stall:CP0/fence
+   7634 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          |             |                 | ID-stall:CP0/fence
+   7635 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          |             |                 | ID-stall:CP0/fence
+   7636 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          |             |                 | ID-stall:CP0/fence
+   7637 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          |             |                 | ID-stall:CP0/fence
+   7638 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          |             |                 | ID-stall:CP0/fence
+   7639 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          |             |                 | ID-stall:CP0/fence
+   7640 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          |             |                 | ID-stall:CP0/fence
+   7641 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          |             | w1:a4           | ID-stall:CP0/fence
+   7642 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          |             |                 | ID-stall:CP0/fence DC:LD MISS
+   7643 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          |             |                 | ID-stall:CP0/fence
+   7644 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          |             |                 | ID-stall:CP0/fence
+   7645 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          |             |                 | ID-stall:CP0/fence
+   7646 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          |             |                 | ID-stall:CP0/fence
+   7647 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          |             |                 | ID-stall:CP0/fence
+   7648 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          |             |                 | ID-stall:CP0/fence DC:LD hit
+   7649 |                          | 03a8 sub s0,t0,s0        | 6| .0398 csrr s0,mcycle     |                          |                          |             | w1:a4           | ID-stall:CP0/fence
+   7650 |                          | 03a8 sub s0,t0,s0        | 6| >0398 csrr s0,mcycle     |                          |                          |             |                 | 
+   7651 | 03ac li t6,0             | 03a8 sub s0,t0,s0        | 4| >039c ld a4,0(s6)        | 0398 csrr s0,mcycle  CP0 |                          |             |                 | 
+   7652 | 03b0 addi s7,s7,-1       |                          | 4| .03a0 mv a5,a4           | 039c ld a4,0(s6)     LSU | 0398 csrr s0,mcycle      |             | w0:s0           | ID-stall:RAW
+   7653 | 03b4 bnez s7,394         | 03ac li t6,0             | 4| .03a0 mv a5,a4           |                          |                          |             |                 | ID-stall:RAW DC:LD hit LSU-full
+   7654 |                          | 03b0 addi s7,s7,-1       | 6| >03a0 mv a5,a4           |                          | 039c ld a4,0(s6)         |             |                 | DC:LD hit
+   7655 | 03b4 bnez s7,394         | 03b0 addi s7,s7,-1       | 4| .03a4 csrr t0,mcycle     | 03a0 mv a5,a4        ALU |                          |             | w1:a4           | ID-stall:CP0/fence
+   7656 | 03b8 mv a1,s0            |                          | 6| .03a4 csrr t0,mcycle     |                          | 03a0 mv a5,a4            |             | w0:a5           | ID-stall:CP0/fence
+   7657 |                          | 03b4 bnez s7,394         | 6| >03a4 csrr t0,mcycle     |                          |                          |             |                 | 
+   7658 | 03b8 mv a1,s0            | 03b4 bnez s7,394         | 4| .03a8 sub s0,t0,s0       | 03a4 csrr t0,mcycle  CP0 |                          |             |                 | ID-stall:RAW
+   7659 | 03bc li a0,1452          |                          | 6| >03a8 sub s0,t0,s0       |                          | 03a4 csrr t0,mcycle      |             | w0:t0           | 
+   7660 | 03c0 jal 21e             | 03b8 mv a1,s0            | 4| >03ac li t6,0            | 03a8 sub s0,t0,s0    ALU |                          |             |                 | 
+   7661 |                          | 03bc li a0,1452          | 4| >03b0 addi s7,s7,-1      | 03ac li t6,0         ALU | 03a8 sub s0,t0,s0        |             | w0:s0           | 
+   7662 |                          |                          | 4| >0398 csrr s0,mcycle     | 03b0 addi s7,s7,-1   ALU | 03ac li t6,0             |             | w0:t6           | I$-miss
+   7679 | 03a8 sub s0,t0,s0        | 03a0 mv a5,a4            | 2| >0398 csrr s0,mcycle     |                          |                          |             |                 | 
+   7680 | 03ac li t6,0             | 03a4 csrr t0,mcycle      | 2| >039c ld a4,0(s6)        | 0398 csrr s0,mcycle  CP0 |                          |             |                 | 
+   7681 | 03b0 addi s7,s7,-1       | 03a8 sub s0,t0,s0        | 2| .03a0 mv a5,a4           | 039c ld a4,0(s6)     LSU | 0398 csrr s0,mcycle      |             | w0:s0           | ID-stall:RAW
+   7682 | 03b4 bnez s7,394         | 03ac li t6,0             | 4| .03a0 mv a5,a4           |                          |                          |             |                 | ID-stall:RAW DC:LD hit LSU-full
+   7683 |                          | 03b0 addi s7,s7,-1       | 6| >03a0 mv a5,a4           |                          | 039c ld a4,0(s6)         |             |                 | DC:LD hit
+   7684 | 03b4 bnez s7,394         | 03b0 addi s7,s7,-1       | 4| .03a4 csrr t0,mcycle     | 03a0 mv a5,a4        ALU |                          |             | w1:a4           | ID-stall:CP0/fence
+   7685 | 03b8 mv a1,s0            |                          | 6| .03a4 csrr t0,mcycle     |                          | 03a0 mv a5,a4            |             | w0:a5           | ID-stall:CP0/fence
+   7686 |                          | 03b4 bnez s7,394         | 6| >03a4 csrr t0,mcycle     |                          |                          |             |                 | 
+   7687 | 03b8 mv a1,s0            | 03b4 bnez s7,394         | 4| .03a8 sub s0,t0,s0       | 03a4 csrr t0,mcycle  CP0 |                          |             |                 | ID-stall:RAW
+   7688 | 03bc li a0,1452          |                          | 6| >03a8 sub s0,t0,s0       |                          | 03a4 csrr t0,mcycle      |             | w0:t0           | 
+   7689 | 03c0 jal 21e             | 03b8 mv a1,s0            | 4| >03ac li t6,0            | 03a8 sub s0,t0,s0    ALU |                          |             |                 | 
+   7690 | 03c4 mv a1,s8            | 03bc li a0,1452          | 4| >03b0 addi s7,s7,-1      | 03ac li t6,0         ALU | 03a8 sub s0,t0,s0        |             | w0:s0           | 
+   7691 | 03c8 li a0,1477          | 03c0 jal 21e             | 4| >03e0 li t6,0            | 03b0 addi s7,s7,-1   ALU | 03ac li t6,0             |             | w0:t6           | IP-redirect->021e
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 summary: cycles=207 retired=12 IPC=0.058 | dc_miss=1, icache_miss=1, ip_redirect=1, retired=12, stall_CP0/fence=185, stall_RAW=6
 
-================================================================================================================================================================
+================================================================================================================================================================================================
 MARK 5   cycles 8580 .. 8613  (34 cycles)
-================================================================================================================================================================
-    cyc | IF (fetch)               | IP (pred)                |IB| ID                       | EX1                      | RETIRE                   | events
-----------------------------------------------------------------------------------------------------------------------------------------------------------------
-   8580 | 03f0 mv a1,s8            | 03e8 csrs 0x7c0,t1       | 0| >03e0 li t6,0            | 03e0 li t6,0         ALU | 03dc ld a4,0(s6)         | TRAP
-   8581 | 03f4 li a0,1506          | 03ec sub s10,s10,s5      | 0| .(flushed) csrs 0x7c0,t1 | 03e0 li t6,0         ALU |                          | ID-stall:CP0/fence RT-redirect->0140
-   8582 | 0140 j 440               |                          | 0|                          |                          |                          | ID-stall:other
-   8583 | 0144 csrr s0,mcause      |                          | 0|                          |                          |                          | ID-stall:other FLUSH
-   8584 | 0148 csrr s1,mepc        | 0140 j 440               | 0| >0140 j 440              |                          |                          | IP-redirect->0440
-   8585 | 0440 csrr s11,mcycle     |                          | 0|                          | 0140 j 440           BJU |                          | 
-   8586 | 0444 csrr s8,mcause      |                          | 0|                          |                          | 0140 j 440               | 
-   8587 | 0448 csrr s9,mepc        | 0440 csrr s11,mcycle     | 0| >0440 csrr s11,mcycle    |                          |                          | 
-   8588 | 044c csrr s10,mtval      | 0444 csrr s8,mcause      | 0| .0444 csrr s8,mcause     | 0440 csrr s11,mcycle CP0 |                          | ID-stall:CP0/fence
-   8589 | 0450 addi t3,s9,4        | 0448 csrr s9,mepc        | 0| .0444 csrr s8,mcause     |                          | 0440 csrr s11,mcycle     | ID-stall:CP0/fence
-   8590 | 0454 csrw mepc,t3        | 044c csrr s10,mtval      | 2| >0444 csrr s8,mcause     |                          |                          | 
-   8591 | 0458 mret                | 0450 addi t3,s9,4        | 2| .0448 csrr s9,mepc       | 0444 csrr s8,mcause  CP0 |                          | ID-stall:CP0/fence
-   8592 | 045c ?                   | 0454 csrw mepc,t3        | 4| .0448 csrr s9,mepc       |                          | 0444 csrr s8,mcause      | ID-stall:CP0/fence
-   8593 |                          | 0458 mret                | 6| >0448 csrr s9,mepc       |                          |                          | 
-   8594 | 045c ?                   | 0458 mret                | 4| .044c csrr s10,mtval     | 0448 csrr s9,mepc    CP0 |                          | ID-stall:CP0/fence
-   8595 | 0460 ?                   |                          | 6| .044c csrr s10,mtval     |                          | 0448 csrr s9,mepc        | ID-stall:CP0/fence
-   8596 |                          | 045c ?                   | 6| >044c csrr s10,mtval     |                          |                          | 
-   8597 | 0460 ?                   | 045c ?                   | 4| >0450 addi t3,s9,4       | 044c csrr s10,mtval  CP0 |                          | 
-   8598 | 0464 ?                   |                          | 4| .0454 csrw mepc,t3       | 0450 addi t3,s9,4    ALU | 044c csrr s10,mtval      | ID-stall:CP0/fence
-   8599 | 0468 ?                   | 0460 ?                   | 4| .0454 csrw mepc,t3       |                          | 0450 addi t3,s9,4        | ID-stall:CP0/fence
-   8600 |                          | 0464 ?                   | 6| >0454 csrw mepc,t3       |                          |                          | 
-   8601 | 0468 ?                   | 0464 ?                   | 4| .(flushed) mret          | 0454 csrw mepc,t3    CP0 |                          | ID-stall:CP0/fence
-   8602 | 046c ?                   |                          | 6| .(flushed) mret          |                          | 0454 csrw mepc,t3        | ID-stall:CP0/fence RT-redirect->0458
-   8603 | 0458 mret                |                          | 0|                          |                          |                          | 
-   8604 | 045c ?                   |                          | 0|                          |                          |                          | ID-stall:other FLUSH
-   8605 | 0460 ?                   | 0458 mret                | 0| >0458 mret               |                          |                          | 
-   8606 | 0464 ?                   | 045c ?                   | 0| >045c ?                  | 0458 mret            CP0 |                          | 
-   8607 | 0468 ?                   | 0460 ?                   | 0| >03e0 li t6,0            | 045c ?               CP0 | 0458 mret                | RT-redirect->03e0
-   8608 | 03e0 li t6,0             |                          | 0|                          | 03e0 li t6,0         CP0 |                          | 
-   8609 | 03e4 lui t1,0x8          |                          | 0|                          |                          |                          | ID-stall:other
-   8610 | 03e8 csrs 0x7c0,t1       | 03e0 li t6,0             | 0| .(flushed) li t6,0       |                          |                          | ID-stall:other FLUSH
-   8611 | 03ec sub s10,s10,s5      | 03e4 lui t1,0x8          | 0| >03e0 li t6,0            |                          |                          | 
-   8612 | 03f0 mv a1,s8            | 03e8 csrs 0x7c0,t1       | 0| >03e4 lui t1,0x8         | 03e0 li t6,0         ALU |                          | 
-   8613 | 03f4 li a0,1506          | 03ec sub s10,s10,s5      | 0| .0410 csrr s0,mcycle     | 03e4 lui t1,0x8      ALU | 03e0 li t6,0             | ID-stall:CP0/fence
-----------------------------------------------------------------------------------------------------------------------------------------------------------------
+================================================================================================================================================================================================
+    cyc | IF (fetch)               | IP (pred)                |IB| ID                       | EX1                      | RETIRE                   | BACK        | WB              | events
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+   8580 | 03f0 mv a1,s8            | 03e8 csrs 0x7c0,t1       | 0| >03e0 li t6,0            | 03e0 li t6,0         ALU | 03dc ld a4,0(s6)         |             |                 | TRAP
+   8581 | 03f4 li a0,1506          | 03ec sub s10,s10,s5      | 0| .(flushed) csrs 0x7c0,t1 | 03e0 li t6,0         ALU |                          |             |                 | ID-stall:CP0/fence RT-redirect->0140
+   8582 | 0140 j 440               |                          | 0|                          |                          |                          |             |                 | ID-stall:other
+   8583 | 0144 csrr s0,mcause      |                          | 0|                          |                          |                          |             |                 | ID-stall:other FLUSH
+   8584 | 0148 csrr s1,mepc        | 0140 j 440               | 0| >0140 j 440              |                          |                          |             |                 | IP-redirect->0440
+   8585 | 0440 csrr s11,mcycle     |                          | 0|                          | 0140 j 440           BJU |                          |             |                 | 
+   8586 | 0444 csrr s8,mcause      |                          | 0|                          |                          | 0140 j 440               |             | w0:zero         | 
+   8587 | 0448 csrr s9,mepc        | 0440 csrr s11,mcycle     | 0| >0440 csrr s11,mcycle    |                          |                          |             |                 | 
+   8588 | 044c csrr s10,mtval      | 0444 csrr s8,mcause      | 0| .0444 csrr s8,mcause     | 0440 csrr s11,mcycle CP0 |                          |             |                 | ID-stall:CP0/fence
+   8589 | 0450 addi t3,s9,4        | 0448 csrr s9,mepc        | 0| .0444 csrr s8,mcause     |                          | 0440 csrr s11,mcycle     |             | w0:s11          | ID-stall:CP0/fence
+   8590 | 0454 csrw mepc,t3        | 044c csrr s10,mtval      | 2| >0444 csrr s8,mcause     |                          |                          |             |                 | 
+   8591 | 0458 mret                | 0450 addi t3,s9,4        | 2| .0448 csrr s9,mepc       | 0444 csrr s8,mcause  CP0 |                          |             |                 | ID-stall:CP0/fence
+   8592 | 045c ?                   | 0454 csrw mepc,t3        | 4| .0448 csrr s9,mepc       |                          | 0444 csrr s8,mcause      |             | w0:s8           | ID-stall:CP0/fence
+   8593 |                          | 0458 mret                | 6| >0448 csrr s9,mepc       |                          |                          |             |                 | 
+   8594 | 045c ?                   | 0458 mret                | 4| .044c csrr s10,mtval     | 0448 csrr s9,mepc    CP0 |                          |             |                 | ID-stall:CP0/fence
+   8595 | 0460 ?                   |                          | 6| .044c csrr s10,mtval     |                          | 0448 csrr s9,mepc        |             | w0:s9           | ID-stall:CP0/fence
+   8596 |                          | 045c ?                   | 6| >044c csrr s10,mtval     |                          |                          |             |                 | 
+   8597 | 0460 ?                   | 045c ?                   | 4| >0450 addi t3,s9,4       | 044c csrr s10,mtval  CP0 |                          |             |                 | 
+   8598 | 0464 ?                   |                          | 4| .0454 csrw mepc,t3       | 0450 addi t3,s9,4    ALU | 044c csrr s10,mtval      |             | w0:s10          | ID-stall:CP0/fence
+   8599 | 0468 ?                   | 0460 ?                   | 4| .0454 csrw mepc,t3       |                          | 0450 addi t3,s9,4        |             | w0:t3           | ID-stall:CP0/fence
+   8600 |                          | 0464 ?                   | 6| >0454 csrw mepc,t3       |                          |                          |             |                 | 
+   8601 | 0468 ?                   | 0464 ?                   | 4| .(flushed) mret          | 0454 csrw mepc,t3    CP0 |                          |             |                 | ID-stall:CP0/fence
+   8602 | 046c ?                   |                          | 6| .(flushed) mret          |                          | 0454 csrw mepc,t3        |             | w0:zero         | ID-stall:CP0/fence RT-redirect->0458
+   8603 | 0458 mret                |                          | 0|                          |                          |                          |             |                 | 
+   8604 | 045c ?                   |                          | 0|                          |                          |                          |             |                 | ID-stall:other FLUSH
+   8605 | 0460 ?                   | 0458 mret                | 0| >0458 mret               |                          |                          |             |                 | 
+   8606 | 0464 ?                   | 045c ?                   | 0| >045c ?                  | 0458 mret            CP0 |                          |             |                 | 
+   8607 | 0468 ?                   | 0460 ?                   | 0| >03e0 li t6,0            | 045c ?               CP0 | 0458 mret                |             |                 | RT-redirect->03e0
+   8608 | 03e0 li t6,0             |                          | 0|                          | 03e0 li t6,0         CP0 |                          |             |                 | 
+   8609 | 03e4 lui t1,0x8          |                          | 0|                          |                          |                          |             |                 | ID-stall:other
+   8610 | 03e8 csrs 0x7c0,t1       | 03e0 li t6,0             | 0| .(flushed) li t6,0       |                          |                          |             |                 | ID-stall:other FLUSH
+   8611 | 03ec sub s10,s10,s5      | 03e4 lui t1,0x8          | 0| >03e0 li t6,0            |                          |                          |             |                 | 
+   8612 | 03f0 mv a1,s8            | 03e8 csrs 0x7c0,t1       | 0| >03e4 lui t1,0x8         | 03e0 li t6,0         ALU |                          |             |                 | 
+   8613 | 03f4 li a0,1506          | 03ec sub s10,s10,s5      | 0| .0410 csrr s0,mcycle     | 03e4 lui t1,0x8      ALU | 03e0 li t6,0             |             | w0:t6           | ID-stall:CP0/fence
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 summary: cycles=34 retired=10 IPC=0.294 | flush=3, ip_redirect=1, retired=10, stall_CP0/fence=12, stall_other=5, trap=1
 
-================================================================================================================================================================
+================================================================================================================================================================================================
 MARK 6   cycles 9576 .. 9605  (24 cycles)
-================================================================================================================================================================
-    cyc | IF (fetch)               | IP (pred)                |IB| ID                       | EX1                      | RETIRE                   | events
-----------------------------------------------------------------------------------------------------------------------------------------------------------------
-   9576 | 0424 li t6,0             | 041c csrr t0,mcycle      | 4| >0410 csrr s0,mcycle     |                          |                          | 
-   9577 | 0428 addi s7,s7,-1       | 0420 sub s0,t0,s0        | 4| >0414 ld a4,0(s5)        | 0410 csrr s0,mcycle  CP0 |                          | 
-   9578 | 042c bnez s7,40c         | 0424 li t6,0             | 4| .0418 mv a5,a4           | 0414 ld a4,0(s5)     LSU | 0410 csrr s0,mcycle      | ID-stall:RAW
-   9579 |                          | 0428 addi s7,s7,-1       | 6| >0418 mv a5,a4           |                          | 0414 ld a4,0(s5)         | DC:LD hit
-   9580 | 042c bnez s7,40c         | 0428 addi s7,s7,-1       | 4| .041c csrr t0,mcycle     | 0418 mv a5,a4        ALU |                          | ID-stall:CP0/fence
-   9581 | 0430 mv a1,s0            |                          | 6| .041c csrr t0,mcycle     |                          | 0418 mv a5,a4            | ID-stall:CP0/fence
-   9582 |                          | 042c bnez s7,40c         | 6| >041c csrr t0,mcycle     |                          |                          | 
-   9583 | 0430 mv a1,s0            | 042c bnez s7,40c         | 4| .0420 sub s0,t0,s0       | 041c csrr t0,mcycle  CP0 |                          | ID-stall:RAW
-   9584 | 0434 li a0,1565          |                          | 6| >0420 sub s0,t0,s0       |                          | 041c csrr t0,mcycle      | 
-   9585 | 0438 jal 21e             | 0430 mv a1,s0            | 4| >0424 li t6,0            | 0420 sub s0,t0,s0    ALU |                          | 
-   9586 | 043c j 10a               | 0434 li a0,1565          | 4| >0428 addi s7,s7,-1      | 0424 li t6,0         ALU | 0420 sub s0,t0,s0        | 
-   9587 | 0440 csrr s11,mcycle     | 0438 jal 21e             | 4| >0410 csrr s0,mcycle     | 0428 addi s7,s7,-1   ALU | 0424 li t6,0             | IP-redirect->021e
-   9594 | 0420 sub s0,t0,s0        | 0418 mv a5,a4            | 2| >0410 csrr s0,mcycle     |                          |                          | 
-   9595 | 0424 li t6,0             | 041c csrr t0,mcycle      | 2| >0414 ld a4,0(s5)        | 0410 csrr s0,mcycle  CP0 |                          | 
-   9596 | 0428 addi s7,s7,-1       | 0420 sub s0,t0,s0        | 2| .0418 mv a5,a4           | 0414 ld a4,0(s5)     LSU | 0410 csrr s0,mcycle      | ID-stall:RAW
-   9597 | 042c bnez s7,40c         | 0424 li t6,0             | 4| >0418 mv a5,a4           |                          | 0414 ld a4,0(s5)         | DC:LD hit
-   9598 | 0430 mv a1,s0            | 0428 addi s7,s7,-1       | 4| .041c csrr t0,mcycle     | 0418 mv a5,a4        ALU |                          | ID-stall:CP0/fence
-   9599 |                          | 042c bnez s7,40c         | 6| .041c csrr t0,mcycle     |                          | 0418 mv a5,a4            | ID-stall:CP0/fence
-   9600 |                          | 042c bnez s7,40c         | 6| >041c csrr t0,mcycle     |                          |                          | 
-   9601 | 0430 mv a1,s0            | 042c bnez s7,40c         | 4| .0420 sub s0,t0,s0       | 041c csrr t0,mcycle  CP0 |                          | ID-stall:RAW
-   9602 | 0434 li a0,1565          |                          | 6| >0420 sub s0,t0,s0       |                          | 041c csrr t0,mcycle      | 
-   9603 | 0438 jal 21e             | 0430 mv a1,s0            | 4| >0424 li t6,0            | 0420 sub s0,t0,s0    ALU |                          | 
-   9604 | 043c j 10a               | 0434 li a0,1565          | 4| >0428 addi s7,s7,-1      | 0424 li t6,0         ALU | 0420 sub s0,t0,s0        | 
-   9605 | 0440 csrr s11,mcycle     | 0438 jal 21e             | 4| >(flushed) bnez s7,394   | 0428 addi s7,s7,-1   ALU | 0424 li t6,0             | IP-redirect->021e
-----------------------------------------------------------------------------------------------------------------------------------------------------------------
+================================================================================================================================================================================================
+    cyc | IF (fetch)               | IP (pred)                |IB| ID                       | EX1                      | RETIRE                   | BACK        | WB              | events
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+   9576 | 0424 li t6,0             | 041c csrr t0,mcycle      | 4| >0410 csrr s0,mcycle     |                          |                          |             |                 | 
+   9577 | 0428 addi s7,s7,-1       | 0420 sub s0,t0,s0        | 4| >0414 ld a4,0(s5)        | 0410 csrr s0,mcycle  CP0 |                          |             |                 | 
+   9578 | 042c bnez s7,40c         | 0424 li t6,0             | 4| .0418 mv a5,a4           | 0414 ld a4,0(s5)     LSU | 0410 csrr s0,mcycle      |             | w0:s0           | ID-stall:RAW
+   9579 |                          | 0428 addi s7,s7,-1       | 6| >0418 mv a5,a4           |                          | 0414 ld a4,0(s5)         |             |                 | DC:LD hit
+   9580 | 042c bnez s7,40c         | 0428 addi s7,s7,-1       | 4| .041c csrr t0,mcycle     | 0418 mv a5,a4        ALU |                          |             | w1:a4           | ID-stall:CP0/fence
+   9581 | 0430 mv a1,s0            |                          | 6| .041c csrr t0,mcycle     |                          | 0418 mv a5,a4            |             | w0:a5           | ID-stall:CP0/fence
+   9582 |                          | 042c bnez s7,40c         | 6| >041c csrr t0,mcycle     |                          |                          |             |                 | 
+   9583 | 0430 mv a1,s0            | 042c bnez s7,40c         | 4| .0420 sub s0,t0,s0       | 041c csrr t0,mcycle  CP0 |                          |             |                 | ID-stall:RAW
+   9584 | 0434 li a0,1565          |                          | 6| >0420 sub s0,t0,s0       |                          | 041c csrr t0,mcycle      |             | w0:t0           | 
+   9585 | 0438 jal 21e             | 0430 mv a1,s0            | 4| >0424 li t6,0            | 0420 sub s0,t0,s0    ALU |                          |             |                 | 
+   9586 | 043c j 10a               | 0434 li a0,1565          | 4| >0428 addi s7,s7,-1      | 0424 li t6,0         ALU | 0420 sub s0,t0,s0        |             | w0:s0           | 
+   9587 | 0440 csrr s11,mcycle     | 0438 jal 21e             | 4| >0410 csrr s0,mcycle     | 0428 addi s7,s7,-1   ALU | 0424 li t6,0             |             | w0:t6           | IP-redirect->021e
+   9594 | 0420 sub s0,t0,s0        | 0418 mv a5,a4            | 2| >0410 csrr s0,mcycle     |                          |                          |             |                 | 
+   9595 | 0424 li t6,0             | 041c csrr t0,mcycle      | 2| >0414 ld a4,0(s5)        | 0410 csrr s0,mcycle  CP0 |                          |             |                 | 
+   9596 | 0428 addi s7,s7,-1       | 0420 sub s0,t0,s0        | 2| .0418 mv a5,a4           | 0414 ld a4,0(s5)     LSU | 0410 csrr s0,mcycle      |             | w0:s0           | ID-stall:RAW
+   9597 | 042c bnez s7,40c         | 0424 li t6,0             | 4| >0418 mv a5,a4           |                          | 0414 ld a4,0(s5)         |             |                 | DC:LD hit
+   9598 | 0430 mv a1,s0            | 0428 addi s7,s7,-1       | 4| .041c csrr t0,mcycle     | 0418 mv a5,a4        ALU |                          |             | w1:a4           | ID-stall:CP0/fence
+   9599 |                          | 042c bnez s7,40c         | 6| .041c csrr t0,mcycle     |                          | 0418 mv a5,a4            |             | w0:a5           | ID-stall:CP0/fence
+   9600 |                          | 042c bnez s7,40c         | 6| >041c csrr t0,mcycle     |                          |                          |             |                 | 
+   9601 | 0430 mv a1,s0            | 042c bnez s7,40c         | 4| .0420 sub s0,t0,s0       | 041c csrr t0,mcycle  CP0 |                          |             |                 | ID-stall:RAW
+   9602 | 0434 li a0,1565          |                          | 6| >0420 sub s0,t0,s0       |                          | 041c csrr t0,mcycle      |             | w0:t0           | 
+   9603 | 0438 jal 21e             | 0430 mv a1,s0            | 4| >0424 li t6,0            | 0420 sub s0,t0,s0    ALU |                          |             |                 | 
+   9604 | 043c j 10a               | 0434 li a0,1565          | 4| >0428 addi s7,s7,-1      | 0424 li t6,0         ALU | 0420 sub s0,t0,s0        |             | w0:s0           | 
+   9605 | 0440 csrr s11,mcycle     | 0438 jal 21e             | 4| >(flushed) bnez s7,394   | 0428 addi s7,s7,-1   ALU | 0424 li t6,0             |             | w0:t6           | IP-redirect->021e
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 summary: cycles=24 retired=12 IPC=0.500 | ip_redirect=2, retired=12, stall_CP0/fence=4, stall_RAW=4

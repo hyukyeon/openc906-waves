@@ -1,0 +1,41 @@
+사용: pipeview.py <out/test 디렉토리> [--mark N] [--max-rows K]
+출력: <dir>/pipeview.txt  (mark 구간별 표 + 구간 요약)
+
+================================================================================================================================================================================================
+MARK 12   cycles 7839 .. 7869  (31 cycles)
+================================================================================================================================================================================================
+    cyc | IF (fetch)               | IP (pred)                |IB| ID                       | EX1                      | RETIRE                   | BACK        | WB              | events
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+   7839 | 09d4 addi a4,s4,1        | 09cc addi a4,s4,1        | 2| .09c4 csrr s0,mcycle     | 09c0 fence           CP0 | 04a4 jal 9c0             |             | w0:ra           | ID-stall:CP0/fence
+   7840 | 09d8 addi a5,s4,1        | 09d0 addi a5,s4,1        | 4| .09c4 csrr s0,mcycle     |                          | 09c0 fence               |             |                 | ID-stall:CP0/fence
+   7841 |                          | 09d4 addi a4,s4,1        | 6| >09c4 csrr s0,mcycle     |                          |                          |             |                 | 
+   7842 | 09d8 addi a5,s4,1        | 09d4 addi a4,s4,1        | 4| >09c8 mul a6,s4,s5       | 09c4 csrr s0,mcycle  CP0 |                          |             |                 | 
+   7843 | 09dc addi a4,s4,1        |                          | 4| >09cc addi a4,s4,1       | 09c8 mul a6,s4,s5    MUL | 09c4 csrr s0,mcycle      |             | w0:s0           | 
+   7844 | 09e0 addi a5,s4,1        | 09d8 addi a5,s4,1        | 2| >09d0 addi a5,s4,1       | 09cc addi a4,s4,1    ALU | 09c8 mul a6,s4,s5        | M2          |                 | 
+   7845 | 09e4 addi a4,s4,1        | 09dc addi a4,s4,1        | 2| >09d4 addi a4,s4,1       | 09d0 addi a5,s4,1    ALU | 09cc addi a4,s4,1        | M3!         | w0:a4           | MUL-wb
+   7846 | 09e8 addi a5,s4,1        | 09e0 addi a5,s4,1        | 2| >09d8 addi a5,s4,1       | 09d4 addi a4,s4,1    ALU | 09d0 addi a5,s4,1        | M3!         | w0:a5           | MUL-wb
+   7847 | 09ec addi a4,s4,1        | 09e4 addi a4,s4,1        | 2| >09dc addi a4,s4,1       | 09d8 addi a5,s4,1    ALU | 09d4 addi a4,s4,1        | M3!         | w0:a4           | MUL-wb
+   7848 | 09f0 addi a5,s4,1        | 09e8 addi a5,s4,1        | 2| >09e0 addi a5,s4,1       | 09dc addi a4,s4,1    ALU | 09d8 addi a5,s4,1        | M3!         | w0:a5           | MUL-wb
+   7849 | 09f4 addi a4,s4,1        | 09ec addi a4,s4,1        | 2| >09e4 addi a4,s4,1       | 09e0 addi a5,s4,1    ALU | 09dc addi a4,s4,1        | M3!         | w0:a4           | MUL-wb
+   7850 | 09f8 addi a5,s4,1        | 09f0 addi a5,s4,1        | 2| >09e8 addi a5,s4,1       | 09e4 addi a4,s4,1    ALU | 09e0 addi a5,s4,1        | M3!         | w0:a5           | MUL-wb
+   7851 | 09fc addi a4,s4,1        | 09f4 addi a4,s4,1        | 2| >09ec addi a4,s4,1       | 09e8 addi a5,s4,1    ALU | 09e4 addi a4,s4,1        | M3!         | w0:a4           | MUL-wb
+   7852 | 0a00 addi a5,s4,1        | 09f8 addi a5,s4,1        | 2| >09f0 addi a5,s4,1       | 09ec addi a4,s4,1    ALU | 09e8 addi a5,s4,1        | M3!         | w0:a5           | MUL-wb
+   7853 | 0a04 addi a4,s4,1        | 09fc addi a4,s4,1        | 2| >09f4 addi a4,s4,1       | 09f0 addi a5,s4,1    ALU | 09ec addi a4,s4,1        | M3!         | w0:a4           | MUL-wb
+   7854 | 0a08 addi a5,s4,1        | 0a00 addi a5,s4,1        | 2| >09f8 addi a5,s4,1       | 09f4 addi a4,s4,1    ALU | 09f0 addi a5,s4,1        | M3!         | w0:a5           | MUL-wb
+   7855 | 0a0c addi a7,a6,1        | 0a04 addi a4,s4,1        | 2| >09fc addi a4,s4,1       | 09f8 addi a5,s4,1    ALU | 09f4 addi a4,s4,1        | M3!         | w0:a4           | MUL-wb
+   7856 | 0a10 csrr t0,mcycle      | 0a08 addi a5,s4,1        | 2| >0a00 addi a5,s4,1       | 09fc addi a4,s4,1    ALU | 09f8 addi a5,s4,1        | M3!         | w0:a5           | MUL-wb
+   7857 | 0a14 sub s0,t0,s0        | 0a0c addi a7,a6,1        | 2| >0a04 addi a4,s4,1       | 0a00 addi a5,s4,1    ALU | 09fc addi a4,s4,1        | M3!         | w0:a4           | MUL-wb
+   7858 | 0a18 ret                 | 0a10 csrr t0,mcycle      | 2| >0a08 addi a5,s4,1       | 0a04 addi a4,s4,1    ALU | 0a00 addi a5,s4,1        | M3!         | w0:a5           | MUL-wb
+   7859 | 0a1c nop                 | 0a14 sub s0,t0,s0        | 2| >0a0c addi a7,a6,1       | 0a08 addi a5,s4,1    ALU | 0a04 addi a4,s4,1        | M3!         | w0:a4           | MUL-wb
+   7860 | 04a8 li t6,0             | 0a18 ret                 | 2| .0a10 csrr t0,mcycle     | 0a0c addi a7,a6,1    ALU | 0a08 addi a5,s4,1        | M3!         | w0:a5           | IP-curflw(RAS/delay) ID-stall:CP0/fence MUL-wb
+   7861 | 04ac mv a1,s0            |                          | 4| .0a10 csrr t0,mcycle     |                          | 0a0c addi a7,a6,1        | M3          | w0:a7           | ID-stall:CP0/fence MUL-wb
+   7862 | 04b0 auipc a0,0x1        | 04a8 li t6,0             | 4| .0a10 csrr t0,mcycle     |                          |                          |             | w0:a6           | ID-stall:CP0/fence
+   7863 |                          | 04ac mv a1,s0            | 6| >0a10 csrr t0,mcycle     |                          |                          |             |                 | 
+   7864 | 04b0 auipc a0,0x1        | 04ac mv a1,s0            | 4| .0a14 sub s0,t0,s0       | 0a10 csrr t0,mcycle  CP0 |                          |             |                 | ID-stall:RAW
+   7865 | 04b4 addi a0,a0,-70      |                          | 6| >0a14 sub s0,t0,s0       |                          | 0a10 csrr t0,mcycle      |             | w0:t0           | 
+   7866 | 04b8 jal 26a             | 04b0 auipc a0,0x1        | 4| >0a18 ret                | 0a14 sub s0,t0,s0    ALU |                          |             |                 | 
+   7867 | 04bc jal a40             | 04b4 addi a0,a0,-70      | 4| >04a8 li t6,0            | 0a18 ret             BJU | 0a14 sub s0,t0,s0        |             | w0:s0           | 
+   7868 | 04c0 li t6,20            | 04b8 jal 26a             | 4| >04ac mv a1,s0           | 04a8 li t6,0         ALU | 0a18 ret                 |             | w0:zero         | IP-redirect->026a
+   7869 | 026a addi sp,sp,-16      |                          | 4| >0a40 csrr s0,mcycle     | 04ac mv a1,s0        ALU | 04a8 li t6,0             |             | w0:t6           | 
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+summary: cycles=31 retired=25 IPC=0.806 | ip_curflw=1, ip_redirect=1, mul_wb_wait=16, retired=25, stall_CP0/fence=5, stall_RAW=1

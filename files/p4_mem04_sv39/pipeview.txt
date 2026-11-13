@@ -1,305 +1,305 @@
 사용: pipeview.py <out/test 디렉토리> [--mark N] [--max-rows K]
 출력: <dir>/pipeview.txt  (mark 구간별 표 + 구간 요약)
 
-================================================================================================================================================================
+================================================================================================================================================================================================
 MARK 1   cycles 3663 .. 3724  (62 cycles)
-================================================================================================================================================================
-    cyc | IF (fetch)               | IP (pred)                |IB| ID                       | EX1                      | RETIRE                   | events
-----------------------------------------------------------------------------------------------------------------------------------------------------------------
-   3663 | 03d8 sub s0,t0,s0        | 03d0 mv a4,a4            | 2| >03c8 rdcycle s0         |                          |                          | 
-   3664 | 03dc li t6,2             | 03d4 rdcycle t0          | 2| >03cc ld a4,0(s7)        | 03c8 rdcycle s0      CP0 |                          | 
-   3665 | 03e0 rdcycle s1          | 03d8 sub s0,t0,s0        | 2| .03d0 mv a4,a4           | 03cc ld a4,0(s7)     LSU | 03c8 rdcycle s0          | ID-stall:RAW,WAW
-   3666 | 03e4 ld a5,8(s7)         | 03dc li t6,2             | 4| .03d0 mv a4,a4           |                          |                          | ID-stall:RAW,WAW
-   3667 |                          | 03e0 rdcycle s1          | 6| .03d0 mv a4,a4           |                          |                          | ID-stall:RAW,WAW
-   3668 |                          | 03e0 rdcycle s1          | 6| .03d0 mv a4,a4           |                          |                          | ID-stall:RAW,WAW
-   3669 |                          | 03e0 rdcycle s1          | 6| .03d0 mv a4,a4           |                          |                          | ID-stall:RAW,WAW
-   3670 |                          | 03e0 rdcycle s1          | 6| .03d0 mv a4,a4           |                          |                          | ID-stall:RAW,WAW
-   3671 |                          | 03e0 rdcycle s1          | 6| .03d0 mv a4,a4           |                          |                          | ID-stall:RAW,WAW
-   3672 |                          | 03e0 rdcycle s1          | 6| .03d0 mv a4,a4           |                          |                          | ID-stall:RAW,WAW
-   3673 |                          | 03e0 rdcycle s1          | 6| .03d0 mv a4,a4           |                          |                          | ID-stall:RAW,WAW
-   3674 |                          | 03e0 rdcycle s1          | 6| .03d0 mv a4,a4           |                          |                          | ID-stall:RAW,WAW
-   3675 |                          | 03e0 rdcycle s1          | 6| .03d0 mv a4,a4           |                          |                          | ID-stall:RAW,WAW
-   3676 |                          | 03e0 rdcycle s1          | 6| .03d0 mv a4,a4           |                          |                          | ID-stall:RAW,WAW
-   3677 |                          | 03e0 rdcycle s1          | 6| .03d0 mv a4,a4           |                          |                          | ID-stall:RAW,WAW
-   3678 |                          | 03e0 rdcycle s1          | 6| .03d0 mv a4,a4           |                          |                          | ID-stall:RAW,WAW
-   3679 |                          | 03e0 rdcycle s1          | 6| .03d0 mv a4,a4           |                          |                          | ID-stall:RAW,WAW
-   3680 |                          | 03e0 rdcycle s1          | 6| .03d0 mv a4,a4           |                          |                          | ID-stall:RAW,WAW
-   3681 |                          | 03e0 rdcycle s1          | 6| .03d0 mv a4,a4           |                          |                          | ID-stall:RAW,WAW
-   3682 |                          | 03e0 rdcycle s1          | 6| .03d0 mv a4,a4           |                          |                          | ID-stall:RAW,WAW
-   3683 |                          | 03e0 rdcycle s1          | 6| .03d0 mv a4,a4           |                          |                          | ID-stall:RAW,WAW
-   3684 |                          | 03e0 rdcycle s1          | 6| .03d0 mv a4,a4           |                          |                          | ID-stall:RAW,WAW
-   3685 |                          | 03e0 rdcycle s1          | 6| .03d0 mv a4,a4           |                          |                          | ID-stall:RAW,WAW
-   3686 |                          | 03e0 rdcycle s1          | 6| .03d0 mv a4,a4           |                          |                          | ID-stall:RAW,WAW
-   3687 |                          | 03e0 rdcycle s1          | 6| .03d0 mv a4,a4           |                          | 03cc ld a4,0(s7)         | ID-stall:RAW,WAW DC:LD MISS
-   3688 |                          | 03e0 rdcycle s1          | 6| .03d0 mv a4,a4           |                          |                          | ID-stall:RAW,WAW
-   3689 |                          | 03e0 rdcycle s1          | 6| .03d0 mv a4,a4           |                          |                          | ID-stall:RAW,WAW
-   3690 |                          | 03e0 rdcycle s1          | 6| .03d0 mv a4,a4           |                          |                          | ID-stall:RAW,WAW
-   3691 |                          | 03e0 rdcycle s1          | 6| .03d0 mv a4,a4           |                          |                          | ID-stall:RAW,WAW
-   3692 |                          | 03e0 rdcycle s1          | 6| .03d0 mv a4,a4           |                          |                          | ID-stall:RAW,WAW
-   3693 |                          | 03e0 rdcycle s1          | 6| .03d0 mv a4,a4           |                          |                          | ID-stall:RAW,WAW
-   3694 |                          | 03e0 rdcycle s1          | 6| .03d0 mv a4,a4           |                          |                          | ID-stall:RAW,WAW
-   3695 |                          | 03e0 rdcycle s1          | 6| .03d0 mv a4,a4           |                          |                          | ID-stall:RAW,WAW
-   3696 |                          | 03e0 rdcycle s1          | 6| .03d0 mv a4,a4           |                          |                          | ID-stall:RAW,WAW
-   3697 |                          | 03e0 rdcycle s1          | 6| .03d0 mv a4,a4           |                          |                          | ID-stall:RAW,WAW
-   3698 |                          | 03e0 rdcycle s1          | 6| .03d0 mv a4,a4           |                          |                          | ID-stall:RAW,WAW
-   3699 |                          | 03e0 rdcycle s1          | 6| .03d0 mv a4,a4           |                          |                          | ID-stall:RAW,WAW
-   3700 |                          | 03e0 rdcycle s1          | 6| .03d0 mv a4,a4           |                          |                          | ID-stall:RAW,WAW
-   3701 |                          | 03e0 rdcycle s1          | 6| .03d0 mv a4,a4           |                          |                          | ID-stall:RAW,WAW
-   3702 |                          | 03e0 rdcycle s1          | 6| .03d0 mv a4,a4           |                          |                          | ID-stall:RAW,WAW
-   3703 |                          | 03e0 rdcycle s1          | 6| .03d0 mv a4,a4           |                          |                          | ID-stall:RAW,WAW
-   3704 |                          | 03e0 rdcycle s1          | 6| .03d0 mv a4,a4           |                          |                          | ID-stall:RAW,WAW
-   3705 |                          | 03e0 rdcycle s1          | 6| .03d0 mv a4,a4           |                          |                          | ID-stall:RAW,WAW
-   3706 |                          | 03e0 rdcycle s1          | 6| .03d0 mv a4,a4           |                          |                          | ID-stall:RAW,WAW
-   3707 |                          | 03e0 rdcycle s1          | 6| .03d0 mv a4,a4           |                          |                          | ID-stall:RAW,WAW
-   3708 |                          | 03e0 rdcycle s1          | 6| .03d0 mv a4,a4           |                          |                          | ID-stall:RAW,WAW
-   3709 |                          | 03e0 rdcycle s1          | 6| .03d0 mv a4,a4           |                          |                          | ID-stall:RAW,WAW
-   3710 |                          | 03e0 rdcycle s1          | 6| .03d0 mv a4,a4           |                          |                          | ID-stall:RAW,WAW
-   3711 |                          | 03e0 rdcycle s1          | 6| .03d0 mv a4,a4           |                          |                          | ID-stall:RAW,WAW
-   3712 |                          | 03e0 rdcycle s1          | 6| .03d0 mv a4,a4           |                          |                          | ID-stall:WAW
-   3713 |                          | 03e0 rdcycle s1          | 6| >03d0 mv a4,a4           |                          |                          | 
-   3714 | 03e4 ld a5,8(s7)         | 03e0 rdcycle s1          | 4| .03d4 rdcycle t0         | 03d0 mv a4,a4        ALU |                          | ID-stall:CP0/fence
-   3715 | 03e8 mv a5,a5            |                          | 6| .03d4 rdcycle t0         |                          | 03d0 mv a4,a4            | ID-stall:CP0/fence
-   3716 |                          | 03e4 ld a5,8(s7)         | 6| .03d4 rdcycle t0         |                          |                          | ID-stall:CP0/fence
-   3717 |                          | 03e4 ld a5,8(s7)         | 6| .03d4 rdcycle t0         |                          |                          | ID-stall:CP0/fence
-   3718 |                          | 03e4 ld a5,8(s7)         | 6| .03d4 rdcycle t0         |                          |                          | ID-stall:CP0/fence
-   3719 |                          | 03e4 ld a5,8(s7)         | 6| >03d4 rdcycle t0         |                          |                          | 
-   3720 | 03e8 mv a5,a5            | 03e4 ld a5,8(s7)         | 4| .03d8 sub s0,t0,s0       | 03d4 rdcycle t0      CP0 |                          | ID-stall:RAW
-   3721 | 03ec rdcycle t0          |                          | 6| >03d8 sub s0,t0,s0       |                          | 03d4 rdcycle t0          | 
-   3722 | 03f0 sub s1,t0,s1        | 03e8 mv a5,a5            | 4| >03dc li t6,2            | 03d8 sub s0,t0,s0    ALU |                          | 
-   3723 | 03f4 mv s2,a4            | 03ec rdcycle t0          | 4| .03e0 rdcycle s1         | 03dc li t6,2         ALU | 03d8 sub s0,t0,s0        | ID-stall:CP0/fence
-   3724 |                          | 03f0 sub s1,t0,s1        | 6| .03e0 rdcycle s1         |                          | 03dc li t6,2             | ID-stall:CP0/fence
-----------------------------------------------------------------------------------------------------------------------------------------------------------------
+================================================================================================================================================================================================
+    cyc | IF (fetch)               | IP (pred)                |IB| ID                       | EX1                      | RETIRE                   | BACK        | WB              | events
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+   3663 | 03d8 sub s0,t0,s0        | 03d0 mv a4,a4            | 2| >03c8 rdcycle s0         |                          |                          |             |                 | 
+   3664 | 03dc li t6,2             | 03d4 rdcycle t0          | 2| >03cc ld a4,0(s7)        | 03c8 rdcycle s0      CP0 |                          |             |                 | 
+   3665 | 03e0 rdcycle s1          | 03d8 sub s0,t0,s0        | 2| .03d0 mv a4,a4           | 03cc ld a4,0(s7)     LSU | 03c8 rdcycle s0          |             | w0:s0           | ID-stall:RAW,WAW
+   3666 | 03e4 ld a5,8(s7)         | 03dc li t6,2             | 4| .03d0 mv a4,a4           |                          |                          |             |                 | ID-stall:RAW,WAW LSU-full
+   3667 |                          | 03e0 rdcycle s1          | 6| .03d0 mv a4,a4           |                          |                          |             |                 | ID-stall:RAW,WAW LSU-full
+   3668 |                          | 03e0 rdcycle s1          | 6| .03d0 mv a4,a4           |                          |                          |             |                 | ID-stall:RAW,WAW LSU-full
+   3669 |                          | 03e0 rdcycle s1          | 6| .03d0 mv a4,a4           |                          |                          |             |                 | ID-stall:RAW,WAW LSU-full
+   3670 |                          | 03e0 rdcycle s1          | 6| .03d0 mv a4,a4           |                          |                          |             |                 | ID-stall:RAW,WAW LSU-full
+   3671 |                          | 03e0 rdcycle s1          | 6| .03d0 mv a4,a4           |                          |                          |             |                 | ID-stall:RAW,WAW LSU-full
+   3672 |                          | 03e0 rdcycle s1          | 6| .03d0 mv a4,a4           |                          |                          |             |                 | ID-stall:RAW,WAW LSU-full
+   3673 |                          | 03e0 rdcycle s1          | 6| .03d0 mv a4,a4           |                          |                          |             |                 | ID-stall:RAW,WAW LSU-full
+   3674 |                          | 03e0 rdcycle s1          | 6| .03d0 mv a4,a4           |                          |                          |             |                 | ID-stall:RAW,WAW LSU-full
+   3675 |                          | 03e0 rdcycle s1          | 6| .03d0 mv a4,a4           |                          |                          |             |                 | ID-stall:RAW,WAW LSU-full
+   3676 |                          | 03e0 rdcycle s1          | 6| .03d0 mv a4,a4           |                          |                          |             |                 | ID-stall:RAW,WAW LSU-full
+   3677 |                          | 03e0 rdcycle s1          | 6| .03d0 mv a4,a4           |                          |                          |             |                 | ID-stall:RAW,WAW LSU-full
+   3678 |                          | 03e0 rdcycle s1          | 6| .03d0 mv a4,a4           |                          |                          |             |                 | ID-stall:RAW,WAW LSU-full
+   3679 |                          | 03e0 rdcycle s1          | 6| .03d0 mv a4,a4           |                          |                          |             |                 | ID-stall:RAW,WAW LSU-full
+   3680 |                          | 03e0 rdcycle s1          | 6| .03d0 mv a4,a4           |                          |                          |             |                 | ID-stall:RAW,WAW LSU-full
+   3681 |                          | 03e0 rdcycle s1          | 6| .03d0 mv a4,a4           |                          |                          |             |                 | ID-stall:RAW,WAW LSU-full
+   3682 |                          | 03e0 rdcycle s1          | 6| .03d0 mv a4,a4           |                          |                          |             |                 | ID-stall:RAW,WAW LSU-full
+   3683 |                          | 03e0 rdcycle s1          | 6| .03d0 mv a4,a4           |                          |                          |             |                 | ID-stall:RAW,WAW LSU-full
+   3684 |                          | 03e0 rdcycle s1          | 6| .03d0 mv a4,a4           |                          |                          |             |                 | ID-stall:RAW,WAW LSU-full
+   3685 |                          | 03e0 rdcycle s1          | 6| .03d0 mv a4,a4           |                          |                          |             |                 | ID-stall:RAW,WAW LSU-full
+   3686 |                          | 03e0 rdcycle s1          | 6| .03d0 mv a4,a4           |                          |                          |             |                 | ID-stall:RAW,WAW LSU-full
+   3687 |                          | 03e0 rdcycle s1          | 6| .03d0 mv a4,a4           |                          | 03cc ld a4,0(s7)         |             |                 | ID-stall:RAW,WAW DC:LD MISS
+   3688 |                          | 03e0 rdcycle s1          | 6| .03d0 mv a4,a4           |                          |                          |             |                 | ID-stall:RAW,WAW
+   3689 |                          | 03e0 rdcycle s1          | 6| .03d0 mv a4,a4           |                          |                          |             |                 | ID-stall:RAW,WAW
+   3690 |                          | 03e0 rdcycle s1          | 6| .03d0 mv a4,a4           |                          |                          |             |                 | ID-stall:RAW,WAW
+   3691 |                          | 03e0 rdcycle s1          | 6| .03d0 mv a4,a4           |                          |                          |             |                 | ID-stall:RAW,WAW
+   3692 |                          | 03e0 rdcycle s1          | 6| .03d0 mv a4,a4           |                          |                          |             |                 | ID-stall:RAW,WAW
+   3693 |                          | 03e0 rdcycle s1          | 6| .03d0 mv a4,a4           |                          |                          |             |                 | ID-stall:RAW,WAW
+   3694 |                          | 03e0 rdcycle s1          | 6| .03d0 mv a4,a4           |                          |                          |             |                 | ID-stall:RAW,WAW
+   3695 |                          | 03e0 rdcycle s1          | 6| .03d0 mv a4,a4           |                          |                          |             |                 | ID-stall:RAW,WAW
+   3696 |                          | 03e0 rdcycle s1          | 6| .03d0 mv a4,a4           |                          |                          |             |                 | ID-stall:RAW,WAW
+   3697 |                          | 03e0 rdcycle s1          | 6| .03d0 mv a4,a4           |                          |                          |             |                 | ID-stall:RAW,WAW
+   3698 |                          | 03e0 rdcycle s1          | 6| .03d0 mv a4,a4           |                          |                          |             |                 | ID-stall:RAW,WAW
+   3699 |                          | 03e0 rdcycle s1          | 6| .03d0 mv a4,a4           |                          |                          |             |                 | ID-stall:RAW,WAW
+   3700 |                          | 03e0 rdcycle s1          | 6| .03d0 mv a4,a4           |                          |                          |             |                 | ID-stall:RAW,WAW
+   3701 |                          | 03e0 rdcycle s1          | 6| .03d0 mv a4,a4           |                          |                          |             |                 | ID-stall:RAW,WAW
+   3702 |                          | 03e0 rdcycle s1          | 6| .03d0 mv a4,a4           |                          |                          |             |                 | ID-stall:RAW,WAW
+   3703 |                          | 03e0 rdcycle s1          | 6| .03d0 mv a4,a4           |                          |                          |             |                 | ID-stall:RAW,WAW
+   3704 |                          | 03e0 rdcycle s1          | 6| .03d0 mv a4,a4           |                          |                          |             |                 | ID-stall:RAW,WAW
+   3705 |                          | 03e0 rdcycle s1          | 6| .03d0 mv a4,a4           |                          |                          |             |                 | ID-stall:RAW,WAW
+   3706 |                          | 03e0 rdcycle s1          | 6| .03d0 mv a4,a4           |                          |                          |             |                 | ID-stall:RAW,WAW
+   3707 |                          | 03e0 rdcycle s1          | 6| .03d0 mv a4,a4           |                          |                          |             |                 | ID-stall:RAW,WAW
+   3708 |                          | 03e0 rdcycle s1          | 6| .03d0 mv a4,a4           |                          |                          |             |                 | ID-stall:RAW,WAW
+   3709 |                          | 03e0 rdcycle s1          | 6| .03d0 mv a4,a4           |                          |                          |             |                 | ID-stall:RAW,WAW
+   3710 |                          | 03e0 rdcycle s1          | 6| .03d0 mv a4,a4           |                          |                          |             |                 | ID-stall:RAW,WAW
+   3711 |                          | 03e0 rdcycle s1          | 6| .03d0 mv a4,a4           |                          |                          |             |                 | ID-stall:RAW,WAW
+   3712 |                          | 03e0 rdcycle s1          | 6| .03d0 mv a4,a4           |                          |                          |             |                 | ID-stall:WAW
+   3713 |                          | 03e0 rdcycle s1          | 6| >03d0 mv a4,a4           |                          |                          |             | w1:a4           | 
+   3714 | 03e4 ld a5,8(s7)         | 03e0 rdcycle s1          | 4| .03d4 rdcycle t0         | 03d0 mv a4,a4        ALU |                          |             |                 | ID-stall:CP0/fence
+   3715 | 03e8 mv a5,a5            |                          | 6| .03d4 rdcycle t0         |                          | 03d0 mv a4,a4            |             | w0:a4           | ID-stall:CP0/fence
+   3716 |                          | 03e4 ld a5,8(s7)         | 6| .03d4 rdcycle t0         |                          |                          |             |                 | ID-stall:CP0/fence
+   3717 |                          | 03e4 ld a5,8(s7)         | 6| .03d4 rdcycle t0         |                          |                          |             |                 | ID-stall:CP0/fence
+   3718 |                          | 03e4 ld a5,8(s7)         | 6| .03d4 rdcycle t0         |                          |                          |             |                 | ID-stall:CP0/fence
+   3719 |                          | 03e4 ld a5,8(s7)         | 6| >03d4 rdcycle t0         |                          |                          |             |                 | 
+   3720 | 03e8 mv a5,a5            | 03e4 ld a5,8(s7)         | 4| .03d8 sub s0,t0,s0       | 03d4 rdcycle t0      CP0 |                          |             |                 | ID-stall:RAW
+   3721 | 03ec rdcycle t0          |                          | 6| >03d8 sub s0,t0,s0       |                          | 03d4 rdcycle t0          |             | w0:t0           | 
+   3722 | 03f0 sub s1,t0,s1        | 03e8 mv a5,a5            | 4| >03dc li t6,2            | 03d8 sub s0,t0,s0    ALU |                          |             |                 | 
+   3723 | 03f4 mv s2,a4            | 03ec rdcycle t0          | 4| .03e0 rdcycle s1         | 03dc li t6,2         ALU | 03d8 sub s0,t0,s0        |             | w0:s0           | ID-stall:CP0/fence
+   3724 |                          | 03f0 sub s1,t0,s1        | 6| .03e0 rdcycle s1         |                          | 03dc li t6,2             |             | w0:t6           | ID-stall:CP0/fence
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 summary: cycles=62 retired=6 IPC=0.097 | dc_miss=1, retired=6, stall_CP0/fence=7, stall_RAW=48, stall_WAW=48
 
-================================================================================================================================================================
+================================================================================================================================================================================================
 MARK 2   cycles 3725 .. 3761  (37 cycles)
-================================================================================================================================================================
-    cyc | IF (fetch)               | IP (pred)                |IB| ID                       | EX1                      | RETIRE                   | events
-----------------------------------------------------------------------------------------------------------------------------------------------------------------
-   3725 |                          | 03f0 sub s1,t0,s1        | 6| >03e0 rdcycle s1         |                          |                          | 
-   3726 | 03f4 mv s2,a4            | 03f0 sub s1,t0,s1        | 4| >03e4 ld a5,8(s7)        | 03e0 rdcycle s1      CP0 |                          | 
-   3727 | 03f8 lui t1,0x40003      |                          | 4| .03e8 mv a5,a5           | 03e4 ld a5,8(s7)     LSU | 03e0 rdcycle s1          | ID-stall:RAW,WAW
-   3728 | 03fc ld s11,0(t1)        | 03f4 mv s2,a4            | 4| .03e8 mv a5,a5           |                          | 03e4 ld a5,8(s7)         | ID-stall:WAW DC:LD hit
-   3729 |                          | 03f8 lui t1,0x40003      | 6| >03e8 mv a5,a5           |                          |                          | 
-   3730 | 03fc ld s11,0(t1)        | 03f8 lui t1,0x40003      | 4| .03ec rdcycle t0         | 03e8 mv a5,a5        ALU |                          | ID-stall:CP0/fence
-   3731 | 0400 li t6,3             |                          | 6| .03ec rdcycle t0         |                          | 03e8 mv a5,a5            | ID-stall:CP0/fence
-   3732 |                          | 03fc ld s11,0(t1)        | 6| >03ec rdcycle t0         |                          |                          | 
-   3733 |                          | 03fc ld s11,0(t1)        | 4| .03f0 sub s1,t0,s1       | 03ec rdcycle t0      CP0 |                          | ID-stall:RAW I$-miss
-   3734 |                          |                          | 6| >03f0 sub s1,t0,s1       |                          | 03ec rdcycle t0          | 
-   3735 |                          |                          | 4| >03f4 mv s2,a4           | 03f0 sub s1,t0,s1    ALU |                          | 
-   3736 |                          |                          | 2| >03f8 lui t1,0x40003     | 03f4 mv s2,a4        ALU | 03f0 sub s1,t0,s1        | 
-   3737 |                          |                          | 0| >03fc ld s11,0(t1)       | 03f8 lui t1,0x40003  ALU | 03f4 mv s2,a4            | 
-   3738 |                          |                          | 0|                          | 03fc ld s11,0(t1)    LSU | 03f8 lui t1,0x40003      | 
-   3739 |                          | 0400 li t6,3             | 0| >03fc ld s11,0(t1)       |                          |                          | 
-   3740 |                          |                          | 0|                          | 03fc ld s11,0(t1)    ALU |                          | ID-stall:EX1-busy
-   3741 |                          |                          | 0|                          | 03fc ld s11,0(t1)    ALU |                          | ID-stall:EX1-busy
-   3742 |                          |                          | 0|                          | 03fc ld s11,0(t1)    ALU |                          | ID-stall:EX1-busy
-   3743 |                          |                          | 0|                          | 03fc ld s11,0(t1)    ALU |                          | ID-stall:EX1-busy
-   3744 |                          |                          | 0|                          | 03fc ld s11,0(t1)    ALU |                          | ID-stall:EX1-busy
-   3745 | 0404 lui t1,0x40001      |                          | 0|                          | 03fc ld s11,0(t1)    ALU |                          | ID-stall:EX1-busy
-   3746 | 0408 ld a6,0(t1)         |                          | 0|                          | 03fc ld s11,0(t1)    ALU |                          | ID-stall:EX1-busy
-   3747 | 040c mv s3,s8            | 0404 lui t1,0x40001      | 0| .0404 lui t1,0x40001     | 03fc ld s11,0(t1)    ALU |                          | ID-stall:EX1-busy
-   3748 | 0410 mv s4,s10           | 0408 ld a6,0(t1)         | 0| .0404 lui t1,0x40001     | 03fc ld s11,0(t1)    ALU |                          | ID-stall:EX1-busy
-   3749 | 0414 li t6,4             | 040c mv s3,s8            | 2| .0404 lui t1,0x40001     | 03fc ld s11,0(t1)    ALU |                          | ID-stall:EX1-busy
-   3750 | 0418 lui t1,0x40002      | 0410 mv s4,s10           | 4| .0404 lui t1,0x40001     | 03fc ld s11,0(t1)    ALU |                          | ID-stall:EX1-busy
-   3751 |                          | 0414 li t6,4             | 6| .0404 lui t1,0x40001     | 03fc ld s11,0(t1)    ALU |                          | ID-stall:EX1-busy
-   3752 |                          | 0414 li t6,4             | 6| .0404 lui t1,0x40001     | 03fc ld s11,0(t1)    ALU |                          | ID-stall:EX1-busy
-   3753 |                          | 0414 li t6,4             | 6| .0404 lui t1,0x40001     | 03fc ld s11,0(t1)    ALU |                          | ID-stall:EX1-busy
-   3754 |                          | 0414 li t6,4             | 6| .0404 lui t1,0x40001     | 03fc ld s11,0(t1)    ALU |                          | ID-stall:EX1-busy
-   3755 |                          | 0414 li t6,4             | 6| .0404 lui t1,0x40001     | 03fc ld s11,0(t1)    ALU |                          | ID-stall:EX1-busy
-   3756 |                          | 0414 li t6,4             | 6| .0404 lui t1,0x40001     | 03fc ld s11,0(t1)    ALU |                          | ID-stall:EX1-busy
-   3757 |                          | 0414 li t6,4             | 6| .0404 lui t1,0x40001     | 03fc ld s11,0(t1)    ALU |                          | ID-stall:EX1-busy
-   3758 |                          | 0414 li t6,4             | 6| .0404 lui t1,0x40001     | 03fc ld s11,0(t1)    ALU |                          | ID-stall:EX1-busy
-   3759 |                          | 0414 li t6,4             | 6| .0404 lui t1,0x40001     | 03fc ld s11,0(t1)    ALU |                          | ID-stall:EX1-busy
-   3760 |                          | 0414 li t6,4             | 6| >0404 lui t1,0x40001     | 0400 li t6,3         ALU | 03fc ld s11,0(t1)        | DC:LD MISS
-   3761 | 0418 lui t1,0x40002      | 0414 li t6,4             | 4| >0408 ld a6,0(t1)        | 0404 lui t1,0x40001  ALU | 0400 li t6,3             | 
-----------------------------------------------------------------------------------------------------------------------------------------------------------------
+================================================================================================================================================================================================
+    cyc | IF (fetch)               | IP (pred)                |IB| ID                       | EX1                      | RETIRE                   | BACK        | WB              | events
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+   3725 |                          | 03f0 sub s1,t0,s1        | 6| >03e0 rdcycle s1         |                          |                          |             |                 | 
+   3726 | 03f4 mv s2,a4            | 03f0 sub s1,t0,s1        | 4| >03e4 ld a5,8(s7)        | 03e0 rdcycle s1      CP0 |                          |             |                 | 
+   3727 | 03f8 lui t1,0x40003      |                          | 4| .03e8 mv a5,a5           | 03e4 ld a5,8(s7)     LSU | 03e0 rdcycle s1          |             | w0:s1           | ID-stall:RAW,WAW
+   3728 | 03fc ld s11,0(t1)        | 03f4 mv s2,a4            | 4| .03e8 mv a5,a5           |                          | 03e4 ld a5,8(s7)         |             |                 | ID-stall:WAW DC:LD hit
+   3729 |                          | 03f8 lui t1,0x40003      | 6| >03e8 mv a5,a5           |                          |                          |             | w1:a5           | 
+   3730 | 03fc ld s11,0(t1)        | 03f8 lui t1,0x40003      | 4| .03ec rdcycle t0         | 03e8 mv a5,a5        ALU |                          |             |                 | ID-stall:CP0/fence
+   3731 | 0400 li t6,3             |                          | 6| .03ec rdcycle t0         |                          | 03e8 mv a5,a5            |             | w0:a5           | ID-stall:CP0/fence
+   3732 |                          | 03fc ld s11,0(t1)        | 6| >03ec rdcycle t0         |                          |                          |             |                 | 
+   3733 |                          | 03fc ld s11,0(t1)        | 4| .03f0 sub s1,t0,s1       | 03ec rdcycle t0      CP0 |                          |             |                 | ID-stall:RAW I$-miss
+   3734 |                          |                          | 6| >03f0 sub s1,t0,s1       |                          | 03ec rdcycle t0          |             | w0:t0           | 
+   3735 |                          |                          | 4| >03f4 mv s2,a4           | 03f0 sub s1,t0,s1    ALU |                          |             |                 | 
+   3736 |                          |                          | 2| >03f8 lui t1,0x40003     | 03f4 mv s2,a4        ALU | 03f0 sub s1,t0,s1        |             | w0:s1           | 
+   3737 |                          |                          | 0| >03fc ld s11,0(t1)       | 03f8 lui t1,0x40003  ALU | 03f4 mv s2,a4            |             | w0:s2           | 
+   3738 |                          |                          | 0|                          | 03fc ld s11,0(t1)    LSU | 03f8 lui t1,0x40003      |             | w0:t1           | 
+   3739 |                          | 0400 li t6,3             | 0| >03fc ld s11,0(t1)       |                          |                          |             |                 | LSU-full
+   3740 |                          |                          | 0|                          | 03fc ld s11,0(t1)    ALU |                          |             |                 | ID-stall:EX1-busy LSU-full
+   3741 |                          |                          | 0|                          | 03fc ld s11,0(t1)    ALU |                          |             |                 | ID-stall:EX1-busy LSU-full
+   3742 |                          |                          | 0|                          | 03fc ld s11,0(t1)    ALU |                          |             |                 | ID-stall:EX1-busy LSU-full
+   3743 |                          |                          | 0|                          | 03fc ld s11,0(t1)    ALU |                          |             |                 | ID-stall:EX1-busy LSU-full
+   3744 |                          |                          | 0|                          | 03fc ld s11,0(t1)    ALU |                          |             |                 | ID-stall:EX1-busy LSU-full
+   3745 | 0404 lui t1,0x40001      |                          | 0|                          | 03fc ld s11,0(t1)    ALU |                          |             |                 | ID-stall:EX1-busy LSU-full
+   3746 | 0408 ld a6,0(t1)         |                          | 0|                          | 03fc ld s11,0(t1)    ALU |                          |             |                 | ID-stall:EX1-busy LSU-full
+   3747 | 040c mv s3,s8            | 0404 lui t1,0x40001      | 0| .0404 lui t1,0x40001     | 03fc ld s11,0(t1)    ALU |                          |             |                 | ID-stall:EX1-busy LSU-full
+   3748 | 0410 mv s4,s10           | 0408 ld a6,0(t1)         | 0| .0404 lui t1,0x40001     | 03fc ld s11,0(t1)    ALU |                          |             |                 | ID-stall:EX1-busy LSU-full
+   3749 | 0414 li t6,4             | 040c mv s3,s8            | 2| .0404 lui t1,0x40001     | 03fc ld s11,0(t1)    ALU |                          |             |                 | ID-stall:EX1-busy LSU-full
+   3750 | 0418 lui t1,0x40002      | 0410 mv s4,s10           | 4| .0404 lui t1,0x40001     | 03fc ld s11,0(t1)    ALU |                          |             |                 | ID-stall:EX1-busy LSU-full
+   3751 |                          | 0414 li t6,4             | 6| .0404 lui t1,0x40001     | 03fc ld s11,0(t1)    ALU |                          |             |                 | ID-stall:EX1-busy LSU-full
+   3752 |                          | 0414 li t6,4             | 6| .0404 lui t1,0x40001     | 03fc ld s11,0(t1)    ALU |                          |             |                 | ID-stall:EX1-busy LSU-full
+   3753 |                          | 0414 li t6,4             | 6| .0404 lui t1,0x40001     | 03fc ld s11,0(t1)    ALU |                          |             |                 | ID-stall:EX1-busy LSU-full
+   3754 |                          | 0414 li t6,4             | 6| .0404 lui t1,0x40001     | 03fc ld s11,0(t1)    ALU |                          |             |                 | ID-stall:EX1-busy LSU-full
+   3755 |                          | 0414 li t6,4             | 6| .0404 lui t1,0x40001     | 03fc ld s11,0(t1)    ALU |                          |             |                 | ID-stall:EX1-busy LSU-full
+   3756 |                          | 0414 li t6,4             | 6| .0404 lui t1,0x40001     | 03fc ld s11,0(t1)    ALU |                          |             |                 | ID-stall:EX1-busy LSU-full
+   3757 |                          | 0414 li t6,4             | 6| .0404 lui t1,0x40001     | 03fc ld s11,0(t1)    ALU |                          |             |                 | ID-stall:EX1-busy LSU-full
+   3758 |                          | 0414 li t6,4             | 6| .0404 lui t1,0x40001     | 03fc ld s11,0(t1)    ALU |                          |             |                 | ID-stall:EX1-busy LSU-full
+   3759 |                          | 0414 li t6,4             | 6| .0404 lui t1,0x40001     | 03fc ld s11,0(t1)    ALU |                          |             |                 | ID-stall:EX1-busy LSU-full
+   3760 |                          | 0414 li t6,4             | 6| >0404 lui t1,0x40001     | 0400 li t6,3         ALU | 03fc ld s11,0(t1)        |             |                 | DC:LD MISS
+   3761 | 0418 lui t1,0x40002      | 0414 li t6,4             | 4| >0408 ld a6,0(t1)        | 0404 lui t1,0x40001  ALU | 0400 li t6,3             |             | w0:t6           | 
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 summary: cycles=37 retired=9 IPC=0.243 | dc_miss=1, icache_miss=1, retired=9, stall_CP0/fence=2, stall_EX1-busy=20, stall_RAW=2, stall_WAW=2
 
-================================================================================================================================================================
+================================================================================================================================================================================================
 MARK 3   cycles 3762 .. 3841  (80 cycles)
-================================================================================================================================================================
-    cyc | IF (fetch)               | IP (pred)                |IB| ID                       | EX1                      | RETIRE                   | events
-----------------------------------------------------------------------------------------------------------------------------------------------------------------
-   3762 | 041c sd a6,0(t1)         |                          | 4| >0408 ld a6,0(t1)        | 0408 ld a6,0(t1)     LSU | 0404 lui t1,0x40001      | 
-   3763 | 0420 mv s5,s8            | 0418 lui t1,0x40002      | 2| .040c mv s3,s8           | 0408 ld a6,0(t1)     ALU |                          | ID-stall:EX1-busy
-   3764 | 0424 mv s6,s10           | 041c sd a6,0(t1)         | 4| .040c mv s3,s8           | 0408 ld a6,0(t1)     ALU |                          | ID-stall:EX1-busy
-   3765 |                          | 0420 mv s5,s8            | 6| .040c mv s3,s8           | 0408 ld a6,0(t1)     ALU |                          | ID-stall:EX1-busy
-   3766 |                          | 0420 mv s5,s8            | 6| .040c mv s3,s8           | 0408 ld a6,0(t1)     ALU |                          | ID-stall:EX1-busy
-   3767 |                          | 0420 mv s5,s8            | 6| .040c mv s3,s8           | 0408 ld a6,0(t1)     ALU |                          | ID-stall:EX1-busy
-   3768 |                          | 0420 mv s5,s8            | 6| .040c mv s3,s8           | 0408 ld a6,0(t1)     ALU |                          | ID-stall:EX1-busy
-   3769 |                          | 0420 mv s5,s8            | 6| .040c mv s3,s8           | 0408 ld a6,0(t1)     ALU |                          | ID-stall:EX1-busy
-   3770 |                          | 0420 mv s5,s8            | 6| .040c mv s3,s8           | 0408 ld a6,0(t1)     ALU |                          | ID-stall:EX1-busy
-   3771 |                          | 0420 mv s5,s8            | 6| .040c mv s3,s8           | 0408 ld a6,0(t1)     ALU |                          | ID-stall:EX1-busy
-   3772 |                          | 0420 mv s5,s8            | 6| .040c mv s3,s8           | 0408 ld a6,0(t1)     ALU |                          | ID-stall:EX1-busy
-   3773 |                          | 0420 mv s5,s8            | 6| .040c mv s3,s8           | 0408 ld a6,0(t1)     ALU |                          | ID-stall:EX1-busy
-   3774 |                          | 0420 mv s5,s8            | 6| .040c mv s3,s8           | 0408 ld a6,0(t1)     ALU |                          | ID-stall:EX1-busy
-   3775 |                          | 0420 mv s5,s8            | 6| .040c mv s3,s8           | 0408 ld a6,0(t1)     ALU |                          | ID-stall:EX1-busy
-   3776 |                          | 0420 mv s5,s8            | 6| .040c mv s3,s8           | 0408 ld a6,0(t1)     ALU |                          | ID-stall:EX1-busy
-   3777 |                          | 0420 mv s5,s8            | 6| .040c mv s3,s8           | 0408 ld a6,0(t1)     ALU |                          | ID-stall:EX1-busy
-   3778 |                          | 0420 mv s5,s8            | 6| .040c mv s3,s8           | 0408 ld a6,0(t1)     ALU |                          | ID-stall:EX1-busy
-   3779 |                          | 0420 mv s5,s8            | 6| .040c mv s3,s8           | 0408 ld a6,0(t1)     ALU |                          | ID-stall:EX1-busy
-   3780 |                          | 0420 mv s5,s8            | 6| .040c mv s3,s8           | 0408 ld a6,0(t1)     ALU |                          | ID-stall:EX1-busy
-   3781 |                          | 0420 mv s5,s8            | 6| .040c mv s3,s8           | 0408 ld a6,0(t1)     ALU |                          | ID-stall:EX1-busy
-   3782 |                          | 0420 mv s5,s8            | 6| .040c mv s3,s8           | 0408 ld a6,0(t1)     ALU |                          | ID-stall:EX1-busy
-   3783 |                          | 0420 mv s5,s8            | 6| .040c mv s3,s8           | 0408 ld a6,0(t1)     ALU |                          | ID-stall:EX1-busy
-   3784 |                          | 0420 mv s5,s8            | 6| .040c mv s3,s8           | 0408 ld a6,0(t1)     ALU |                          | ID-stall:EX1-busy
-   3785 |                          | 0420 mv s5,s8            | 6| >040c mv s3,s8           | 040c mv s3,s8        ALU | 0408 ld a6,0(t1)         | TRAP
-   3786 | 0424 mv s6,s10           | 0420 mv s5,s8            | 4| >(flushed) li t6,4       | 040c mv s3,s8        ALU |                          | RT-redirect->0140
-   3787 | 0140 j 540               |                          | 0|                          |                          |                          | ID-stall:other
-   3788 |                          |                          | 0|                          |                          |                          | ID-stall:other FLUSH
-   3789 |                          |                          | 0|                          |                          |                          | I$-miss
-   3790 |                          |                          | 0|                          |                          |                          | 
-   3791 |                          |                          | 0|                          |                          |                          | 
-   3792 |                          |                          | 0|                          |                          |                          | 
-   3793 |                          |                          | 0|                          |                          |                          | 
-   3794 |                          |                          | 0|                          |                          |                          | 
-   3795 |                          | 0140 j 540               | 0| >0140 j 540              |                          |                          | IP-redirect->0540
-   3796 |                          |                          | 0|                          | 0140 j 540           BJU |                          | 
-   3797 |                          |                          | 0|                          |                          | 0140 j 540               | 
-   3798 |                          |                          | 0|                          |                          |                          | 
-   3799 |                          |                          | 0|                          |                          |                          | 
-   3800 |                          |                          | 0|                          |                          |                          | 
-   3801 | 0540 csrr s8,mcause      |                          | 0|                          |                          |                          | 
-   3802 |                          |                          | 0|                          |                          |                          | 
-   3803 |                          |                          | 0|                          |                          |                          | I$-miss
-   3804 |                          |                          | 0|                          |                          |                          | 
-   3805 |                          |                          | 0|                          |                          |                          | 
-   3806 |                          |                          | 0|                          |                          |                          | 
-   3807 |                          |                          | 0|                          |                          |                          | 
-   3808 |                          |                          | 0|                          |                          |                          | 
-   3809 |                          | 0540 csrr s8,mcause      | 0| >0540 csrr s8,mcause     |                          |                          | 
-   3810 |                          |                          | 0|                          | 0540 csrr s8,mcause  CP0 |                          | 
-   3811 |                          |                          | 0|                          |                          | 0540 csrr s8,mcause      | 
-   3812 |                          |                          | 0|                          |                          |                          | 
-   3813 |                          |                          | 0|                          |                          |                          | 
-   3814 |                          |                          | 0|                          |                          |                          | 
-   3815 | 0544 csrr s9,mepc        |                          | 0|                          |                          |                          | 
-   3816 | 0548 csrr s10,mtval      |                          | 0|                          |                          |                          | 
-   3817 | 054c li t4,9             | 0544 csrr s9,mepc        | 0| >0544 csrr s9,mepc       |                          |                          | 
-   3818 | 0550 beq s8,t4,560       | 0548 csrr s10,mtval      | 0| .0548 csrr s10,mtval     | 0544 csrr s9,mepc    CP0 |                          | ID-stall:CP0/fence
-   3819 | 0554 addi t4,s9,4        | 054c li t4,9             | 0| .0548 csrr s10,mtval     |                          | 0544 csrr s9,mepc        | ID-stall:CP0/fence
-   3820 | 0558 csrw mepc,t4        | 0550 beq s8,t4,560       | 2| >0548 csrr s10,mtval     |                          |                          | 
-   3821 | 055c mret                | 0554 addi t4,s9,4        | 2| >054c li t4,9            | 0548 csrr s10,mtval  CP0 |                          | 
-   3822 | 0560 lui t4,0x2          | 0558 csrw mepc,t4        | 2| >0550 beq s8,t4,560      | 054c li t4,9         ALU | 0548 csrr s10,mtval      | 
-   3823 | 0564 addiw t4,t4,-2048   | 055c mret                | 2| >0554 addi t4,s9,4       | 0550 beq s8,t4,560   BJU | 054c li t4,9             | BR-resolve:N
-   3824 | 0568 csrs mstatus,t4     | 0560 lui t4,0x2          | 2| .0558 csrw mepc,t4       | 0554 addi t4,s9,4    ALU | 0550 beq s8,t4,560       | ID-stall:CP0/fence
-   3825 | 056c auipc t4,0x0        | 0564 addiw t4,t4,-2048   | 4| .0558 csrw mepc,t4       |                          | 0554 addi t4,s9,4        | ID-stall:CP0/fence
-   3826 |                          | 0568 csrs mstatus,t4     | 6| >0558 csrw mepc,t4       |                          |                          | 
-   3827 | 056c auipc t4,0x0        | 0568 csrs mstatus,t4     | 4| .(flushed) mret          | 0558 csrw mepc,t4    CP0 |                          | ID-stall:CP0/fence
-   3828 | 0570 addi t4,t4,-260     |                          | 6| .(flushed) mret          |                          | 0558 csrw mepc,t4        | ID-stall:CP0/fence RT-redirect->055c
-   3829 | 055c mret                |                          | 0|                          |                          |                          | 
-   3830 | 0560 lui t4,0x2          |                          | 0|                          |                          |                          | ID-stall:other FLUSH
-   3831 | 0564 addiw t4,t4,-2048   | 055c mret                | 0| >055c mret               |                          |                          | 
-   3832 | 0568 csrs mstatus,t4     | 0560 lui t4,0x2          | 0| >0560 lui t4,0x2         | 055c mret            CP0 |                          | 
-   3833 | 056c auipc t4,0x0        | 0564 addiw t4,t4,-2048   | 0| >040c mv s3,s8           | 0560 lui t4,0x2      ALU | 055c mret                | RT-redirect->040c
-   3834 | 040c mv s3,s8            |                          | 0|                          | 040c mv s3,s8        ALU |                          | 
-   3835 | 0410 mv s4,s10           |                          | 0|                          |                          |                          | ID-stall:other
-   3836 | 0414 li t6,4             | 040c mv s3,s8            | 0| .(flushed) mv s3,s8      |                          |                          | ID-stall:other FLUSH
-   3837 | 0418 lui t1,0x40002      | 0410 mv s4,s10           | 0| >040c mv s3,s8           |                          |                          | 
-   3838 | 041c sd a6,0(t1)         | 0414 li t6,4             | 0| >0410 mv s4,s10          | 040c mv s3,s8        ALU |                          | 
-   3839 | 0420 mv s5,s8            | 0418 lui t1,0x40002      | 0| >0414 li t6,4            | 0410 mv s4,s10       ALU | 040c mv s3,s8            | 
-   3840 | 0424 mv s6,s10           | 041c sd a6,0(t1)         | 0| >0418 lui t1,0x40002     | 0414 li t6,4         ALU | 0410 mv s4,s10           | 
-   3841 | 0428 li t6,5             | 0420 mv s5,s8            | 0| >041c sd a6,0(t1)        | 0418 lui t1,0x40002  ALU | 0414 li t6,4             | 
-----------------------------------------------------------------------------------------------------------------------------------------------------------------
+================================================================================================================================================================================================
+    cyc | IF (fetch)               | IP (pred)                |IB| ID                       | EX1                      | RETIRE                   | BACK        | WB              | events
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+   3762 | 041c sd a6,0(t1)         |                          | 4| >0408 ld a6,0(t1)        | 0408 ld a6,0(t1)     LSU | 0404 lui t1,0x40001      |             | w0:t1           | 
+   3763 | 0420 mv s5,s8            | 0418 lui t1,0x40002      | 2| .040c mv s3,s8           | 0408 ld a6,0(t1)     ALU |                          |             |                 | ID-stall:EX1-busy LSU-full
+   3764 | 0424 mv s6,s10           | 041c sd a6,0(t1)         | 4| .040c mv s3,s8           | 0408 ld a6,0(t1)     ALU |                          |             |                 | ID-stall:EX1-busy LSU-full
+   3765 |                          | 0420 mv s5,s8            | 6| .040c mv s3,s8           | 0408 ld a6,0(t1)     ALU |                          |             |                 | ID-stall:EX1-busy LSU-full
+   3766 |                          | 0420 mv s5,s8            | 6| .040c mv s3,s8           | 0408 ld a6,0(t1)     ALU |                          |             |                 | ID-stall:EX1-busy LSU-full
+   3767 |                          | 0420 mv s5,s8            | 6| .040c mv s3,s8           | 0408 ld a6,0(t1)     ALU |                          |             |                 | ID-stall:EX1-busy LSU-full
+   3768 |                          | 0420 mv s5,s8            | 6| .040c mv s3,s8           | 0408 ld a6,0(t1)     ALU |                          |             |                 | ID-stall:EX1-busy LSU-full
+   3769 |                          | 0420 mv s5,s8            | 6| .040c mv s3,s8           | 0408 ld a6,0(t1)     ALU |                          |             |                 | ID-stall:EX1-busy LSU-full
+   3770 |                          | 0420 mv s5,s8            | 6| .040c mv s3,s8           | 0408 ld a6,0(t1)     ALU |                          |             |                 | ID-stall:EX1-busy LSU-full
+   3771 |                          | 0420 mv s5,s8            | 6| .040c mv s3,s8           | 0408 ld a6,0(t1)     ALU |                          |             |                 | ID-stall:EX1-busy LSU-full
+   3772 |                          | 0420 mv s5,s8            | 6| .040c mv s3,s8           | 0408 ld a6,0(t1)     ALU |                          |             |                 | ID-stall:EX1-busy LSU-full
+   3773 |                          | 0420 mv s5,s8            | 6| .040c mv s3,s8           | 0408 ld a6,0(t1)     ALU |                          |             |                 | ID-stall:EX1-busy LSU-full
+   3774 |                          | 0420 mv s5,s8            | 6| .040c mv s3,s8           | 0408 ld a6,0(t1)     ALU |                          |             | w1:s11          | ID-stall:EX1-busy LSU-full
+   3775 |                          | 0420 mv s5,s8            | 6| .040c mv s3,s8           | 0408 ld a6,0(t1)     ALU |                          |             |                 | ID-stall:EX1-busy LSU-full
+   3776 |                          | 0420 mv s5,s8            | 6| .040c mv s3,s8           | 0408 ld a6,0(t1)     ALU |                          |             |                 | ID-stall:EX1-busy LSU-full
+   3777 |                          | 0420 mv s5,s8            | 6| .040c mv s3,s8           | 0408 ld a6,0(t1)     ALU |                          |             |                 | ID-stall:EX1-busy LSU-full
+   3778 |                          | 0420 mv s5,s8            | 6| .040c mv s3,s8           | 0408 ld a6,0(t1)     ALU |                          |             |                 | ID-stall:EX1-busy LSU-full
+   3779 |                          | 0420 mv s5,s8            | 6| .040c mv s3,s8           | 0408 ld a6,0(t1)     ALU |                          |             |                 | ID-stall:EX1-busy LSU-full
+   3780 |                          | 0420 mv s5,s8            | 6| .040c mv s3,s8           | 0408 ld a6,0(t1)     ALU |                          |             |                 | ID-stall:EX1-busy LSU-full
+   3781 |                          | 0420 mv s5,s8            | 6| .040c mv s3,s8           | 0408 ld a6,0(t1)     ALU |                          |             |                 | ID-stall:EX1-busy LSU-full
+   3782 |                          | 0420 mv s5,s8            | 6| .040c mv s3,s8           | 0408 ld a6,0(t1)     ALU |                          |             |                 | ID-stall:EX1-busy LSU-full
+   3783 |                          | 0420 mv s5,s8            | 6| .040c mv s3,s8           | 0408 ld a6,0(t1)     ALU |                          |             |                 | ID-stall:EX1-busy LSU-full
+   3784 |                          | 0420 mv s5,s8            | 6| .040c mv s3,s8           | 0408 ld a6,0(t1)     ALU |                          |             |                 | ID-stall:EX1-busy LSU-full
+   3785 |                          | 0420 mv s5,s8            | 6| >040c mv s3,s8           | 040c mv s3,s8        ALU | 0408 ld a6,0(t1)         |             |                 | TRAP
+   3786 | 0424 mv s6,s10           | 0420 mv s5,s8            | 4| >(flushed) li t6,4       | 040c mv s3,s8        ALU |                          |             |                 | RT-redirect->0140
+   3787 | 0140 j 540               |                          | 0|                          |                          |                          |             |                 | ID-stall:other
+   3788 |                          |                          | 0|                          |                          |                          |             |                 | ID-stall:other FLUSH
+   3789 |                          |                          | 0|                          |                          |                          |             |                 | I$-miss
+   3790 |                          |                          | 0|                          |                          |                          |             |                 | 
+   3791 |                          |                          | 0|                          |                          |                          |             |                 | 
+   3792 |                          |                          | 0|                          |                          |                          |             |                 | 
+   3793 |                          |                          | 0|                          |                          |                          |             |                 | 
+   3794 |                          |                          | 0|                          |                          |                          |             |                 | 
+   3795 |                          | 0140 j 540               | 0| >0140 j 540              |                          |                          |             |                 | IP-redirect->0540
+   3796 |                          |                          | 0|                          | 0140 j 540           BJU |                          |             |                 | 
+   3797 |                          |                          | 0|                          |                          | 0140 j 540               |             | w0:zero         | 
+   3798 |                          |                          | 0|                          |                          |                          |             |                 | 
+   3799 |                          |                          | 0|                          |                          |                          |             |                 | 
+   3800 |                          |                          | 0|                          |                          |                          |             |                 | 
+   3801 | 0540 csrr s8,mcause      |                          | 0|                          |                          |                          |             |                 | 
+   3802 |                          |                          | 0|                          |                          |                          |             |                 | 
+   3803 |                          |                          | 0|                          |                          |                          |             |                 | I$-miss
+   3804 |                          |                          | 0|                          |                          |                          |             |                 | 
+   3805 |                          |                          | 0|                          |                          |                          |             |                 | 
+   3806 |                          |                          | 0|                          |                          |                          |             |                 | 
+   3807 |                          |                          | 0|                          |                          |                          |             |                 | 
+   3808 |                          |                          | 0|                          |                          |                          |             |                 | 
+   3809 |                          | 0540 csrr s8,mcause      | 0| >0540 csrr s8,mcause     |                          |                          |             |                 | 
+   3810 |                          |                          | 0|                          | 0540 csrr s8,mcause  CP0 |                          |             |                 | 
+   3811 |                          |                          | 0|                          |                          | 0540 csrr s8,mcause      |             | w0:s8           | 
+   3812 |                          |                          | 0|                          |                          |                          |             |                 | 
+   3813 |                          |                          | 0|                          |                          |                          |             |                 | 
+   3814 |                          |                          | 0|                          |                          |                          |             |                 | 
+   3815 | 0544 csrr s9,mepc        |                          | 0|                          |                          |                          |             |                 | 
+   3816 | 0548 csrr s10,mtval      |                          | 0|                          |                          |                          |             |                 | 
+   3817 | 054c li t4,9             | 0544 csrr s9,mepc        | 0| >0544 csrr s9,mepc       |                          |                          |             |                 | 
+   3818 | 0550 beq s8,t4,560       | 0548 csrr s10,mtval      | 0| .0548 csrr s10,mtval     | 0544 csrr s9,mepc    CP0 |                          |             |                 | ID-stall:CP0/fence
+   3819 | 0554 addi t4,s9,4        | 054c li t4,9             | 0| .0548 csrr s10,mtval     |                          | 0544 csrr s9,mepc        |             | w0:s9           | ID-stall:CP0/fence
+   3820 | 0558 csrw mepc,t4        | 0550 beq s8,t4,560       | 2| >0548 csrr s10,mtval     |                          |                          |             |                 | 
+   3821 | 055c mret                | 0554 addi t4,s9,4        | 2| >054c li t4,9            | 0548 csrr s10,mtval  CP0 |                          |             |                 | 
+   3822 | 0560 lui t4,0x2          | 0558 csrw mepc,t4        | 2| >0550 beq s8,t4,560      | 054c li t4,9         ALU | 0548 csrr s10,mtval      |             | w0:s10          | 
+   3823 | 0564 addiw t4,t4,-2048   | 055c mret                | 2| >0554 addi t4,s9,4       | 0550 beq s8,t4,560   BJU | 054c li t4,9             |             | w0:t4           | BR-resolve:N
+   3824 | 0568 csrs mstatus,t4     | 0560 lui t4,0x2          | 2| .0558 csrw mepc,t4       | 0554 addi t4,s9,4    ALU | 0550 beq s8,t4,560       |             |                 | ID-stall:CP0/fence
+   3825 | 056c auipc t4,0x0        | 0564 addiw t4,t4,-2048   | 4| .0558 csrw mepc,t4       |                          | 0554 addi t4,s9,4        |             | w0:t4           | ID-stall:CP0/fence
+   3826 |                          | 0568 csrs mstatus,t4     | 6| >0558 csrw mepc,t4       |                          |                          |             |                 | 
+   3827 | 056c auipc t4,0x0        | 0568 csrs mstatus,t4     | 4| .(flushed) mret          | 0558 csrw mepc,t4    CP0 |                          |             |                 | ID-stall:CP0/fence
+   3828 | 0570 addi t4,t4,-260     |                          | 6| .(flushed) mret          |                          | 0558 csrw mepc,t4        |             | w0:zero         | ID-stall:CP0/fence RT-redirect->055c
+   3829 | 055c mret                |                          | 0|                          |                          |                          |             |                 | 
+   3830 | 0560 lui t4,0x2          |                          | 0|                          |                          |                          |             |                 | ID-stall:other FLUSH
+   3831 | 0564 addiw t4,t4,-2048   | 055c mret                | 0| >055c mret               |                          |                          |             |                 | 
+   3832 | 0568 csrs mstatus,t4     | 0560 lui t4,0x2          | 0| >0560 lui t4,0x2         | 055c mret            CP0 |                          |             |                 | 
+   3833 | 056c auipc t4,0x0        | 0564 addiw t4,t4,-2048   | 0| >040c mv s3,s8           | 0560 lui t4,0x2      ALU | 055c mret                |             |                 | RT-redirect->040c
+   3834 | 040c mv s3,s8            |                          | 0|                          | 040c mv s3,s8        ALU |                          |             |                 | 
+   3835 | 0410 mv s4,s10           |                          | 0|                          |                          |                          |             |                 | ID-stall:other
+   3836 | 0414 li t6,4             | 040c mv s3,s8            | 0| .(flushed) mv s3,s8      |                          |                          |             |                 | ID-stall:other FLUSH
+   3837 | 0418 lui t1,0x40002      | 0410 mv s4,s10           | 0| >040c mv s3,s8           |                          |                          |             |                 | 
+   3838 | 041c sd a6,0(t1)         | 0414 li t6,4             | 0| >0410 mv s4,s10          | 040c mv s3,s8        ALU |                          |             |                 | 
+   3839 | 0420 mv s5,s8            | 0418 lui t1,0x40002      | 0| >0414 li t6,4            | 0410 mv s4,s10       ALU | 040c mv s3,s8            |             | w0:s3           | 
+   3840 | 0424 mv s6,s10           | 041c sd a6,0(t1)         | 0| >0418 lui t1,0x40002     | 0414 li t6,4         ALU | 0410 mv s4,s10           |             | w0:s4           | 
+   3841 | 0428 li t6,5             | 0420 mv s5,s8            | 0| >041c sd a6,0(t1)        | 0418 lui t1,0x40002  ALU | 0414 li t6,4             |             | w0:t6           | 
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 summary: cycles=80 retired=14 IPC=0.175 | flush=3, icache_miss=2, ip_redirect=1, retired=14, stall_CP0/fence=6, stall_EX1-busy=22, stall_other=5, trap=1
 
-================================================================================================================================================================
+================================================================================================================================================================================================
 MARK 4   cycles 3842 .. 3899  (58 cycles)
-================================================================================================================================================================
-    cyc | IF (fetch)               | IP (pred)                |IB| ID                       | EX1                      | RETIRE                   | events
-----------------------------------------------------------------------------------------------------------------------------------------------------------------
-   3842 | 042c lui t1,0x77779      | 0424 mv s6,s10           | 0| >041c sd a6,0(t1)        | 041c sd a6,0(t1)     LSU | 0418 lui t1,0x40002      | 
-   3843 | 0430 addiw t1,t1,-1912   | 0428 li t6,5             | 0| .0420 mv s5,s8           | 041c sd a6,0(t1)     ALU |                          | ID-stall:EX1-busy
-   3844 | 0434 sd t1,16(s7)        | 042c lui t1,0x77779      | 2| .0420 mv s5,s8           | 041c sd a6,0(t1)     ALU |                          | ID-stall:EX1-busy
-   3845 | 0438 lui t2,0x40003      | 0430 addiw t1,t1,-1912   | 4| .0420 mv s5,s8           | 041c sd a6,0(t1)     ALU |                          | ID-stall:EX1-busy
-   3846 |                          | 0434 sd t1,16(s7)        | 6| .0420 mv s5,s8           | 041c sd a6,0(t1)     ALU |                          | ID-stall:EX1-busy
-   3847 |                          | 0434 sd t1,16(s7)        | 6| .0420 mv s5,s8           | 041c sd a6,0(t1)     ALU |                          | ID-stall:EX1-busy
-   3848 |                          | 0434 sd t1,16(s7)        | 6| .0420 mv s5,s8           | 041c sd a6,0(t1)     ALU |                          | ID-stall:EX1-busy
-   3849 |                          | 0434 sd t1,16(s7)        | 6| .0420 mv s5,s8           | 041c sd a6,0(t1)     ALU |                          | ID-stall:EX1-busy
-   3850 |                          | 0434 sd t1,16(s7)        | 6| .0420 mv s5,s8           | 041c sd a6,0(t1)     ALU |                          | ID-stall:EX1-busy
-   3851 |                          | 0434 sd t1,16(s7)        | 6| .0420 mv s5,s8           | 041c sd a6,0(t1)     ALU |                          | ID-stall:EX1-busy
-   3852 |                          | 0434 sd t1,16(s7)        | 6| .0420 mv s5,s8           | 041c sd a6,0(t1)     ALU |                          | ID-stall:EX1-busy
-   3853 |                          | 0434 sd t1,16(s7)        | 6| .0420 mv s5,s8           | 041c sd a6,0(t1)     ALU |                          | ID-stall:EX1-busy
-   3854 |                          | 0434 sd t1,16(s7)        | 6| .0420 mv s5,s8           | 041c sd a6,0(t1)     ALU |                          | ID-stall:EX1-busy
-   3855 |                          | 0434 sd t1,16(s7)        | 6| .0420 mv s5,s8           | 041c sd a6,0(t1)     ALU |                          | ID-stall:EX1-busy
-   3856 |                          | 0434 sd t1,16(s7)        | 6| .0420 mv s5,s8           | 041c sd a6,0(t1)     ALU |                          | ID-stall:EX1-busy
-   3857 |                          | 0434 sd t1,16(s7)        | 6| .0420 mv s5,s8           | 041c sd a6,0(t1)     ALU |                          | ID-stall:EX1-busy
-   3858 |                          | 0434 sd t1,16(s7)        | 6| .0420 mv s5,s8           | 041c sd a6,0(t1)     ALU |                          | ID-stall:EX1-busy
-   3859 |                          | 0434 sd t1,16(s7)        | 6| .0420 mv s5,s8           | 041c sd a6,0(t1)     ALU |                          | ID-stall:EX1-busy
-   3860 |                          | 0434 sd t1,16(s7)        | 6| .0420 mv s5,s8           | 041c sd a6,0(t1)     ALU |                          | ID-stall:EX1-busy
-   3861 |                          | 0434 sd t1,16(s7)        | 6| .0420 mv s5,s8           | 041c sd a6,0(t1)     ALU |                          | ID-stall:EX1-busy
-   3862 |                          | 0434 sd t1,16(s7)        | 6| .0420 mv s5,s8           | 041c sd a6,0(t1)     ALU |                          | ID-stall:EX1-busy
-   3863 |                          | 0434 sd t1,16(s7)        | 6| .0420 mv s5,s8           | 041c sd a6,0(t1)     ALU |                          | ID-stall:EX1-busy
-   3864 |                          | 0434 sd t1,16(s7)        | 6| .0420 mv s5,s8           | 041c sd a6,0(t1)     ALU |                          | ID-stall:EX1-busy
-   3865 |                          | 0434 sd t1,16(s7)        | 6| >0420 mv s5,s8           | 0420 mv s5,s8        ALU | 041c sd a6,0(t1)         | TRAP
-   3866 | 0438 lui t2,0x40003      | 0434 sd t1,16(s7)        | 4| >(flushed) li t6,5       | 0420 mv s5,s8        ALU |                          | RT-redirect->0140
-   3867 | 0140 j 540               |                          | 0|                          |                          |                          | ID-stall:other
-   3868 | 0540 csrr s8,mcause      |                          | 0|                          |                          |                          | BTB-redirect ID-stall:other FLUSH
-   3869 | 0544 csrr s9,mepc        | 0140 j 540               | 0| >0140 j 540              |                          |                          | 
-   3870 | 0548 csrr s10,mtval      | 0540 csrr s8,mcause      | 0| .0540 csrr s8,mcause     | 0140 j 540           BJU |                          | ID-stall:CP0/fence
-   3871 | 054c li t4,9             | 0544 csrr s9,mepc        | 0| .0540 csrr s8,mcause     |                          | 0140 j 540               | ID-stall:CP0/fence
-   3872 | 0550 beq s8,t4,560       | 0548 csrr s10,mtval      | 2| >0540 csrr s8,mcause     |                          |                          | 
-   3873 | 0554 addi t4,s9,4        | 054c li t4,9             | 2| .0544 csrr s9,mepc       | 0540 csrr s8,mcause  CP0 |                          | ID-stall:CP0/fence
-   3874 | 0558 csrw mepc,t4        | 0550 beq s8,t4,560       | 4| .0544 csrr s9,mepc       |                          | 0540 csrr s8,mcause      | ID-stall:CP0/fence
-   3875 |                          | 0554 addi t4,s9,4        | 6| >0544 csrr s9,mepc       |                          |                          | 
-   3876 | 0558 csrw mepc,t4        | 0554 addi t4,s9,4        | 4| .0548 csrr s10,mtval     | 0544 csrr s9,mepc    CP0 |                          | ID-stall:CP0/fence
-   3877 | 055c mret                |                          | 6| .0548 csrr s10,mtval     |                          | 0544 csrr s9,mepc        | ID-stall:CP0/fence
-   3878 |                          | 0558 csrw mepc,t4        | 6| >0548 csrr s10,mtval     |                          |                          | 
-   3879 | 055c mret                | 0558 csrw mepc,t4        | 4| >054c li t4,9            | 0548 csrr s10,mtval  CP0 |                          | 
-   3880 | 0560 lui t4,0x2          |                          | 4| >0550 beq s8,t4,560      | 054c li t4,9         ALU | 0548 csrr s10,mtval      | 
-   3881 | 0564 addiw t4,t4,-2048   | 055c mret                | 2| >0554 addi t4,s9,4       | 0550 beq s8,t4,560   BJU | 054c li t4,9             | BR-resolve:N
-   3882 | 0568 csrs mstatus,t4     | 0560 lui t4,0x2          | 2| .0558 csrw mepc,t4       | 0554 addi t4,s9,4    ALU | 0550 beq s8,t4,560       | ID-stall:CP0/fence
-   3883 | 056c auipc t4,0x0        | 0564 addiw t4,t4,-2048   | 4| .0558 csrw mepc,t4       |                          | 0554 addi t4,s9,4        | ID-stall:CP0/fence
-   3884 |                          | 0568 csrs mstatus,t4     | 6| >0558 csrw mepc,t4       |                          |                          | 
-   3885 | 056c auipc t4,0x0        | 0568 csrs mstatus,t4     | 4| .(flushed) mret          | 0558 csrw mepc,t4    CP0 |                          | ID-stall:CP0/fence
-   3886 | 0570 addi t4,t4,-260     |                          | 6| .(flushed) mret          |                          | 0558 csrw mepc,t4        | ID-stall:CP0/fence RT-redirect->055c
-   3887 | 055c mret                |                          | 0|                          |                          |                          | 
-   3888 | 0560 lui t4,0x2          |                          | 0|                          |                          |                          | ID-stall:other FLUSH
-   3889 | 0564 addiw t4,t4,-2048   | 055c mret                | 0| >055c mret               |                          |                          | 
-   3890 | 0568 csrs mstatus,t4     | 0560 lui t4,0x2          | 0| >0560 lui t4,0x2         | 055c mret            CP0 |                          | 
-   3891 | 056c auipc t4,0x0        | 0564 addiw t4,t4,-2048   | 0| >0420 mv s5,s8           | 0560 lui t4,0x2      ALU | 055c mret                | RT-redirect->0420
-   3892 | 0420 mv s5,s8            |                          | 0|                          | 0420 mv s5,s8        ALU |                          | 
-   3893 | 0424 mv s6,s10           |                          | 0|                          |                          |                          | ID-stall:other
-   3894 | 0428 li t6,5             | 0420 mv s5,s8            | 0| .(flushed) mv s5,s8      |                          |                          | ID-stall:other FLUSH
-   3895 | 042c lui t1,0x77779      | 0424 mv s6,s10           | 0| >0420 mv s5,s8           |                          |                          | 
-   3896 | 0430 addiw t1,t1,-1912   | 0428 li t6,5             | 0| >0424 mv s6,s10          | 0420 mv s5,s8        ALU |                          | 
-   3897 | 0434 sd t1,16(s7)        | 042c lui t1,0x77779      | 0| >0428 li t6,5            | 0424 mv s6,s10       ALU | 0420 mv s5,s8            | 
-   3898 | 0438 lui t2,0x40003      | 0430 addiw t1,t1,-1912   | 0| >042c lui t1,0x77779     | 0428 li t6,5         ALU | 0424 mv s6,s10           | 
-   3899 | 043c ld s9,16(t2)        | 0434 sd t1,16(s7)        | 0| >0430 addiw t1,t1,-1912  | 042c lui t1,0x77779  ALU | 0428 li t6,5             | 
-----------------------------------------------------------------------------------------------------------------------------------------------------------------
+================================================================================================================================================================================================
+    cyc | IF (fetch)               | IP (pred)                |IB| ID                       | EX1                      | RETIRE                   | BACK        | WB              | events
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+   3842 | 042c lui t1,0x77779      | 0424 mv s6,s10           | 0| >041c sd a6,0(t1)        | 041c sd a6,0(t1)     LSU | 0418 lui t1,0x40002      |             | w0:t1           | 
+   3843 | 0430 addiw t1,t1,-1912   | 0428 li t6,5             | 0| .0420 mv s5,s8           | 041c sd a6,0(t1)     ALU |                          |             |                 | ID-stall:EX1-busy LSU-full
+   3844 | 0434 sd t1,16(s7)        | 042c lui t1,0x77779      | 2| .0420 mv s5,s8           | 041c sd a6,0(t1)     ALU |                          |             |                 | ID-stall:EX1-busy LSU-full
+   3845 | 0438 lui t2,0x40003      | 0430 addiw t1,t1,-1912   | 4| .0420 mv s5,s8           | 041c sd a6,0(t1)     ALU |                          |             |                 | ID-stall:EX1-busy LSU-full
+   3846 |                          | 0434 sd t1,16(s7)        | 6| .0420 mv s5,s8           | 041c sd a6,0(t1)     ALU |                          |             |                 | ID-stall:EX1-busy LSU-full
+   3847 |                          | 0434 sd t1,16(s7)        | 6| .0420 mv s5,s8           | 041c sd a6,0(t1)     ALU |                          |             |                 | ID-stall:EX1-busy LSU-full
+   3848 |                          | 0434 sd t1,16(s7)        | 6| .0420 mv s5,s8           | 041c sd a6,0(t1)     ALU |                          |             |                 | ID-stall:EX1-busy LSU-full
+   3849 |                          | 0434 sd t1,16(s7)        | 6| .0420 mv s5,s8           | 041c sd a6,0(t1)     ALU |                          |             |                 | ID-stall:EX1-busy LSU-full
+   3850 |                          | 0434 sd t1,16(s7)        | 6| .0420 mv s5,s8           | 041c sd a6,0(t1)     ALU |                          |             |                 | ID-stall:EX1-busy LSU-full
+   3851 |                          | 0434 sd t1,16(s7)        | 6| .0420 mv s5,s8           | 041c sd a6,0(t1)     ALU |                          |             |                 | ID-stall:EX1-busy LSU-full
+   3852 |                          | 0434 sd t1,16(s7)        | 6| .0420 mv s5,s8           | 041c sd a6,0(t1)     ALU |                          |             |                 | ID-stall:EX1-busy LSU-full
+   3853 |                          | 0434 sd t1,16(s7)        | 6| .0420 mv s5,s8           | 041c sd a6,0(t1)     ALU |                          |             |                 | ID-stall:EX1-busy LSU-full
+   3854 |                          | 0434 sd t1,16(s7)        | 6| .0420 mv s5,s8           | 041c sd a6,0(t1)     ALU |                          |             |                 | ID-stall:EX1-busy LSU-full
+   3855 |                          | 0434 sd t1,16(s7)        | 6| .0420 mv s5,s8           | 041c sd a6,0(t1)     ALU |                          |             |                 | ID-stall:EX1-busy LSU-full
+   3856 |                          | 0434 sd t1,16(s7)        | 6| .0420 mv s5,s8           | 041c sd a6,0(t1)     ALU |                          |             |                 | ID-stall:EX1-busy LSU-full
+   3857 |                          | 0434 sd t1,16(s7)        | 6| .0420 mv s5,s8           | 041c sd a6,0(t1)     ALU |                          |             |                 | ID-stall:EX1-busy LSU-full
+   3858 |                          | 0434 sd t1,16(s7)        | 6| .0420 mv s5,s8           | 041c sd a6,0(t1)     ALU |                          |             |                 | ID-stall:EX1-busy LSU-full
+   3859 |                          | 0434 sd t1,16(s7)        | 6| .0420 mv s5,s8           | 041c sd a6,0(t1)     ALU |                          |             |                 | ID-stall:EX1-busy LSU-full
+   3860 |                          | 0434 sd t1,16(s7)        | 6| .0420 mv s5,s8           | 041c sd a6,0(t1)     ALU |                          |             |                 | ID-stall:EX1-busy LSU-full
+   3861 |                          | 0434 sd t1,16(s7)        | 6| .0420 mv s5,s8           | 041c sd a6,0(t1)     ALU |                          |             |                 | ID-stall:EX1-busy LSU-full
+   3862 |                          | 0434 sd t1,16(s7)        | 6| .0420 mv s5,s8           | 041c sd a6,0(t1)     ALU |                          |             |                 | ID-stall:EX1-busy LSU-full
+   3863 |                          | 0434 sd t1,16(s7)        | 6| .0420 mv s5,s8           | 041c sd a6,0(t1)     ALU |                          |             |                 | ID-stall:EX1-busy LSU-full
+   3864 |                          | 0434 sd t1,16(s7)        | 6| .0420 mv s5,s8           | 041c sd a6,0(t1)     ALU |                          |             |                 | ID-stall:EX1-busy LSU-full
+   3865 |                          | 0434 sd t1,16(s7)        | 6| >0420 mv s5,s8           | 0420 mv s5,s8        ALU | 041c sd a6,0(t1)         |             |                 | TRAP
+   3866 | 0438 lui t2,0x40003      | 0434 sd t1,16(s7)        | 4| >(flushed) li t6,5       | 0420 mv s5,s8        ALU |                          |             |                 | RT-redirect->0140
+   3867 | 0140 j 540               |                          | 0|                          |                          |                          |             |                 | ID-stall:other
+   3868 | 0540 csrr s8,mcause      |                          | 0|                          |                          |                          |             |                 | BTB-redirect ID-stall:other FLUSH
+   3869 | 0544 csrr s9,mepc        | 0140 j 540               | 0| >0140 j 540              |                          |                          |             |                 | 
+   3870 | 0548 csrr s10,mtval      | 0540 csrr s8,mcause      | 0| .0540 csrr s8,mcause     | 0140 j 540           BJU |                          |             |                 | ID-stall:CP0/fence
+   3871 | 054c li t4,9             | 0544 csrr s9,mepc        | 0| .0540 csrr s8,mcause     |                          | 0140 j 540               |             | w0:zero         | ID-stall:CP0/fence
+   3872 | 0550 beq s8,t4,560       | 0548 csrr s10,mtval      | 2| >0540 csrr s8,mcause     |                          |                          |             |                 | 
+   3873 | 0554 addi t4,s9,4        | 054c li t4,9             | 2| .0544 csrr s9,mepc       | 0540 csrr s8,mcause  CP0 |                          |             |                 | ID-stall:CP0/fence
+   3874 | 0558 csrw mepc,t4        | 0550 beq s8,t4,560       | 4| .0544 csrr s9,mepc       |                          | 0540 csrr s8,mcause      |             | w0:s8           | ID-stall:CP0/fence
+   3875 |                          | 0554 addi t4,s9,4        | 6| >0544 csrr s9,mepc       |                          |                          |             |                 | 
+   3876 | 0558 csrw mepc,t4        | 0554 addi t4,s9,4        | 4| .0548 csrr s10,mtval     | 0544 csrr s9,mepc    CP0 |                          |             |                 | ID-stall:CP0/fence
+   3877 | 055c mret                |                          | 6| .0548 csrr s10,mtval     |                          | 0544 csrr s9,mepc        |             | w0:s9           | ID-stall:CP0/fence
+   3878 |                          | 0558 csrw mepc,t4        | 6| >0548 csrr s10,mtval     |                          |                          |             |                 | 
+   3879 | 055c mret                | 0558 csrw mepc,t4        | 4| >054c li t4,9            | 0548 csrr s10,mtval  CP0 |                          |             |                 | 
+   3880 | 0560 lui t4,0x2          |                          | 4| >0550 beq s8,t4,560      | 054c li t4,9         ALU | 0548 csrr s10,mtval      |             | w0:s10          | 
+   3881 | 0564 addiw t4,t4,-2048   | 055c mret                | 2| >0554 addi t4,s9,4       | 0550 beq s8,t4,560   BJU | 054c li t4,9             |             | w0:t4           | BR-resolve:N
+   3882 | 0568 csrs mstatus,t4     | 0560 lui t4,0x2          | 2| .0558 csrw mepc,t4       | 0554 addi t4,s9,4    ALU | 0550 beq s8,t4,560       |             |                 | ID-stall:CP0/fence
+   3883 | 056c auipc t4,0x0        | 0564 addiw t4,t4,-2048   | 4| .0558 csrw mepc,t4       |                          | 0554 addi t4,s9,4        |             | w0:t4           | ID-stall:CP0/fence
+   3884 |                          | 0568 csrs mstatus,t4     | 6| >0558 csrw mepc,t4       |                          |                          |             |                 | 
+   3885 | 056c auipc t4,0x0        | 0568 csrs mstatus,t4     | 4| .(flushed) mret          | 0558 csrw mepc,t4    CP0 |                          |             |                 | ID-stall:CP0/fence
+   3886 | 0570 addi t4,t4,-260     |                          | 6| .(flushed) mret          |                          | 0558 csrw mepc,t4        |             | w0:zero         | ID-stall:CP0/fence RT-redirect->055c
+   3887 | 055c mret                |                          | 0|                          |                          |                          |             |                 | 
+   3888 | 0560 lui t4,0x2          |                          | 0|                          |                          |                          |             |                 | ID-stall:other FLUSH
+   3889 | 0564 addiw t4,t4,-2048   | 055c mret                | 0| >055c mret               |                          |                          |             |                 | 
+   3890 | 0568 csrs mstatus,t4     | 0560 lui t4,0x2          | 0| >0560 lui t4,0x2         | 055c mret            CP0 |                          |             |                 | 
+   3891 | 056c auipc t4,0x0        | 0564 addiw t4,t4,-2048   | 0| >0420 mv s5,s8           | 0560 lui t4,0x2      ALU | 055c mret                |             |                 | RT-redirect->0420
+   3892 | 0420 mv s5,s8            |                          | 0|                          | 0420 mv s5,s8        ALU |                          |             |                 | 
+   3893 | 0424 mv s6,s10           |                          | 0|                          |                          |                          |             |                 | ID-stall:other
+   3894 | 0428 li t6,5             | 0420 mv s5,s8            | 0| .(flushed) mv s5,s8      |                          |                          |             |                 | ID-stall:other FLUSH
+   3895 | 042c lui t1,0x77779      | 0424 mv s6,s10           | 0| >0420 mv s5,s8           |                          |                          |             |                 | 
+   3896 | 0430 addiw t1,t1,-1912   | 0428 li t6,5             | 0| >0424 mv s6,s10          | 0420 mv s5,s8        ALU |                          |             |                 | 
+   3897 | 0434 sd t1,16(s7)        | 042c lui t1,0x77779      | 0| >0428 li t6,5            | 0424 mv s6,s10       ALU | 0420 mv s5,s8            |             | w0:s5           | 
+   3898 | 0438 lui t2,0x40003      | 0430 addiw t1,t1,-1912   | 0| >042c lui t1,0x77779     | 0428 li t6,5         ALU | 0424 mv s6,s10           |             | w0:s6           | 
+   3899 | 043c ld s9,16(t2)        | 0434 sd t1,16(s7)        | 0| >0430 addiw t1,t1,-1912  | 042c lui t1,0x77779  ALU | 0428 li t6,5             |             | w0:t6           | 
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 summary: cycles=58 retired=14 IPC=0.241 | btb_redirect=1, flush=3, retired=14, stall_CP0/fence=10, stall_EX1-busy=22, stall_other=5, trap=1
 
-================================================================================================================================================================
+================================================================================================================================================================================================
 MARK 5   cycles 3900 .. 3925  (26 cycles)
-================================================================================================================================================================
-    cyc | IF (fetch)               | IP (pred)                |IB| ID                       | EX1                      | RETIRE                   | events
-----------------------------------------------------------------------------------------------------------------------------------------------------------------
-   3900 | 0440 lui t1,0x9a         | 0438 lui t2,0x40003      | 0| >0434 sd t1,16(s7)       | 0430 addiw t1,t1,-19 ALU | 042c lui t1,0x77779      | 
-   3901 |                          | 043c ld s9,16(t2)        | 0| >0438 lui t2,0x40003     | 0434 sd t1,16(s7)    LSU | 0430 addiw t1,t1,-1912   | 
-   3902 |                          |                          | 0| >043c ld s9,16(t2)       | 0438 lui t2,0x40003  ALU | 0434 sd t1,16(s7)        | DC:ST MISS I$-miss
-   3903 |                          |                          | 0|                          | 043c ld s9,16(t2)    LSU | 0438 lui t2,0x40003      | 
-   3904 |                          |                          | 0|                          |                          | 043c ld s9,16(t2)        | DC:LD hit STB-fwd
-   3905 |                          |                          | 0|                          |                          |                          | 
-   3906 |                          |                          | 0|                          |                          |                          | 
-   3907 |                          |                          | 0|                          |                          |                          | 
-   3908 |                          | 0440 lui t1,0x9a         | 0| >0440 lui t1,0x9a        |                          |                          | 
-   3909 |                          |                          | 0|                          | 0440 lui t1,0x9a     ALU |                          | 
-   3910 |                          |                          | 0|                          |                          | 0440 lui t1,0x9a         | 
-   3911 |                          |                          | 0|                          |                          |                          | 
-   3912 |                          |                          | 0|                          |                          |                          | 
-   3913 |                          |                          | 0|                          |                          |                          | 
-   3914 | 0444 addiw t1,t1,-1637   |                          | 0|                          |                          |                          | 
-   3915 | 0448 slli t1,t1,0xc      |                          | 0|                          |                          |                          | 
-   3916 | 044c addi t1,t1,-1366    | 0444 addiw t1,t1,-1637   | 0| >0444 addiw t1,t1,-1637  |                          |                          | 
-   3917 | 0450 sd t1,24(t2)        | 0448 slli t1,t1,0xc      | 0| >0448 slli t1,t1,0xc     | 0444 addiw t1,t1,-16 ALU |                          | 
-   3918 | 0454 ld s10,24(s7)       | 044c addi t1,t1,-1366    | 0| >044c addi t1,t1,-1366   | 0448 slli t1,t1,0xc  ALU | 0444 addiw t1,t1,-1637   | 
-   3919 | 0458 mv a0,s9            | 0450 sd t1,24(t2)        | 0| >0450 sd t1,24(t2)       | 044c addi t1,t1,-136 ALU | 0448 slli t1,t1,0xc      | 
-   3920 | 045c mv a1,s10           | 0454 ld s10,24(s7)       | 0| >0454 ld s10,24(s7)      | 0450 sd t1,24(t2)    LSU | 044c addi t1,t1,-1366    | 
-   3921 | 0460 li t6,0             | 0458 mv a0,s9            | 0| >0458 mv a0,s9           | 0454 ld s10,24(s7)   LSU | 0450 sd t1,24(t2)        | DC:ST MISS
-   3922 | 0464 ecall               | 045c mv a1,s10           | 0| >045c mv a1,s10          | 0458 mv a0,s9        ALU | 0454 ld s10,24(s7)       | DC:LD hit STB-fwd
-   3923 | 0468 mv s9,a0            | 0460 li t6,0             | 0| >0460 li t6,0            | 045c mv a1,s10       ALU | 0458 mv a0,s9            | 
-   3924 | 046c mv s10,a1           | 0464 ecall               | 0| .(flushed) ecall         | 0460 li t6,0         ALU | 045c mv a1,s10           | ID-stall:CP0/fence
-   3925 | 0470 mv a1,s0            | 0468 mv s9,a0            | 0| .(flushed) ecall         |                          | 0460 li t6,0             | ID-stall:CP0/fence
-----------------------------------------------------------------------------------------------------------------------------------------------------------------
-summary: cycles=26 retired=14 IPC=0.538 | dc_miss=2, icache_miss=1, retired=14, stall_CP0/fence=2, stb_fwd=2
+================================================================================================================================================================================================
+    cyc | IF (fetch)               | IP (pred)                |IB| ID                       | EX1                      | RETIRE                   | BACK        | WB              | events
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+   3900 | 0440 lui t1,0x9a         | 0438 lui t2,0x40003      | 0| >0434 sd t1,16(s7)       | 0430 addiw t1,t1,-19 ALU | 042c lui t1,0x77779      |             | w0:t1           | 
+   3901 |                          | 043c ld s9,16(t2)        | 0| >0438 lui t2,0x40003     | 0434 sd t1,16(s7)    LSU | 0430 addiw t1,t1,-1912   |             | w0:t1           | 
+   3902 |                          |                          | 0| >043c ld s9,16(t2)       | 0438 lui t2,0x40003  ALU | 0434 sd t1,16(s7)        |             |                 | DC:ST MISS I$-miss
+   3903 |                          |                          | 0|                          | 043c ld s9,16(t2)    LSU | 0438 lui t2,0x40003      |             | w0:t2           | 
+   3904 |                          |                          | 0|                          |                          | 043c ld s9,16(t2)        |             |                 | DC:LD hit STB-fwd
+   3905 |                          |                          | 0|                          |                          |                          |             | w1:s9           | 
+   3906 |                          |                          | 0|                          |                          |                          |             |                 | 
+   3907 |                          |                          | 0|                          |                          |                          |             |                 | 
+   3908 |                          | 0440 lui t1,0x9a         | 0| >0440 lui t1,0x9a        |                          |                          |             |                 | 
+   3909 |                          |                          | 0|                          | 0440 lui t1,0x9a     ALU |                          |             |                 | 
+   3910 |                          |                          | 0|                          |                          | 0440 lui t1,0x9a         |             | w0:t1           | 
+   3911 |                          |                          | 0|                          |                          |                          |             |                 | 
+   3912 |                          |                          | 0|                          |                          |                          |             |                 | 
+   3913 |                          |                          | 0|                          |                          |                          |             |                 | 
+   3914 | 0444 addiw t1,t1,-1637   |                          | 0|                          |                          |                          |             |                 | 
+   3915 | 0448 slli t1,t1,0xc      |                          | 0|                          |                          |                          |             |                 | 
+   3916 | 044c addi t1,t1,-1366    | 0444 addiw t1,t1,-1637   | 0| >0444 addiw t1,t1,-1637  |                          |                          |             |                 | 
+   3917 | 0450 sd t1,24(t2)        | 0448 slli t1,t1,0xc      | 0| >0448 slli t1,t1,0xc     | 0444 addiw t1,t1,-16 ALU |                          |             |                 | 
+   3918 | 0454 ld s10,24(s7)       | 044c addi t1,t1,-1366    | 0| >044c addi t1,t1,-1366   | 0448 slli t1,t1,0xc  ALU | 0444 addiw t1,t1,-1637   |             | w0:t1           | 
+   3919 | 0458 mv a0,s9            | 0450 sd t1,24(t2)        | 0| >0450 sd t1,24(t2)       | 044c addi t1,t1,-136 ALU | 0448 slli t1,t1,0xc      |             | w0:t1           | 
+   3920 | 045c mv a1,s10           | 0454 ld s10,24(s7)       | 0| >0454 ld s10,24(s7)      | 0450 sd t1,24(t2)    LSU | 044c addi t1,t1,-1366    |             | w0:t1           | 
+   3921 | 0460 li t6,0             | 0458 mv a0,s9            | 0| >0458 mv a0,s9           | 0454 ld s10,24(s7)   LSU | 0450 sd t1,24(t2)        |             |                 | DC:ST MISS
+   3922 | 0464 ecall               | 045c mv a1,s10           | 0| >045c mv a1,s10          | 0458 mv a0,s9        ALU | 0454 ld s10,24(s7)       |             |                 | DC:LD hit STB-fwd
+   3923 | 0468 mv s9,a0            | 0460 li t6,0             | 0| >0460 li t6,0            | 045c mv a1,s10       ALU | 0458 mv a0,s9            |             | w0:a0 w1:s10    | 
+   3924 | 046c mv s10,a1           | 0464 ecall               | 0| .(flushed) ecall         | 0460 li t6,0         ALU | 045c mv a1,s10           |             | w0:a1           | ID-stall:CP0/fence
+   3925 | 0470 mv a1,s0            | 0468 mv s9,a0            | 0| .(flushed) ecall         |                          | 0460 li t6,0             |             | w0:t6           | ID-stall:CP0/fence
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+summary: cycles=26 retired=14 IPC=0.538 | dc_miss=2, icache_miss=1, retired=14, stall_CP0/fence=2, stb_fwd=2, wb_dual=1

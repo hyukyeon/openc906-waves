@@ -1,338 +1,338 @@
 사용: pipeview.py <out/test 디렉토리> [--mark N] [--max-rows K]
 출력: <dir>/pipeview.txt  (mark 구간별 표 + 구간 요약)
 
-================================================================================================================================================================
+================================================================================================================================================================================================
 MARK 1   cycles 2659 .. 2798  (140 cycles)
-================================================================================================================================================================
-    cyc | IF (fetch)               | IP (pred)                |IB| ID                       | EX1                      | RETIRE                   | events
-----------------------------------------------------------------------------------------------------------------------------------------------------------------
-   2659 |                          |                          | 0|                          |                          | 0284 jal 380             | 
-   2660 |                          |                          | 0|                          |                          |                          | I$-miss
-   2661 |                          |                          | 0|                          |                          |                          | 
-   2662 |                          |                          | 0|                          |                          |                          | 
-   2663 |                          |                          | 0|                          |                          |                          | 
-   2664 |                          |                          | 0|                          |                          |                          | 
-   2665 |                          |                          | 0|                          |                          |                          | 
-   2666 |                          | 0380 csrr s3,mhpmcounter | 0| >0380 csrr s3,mhpmcounte |                          |                          | 
-   2667 |                          |                          | 0|                          | 0380 csrr s3,mhpmcou CP0 |                          | 
-   2668 |                          |                          | 0|                          |                          | 0380 csrr s3,mhpmcounter | 
-   2669 |                          |                          | 0|                          |                          |                          | 
-   2670 |                          |                          | 0|                          |                          |                          | 
-   2671 |                          |                          | 0|                          |                          |                          | 
-   2672 | 0384 csrr s0,mcycle      |                          | 0|                          |                          |                          | 
-   2673 | 0388 addi a4,a4,1        |                          | 0|                          |                          |                          | 
-   2674 | 038c addi a5,a5,1        | 0384 csrr s0,mcycle      | 0| >0384 csrr s0,mcycle     |                          |                          | 
-   2675 | 0390 addi a6,a6,1        | 0388 addi a4,a4,1        | 0| >0388 addi a4,a4,1       | 0384 csrr s0,mcycle  CP0 |                          | 
-   2676 | 0394 addi a7,a7,1        | 038c addi a5,a5,1        | 0| >038c addi a5,a5,1       | 0388 addi a4,a4,1    ALU | 0384 csrr s0,mcycle      | 
-   2677 | 0398 addi a4,a4,1        | 0390 addi a6,a6,1        | 0| >0390 addi a6,a6,1       | 038c addi a5,a5,1    ALU | 0388 addi a4,a4,1        | 
-   2678 | 039c addi a5,a5,1        | 0394 addi a7,a7,1        | 0| >0394 addi a7,a7,1       | 0390 addi a6,a6,1    ALU | 038c addi a5,a5,1        | 
-   2679 | 03a0 addi a6,a6,1        | 0398 addi a4,a4,1        | 0| >0398 addi a4,a4,1       | 0394 addi a7,a7,1    ALU | 0390 addi a6,a6,1        | 
-   2680 | 03a4 addi a7,a7,1        | 039c addi a5,a5,1        | 0| >039c addi a5,a5,1       | 0398 addi a4,a4,1    ALU | 0394 addi a7,a7,1        | 
-   2681 | 03a8 addi a4,a4,1        | 03a0 addi a6,a6,1        | 0| >03a0 addi a6,a6,1       | 039c addi a5,a5,1    ALU | 0398 addi a4,a4,1        | 
-   2682 | 03ac addi a5,a5,1        | 03a4 addi a7,a7,1        | 0| >03a4 addi a7,a7,1       | 03a0 addi a6,a6,1    ALU | 039c addi a5,a5,1        | 
-   2683 | 03b0 addi a6,a6,1        | 03a8 addi a4,a4,1        | 0| >03a8 addi a4,a4,1       | 03a4 addi a7,a7,1    ALU | 03a0 addi a6,a6,1        | 
-   2684 | 03b4 addi a7,a7,1        | 03ac addi a5,a5,1        | 0| >03ac addi a5,a5,1       | 03a8 addi a4,a4,1    ALU | 03a4 addi a7,a7,1        | 
-   2685 | 03b8 addi a4,a4,1        | 03b0 addi a6,a6,1        | 0| >03b0 addi a6,a6,1       | 03ac addi a5,a5,1    ALU | 03a8 addi a4,a4,1        | 
-   2686 | 03bc addi a5,a5,1        | 03b4 addi a7,a7,1        | 0| >03b4 addi a7,a7,1       | 03b0 addi a6,a6,1    ALU | 03ac addi a5,a5,1        | 
-   2687 | 03c0 addi a6,a6,1        | 03b8 addi a4,a4,1        | 0| >03b8 addi a4,a4,1       | 03b4 addi a7,a7,1    ALU | 03b0 addi a6,a6,1        | 
-   2688 |                          | 03bc addi a5,a5,1        | 0| >03bc addi a5,a5,1       | 03b8 addi a4,a4,1    ALU | 03b4 addi a7,a7,1        | 
-   2689 |                          |                          | 0|                          | 03bc addi a5,a5,1    ALU | 03b8 addi a4,a4,1        | I$-miss
-   2690 |                          |                          | 0|                          |                          | 03bc addi a5,a5,1        | 
-   2691 |                          |                          | 0|                          |                          |                          | 
-   2692 |                          |                          | 0|                          |                          |                          | 
-   2693 |                          |                          | 0|                          |                          |                          | 
-   2694 |                          |                          | 0|                          |                          |                          | 
-   2695 |                          | 03c0 addi a6,a6,1        | 0| >03c0 addi a6,a6,1       |                          |                          | 
-   2696 |                          |                          | 0|                          | 03c0 addi a6,a6,1    ALU |                          | 
-   2697 |                          |                          | 0|                          |                          | 03c0 addi a6,a6,1        | 
-   2698 |                          |                          | 0|                          |                          |                          | 
-   2699 |                          |                          | 0|                          |                          |                          | 
-   2700 |                          |                          | 0|                          |                          |                          | 
-   2701 | 03c4 addi a7,a7,1        |                          | 0|                          |                          |                          | 
-   2702 | 03c8 addi a4,a4,1        |                          | 0|                          |                          |                          | 
-   2703 | 03cc addi a5,a5,1        | 03c4 addi a7,a7,1        | 0| >03c4 addi a7,a7,1       |                          |                          | 
-   2704 | 03d0 addi a6,a6,1        | 03c8 addi a4,a4,1        | 0| >03c8 addi a4,a4,1       | 03c4 addi a7,a7,1    ALU |                          | 
-   2705 | 03d4 addi a7,a7,1        | 03cc addi a5,a5,1        | 0| >03cc addi a5,a5,1       | 03c8 addi a4,a4,1    ALU | 03c4 addi a7,a7,1        | 
-   2706 | 03d8 addi a4,a4,1        | 03d0 addi a6,a6,1        | 0| >03d0 addi a6,a6,1       | 03cc addi a5,a5,1    ALU | 03c8 addi a4,a4,1        | 
-   2707 | 03dc addi a5,a5,1        | 03d4 addi a7,a7,1        | 0| >03d4 addi a7,a7,1       | 03d0 addi a6,a6,1    ALU | 03cc addi a5,a5,1        | 
-   2708 | 03e0 addi a6,a6,1        | 03d8 addi a4,a4,1        | 0| >03d8 addi a4,a4,1       | 03d4 addi a7,a7,1    ALU | 03d0 addi a6,a6,1        | 
-   2709 | 03e4 addi a7,a7,1        | 03dc addi a5,a5,1        | 0| >03dc addi a5,a5,1       | 03d8 addi a4,a4,1    ALU | 03d4 addi a7,a7,1        | 
-   2710 | 03e8 addi a4,a4,1        | 03e0 addi a6,a6,1        | 0| >03e0 addi a6,a6,1       | 03dc addi a5,a5,1    ALU | 03d8 addi a4,a4,1        | 
-   2711 | 03ec addi a5,a5,1        | 03e4 addi a7,a7,1        | 0| >03e4 addi a7,a7,1       | 03e0 addi a6,a6,1    ALU | 03dc addi a5,a5,1        | 
-   2712 | 03f0 addi a6,a6,1        | 03e8 addi a4,a4,1        | 0| >03e8 addi a4,a4,1       | 03e4 addi a7,a7,1    ALU | 03e0 addi a6,a6,1        | 
-   2713 | 03f4 addi a7,a7,1        | 03ec addi a5,a5,1        | 0| >03ec addi a5,a5,1       | 03e8 addi a4,a4,1    ALU | 03e4 addi a7,a7,1        | 
-   2714 | 03f8 addi a4,a4,1        | 03f0 addi a6,a6,1        | 0| >03f0 addi a6,a6,1       | 03ec addi a5,a5,1    ALU | 03e8 addi a4,a4,1        | 
-   2715 | 03fc addi a5,a5,1        | 03f4 addi a7,a7,1        | 0| >03f4 addi a7,a7,1       | 03f0 addi a6,a6,1    ALU | 03ec addi a5,a5,1        | 
-   2716 | 0400 addi a6,a6,1        | 03f8 addi a4,a4,1        | 0| >03f8 addi a4,a4,1       | 03f4 addi a7,a7,1    ALU | 03f0 addi a6,a6,1        | 
-   2717 |                          | 03fc addi a5,a5,1        | 0| >03fc addi a5,a5,1       | 03f8 addi a4,a4,1    ALU | 03f4 addi a7,a7,1        | 
-   2718 |                          |                          | 0|                          | 03fc addi a5,a5,1    ALU | 03f8 addi a4,a4,1        | I$-miss
-   2719 |                          |                          | 0|                          |                          | 03fc addi a5,a5,1        | 
-   2720 |                          |                          | 0|                          |                          |                          | 
-   2721 |                          |                          | 0|                          |                          |                          | 
-   2722 |                          |                          | 0|                          |                          |                          | 
-   2723 |                          |                          | 0|                          |                          |                          | 
-   2724 |                          | 0400 addi a6,a6,1        | 0| >0400 addi a6,a6,1       |                          |                          | 
-   2725 |                          |                          | 0|                          | 0400 addi a6,a6,1    ALU |                          | 
-   2726 |                          |                          | 0|                          |                          | 0400 addi a6,a6,1        | 
-   2727 |                          |                          | 0|                          |                          |                          | 
-   2728 |                          |                          | 0|                          |                          |                          | 
-   2729 |                          |                          | 0|                          |                          |                          | 
-   2730 | 0404 addi a7,a7,1        |                          | 0|                          |                          |                          | 
-   2731 | 0408 csrr t0,mcycle      |                          | 0|                          |                          |                          | 
-   2732 | 040c sub s0,t0,s0        | 0404 addi a7,a7,1        | 0| >0404 addi a7,a7,1       |                          |                          | 
-   2733 | 0410 csrr s1,mhpmcounter | 0408 csrr t0,mcycle      | 0| .0408 csrr t0,mcycle     | 0404 addi a7,a7,1    ALU |                          | ID-stall:CP0/fence
-   2734 | 0414 sub s1,s1,s3        | 040c sub s0,t0,s0        | 0| .0408 csrr t0,mcycle     |                          | 0404 addi a7,a7,1        | ID-stall:CP0/fence
-   2735 | 0418 ret                 | 0410 csrr s1,mhpmcounter | 2| >0408 csrr t0,mcycle     |                          |                          | 
-   2736 | 041c nop                 | 0414 sub s1,s1,s3        | 2| .040c sub s0,t0,s0       | 0408 csrr t0,mcycle  CP0 |                          | ID-stall:RAW
-   2737 | 0288 mv s5,s0            | 0418 ret                 | 4| >040c sub s0,t0,s0       |                          | 0408 csrr t0,mcycle      | IP-curflw(RAS/delay)
-   2738 | 028c mv s6,s1            |                          | 4| .0410 csrr s1,mhpmcounte | 040c sub s0,t0,s0    ALU |                          | ID-stall:CP0/fence
-   2739 | 0290 jal 380             | 0288 mv s5,s0            | 4| .0410 csrr s1,mhpmcounte |                          | 040c sub s0,t0,s0        | ID-stall:CP0/fence
-   2740 |                          | 028c mv s6,s1            | 6| >0410 csrr s1,mhpmcounte |                          |                          | 
-   2741 | 0290 jal 380             | 028c mv s6,s1            | 4| .0414 sub s1,s1,s3       | 0410 csrr s1,mhpmcou CP0 |                          | ID-stall:RAW,WAW
-   2742 | 0294 li t6,0             |                          | 6| >0414 sub s1,s1,s3       |                          | 0410 csrr s1,mhpmcounter | 
-   2743 | 0298 mv a1,s5            | 0290 jal 380             | 4| >0418 ret                | 0414 sub s1,s1,s3    ALU |                          | IP-redirect->0380
-   2744 | 0380 csrr s3,mhpmcounter |                          | 4| >0288 mv s5,s0           | 0418 ret             BJU | 0414 sub s1,s1,s3        | 
-   2745 | 0384 csrr s0,mcycle      |                          | 2| >028c mv s6,s1           | 0288 mv s5,s0        ALU | 0418 ret                 | 
-   2746 | 0388 addi a4,a4,1        | 0380 csrr s3,mhpmcounter | 0| >0290 jal 380            | 028c mv s6,s1        ALU | 0288 mv s5,s0            | 
-   2747 | 038c addi a5,a5,1        | 0384 csrr s0,mcycle      | 0| .0380 csrr s3,mhpmcounte | 0290 jal 380         BJU | 028c mv s6,s1            | ID-stall:CP0/fence
-   2748 | 0390 addi a6,a6,1        | 0388 addi a4,a4,1        | 2| .0380 csrr s3,mhpmcounte |                          | 0290 jal 380             | ID-stall:CP0/fence
-   2749 | 0394 addi a7,a7,1        | 038c addi a5,a5,1        | 4| >0380 csrr s3,mhpmcounte |                          |                          | 
-   2750 | 0398 addi a4,a4,1        | 0390 addi a6,a6,1        | 4| .0384 csrr s0,mcycle     | 0380 csrr s3,mhpmcou CP0 |                          | ID-stall:CP0/fence
-   2751 |                          | 0394 addi a7,a7,1        | 6| .0384 csrr s0,mcycle     |                          | 0380 csrr s3,mhpmcounter | ID-stall:CP0/fence
-   2752 |                          | 0394 addi a7,a7,1        | 6| >0384 csrr s0,mcycle     |                          |                          | 
-   2753 | 0398 addi a4,a4,1        | 0394 addi a7,a7,1        | 4| >0388 addi a4,a4,1       | 0384 csrr s0,mcycle  CP0 |                          | 
-   2754 | 039c addi a5,a5,1        |                          | 4| >038c addi a5,a5,1       | 0388 addi a4,a4,1    ALU | 0384 csrr s0,mcycle      | 
-   2755 | 03a0 addi a6,a6,1        | 0398 addi a4,a4,1        | 2| >0390 addi a6,a6,1       | 038c addi a5,a5,1    ALU | 0388 addi a4,a4,1        | 
-   2756 | 03a4 addi a7,a7,1        | 039c addi a5,a5,1        | 2| >0394 addi a7,a7,1       | 0390 addi a6,a6,1    ALU | 038c addi a5,a5,1        | 
-   2757 | 03a8 addi a4,a4,1        | 03a0 addi a6,a6,1        | 2| >0398 addi a4,a4,1       | 0394 addi a7,a7,1    ALU | 0390 addi a6,a6,1        | 
-   2758 | 03ac addi a5,a5,1        | 03a4 addi a7,a7,1        | 2| >039c addi a5,a5,1       | 0398 addi a4,a4,1    ALU | 0394 addi a7,a7,1        | 
-   2759 | 03b0 addi a6,a6,1        | 03a8 addi a4,a4,1        | 2| >03a0 addi a6,a6,1       | 039c addi a5,a5,1    ALU | 0398 addi a4,a4,1        | 
-   2760 | 03b4 addi a7,a7,1        | 03ac addi a5,a5,1        | 2| >03a4 addi a7,a7,1       | 03a0 addi a6,a6,1    ALU | 039c addi a5,a5,1        | 
-   2761 | 03b8 addi a4,a4,1        | 03b0 addi a6,a6,1        | 2| >03a8 addi a4,a4,1       | 03a4 addi a7,a7,1    ALU | 03a0 addi a6,a6,1        | 
-   2762 | 03bc addi a5,a5,1        | 03b4 addi a7,a7,1        | 2| >03ac addi a5,a5,1       | 03a8 addi a4,a4,1    ALU | 03a4 addi a7,a7,1        | 
-   2763 | 03c0 addi a6,a6,1        | 03b8 addi a4,a4,1        | 2| >03b0 addi a6,a6,1       | 03ac addi a5,a5,1    ALU | 03a8 addi a4,a4,1        | 
-   2764 | 03c4 addi a7,a7,1        | 03bc addi a5,a5,1        | 2| >03b4 addi a7,a7,1       | 03b0 addi a6,a6,1    ALU | 03ac addi a5,a5,1        | 
-   2765 | 03c8 addi a4,a4,1        | 03c0 addi a6,a6,1        | 2| >03b8 addi a4,a4,1       | 03b4 addi a7,a7,1    ALU | 03b0 addi a6,a6,1        | 
-   2766 | 03cc addi a5,a5,1        | 03c4 addi a7,a7,1        | 2| >03bc addi a5,a5,1       | 03b8 addi a4,a4,1    ALU | 03b4 addi a7,a7,1        | 
-   2767 | 03d0 addi a6,a6,1        | 03c8 addi a4,a4,1        | 2| >03c0 addi a6,a6,1       | 03bc addi a5,a5,1    ALU | 03b8 addi a4,a4,1        | 
-   2768 | 03d4 addi a7,a7,1        | 03cc addi a5,a5,1        | 2| >03c4 addi a7,a7,1       | 03c0 addi a6,a6,1    ALU | 03bc addi a5,a5,1        | 
-   2769 | 03d8 addi a4,a4,1        | 03d0 addi a6,a6,1        | 2| >03c8 addi a4,a4,1       | 03c4 addi a7,a7,1    ALU | 03c0 addi a6,a6,1        | 
-   2770 | 03dc addi a5,a5,1        | 03d4 addi a7,a7,1        | 2| >03cc addi a5,a5,1       | 03c8 addi a4,a4,1    ALU | 03c4 addi a7,a7,1        | 
-   2771 | 03e0 addi a6,a6,1        | 03d8 addi a4,a4,1        | 2| >03d0 addi a6,a6,1       | 03cc addi a5,a5,1    ALU | 03c8 addi a4,a4,1        | 
-   2772 | 03e4 addi a7,a7,1        | 03dc addi a5,a5,1        | 2| >03d4 addi a7,a7,1       | 03d0 addi a6,a6,1    ALU | 03cc addi a5,a5,1        | 
-   2773 | 03e8 addi a4,a4,1        | 03e0 addi a6,a6,1        | 2| >03d8 addi a4,a4,1       | 03d4 addi a7,a7,1    ALU | 03d0 addi a6,a6,1        | 
-   2774 | 03ec addi a5,a5,1        | 03e4 addi a7,a7,1        | 2| >03dc addi a5,a5,1       | 03d8 addi a4,a4,1    ALU | 03d4 addi a7,a7,1        | 
-   2775 | 03f0 addi a6,a6,1        | 03e8 addi a4,a4,1        | 2| >03e0 addi a6,a6,1       | 03dc addi a5,a5,1    ALU | 03d8 addi a4,a4,1        | 
-   2776 | 03f4 addi a7,a7,1        | 03ec addi a5,a5,1        | 2| >03e4 addi a7,a7,1       | 03e0 addi a6,a6,1    ALU | 03dc addi a5,a5,1        | 
-   2777 | 03f8 addi a4,a4,1        | 03f0 addi a6,a6,1        | 2| >03e8 addi a4,a4,1       | 03e4 addi a7,a7,1    ALU | 03e0 addi a6,a6,1        | 
-   2778 | 03fc addi a5,a5,1        | 03f4 addi a7,a7,1        | 2| >03ec addi a5,a5,1       | 03e8 addi a4,a4,1    ALU | 03e4 addi a7,a7,1        | 
-   2779 | 0400 addi a6,a6,1        | 03f8 addi a4,a4,1        | 2| >03f0 addi a6,a6,1       | 03ec addi a5,a5,1    ALU | 03e8 addi a4,a4,1        | 
-   2780 | 0404 addi a7,a7,1        | 03fc addi a5,a5,1        | 2| >03f4 addi a7,a7,1       | 03f0 addi a6,a6,1    ALU | 03ec addi a5,a5,1        | 
-   2781 | 0408 csrr t0,mcycle      | 0400 addi a6,a6,1        | 2| >03f8 addi a4,a4,1       | 03f4 addi a7,a7,1    ALU | 03f0 addi a6,a6,1        | 
-   2782 | 040c sub s0,t0,s0        | 0404 addi a7,a7,1        | 2| >03fc addi a5,a5,1       | 03f8 addi a4,a4,1    ALU | 03f4 addi a7,a7,1        | 
-   2783 | 0410 csrr s1,mhpmcounter | 0408 csrr t0,mcycle      | 2| >0400 addi a6,a6,1       | 03fc addi a5,a5,1    ALU | 03f8 addi a4,a4,1        | 
-   2784 | 0414 sub s1,s1,s3        | 040c sub s0,t0,s0        | 2| >0404 addi a7,a7,1       | 0400 addi a6,a6,1    ALU | 03fc addi a5,a5,1        | 
-   2785 | 0418 ret                 | 0410 csrr s1,mhpmcounter | 2| .0408 csrr t0,mcycle     | 0404 addi a7,a7,1    ALU | 0400 addi a6,a6,1        | ID-stall:CP0/fence
-   2786 | 041c nop                 | 0414 sub s1,s1,s3        | 4| .0408 csrr t0,mcycle     |                          | 0404 addi a7,a7,1        | ID-stall:CP0/fence
-   2787 |                          | 0418 ret                 | 6| >0408 csrr t0,mcycle     |                          |                          | IP-curflw(RAS/delay)
-   2788 | 0294 li t6,0             | 0418 ret                 | 4| .040c sub s0,t0,s0       | 0408 csrr t0,mcycle  CP0 |                          | IP-curflw(RAS/delay) ID-stall:RAW
-   2789 | 0298 mv a1,s5            |                          | 6| >040c sub s0,t0,s0       |                          | 0408 csrr t0,mcycle      | 
-   2790 | 029c li a0,1534          | 0294 li t6,0             | 4| .0410 csrr s1,mhpmcounte | 040c sub s0,t0,s0    ALU |                          | ID-stall:CP0/fence
-   2791 |                          | 0298 mv a1,s5            | 6| .0410 csrr s1,mhpmcounte |                          | 040c sub s0,t0,s0        | ID-stall:CP0/fence
-   2792 |                          | 0298 mv a1,s5            | 6| >0410 csrr s1,mhpmcounte |                          |                          | 
-   2793 | 029c li a0,1534          | 0298 mv a1,s5            | 4| .0414 sub s1,s1,s3       | 0410 csrr s1,mhpmcou CP0 |                          | ID-stall:RAW,WAW
-   2794 | 02a0 jal 21e             |                          | 6| >0414 sub s1,s1,s3       |                          | 0410 csrr s1,mhpmcounter | 
-   2795 | 02a4 mv a1,s6            | 029c li a0,1534          | 4| >0418 ret                | 0414 sub s1,s1,s3    ALU |                          | 
-   2796 | 02a8 li a0,1551          | 02a0 jal 21e             | 4| >0294 li t6,0            | 0418 ret             BJU | 0414 sub s1,s1,s3        | IP-redirect->021e
-   2797 | 021e addi sp,sp,-16      |                          | 4| >0298 mv a1,s5           | 0294 li t6,0         ALU | 0418 ret                 | 
-   2798 |                          |                          | 2| >0440 csrr s3,mhpmcounte | 0298 mv a1,s5        ALU | 0294 li t6,0             | 
-----------------------------------------------------------------------------------------------------------------------------------------------------------------
+================================================================================================================================================================================================
+    cyc | IF (fetch)               | IP (pred)                |IB| ID                       | EX1                      | RETIRE                   | BACK        | WB              | events
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+   2659 |                          |                          | 0|                          |                          | 0284 jal 380             |             | w0:ra           | 
+   2660 |                          |                          | 0|                          |                          |                          |             |                 | I$-miss
+   2661 |                          |                          | 0|                          |                          |                          |             |                 | 
+   2662 |                          |                          | 0|                          |                          |                          |             |                 | 
+   2663 |                          |                          | 0|                          |                          |                          |             |                 | 
+   2664 |                          |                          | 0|                          |                          |                          |             |                 | 
+   2665 |                          |                          | 0|                          |                          |                          |             |                 | 
+   2666 |                          | 0380 csrr s3,mhpmcounter | 0| >0380 csrr s3,mhpmcounte |                          |                          |             |                 | 
+   2667 |                          |                          | 0|                          | 0380 csrr s3,mhpmcou CP0 |                          |             |                 | 
+   2668 |                          |                          | 0|                          |                          | 0380 csrr s3,mhpmcounter |             | w0:s3           | 
+   2669 |                          |                          | 0|                          |                          |                          |             |                 | 
+   2670 |                          |                          | 0|                          |                          |                          |             |                 | 
+   2671 |                          |                          | 0|                          |                          |                          |             |                 | 
+   2672 | 0384 csrr s0,mcycle      |                          | 0|                          |                          |                          |             |                 | 
+   2673 | 0388 addi a4,a4,1        |                          | 0|                          |                          |                          |             |                 | 
+   2674 | 038c addi a5,a5,1        | 0384 csrr s0,mcycle      | 0| >0384 csrr s0,mcycle     |                          |                          |             |                 | 
+   2675 | 0390 addi a6,a6,1        | 0388 addi a4,a4,1        | 0| >0388 addi a4,a4,1       | 0384 csrr s0,mcycle  CP0 |                          |             |                 | 
+   2676 | 0394 addi a7,a7,1        | 038c addi a5,a5,1        | 0| >038c addi a5,a5,1       | 0388 addi a4,a4,1    ALU | 0384 csrr s0,mcycle      |             | w0:s0           | 
+   2677 | 0398 addi a4,a4,1        | 0390 addi a6,a6,1        | 0| >0390 addi a6,a6,1       | 038c addi a5,a5,1    ALU | 0388 addi a4,a4,1        |             | w0:a4           | 
+   2678 | 039c addi a5,a5,1        | 0394 addi a7,a7,1        | 0| >0394 addi a7,a7,1       | 0390 addi a6,a6,1    ALU | 038c addi a5,a5,1        |             | w0:a5           | 
+   2679 | 03a0 addi a6,a6,1        | 0398 addi a4,a4,1        | 0| >0398 addi a4,a4,1       | 0394 addi a7,a7,1    ALU | 0390 addi a6,a6,1        |             | w0:a6           | 
+   2680 | 03a4 addi a7,a7,1        | 039c addi a5,a5,1        | 0| >039c addi a5,a5,1       | 0398 addi a4,a4,1    ALU | 0394 addi a7,a7,1        |             | w0:a7           | 
+   2681 | 03a8 addi a4,a4,1        | 03a0 addi a6,a6,1        | 0| >03a0 addi a6,a6,1       | 039c addi a5,a5,1    ALU | 0398 addi a4,a4,1        |             | w0:a4           | 
+   2682 | 03ac addi a5,a5,1        | 03a4 addi a7,a7,1        | 0| >03a4 addi a7,a7,1       | 03a0 addi a6,a6,1    ALU | 039c addi a5,a5,1        |             | w0:a5           | 
+   2683 | 03b0 addi a6,a6,1        | 03a8 addi a4,a4,1        | 0| >03a8 addi a4,a4,1       | 03a4 addi a7,a7,1    ALU | 03a0 addi a6,a6,1        |             | w0:a6           | 
+   2684 | 03b4 addi a7,a7,1        | 03ac addi a5,a5,1        | 0| >03ac addi a5,a5,1       | 03a8 addi a4,a4,1    ALU | 03a4 addi a7,a7,1        |             | w0:a7           | 
+   2685 | 03b8 addi a4,a4,1        | 03b0 addi a6,a6,1        | 0| >03b0 addi a6,a6,1       | 03ac addi a5,a5,1    ALU | 03a8 addi a4,a4,1        |             | w0:a4           | 
+   2686 | 03bc addi a5,a5,1        | 03b4 addi a7,a7,1        | 0| >03b4 addi a7,a7,1       | 03b0 addi a6,a6,1    ALU | 03ac addi a5,a5,1        |             | w0:a5           | 
+   2687 | 03c0 addi a6,a6,1        | 03b8 addi a4,a4,1        | 0| >03b8 addi a4,a4,1       | 03b4 addi a7,a7,1    ALU | 03b0 addi a6,a6,1        |             | w0:a6           | 
+   2688 |                          | 03bc addi a5,a5,1        | 0| >03bc addi a5,a5,1       | 03b8 addi a4,a4,1    ALU | 03b4 addi a7,a7,1        |             | w0:a7           | 
+   2689 |                          |                          | 0|                          | 03bc addi a5,a5,1    ALU | 03b8 addi a4,a4,1        |             | w0:a4           | I$-miss
+   2690 |                          |                          | 0|                          |                          | 03bc addi a5,a5,1        |             | w0:a5           | 
+   2691 |                          |                          | 0|                          |                          |                          |             |                 | 
+   2692 |                          |                          | 0|                          |                          |                          |             |                 | 
+   2693 |                          |                          | 0|                          |                          |                          |             |                 | 
+   2694 |                          |                          | 0|                          |                          |                          |             |                 | 
+   2695 |                          | 03c0 addi a6,a6,1        | 0| >03c0 addi a6,a6,1       |                          |                          |             |                 | 
+   2696 |                          |                          | 0|                          | 03c0 addi a6,a6,1    ALU |                          |             |                 | 
+   2697 |                          |                          | 0|                          |                          | 03c0 addi a6,a6,1        |             | w0:a6           | 
+   2698 |                          |                          | 0|                          |                          |                          |             |                 | 
+   2699 |                          |                          | 0|                          |                          |                          |             |                 | 
+   2700 |                          |                          | 0|                          |                          |                          |             |                 | 
+   2701 | 03c4 addi a7,a7,1        |                          | 0|                          |                          |                          |             |                 | 
+   2702 | 03c8 addi a4,a4,1        |                          | 0|                          |                          |                          |             |                 | 
+   2703 | 03cc addi a5,a5,1        | 03c4 addi a7,a7,1        | 0| >03c4 addi a7,a7,1       |                          |                          |             |                 | 
+   2704 | 03d0 addi a6,a6,1        | 03c8 addi a4,a4,1        | 0| >03c8 addi a4,a4,1       | 03c4 addi a7,a7,1    ALU |                          |             |                 | 
+   2705 | 03d4 addi a7,a7,1        | 03cc addi a5,a5,1        | 0| >03cc addi a5,a5,1       | 03c8 addi a4,a4,1    ALU | 03c4 addi a7,a7,1        |             | w0:a7           | 
+   2706 | 03d8 addi a4,a4,1        | 03d0 addi a6,a6,1        | 0| >03d0 addi a6,a6,1       | 03cc addi a5,a5,1    ALU | 03c8 addi a4,a4,1        |             | w0:a4           | 
+   2707 | 03dc addi a5,a5,1        | 03d4 addi a7,a7,1        | 0| >03d4 addi a7,a7,1       | 03d0 addi a6,a6,1    ALU | 03cc addi a5,a5,1        |             | w0:a5           | 
+   2708 | 03e0 addi a6,a6,1        | 03d8 addi a4,a4,1        | 0| >03d8 addi a4,a4,1       | 03d4 addi a7,a7,1    ALU | 03d0 addi a6,a6,1        |             | w0:a6           | 
+   2709 | 03e4 addi a7,a7,1        | 03dc addi a5,a5,1        | 0| >03dc addi a5,a5,1       | 03d8 addi a4,a4,1    ALU | 03d4 addi a7,a7,1        |             | w0:a7           | 
+   2710 | 03e8 addi a4,a4,1        | 03e0 addi a6,a6,1        | 0| >03e0 addi a6,a6,1       | 03dc addi a5,a5,1    ALU | 03d8 addi a4,a4,1        |             | w0:a4           | 
+   2711 | 03ec addi a5,a5,1        | 03e4 addi a7,a7,1        | 0| >03e4 addi a7,a7,1       | 03e0 addi a6,a6,1    ALU | 03dc addi a5,a5,1        |             | w0:a5           | 
+   2712 | 03f0 addi a6,a6,1        | 03e8 addi a4,a4,1        | 0| >03e8 addi a4,a4,1       | 03e4 addi a7,a7,1    ALU | 03e0 addi a6,a6,1        |             | w0:a6           | 
+   2713 | 03f4 addi a7,a7,1        | 03ec addi a5,a5,1        | 0| >03ec addi a5,a5,1       | 03e8 addi a4,a4,1    ALU | 03e4 addi a7,a7,1        |             | w0:a7           | 
+   2714 | 03f8 addi a4,a4,1        | 03f0 addi a6,a6,1        | 0| >03f0 addi a6,a6,1       | 03ec addi a5,a5,1    ALU | 03e8 addi a4,a4,1        |             | w0:a4           | 
+   2715 | 03fc addi a5,a5,1        | 03f4 addi a7,a7,1        | 0| >03f4 addi a7,a7,1       | 03f0 addi a6,a6,1    ALU | 03ec addi a5,a5,1        |             | w0:a5           | 
+   2716 | 0400 addi a6,a6,1        | 03f8 addi a4,a4,1        | 0| >03f8 addi a4,a4,1       | 03f4 addi a7,a7,1    ALU | 03f0 addi a6,a6,1        |             | w0:a6           | 
+   2717 |                          | 03fc addi a5,a5,1        | 0| >03fc addi a5,a5,1       | 03f8 addi a4,a4,1    ALU | 03f4 addi a7,a7,1        |             | w0:a7           | 
+   2718 |                          |                          | 0|                          | 03fc addi a5,a5,1    ALU | 03f8 addi a4,a4,1        |             | w0:a4           | I$-miss
+   2719 |                          |                          | 0|                          |                          | 03fc addi a5,a5,1        |             | w0:a5           | 
+   2720 |                          |                          | 0|                          |                          |                          |             |                 | 
+   2721 |                          |                          | 0|                          |                          |                          |             |                 | 
+   2722 |                          |                          | 0|                          |                          |                          |             |                 | 
+   2723 |                          |                          | 0|                          |                          |                          |             |                 | 
+   2724 |                          | 0400 addi a6,a6,1        | 0| >0400 addi a6,a6,1       |                          |                          |             |                 | 
+   2725 |                          |                          | 0|                          | 0400 addi a6,a6,1    ALU |                          |             |                 | 
+   2726 |                          |                          | 0|                          |                          | 0400 addi a6,a6,1        |             | w0:a6           | 
+   2727 |                          |                          | 0|                          |                          |                          |             |                 | 
+   2728 |                          |                          | 0|                          |                          |                          |             |                 | 
+   2729 |                          |                          | 0|                          |                          |                          |             |                 | 
+   2730 | 0404 addi a7,a7,1        |                          | 0|                          |                          |                          |             |                 | 
+   2731 | 0408 csrr t0,mcycle      |                          | 0|                          |                          |                          |             |                 | 
+   2732 | 040c sub s0,t0,s0        | 0404 addi a7,a7,1        | 0| >0404 addi a7,a7,1       |                          |                          |             |                 | 
+   2733 | 0410 csrr s1,mhpmcounter | 0408 csrr t0,mcycle      | 0| .0408 csrr t0,mcycle     | 0404 addi a7,a7,1    ALU |                          |             |                 | ID-stall:CP0/fence
+   2734 | 0414 sub s1,s1,s3        | 040c sub s0,t0,s0        | 0| .0408 csrr t0,mcycle     |                          | 0404 addi a7,a7,1        |             | w0:a7           | ID-stall:CP0/fence
+   2735 | 0418 ret                 | 0410 csrr s1,mhpmcounter | 2| >0408 csrr t0,mcycle     |                          |                          |             |                 | 
+   2736 | 041c nop                 | 0414 sub s1,s1,s3        | 2| .040c sub s0,t0,s0       | 0408 csrr t0,mcycle  CP0 |                          |             |                 | ID-stall:RAW
+   2737 | 0288 mv s5,s0            | 0418 ret                 | 4| >040c sub s0,t0,s0       |                          | 0408 csrr t0,mcycle      |             | w0:t0           | IP-curflw(RAS/delay)
+   2738 | 028c mv s6,s1            |                          | 4| .0410 csrr s1,mhpmcounte | 040c sub s0,t0,s0    ALU |                          |             |                 | ID-stall:CP0/fence
+   2739 | 0290 jal 380             | 0288 mv s5,s0            | 4| .0410 csrr s1,mhpmcounte |                          | 040c sub s0,t0,s0        |             | w0:s0           | ID-stall:CP0/fence
+   2740 |                          | 028c mv s6,s1            | 6| >0410 csrr s1,mhpmcounte |                          |                          |             |                 | 
+   2741 | 0290 jal 380             | 028c mv s6,s1            | 4| .0414 sub s1,s1,s3       | 0410 csrr s1,mhpmcou CP0 |                          |             |                 | ID-stall:RAW,WAW
+   2742 | 0294 li t6,0             |                          | 6| >0414 sub s1,s1,s3       |                          | 0410 csrr s1,mhpmcounter |             | w0:s1           | 
+   2743 | 0298 mv a1,s5            | 0290 jal 380             | 4| >0418 ret                | 0414 sub s1,s1,s3    ALU |                          |             |                 | IP-redirect->0380
+   2744 | 0380 csrr s3,mhpmcounter |                          | 4| >0288 mv s5,s0           | 0418 ret             BJU | 0414 sub s1,s1,s3        |             | w0:s1           | 
+   2745 | 0384 csrr s0,mcycle      |                          | 2| >028c mv s6,s1           | 0288 mv s5,s0        ALU | 0418 ret                 |             | w0:zero         | 
+   2746 | 0388 addi a4,a4,1        | 0380 csrr s3,mhpmcounter | 0| >0290 jal 380            | 028c mv s6,s1        ALU | 0288 mv s5,s0            |             | w0:s5           | 
+   2747 | 038c addi a5,a5,1        | 0384 csrr s0,mcycle      | 0| .0380 csrr s3,mhpmcounte | 0290 jal 380         BJU | 028c mv s6,s1            |             | w0:s6           | ID-stall:CP0/fence
+   2748 | 0390 addi a6,a6,1        | 0388 addi a4,a4,1        | 2| .0380 csrr s3,mhpmcounte |                          | 0290 jal 380             |             | w0:ra           | ID-stall:CP0/fence
+   2749 | 0394 addi a7,a7,1        | 038c addi a5,a5,1        | 4| >0380 csrr s3,mhpmcounte |                          |                          |             |                 | 
+   2750 | 0398 addi a4,a4,1        | 0390 addi a6,a6,1        | 4| .0384 csrr s0,mcycle     | 0380 csrr s3,mhpmcou CP0 |                          |             |                 | ID-stall:CP0/fence
+   2751 |                          | 0394 addi a7,a7,1        | 6| .0384 csrr s0,mcycle     |                          | 0380 csrr s3,mhpmcounter |             | w0:s3           | ID-stall:CP0/fence
+   2752 |                          | 0394 addi a7,a7,1        | 6| >0384 csrr s0,mcycle     |                          |                          |             |                 | 
+   2753 | 0398 addi a4,a4,1        | 0394 addi a7,a7,1        | 4| >0388 addi a4,a4,1       | 0384 csrr s0,mcycle  CP0 |                          |             |                 | 
+   2754 | 039c addi a5,a5,1        |                          | 4| >038c addi a5,a5,1       | 0388 addi a4,a4,1    ALU | 0384 csrr s0,mcycle      |             | w0:s0           | 
+   2755 | 03a0 addi a6,a6,1        | 0398 addi a4,a4,1        | 2| >0390 addi a6,a6,1       | 038c addi a5,a5,1    ALU | 0388 addi a4,a4,1        |             | w0:a4           | 
+   2756 | 03a4 addi a7,a7,1        | 039c addi a5,a5,1        | 2| >0394 addi a7,a7,1       | 0390 addi a6,a6,1    ALU | 038c addi a5,a5,1        |             | w0:a5           | 
+   2757 | 03a8 addi a4,a4,1        | 03a0 addi a6,a6,1        | 2| >0398 addi a4,a4,1       | 0394 addi a7,a7,1    ALU | 0390 addi a6,a6,1        |             | w0:a6           | 
+   2758 | 03ac addi a5,a5,1        | 03a4 addi a7,a7,1        | 2| >039c addi a5,a5,1       | 0398 addi a4,a4,1    ALU | 0394 addi a7,a7,1        |             | w0:a7           | 
+   2759 | 03b0 addi a6,a6,1        | 03a8 addi a4,a4,1        | 2| >03a0 addi a6,a6,1       | 039c addi a5,a5,1    ALU | 0398 addi a4,a4,1        |             | w0:a4           | 
+   2760 | 03b4 addi a7,a7,1        | 03ac addi a5,a5,1        | 2| >03a4 addi a7,a7,1       | 03a0 addi a6,a6,1    ALU | 039c addi a5,a5,1        |             | w0:a5           | 
+   2761 | 03b8 addi a4,a4,1        | 03b0 addi a6,a6,1        | 2| >03a8 addi a4,a4,1       | 03a4 addi a7,a7,1    ALU | 03a0 addi a6,a6,1        |             | w0:a6           | 
+   2762 | 03bc addi a5,a5,1        | 03b4 addi a7,a7,1        | 2| >03ac addi a5,a5,1       | 03a8 addi a4,a4,1    ALU | 03a4 addi a7,a7,1        |             | w0:a7           | 
+   2763 | 03c0 addi a6,a6,1        | 03b8 addi a4,a4,1        | 2| >03b0 addi a6,a6,1       | 03ac addi a5,a5,1    ALU | 03a8 addi a4,a4,1        |             | w0:a4           | 
+   2764 | 03c4 addi a7,a7,1        | 03bc addi a5,a5,1        | 2| >03b4 addi a7,a7,1       | 03b0 addi a6,a6,1    ALU | 03ac addi a5,a5,1        |             | w0:a5           | 
+   2765 | 03c8 addi a4,a4,1        | 03c0 addi a6,a6,1        | 2| >03b8 addi a4,a4,1       | 03b4 addi a7,a7,1    ALU | 03b0 addi a6,a6,1        |             | w0:a6           | 
+   2766 | 03cc addi a5,a5,1        | 03c4 addi a7,a7,1        | 2| >03bc addi a5,a5,1       | 03b8 addi a4,a4,1    ALU | 03b4 addi a7,a7,1        |             | w0:a7           | 
+   2767 | 03d0 addi a6,a6,1        | 03c8 addi a4,a4,1        | 2| >03c0 addi a6,a6,1       | 03bc addi a5,a5,1    ALU | 03b8 addi a4,a4,1        |             | w0:a4           | 
+   2768 | 03d4 addi a7,a7,1        | 03cc addi a5,a5,1        | 2| >03c4 addi a7,a7,1       | 03c0 addi a6,a6,1    ALU | 03bc addi a5,a5,1        |             | w0:a5           | 
+   2769 | 03d8 addi a4,a4,1        | 03d0 addi a6,a6,1        | 2| >03c8 addi a4,a4,1       | 03c4 addi a7,a7,1    ALU | 03c0 addi a6,a6,1        |             | w0:a6           | 
+   2770 | 03dc addi a5,a5,1        | 03d4 addi a7,a7,1        | 2| >03cc addi a5,a5,1       | 03c8 addi a4,a4,1    ALU | 03c4 addi a7,a7,1        |             | w0:a7           | 
+   2771 | 03e0 addi a6,a6,1        | 03d8 addi a4,a4,1        | 2| >03d0 addi a6,a6,1       | 03cc addi a5,a5,1    ALU | 03c8 addi a4,a4,1        |             | w0:a4           | 
+   2772 | 03e4 addi a7,a7,1        | 03dc addi a5,a5,1        | 2| >03d4 addi a7,a7,1       | 03d0 addi a6,a6,1    ALU | 03cc addi a5,a5,1        |             | w0:a5           | 
+   2773 | 03e8 addi a4,a4,1        | 03e0 addi a6,a6,1        | 2| >03d8 addi a4,a4,1       | 03d4 addi a7,a7,1    ALU | 03d0 addi a6,a6,1        |             | w0:a6           | 
+   2774 | 03ec addi a5,a5,1        | 03e4 addi a7,a7,1        | 2| >03dc addi a5,a5,1       | 03d8 addi a4,a4,1    ALU | 03d4 addi a7,a7,1        |             | w0:a7           | 
+   2775 | 03f0 addi a6,a6,1        | 03e8 addi a4,a4,1        | 2| >03e0 addi a6,a6,1       | 03dc addi a5,a5,1    ALU | 03d8 addi a4,a4,1        |             | w0:a4           | 
+   2776 | 03f4 addi a7,a7,1        | 03ec addi a5,a5,1        | 2| >03e4 addi a7,a7,1       | 03e0 addi a6,a6,1    ALU | 03dc addi a5,a5,1        |             | w0:a5           | 
+   2777 | 03f8 addi a4,a4,1        | 03f0 addi a6,a6,1        | 2| >03e8 addi a4,a4,1       | 03e4 addi a7,a7,1    ALU | 03e0 addi a6,a6,1        |             | w0:a6           | 
+   2778 | 03fc addi a5,a5,1        | 03f4 addi a7,a7,1        | 2| >03ec addi a5,a5,1       | 03e8 addi a4,a4,1    ALU | 03e4 addi a7,a7,1        |             | w0:a7           | 
+   2779 | 0400 addi a6,a6,1        | 03f8 addi a4,a4,1        | 2| >03f0 addi a6,a6,1       | 03ec addi a5,a5,1    ALU | 03e8 addi a4,a4,1        |             | w0:a4           | 
+   2780 | 0404 addi a7,a7,1        | 03fc addi a5,a5,1        | 2| >03f4 addi a7,a7,1       | 03f0 addi a6,a6,1    ALU | 03ec addi a5,a5,1        |             | w0:a5           | 
+   2781 | 0408 csrr t0,mcycle      | 0400 addi a6,a6,1        | 2| >03f8 addi a4,a4,1       | 03f4 addi a7,a7,1    ALU | 03f0 addi a6,a6,1        |             | w0:a6           | 
+   2782 | 040c sub s0,t0,s0        | 0404 addi a7,a7,1        | 2| >03fc addi a5,a5,1       | 03f8 addi a4,a4,1    ALU | 03f4 addi a7,a7,1        |             | w0:a7           | 
+   2783 | 0410 csrr s1,mhpmcounter | 0408 csrr t0,mcycle      | 2| >0400 addi a6,a6,1       | 03fc addi a5,a5,1    ALU | 03f8 addi a4,a4,1        |             | w0:a4           | 
+   2784 | 0414 sub s1,s1,s3        | 040c sub s0,t0,s0        | 2| >0404 addi a7,a7,1       | 0400 addi a6,a6,1    ALU | 03fc addi a5,a5,1        |             | w0:a5           | 
+   2785 | 0418 ret                 | 0410 csrr s1,mhpmcounter | 2| .0408 csrr t0,mcycle     | 0404 addi a7,a7,1    ALU | 0400 addi a6,a6,1        |             | w0:a6           | ID-stall:CP0/fence
+   2786 | 041c nop                 | 0414 sub s1,s1,s3        | 4| .0408 csrr t0,mcycle     |                          | 0404 addi a7,a7,1        |             | w0:a7           | ID-stall:CP0/fence
+   2787 |                          | 0418 ret                 | 6| >0408 csrr t0,mcycle     |                          |                          |             |                 | IP-curflw(RAS/delay)
+   2788 | 0294 li t6,0             | 0418 ret                 | 4| .040c sub s0,t0,s0       | 0408 csrr t0,mcycle  CP0 |                          |             |                 | IP-curflw(RAS/delay) ID-stall:RAW
+   2789 | 0298 mv a1,s5            |                          | 6| >040c sub s0,t0,s0       |                          | 0408 csrr t0,mcycle      |             | w0:t0           | 
+   2790 | 029c li a0,1534          | 0294 li t6,0             | 4| .0410 csrr s1,mhpmcounte | 040c sub s0,t0,s0    ALU |                          |             |                 | ID-stall:CP0/fence
+   2791 |                          | 0298 mv a1,s5            | 6| .0410 csrr s1,mhpmcounte |                          | 040c sub s0,t0,s0        |             | w0:s0           | ID-stall:CP0/fence
+   2792 |                          | 0298 mv a1,s5            | 6| >0410 csrr s1,mhpmcounte |                          |                          |             |                 | 
+   2793 | 029c li a0,1534          | 0298 mv a1,s5            | 4| .0414 sub s1,s1,s3       | 0410 csrr s1,mhpmcou CP0 |                          |             |                 | ID-stall:RAW,WAW
+   2794 | 02a0 jal 21e             |                          | 6| >0414 sub s1,s1,s3       |                          | 0410 csrr s1,mhpmcounter |             | w0:s1           | 
+   2795 | 02a4 mv a1,s6            | 029c li a0,1534          | 4| >0418 ret                | 0414 sub s1,s1,s3    ALU |                          |             |                 | 
+   2796 | 02a8 li a0,1551          | 02a0 jal 21e             | 4| >0294 li t6,0            | 0418 ret             BJU | 0414 sub s1,s1,s3        |             | w0:s1           | IP-redirect->021e
+   2797 | 021e addi sp,sp,-16      |                          | 4| >0298 mv a1,s5           | 0294 li t6,0         ALU | 0418 ret                 |             | w0:zero         | 
+   2798 |                          |                          | 2| >0440 csrr s3,mhpmcounte | 0298 mv a1,s5        ALU | 0294 li t6,0             |             | w0:t6           | 
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 summary: cycles=140 retired=83 IPC=0.593 | icache_miss=3, ip_curflw=3, ip_redirect=2, retired=83, stall_CP0/fence=12, stall_RAW=4, stall_WAW=2
 
-================================================================================================================================================================
+================================================================================================================================================================================================
 MARK 2   cycles 4344 .. 4462  (119 cycles)
-================================================================================================================================================================
-    cyc | IF (fetch)               | IP (pred)                |IB| ID                       | EX1                      | RETIRE                   | events
-----------------------------------------------------------------------------------------------------------------------------------------------------------------
-   4344 |                          |                          | 0|                          |                          | 02cc jal 440             | I$-miss
-   4345 |                          |                          | 0|                          |                          |                          | 
-   4346 |                          |                          | 0|                          |                          |                          | 
-   4347 |                          |                          | 0|                          |                          |                          | 
-   4348 |                          |                          | 0|                          |                          |                          | 
-   4349 |                          |                          | 0|                          |                          |                          | 
-   4350 |                          | 0440 csrr s3,mhpmcounter | 0| >0440 csrr s3,mhpmcounte |                          |                          | 
-   4351 |                          |                          | 0|                          | 0440 csrr s3,mhpmcou CP0 |                          | 
-   4352 |                          |                          | 0|                          |                          | 0440 csrr s3,mhpmcounter | 
-   4353 |                          |                          | 0|                          |                          |                          | 
-   4354 |                          |                          | 0|                          |                          |                          | 
-   4355 |                          |                          | 0|                          |                          |                          | 
-   4356 | 0444 csrr s0,mcycle      |                          | 0|                          |                          |                          | 
-   4357 | 0448 addi a4,a4,1        |                          | 0|                          |                          |                          | 
-   4358 | 044c addi a2,a2,1        | 0444 csrr s0,mcycle      | 0| >0444 csrr s0,mcycle     |                          |                          | 
-   4359 | 0450 addi a4,a4,1        | 0448 addi a4,a4,1        | 0| >0448 addi a4,a4,1       | 0444 csrr s0,mcycle  CP0 |                          | 
-   4360 | 0454 addi a2,a2,1        | 044c addi a2,a2,1        | 0| >044a addi a5,a5,1       | 0448 addi a4,a4,1    ALU | 0444 csrr s0,mcycle      | 
-   4361 | 0458 addi a4,a4,1        | 0450 addi a4,a4,1        | 1| >044c addi a2,a2,1       | 044a addi a5,a5,1    ALU | 0448 addi a4,a4,1        | 
-   4362 | 045c addi a2,a2,1        | 0454 addi a2,a2,1        | 2| >044e addi a3,a3,1       | 044c addi a2,a2,1    ALU | 044a addi a5,a5,1        | 
-   4363 | 0460 addi a4,a4,1        | 0458 addi a4,a4,1        | 3| >0450 addi a4,a4,1       | 044e addi a3,a3,1    ALU | 044c addi a2,a2,1        | 
-   4364 | 0464 addi a2,a2,1        | 045c addi a2,a2,1        | 4| >0452 addi a5,a5,1       | 0450 addi a4,a4,1    ALU | 044e addi a3,a3,1        | 
-   4365 |                          | 0460 addi a4,a4,1        | 5| >0454 addi a2,a2,1       | 0452 addi a5,a5,1    ALU | 0450 addi a4,a4,1        | 
-   4366 | 0464 addi a2,a2,1        | 0460 addi a4,a4,1        | 4| >0456 addi a3,a3,1       | 0454 addi a2,a2,1    ALU | 0452 addi a5,a5,1        | 
-   4367 | 0468 addi a4,a4,1        |                          | 5| >0458 addi a4,a4,1       | 0456 addi a3,a3,1    ALU | 0454 addi a2,a2,1        | 
-   4368 | 046c addi a2,a2,1        | 0464 addi a2,a2,1        | 4| >045a addi a5,a5,1       | 0458 addi a4,a4,1    ALU | 0456 addi a3,a3,1        | 
-   4369 |                          | 0468 addi a4,a4,1        | 5| >045c addi a2,a2,1       | 045a addi a5,a5,1    ALU | 0458 addi a4,a4,1        | 
-   4370 | 046c addi a2,a2,1        | 0468 addi a4,a4,1        | 4| >045e addi a3,a3,1       | 045c addi a2,a2,1    ALU | 045a addi a5,a5,1        | 
-   4371 | 0470 addi a4,a4,1        |                          | 5| >0460 addi a4,a4,1       | 045e addi a3,a3,1    ALU | 045c addi a2,a2,1        | 
-   4372 | 0474 addi a2,a2,1        | 046c addi a2,a2,1        | 4| >0462 addi a5,a5,1       | 0460 addi a4,a4,1    ALU | 045e addi a3,a3,1        | 
-   4373 |                          | 0470 addi a4,a4,1        | 5| >0464 addi a2,a2,1       | 0462 addi a5,a5,1    ALU | 0460 addi a4,a4,1        | 
-   4374 | 0474 addi a2,a2,1        | 0470 addi a4,a4,1        | 4| >0466 addi a3,a3,1       | 0464 addi a2,a2,1    ALU | 0462 addi a5,a5,1        | 
-   4375 | 0478 addi a4,a4,1        |                          | 5| >0468 addi a4,a4,1       | 0466 addi a3,a3,1    ALU | 0464 addi a2,a2,1        | 
-   4376 | 047c addi a2,a2,1        | 0474 addi a2,a2,1        | 4| >046a addi a5,a5,1       | 0468 addi a4,a4,1    ALU | 0466 addi a3,a3,1        | 
-   4377 |                          | 0478 addi a4,a4,1        | 5| >046c addi a2,a2,1       | 046a addi a5,a5,1    ALU | 0468 addi a4,a4,1        | 
-   4378 | 047c addi a2,a2,1        | 0478 addi a4,a4,1        | 4| >046e addi a3,a3,1       | 046c addi a2,a2,1    ALU | 046a addi a5,a5,1        | 
-   4379 | 0480 addi a4,a4,1        |                          | 5| >0470 addi a4,a4,1       | 046e addi a3,a3,1    ALU | 046c addi a2,a2,1        | 
-   4380 |                          | 047c addi a2,a2,1        | 4| >0472 addi a5,a5,1       | 0470 addi a4,a4,1    ALU | 046e addi a3,a3,1        | 
-   4381 |                          |                          | 5| >0474 addi a2,a2,1       | 0472 addi a5,a5,1    ALU | 0470 addi a4,a4,1        | I$-miss
-   4382 |                          |                          | 4| >0476 addi a3,a3,1       | 0474 addi a2,a2,1    ALU | 0472 addi a5,a5,1        | 
-   4383 |                          |                          | 3| >0478 addi a4,a4,1       | 0476 addi a3,a3,1    ALU | 0474 addi a2,a2,1        | 
-   4384 |                          |                          | 2| >047a addi a5,a5,1       | 0478 addi a4,a4,1    ALU | 0476 addi a3,a3,1        | 
-   4385 |                          |                          | 1| >047c addi a2,a2,1       | 047a addi a5,a5,1    ALU | 0478 addi a4,a4,1        | 
-   4386 |                          |                          | 0| >047e addi a3,a3,1       | 047c addi a2,a2,1    ALU | 047a addi a5,a5,1        | 
-   4387 |                          | 0480 addi a4,a4,1        | 0| >0480 addi a4,a4,1       | 047e addi a3,a3,1    ALU | 047c addi a2,a2,1        | 
-   4388 |                          |                          | 0| >0482 addi a5,a5,1       | 0480 addi a4,a4,1    ALU | 047e addi a3,a3,1        | 
-   4389 |                          |                          | 0|                          | 0482 addi a5,a5,1    ALU | 0480 addi a4,a4,1        | 
-   4390 |                          |                          | 0|                          |                          | 0482 addi a5,a5,1        | 
-   4391 |                          |                          | 0|                          |                          |                          | 
-   4392 |                          |                          | 0|                          |                          |                          | 
-   4393 | 0484 addi a2,a2,1        |                          | 0|                          |                          |                          | 
-   4394 | 0488 csrr t0,mcycle      |                          | 0|                          |                          |                          | 
-   4395 | 048c sub s0,t0,s0        | 0484 addi a2,a2,1        | 0| >0484 addi a2,a2,1       |                          |                          | 
-   4396 | 0490 csrr s1,mhpmcounter | 0488 csrr t0,mcycle      | 0| >0486 addi a3,a3,1       | 0484 addi a2,a2,1    ALU |                          | 
-   4397 | 0494 sub s1,s1,s3        | 048c sub s0,t0,s0        | 0| .0488 csrr t0,mcycle     | 0486 addi a3,a3,1    ALU | 0484 addi a2,a2,1        | ID-stall:CP0/fence
-   4398 | 0498 ret                 | 0490 csrr s1,mhpmcounter | 2| .0488 csrr t0,mcycle     |                          | 0486 addi a3,a3,1        | ID-stall:CP0/fence
-   4399 | 049c nop                 | 0494 sub s1,s1,s3        | 4| >0488 csrr t0,mcycle     |                          |                          | 
-   4400 | 02d0 mv s5,s0            | 0498 ret                 | 4| .048c sub s0,t0,s0       | 0488 csrr t0,mcycle  CP0 |                          | IP-curflw(RAS/delay) ID-stall:RAW
-   4401 | 02d4 mv s6,s1            |                          | 6| >048c sub s0,t0,s0       |                          | 0488 csrr t0,mcycle      | 
-   4402 | 02d8 jal 440             | 02d0 mv s5,s0            | 4| .0490 csrr s1,mhpmcounte | 048c sub s0,t0,s0    ALU |                          | ID-stall:CP0/fence
-   4403 |                          | 02d4 mv s6,s1            | 6| .0490 csrr s1,mhpmcounte |                          | 048c sub s0,t0,s0        | ID-stall:CP0/fence
-   4404 |                          | 02d4 mv s6,s1            | 6| >0490 csrr s1,mhpmcounte |                          |                          | 
-   4405 | 02d8 jal 440             | 02d4 mv s6,s1            | 4| .0494 sub s1,s1,s3       | 0490 csrr s1,mhpmcou CP0 |                          | ID-stall:RAW,WAW
-   4406 | 02dc li t6,0             |                          | 6| >0494 sub s1,s1,s3       |                          | 0490 csrr s1,mhpmcounter | 
-   4407 | 02e0 mv a1,s5            | 02d8 jal 440             | 4| >0498 ret                | 0494 sub s1,s1,s3    ALU |                          | IP-redirect->0440
-   4408 | 0440 csrr s3,mhpmcounter |                          | 4| >02d0 mv s5,s0           | 0498 ret             BJU | 0494 sub s1,s1,s3        | 
-   4409 | 0444 csrr s0,mcycle      |                          | 2| >02d4 mv s6,s1           | 02d0 mv s5,s0        ALU | 0498 ret                 | 
-   4410 | 0448 addi a4,a4,1        | 0440 csrr s3,mhpmcounter | 0| >02d8 jal 440            | 02d4 mv s6,s1        ALU | 02d0 mv s5,s0            | 
-   4411 | 044c addi a2,a2,1        | 0444 csrr s0,mcycle      | 0| .0440 csrr s3,mhpmcounte | 02d8 jal 440         BJU | 02d4 mv s6,s1            | ID-stall:CP0/fence
-   4412 | 0450 addi a4,a4,1        | 0448 addi a4,a4,1        | 2| .0440 csrr s3,mhpmcounte |                          | 02d8 jal 440             | ID-stall:CP0/fence
-   4413 | 0454 addi a2,a2,1        | 044c addi a2,a2,1        | 4| >0440 csrr s3,mhpmcounte |                          |                          | 
-   4414 | 0458 addi a4,a4,1        | 0450 addi a4,a4,1        | 4| .0444 csrr s0,mcycle     | 0440 csrr s3,mhpmcou CP0 |                          | ID-stall:CP0/fence
-   4415 |                          | 0454 addi a2,a2,1        | 6| .0444 csrr s0,mcycle     |                          | 0440 csrr s3,mhpmcounter | ID-stall:CP0/fence
-   4416 |                          | 0454 addi a2,a2,1        | 6| >0444 csrr s0,mcycle     |                          |                          | 
-   4417 |                          | 0454 addi a2,a2,1        | 5| >0448 addi a4,a4,1       | 0444 csrr s0,mcycle  CP0 |                          | 
-   4418 | 0458 addi a4,a4,1        | 0454 addi a2,a2,1        | 4| >044a addi a5,a5,1       | 0448 addi a4,a4,1    ALU | 0444 csrr s0,mcycle      | 
-   4419 | 045c addi a2,a2,1        |                          | 5| >044c addi a2,a2,1       | 044a addi a5,a5,1    ALU | 0448 addi a4,a4,1        | 
-   4420 | 0460 addi a4,a4,1        | 0458 addi a4,a4,1        | 4| >044e addi a3,a3,1       | 044c addi a2,a2,1    ALU | 044a addi a5,a5,1        | 
-   4421 |                          | 045c addi a2,a2,1        | 5| >0450 addi a4,a4,1       | 044e addi a3,a3,1    ALU | 044c addi a2,a2,1        | 
-   4422 | 0460 addi a4,a4,1        | 045c addi a2,a2,1        | 4| >0452 addi a5,a5,1       | 0450 addi a4,a4,1    ALU | 044e addi a3,a3,1        | 
-   4423 | 0464 addi a2,a2,1        |                          | 5| >0454 addi a2,a2,1       | 0452 addi a5,a5,1    ALU | 0450 addi a4,a4,1        | 
-   4424 | 0468 addi a4,a4,1        | 0460 addi a4,a4,1        | 4| >0456 addi a3,a3,1       | 0454 addi a2,a2,1    ALU | 0452 addi a5,a5,1        | 
-   4425 |                          | 0464 addi a2,a2,1        | 5| >0458 addi a4,a4,1       | 0456 addi a3,a3,1    ALU | 0454 addi a2,a2,1        | 
-   4426 | 0468 addi a4,a4,1        | 0464 addi a2,a2,1        | 4| >045a addi a5,a5,1       | 0458 addi a4,a4,1    ALU | 0456 addi a3,a3,1        | 
-   4427 | 046c addi a2,a2,1        |                          | 5| >045c addi a2,a2,1       | 045a addi a5,a5,1    ALU | 0458 addi a4,a4,1        | 
-   4428 | 0470 addi a4,a4,1        | 0468 addi a4,a4,1        | 4| >045e addi a3,a3,1       | 045c addi a2,a2,1    ALU | 045a addi a5,a5,1        | 
-   4429 |                          | 046c addi a2,a2,1        | 5| >0460 addi a4,a4,1       | 045e addi a3,a3,1    ALU | 045c addi a2,a2,1        | 
-   4430 | 0470 addi a4,a4,1        | 046c addi a2,a2,1        | 4| >0462 addi a5,a5,1       | 0460 addi a4,a4,1    ALU | 045e addi a3,a3,1        | 
-   4431 | 0474 addi a2,a2,1        |                          | 5| >0464 addi a2,a2,1       | 0462 addi a5,a5,1    ALU | 0460 addi a4,a4,1        | 
-   4432 | 0478 addi a4,a4,1        | 0470 addi a4,a4,1        | 4| >0466 addi a3,a3,1       | 0464 addi a2,a2,1    ALU | 0462 addi a5,a5,1        | 
-   4433 |                          | 0474 addi a2,a2,1        | 5| >0468 addi a4,a4,1       | 0466 addi a3,a3,1    ALU | 0464 addi a2,a2,1        | 
-   4434 | 0478 addi a4,a4,1        | 0474 addi a2,a2,1        | 4| >046a addi a5,a5,1       | 0468 addi a4,a4,1    ALU | 0466 addi a3,a3,1        | 
-   4435 | 047c addi a2,a2,1        |                          | 5| >046c addi a2,a2,1       | 046a addi a5,a5,1    ALU | 0468 addi a4,a4,1        | 
-   4436 | 0480 addi a4,a4,1        | 0478 addi a4,a4,1        | 4| >046e addi a3,a3,1       | 046c addi a2,a2,1    ALU | 046a addi a5,a5,1        | 
-   4437 |                          | 047c addi a2,a2,1        | 5| >0470 addi a4,a4,1       | 046e addi a3,a3,1    ALU | 046c addi a2,a2,1        | 
-   4438 | 0480 addi a4,a4,1        | 047c addi a2,a2,1        | 4| >0472 addi a5,a5,1       | 0470 addi a4,a4,1    ALU | 046e addi a3,a3,1        | 
-   4439 | 0484 addi a2,a2,1        |                          | 5| >0474 addi a2,a2,1       | 0472 addi a5,a5,1    ALU | 0470 addi a4,a4,1        | 
-   4440 | 0488 csrr t0,mcycle      | 0480 addi a4,a4,1        | 4| >0476 addi a3,a3,1       | 0474 addi a2,a2,1    ALU | 0472 addi a5,a5,1        | 
-   4441 |                          | 0484 addi a2,a2,1        | 5| >0478 addi a4,a4,1       | 0476 addi a3,a3,1    ALU | 0474 addi a2,a2,1        | 
-   4442 | 0488 csrr t0,mcycle      | 0484 addi a2,a2,1        | 4| >047a addi a5,a5,1       | 0478 addi a4,a4,1    ALU | 0476 addi a3,a3,1        | 
-   4443 | 048c sub s0,t0,s0        |                          | 5| >047c addi a2,a2,1       | 047a addi a5,a5,1    ALU | 0478 addi a4,a4,1        | 
-   4444 | 0490 csrr s1,mhpmcounter | 0488 csrr t0,mcycle      | 4| >047e addi a3,a3,1       | 047c addi a2,a2,1    ALU | 047a addi a5,a5,1        | 
-   4445 |                          | 048c sub s0,t0,s0        | 5| >0480 addi a4,a4,1       | 047e addi a3,a3,1    ALU | 047c addi a2,a2,1        | 
-   4446 | 0490 csrr s1,mhpmcounter | 048c sub s0,t0,s0        | 4| >0482 addi a5,a5,1       | 0480 addi a4,a4,1    ALU | 047e addi a3,a3,1        | 
-   4447 | 0494 sub s1,s1,s3        |                          | 5| >0484 addi a2,a2,1       | 0482 addi a5,a5,1    ALU | 0480 addi a4,a4,1        | 
-   4448 | 0498 ret                 | 0490 csrr s1,mhpmcounter | 4| >0486 addi a3,a3,1       | 0484 addi a2,a2,1    ALU | 0482 addi a5,a5,1        | 
-   4449 | 049c nop                 | 0494 sub s1,s1,s3        | 4| .0488 csrr t0,mcycle     | 0486 addi a3,a3,1    ALU | 0484 addi a2,a2,1        | ID-stall:CP0/fence
-   4450 |                          | 0498 ret                 | 6| .0488 csrr t0,mcycle     |                          | 0486 addi a3,a3,1        | IP-curflw(RAS/delay) ID-stall:CP0/fence
-   4451 |                          | 0498 ret                 | 6| >0488 csrr t0,mcycle     |                          |                          | IP-curflw(RAS/delay)
-   4452 | 02dc li t6,0             | 0498 ret                 | 4| .048c sub s0,t0,s0       | 0488 csrr t0,mcycle  CP0 |                          | IP-curflw(RAS/delay) ID-stall:RAW
-   4453 | 02e0 mv a1,s5            |                          | 6| >048c sub s0,t0,s0       |                          | 0488 csrr t0,mcycle      | 
-   4454 | 02e4 li a0,1602          | 02dc li t6,0             | 4| .0490 csrr s1,mhpmcounte | 048c sub s0,t0,s0    ALU |                          | ID-stall:CP0/fence
-   4455 |                          | 02e0 mv a1,s5            | 6| .0490 csrr s1,mhpmcounte |                          | 048c sub s0,t0,s0        | ID-stall:CP0/fence
-   4456 |                          | 02e0 mv a1,s5            | 6| >0490 csrr s1,mhpmcounte |                          |                          | 
-   4457 | 02e4 li a0,1602          | 02e0 mv a1,s5            | 4| .0494 sub s1,s1,s3       | 0490 csrr s1,mhpmcou CP0 |                          | ID-stall:RAW,WAW
-   4458 | 02e8 jal 21e             |                          | 6| >0494 sub s1,s1,s3       |                          | 0490 csrr s1,mhpmcounter | 
-   4459 | 02ec mv a1,s6            | 02e4 li a0,1602          | 4| >0498 ret                | 0494 sub s1,s1,s3    ALU |                          | 
-   4460 | 02f0 li a0,1618          | 02e8 jal 21e             | 4| >02dc li t6,0            | 0498 ret             BJU | 0494 sub s1,s1,s3        | IP-redirect->021e
-   4461 | 021e addi sp,sp,-16      |                          | 4| >02e0 mv a1,s5           | 02dc li t6,0         ALU | 0498 ret                 | 
-   4462 | 0220 sd ra,0(sp)         |                          | 2| >04c0 csrr s3,mhpmcounte | 02e0 mv a1,s5        ALU | 02dc li t6,0             | 
-----------------------------------------------------------------------------------------------------------------------------------------------------------------
+================================================================================================================================================================================================
+    cyc | IF (fetch)               | IP (pred)                |IB| ID                       | EX1                      | RETIRE                   | BACK        | WB              | events
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+   4344 |                          |                          | 0|                          |                          | 02cc jal 440             |             | w0:ra           | I$-miss
+   4345 |                          |                          | 0|                          |                          |                          |             |                 | 
+   4346 |                          |                          | 0|                          |                          |                          |             |                 | 
+   4347 |                          |                          | 0|                          |                          |                          |             |                 | 
+   4348 |                          |                          | 0|                          |                          |                          |             |                 | 
+   4349 |                          |                          | 0|                          |                          |                          |             |                 | 
+   4350 |                          | 0440 csrr s3,mhpmcounter | 0| >0440 csrr s3,mhpmcounte |                          |                          |             |                 | 
+   4351 |                          |                          | 0|                          | 0440 csrr s3,mhpmcou CP0 |                          |             |                 | 
+   4352 |                          |                          | 0|                          |                          | 0440 csrr s3,mhpmcounter |             | w0:s3           | 
+   4353 |                          |                          | 0|                          |                          |                          |             |                 | 
+   4354 |                          |                          | 0|                          |                          |                          |             |                 | 
+   4355 |                          |                          | 0|                          |                          |                          |             |                 | 
+   4356 | 0444 csrr s0,mcycle      |                          | 0|                          |                          |                          |             |                 | 
+   4357 | 0448 addi a4,a4,1        |                          | 0|                          |                          |                          |             |                 | 
+   4358 | 044c addi a2,a2,1        | 0444 csrr s0,mcycle      | 0| >0444 csrr s0,mcycle     |                          |                          |             |                 | 
+   4359 | 0450 addi a4,a4,1        | 0448 addi a4,a4,1        | 0| >0448 addi a4,a4,1       | 0444 csrr s0,mcycle  CP0 |                          |             |                 | 
+   4360 | 0454 addi a2,a2,1        | 044c addi a2,a2,1        | 0| >044a addi a5,a5,1       | 0448 addi a4,a4,1    ALU | 0444 csrr s0,mcycle      |             | w0:s0           | 
+   4361 | 0458 addi a4,a4,1        | 0450 addi a4,a4,1        | 1| >044c addi a2,a2,1       | 044a addi a5,a5,1    ALU | 0448 addi a4,a4,1        |             | w0:a4           | 
+   4362 | 045c addi a2,a2,1        | 0454 addi a2,a2,1        | 2| >044e addi a3,a3,1       | 044c addi a2,a2,1    ALU | 044a addi a5,a5,1        |             | w0:a5           | 
+   4363 | 0460 addi a4,a4,1        | 0458 addi a4,a4,1        | 3| >0450 addi a4,a4,1       | 044e addi a3,a3,1    ALU | 044c addi a2,a2,1        |             | w0:a2           | 
+   4364 | 0464 addi a2,a2,1        | 045c addi a2,a2,1        | 4| >0452 addi a5,a5,1       | 0450 addi a4,a4,1    ALU | 044e addi a3,a3,1        |             | w0:a3           | 
+   4365 |                          | 0460 addi a4,a4,1        | 5| >0454 addi a2,a2,1       | 0452 addi a5,a5,1    ALU | 0450 addi a4,a4,1        |             | w0:a4           | 
+   4366 | 0464 addi a2,a2,1        | 0460 addi a4,a4,1        | 4| >0456 addi a3,a3,1       | 0454 addi a2,a2,1    ALU | 0452 addi a5,a5,1        |             | w0:a5           | 
+   4367 | 0468 addi a4,a4,1        |                          | 5| >0458 addi a4,a4,1       | 0456 addi a3,a3,1    ALU | 0454 addi a2,a2,1        |             | w0:a2           | 
+   4368 | 046c addi a2,a2,1        | 0464 addi a2,a2,1        | 4| >045a addi a5,a5,1       | 0458 addi a4,a4,1    ALU | 0456 addi a3,a3,1        |             | w0:a3           | 
+   4369 |                          | 0468 addi a4,a4,1        | 5| >045c addi a2,a2,1       | 045a addi a5,a5,1    ALU | 0458 addi a4,a4,1        |             | w0:a4           | 
+   4370 | 046c addi a2,a2,1        | 0468 addi a4,a4,1        | 4| >045e addi a3,a3,1       | 045c addi a2,a2,1    ALU | 045a addi a5,a5,1        |             | w0:a5           | 
+   4371 | 0470 addi a4,a4,1        |                          | 5| >0460 addi a4,a4,1       | 045e addi a3,a3,1    ALU | 045c addi a2,a2,1        |             | w0:a2           | 
+   4372 | 0474 addi a2,a2,1        | 046c addi a2,a2,1        | 4| >0462 addi a5,a5,1       | 0460 addi a4,a4,1    ALU | 045e addi a3,a3,1        |             | w0:a3           | 
+   4373 |                          | 0470 addi a4,a4,1        | 5| >0464 addi a2,a2,1       | 0462 addi a5,a5,1    ALU | 0460 addi a4,a4,1        |             | w0:a4           | 
+   4374 | 0474 addi a2,a2,1        | 0470 addi a4,a4,1        | 4| >0466 addi a3,a3,1       | 0464 addi a2,a2,1    ALU | 0462 addi a5,a5,1        |             | w0:a5           | 
+   4375 | 0478 addi a4,a4,1        |                          | 5| >0468 addi a4,a4,1       | 0466 addi a3,a3,1    ALU | 0464 addi a2,a2,1        |             | w0:a2           | 
+   4376 | 047c addi a2,a2,1        | 0474 addi a2,a2,1        | 4| >046a addi a5,a5,1       | 0468 addi a4,a4,1    ALU | 0466 addi a3,a3,1        |             | w0:a3           | 
+   4377 |                          | 0478 addi a4,a4,1        | 5| >046c addi a2,a2,1       | 046a addi a5,a5,1    ALU | 0468 addi a4,a4,1        |             | w0:a4           | 
+   4378 | 047c addi a2,a2,1        | 0478 addi a4,a4,1        | 4| >046e addi a3,a3,1       | 046c addi a2,a2,1    ALU | 046a addi a5,a5,1        |             | w0:a5           | 
+   4379 | 0480 addi a4,a4,1        |                          | 5| >0470 addi a4,a4,1       | 046e addi a3,a3,1    ALU | 046c addi a2,a2,1        |             | w0:a2           | 
+   4380 |                          | 047c addi a2,a2,1        | 4| >0472 addi a5,a5,1       | 0470 addi a4,a4,1    ALU | 046e addi a3,a3,1        |             | w0:a3           | 
+   4381 |                          |                          | 5| >0474 addi a2,a2,1       | 0472 addi a5,a5,1    ALU | 0470 addi a4,a4,1        |             | w0:a4           | I$-miss
+   4382 |                          |                          | 4| >0476 addi a3,a3,1       | 0474 addi a2,a2,1    ALU | 0472 addi a5,a5,1        |             | w0:a5           | 
+   4383 |                          |                          | 3| >0478 addi a4,a4,1       | 0476 addi a3,a3,1    ALU | 0474 addi a2,a2,1        |             | w0:a2           | 
+   4384 |                          |                          | 2| >047a addi a5,a5,1       | 0478 addi a4,a4,1    ALU | 0476 addi a3,a3,1        |             | w0:a3           | 
+   4385 |                          |                          | 1| >047c addi a2,a2,1       | 047a addi a5,a5,1    ALU | 0478 addi a4,a4,1        |             | w0:a4           | 
+   4386 |                          |                          | 0| >047e addi a3,a3,1       | 047c addi a2,a2,1    ALU | 047a addi a5,a5,1        |             | w0:a5           | 
+   4387 |                          | 0480 addi a4,a4,1        | 0| >0480 addi a4,a4,1       | 047e addi a3,a3,1    ALU | 047c addi a2,a2,1        |             | w0:a2           | 
+   4388 |                          |                          | 0| >0482 addi a5,a5,1       | 0480 addi a4,a4,1    ALU | 047e addi a3,a3,1        |             | w0:a3           | 
+   4389 |                          |                          | 0|                          | 0482 addi a5,a5,1    ALU | 0480 addi a4,a4,1        |             | w0:a4           | 
+   4390 |                          |                          | 0|                          |                          | 0482 addi a5,a5,1        |             | w0:a5           | 
+   4391 |                          |                          | 0|                          |                          |                          |             |                 | 
+   4392 |                          |                          | 0|                          |                          |                          |             |                 | 
+   4393 | 0484 addi a2,a2,1        |                          | 0|                          |                          |                          |             |                 | 
+   4394 | 0488 csrr t0,mcycle      |                          | 0|                          |                          |                          |             |                 | 
+   4395 | 048c sub s0,t0,s0        | 0484 addi a2,a2,1        | 0| >0484 addi a2,a2,1       |                          |                          |             |                 | 
+   4396 | 0490 csrr s1,mhpmcounter | 0488 csrr t0,mcycle      | 0| >0486 addi a3,a3,1       | 0484 addi a2,a2,1    ALU |                          |             |                 | 
+   4397 | 0494 sub s1,s1,s3        | 048c sub s0,t0,s0        | 0| .0488 csrr t0,mcycle     | 0486 addi a3,a3,1    ALU | 0484 addi a2,a2,1        |             | w0:a2           | ID-stall:CP0/fence
+   4398 | 0498 ret                 | 0490 csrr s1,mhpmcounter | 2| .0488 csrr t0,mcycle     |                          | 0486 addi a3,a3,1        |             | w0:a3           | ID-stall:CP0/fence
+   4399 | 049c nop                 | 0494 sub s1,s1,s3        | 4| >0488 csrr t0,mcycle     |                          |                          |             |                 | 
+   4400 | 02d0 mv s5,s0            | 0498 ret                 | 4| .048c sub s0,t0,s0       | 0488 csrr t0,mcycle  CP0 |                          |             |                 | IP-curflw(RAS/delay) ID-stall:RAW
+   4401 | 02d4 mv s6,s1            |                          | 6| >048c sub s0,t0,s0       |                          | 0488 csrr t0,mcycle      |             | w0:t0           | 
+   4402 | 02d8 jal 440             | 02d0 mv s5,s0            | 4| .0490 csrr s1,mhpmcounte | 048c sub s0,t0,s0    ALU |                          |             |                 | ID-stall:CP0/fence
+   4403 |                          | 02d4 mv s6,s1            | 6| .0490 csrr s1,mhpmcounte |                          | 048c sub s0,t0,s0        |             | w0:s0           | ID-stall:CP0/fence
+   4404 |                          | 02d4 mv s6,s1            | 6| >0490 csrr s1,mhpmcounte |                          |                          |             |                 | 
+   4405 | 02d8 jal 440             | 02d4 mv s6,s1            | 4| .0494 sub s1,s1,s3       | 0490 csrr s1,mhpmcou CP0 |                          |             |                 | ID-stall:RAW,WAW
+   4406 | 02dc li t6,0             |                          | 6| >0494 sub s1,s1,s3       |                          | 0490 csrr s1,mhpmcounter |             | w0:s1           | 
+   4407 | 02e0 mv a1,s5            | 02d8 jal 440             | 4| >0498 ret                | 0494 sub s1,s1,s3    ALU |                          |             |                 | IP-redirect->0440
+   4408 | 0440 csrr s3,mhpmcounter |                          | 4| >02d0 mv s5,s0           | 0498 ret             BJU | 0494 sub s1,s1,s3        |             | w0:s1           | 
+   4409 | 0444 csrr s0,mcycle      |                          | 2| >02d4 mv s6,s1           | 02d0 mv s5,s0        ALU | 0498 ret                 |             | w0:zero         | 
+   4410 | 0448 addi a4,a4,1        | 0440 csrr s3,mhpmcounter | 0| >02d8 jal 440            | 02d4 mv s6,s1        ALU | 02d0 mv s5,s0            |             | w0:s5           | 
+   4411 | 044c addi a2,a2,1        | 0444 csrr s0,mcycle      | 0| .0440 csrr s3,mhpmcounte | 02d8 jal 440         BJU | 02d4 mv s6,s1            |             | w0:s6           | ID-stall:CP0/fence
+   4412 | 0450 addi a4,a4,1        | 0448 addi a4,a4,1        | 2| .0440 csrr s3,mhpmcounte |                          | 02d8 jal 440             |             | w0:ra           | ID-stall:CP0/fence
+   4413 | 0454 addi a2,a2,1        | 044c addi a2,a2,1        | 4| >0440 csrr s3,mhpmcounte |                          |                          |             |                 | 
+   4414 | 0458 addi a4,a4,1        | 0450 addi a4,a4,1        | 4| .0444 csrr s0,mcycle     | 0440 csrr s3,mhpmcou CP0 |                          |             |                 | ID-stall:CP0/fence
+   4415 |                          | 0454 addi a2,a2,1        | 6| .0444 csrr s0,mcycle     |                          | 0440 csrr s3,mhpmcounter |             | w0:s3           | ID-stall:CP0/fence
+   4416 |                          | 0454 addi a2,a2,1        | 6| >0444 csrr s0,mcycle     |                          |                          |             |                 | 
+   4417 |                          | 0454 addi a2,a2,1        | 5| >0448 addi a4,a4,1       | 0444 csrr s0,mcycle  CP0 |                          |             |                 | 
+   4418 | 0458 addi a4,a4,1        | 0454 addi a2,a2,1        | 4| >044a addi a5,a5,1       | 0448 addi a4,a4,1    ALU | 0444 csrr s0,mcycle      |             | w0:s0           | 
+   4419 | 045c addi a2,a2,1        |                          | 5| >044c addi a2,a2,1       | 044a addi a5,a5,1    ALU | 0448 addi a4,a4,1        |             | w0:a4           | 
+   4420 | 0460 addi a4,a4,1        | 0458 addi a4,a4,1        | 4| >044e addi a3,a3,1       | 044c addi a2,a2,1    ALU | 044a addi a5,a5,1        |             | w0:a5           | 
+   4421 |                          | 045c addi a2,a2,1        | 5| >0450 addi a4,a4,1       | 044e addi a3,a3,1    ALU | 044c addi a2,a2,1        |             | w0:a2           | 
+   4422 | 0460 addi a4,a4,1        | 045c addi a2,a2,1        | 4| >0452 addi a5,a5,1       | 0450 addi a4,a4,1    ALU | 044e addi a3,a3,1        |             | w0:a3           | 
+   4423 | 0464 addi a2,a2,1        |                          | 5| >0454 addi a2,a2,1       | 0452 addi a5,a5,1    ALU | 0450 addi a4,a4,1        |             | w0:a4           | 
+   4424 | 0468 addi a4,a4,1        | 0460 addi a4,a4,1        | 4| >0456 addi a3,a3,1       | 0454 addi a2,a2,1    ALU | 0452 addi a5,a5,1        |             | w0:a5           | 
+   4425 |                          | 0464 addi a2,a2,1        | 5| >0458 addi a4,a4,1       | 0456 addi a3,a3,1    ALU | 0454 addi a2,a2,1        |             | w0:a2           | 
+   4426 | 0468 addi a4,a4,1        | 0464 addi a2,a2,1        | 4| >045a addi a5,a5,1       | 0458 addi a4,a4,1    ALU | 0456 addi a3,a3,1        |             | w0:a3           | 
+   4427 | 046c addi a2,a2,1        |                          | 5| >045c addi a2,a2,1       | 045a addi a5,a5,1    ALU | 0458 addi a4,a4,1        |             | w0:a4           | 
+   4428 | 0470 addi a4,a4,1        | 0468 addi a4,a4,1        | 4| >045e addi a3,a3,1       | 045c addi a2,a2,1    ALU | 045a addi a5,a5,1        |             | w0:a5           | 
+   4429 |                          | 046c addi a2,a2,1        | 5| >0460 addi a4,a4,1       | 045e addi a3,a3,1    ALU | 045c addi a2,a2,1        |             | w0:a2           | 
+   4430 | 0470 addi a4,a4,1        | 046c addi a2,a2,1        | 4| >0462 addi a5,a5,1       | 0460 addi a4,a4,1    ALU | 045e addi a3,a3,1        |             | w0:a3           | 
+   4431 | 0474 addi a2,a2,1        |                          | 5| >0464 addi a2,a2,1       | 0462 addi a5,a5,1    ALU | 0460 addi a4,a4,1        |             | w0:a4           | 
+   4432 | 0478 addi a4,a4,1        | 0470 addi a4,a4,1        | 4| >0466 addi a3,a3,1       | 0464 addi a2,a2,1    ALU | 0462 addi a5,a5,1        |             | w0:a5           | 
+   4433 |                          | 0474 addi a2,a2,1        | 5| >0468 addi a4,a4,1       | 0466 addi a3,a3,1    ALU | 0464 addi a2,a2,1        |             | w0:a2           | 
+   4434 | 0478 addi a4,a4,1        | 0474 addi a2,a2,1        | 4| >046a addi a5,a5,1       | 0468 addi a4,a4,1    ALU | 0466 addi a3,a3,1        |             | w0:a3           | 
+   4435 | 047c addi a2,a2,1        |                          | 5| >046c addi a2,a2,1       | 046a addi a5,a5,1    ALU | 0468 addi a4,a4,1        |             | w0:a4           | 
+   4436 | 0480 addi a4,a4,1        | 0478 addi a4,a4,1        | 4| >046e addi a3,a3,1       | 046c addi a2,a2,1    ALU | 046a addi a5,a5,1        |             | w0:a5           | 
+   4437 |                          | 047c addi a2,a2,1        | 5| >0470 addi a4,a4,1       | 046e addi a3,a3,1    ALU | 046c addi a2,a2,1        |             | w0:a2           | 
+   4438 | 0480 addi a4,a4,1        | 047c addi a2,a2,1        | 4| >0472 addi a5,a5,1       | 0470 addi a4,a4,1    ALU | 046e addi a3,a3,1        |             | w0:a3           | 
+   4439 | 0484 addi a2,a2,1        |                          | 5| >0474 addi a2,a2,1       | 0472 addi a5,a5,1    ALU | 0470 addi a4,a4,1        |             | w0:a4           | 
+   4440 | 0488 csrr t0,mcycle      | 0480 addi a4,a4,1        | 4| >0476 addi a3,a3,1       | 0474 addi a2,a2,1    ALU | 0472 addi a5,a5,1        |             | w0:a5           | 
+   4441 |                          | 0484 addi a2,a2,1        | 5| >0478 addi a4,a4,1       | 0476 addi a3,a3,1    ALU | 0474 addi a2,a2,1        |             | w0:a2           | 
+   4442 | 0488 csrr t0,mcycle      | 0484 addi a2,a2,1        | 4| >047a addi a5,a5,1       | 0478 addi a4,a4,1    ALU | 0476 addi a3,a3,1        |             | w0:a3           | 
+   4443 | 048c sub s0,t0,s0        |                          | 5| >047c addi a2,a2,1       | 047a addi a5,a5,1    ALU | 0478 addi a4,a4,1        |             | w0:a4           | 
+   4444 | 0490 csrr s1,mhpmcounter | 0488 csrr t0,mcycle      | 4| >047e addi a3,a3,1       | 047c addi a2,a2,1    ALU | 047a addi a5,a5,1        |             | w0:a5           | 
+   4445 |                          | 048c sub s0,t0,s0        | 5| >0480 addi a4,a4,1       | 047e addi a3,a3,1    ALU | 047c addi a2,a2,1        |             | w0:a2           | 
+   4446 | 0490 csrr s1,mhpmcounter | 048c sub s0,t0,s0        | 4| >0482 addi a5,a5,1       | 0480 addi a4,a4,1    ALU | 047e addi a3,a3,1        |             | w0:a3           | 
+   4447 | 0494 sub s1,s1,s3        |                          | 5| >0484 addi a2,a2,1       | 0482 addi a5,a5,1    ALU | 0480 addi a4,a4,1        |             | w0:a4           | 
+   4448 | 0498 ret                 | 0490 csrr s1,mhpmcounter | 4| >0486 addi a3,a3,1       | 0484 addi a2,a2,1    ALU | 0482 addi a5,a5,1        |             | w0:a5           | 
+   4449 | 049c nop                 | 0494 sub s1,s1,s3        | 4| .0488 csrr t0,mcycle     | 0486 addi a3,a3,1    ALU | 0484 addi a2,a2,1        |             | w0:a2           | ID-stall:CP0/fence
+   4450 |                          | 0498 ret                 | 6| .0488 csrr t0,mcycle     |                          | 0486 addi a3,a3,1        |             | w0:a3           | IP-curflw(RAS/delay) ID-stall:CP0/fence
+   4451 |                          | 0498 ret                 | 6| >0488 csrr t0,mcycle     |                          |                          |             |                 | IP-curflw(RAS/delay)
+   4452 | 02dc li t6,0             | 0498 ret                 | 4| .048c sub s0,t0,s0       | 0488 csrr t0,mcycle  CP0 |                          |             |                 | IP-curflw(RAS/delay) ID-stall:RAW
+   4453 | 02e0 mv a1,s5            |                          | 6| >048c sub s0,t0,s0       |                          | 0488 csrr t0,mcycle      |             | w0:t0           | 
+   4454 | 02e4 li a0,1602          | 02dc li t6,0             | 4| .0490 csrr s1,mhpmcounte | 048c sub s0,t0,s0    ALU |                          |             |                 | ID-stall:CP0/fence
+   4455 |                          | 02e0 mv a1,s5            | 6| .0490 csrr s1,mhpmcounte |                          | 048c sub s0,t0,s0        |             | w0:s0           | ID-stall:CP0/fence
+   4456 |                          | 02e0 mv a1,s5            | 6| >0490 csrr s1,mhpmcounte |                          |                          |             |                 | 
+   4457 | 02e4 li a0,1602          | 02e0 mv a1,s5            | 4| .0494 sub s1,s1,s3       | 0490 csrr s1,mhpmcou CP0 |                          |             |                 | ID-stall:RAW,WAW
+   4458 | 02e8 jal 21e             |                          | 6| >0494 sub s1,s1,s3       |                          | 0490 csrr s1,mhpmcounter |             | w0:s1           | 
+   4459 | 02ec mv a1,s6            | 02e4 li a0,1602          | 4| >0498 ret                | 0494 sub s1,s1,s3    ALU |                          |             |                 | 
+   4460 | 02f0 li a0,1618          | 02e8 jal 21e             | 4| >02dc li t6,0            | 0498 ret             BJU | 0494 sub s1,s1,s3        |             | w0:s1           | IP-redirect->021e
+   4461 | 021e addi sp,sp,-16      |                          | 4| >02e0 mv a1,s5           | 02dc li t6,0         ALU | 0498 ret                 |             | w0:zero         | 
+   4462 | 0220 sd ra,0(sp)         |                          | 2| >04c0 csrr s3,mhpmcounte | 02e0 mv a1,s5        ALU | 02dc li t6,0             |             | w0:t6           | 
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 summary: cycles=119 retired=83 IPC=0.697 | icache_miss=2, ip_curflw=4, ip_redirect=2, retired=83, stall_CP0/fence=12, stall_RAW=4, stall_WAW=2
 
-================================================================================================================================================================
+================================================================================================================================================================================================
 MARK 3   cycles 5830 .. 5882  (53 cycles)
-================================================================================================================================================================
-    cyc | IF (fetch)               | IP (pred)                |IB| ID                       | EX1                      | RETIRE                   | events
-----------------------------------------------------------------------------------------------------------------------------------------------------------------
-   5830 |                          | 04d0 ?                   | 5| .04c0 csrr s3,mhpmcounte |                          | 0318 jal 4c0             | ID-stall:CP0/fence
-   5831 |                          | 04d0 ?                   | 5| >04c0 csrr s3,mhpmcounte |                          |                          | 
-   5832 | 04d4 ?                   | 04d0 ?                   | 3| .04c4 csrr s0,mcycle     | 04c0 csrr s3,mhpmcou CP0 |                          | ID-stall:CP0/fence
-   5833 | 04d8 ?                   |                          | 5| .04c4 csrr s0,mcycle     |                          | 04c0 csrr s3,mhpmcounter | ID-stall:CP0/fence
-   5834 |                          | 04d4 ?                   | 5| >04c4 csrr s0,mcycle     |                          |                          | 
-   5835 | 04d8 ?                   | 04d4 ?                   | 4| >04c8 nop                | 04c4 csrr s0,mcycle  CP0 |                          | 
-   5836 | 04dc ?                   |                          | 4| >04ca addi a4,a4,1       | 04c8 nop             ALU | 04c4 csrr s0,mcycle      | 
-   5837 | 04e0 ?                   | 04d8 ?                   | 2| >04ce addi a5,a5,1       | 04ca addi a4,a4,1    ALU | 04c8 nop                 | 
-   5838 | 04e4 ?                   | 04dc ?                   | 2| >04d2 addi a6,a6,1       | 04ce addi a5,a5,1    ALU | 04ca addi a4,a4,1        | 
-   5839 | 04e8 ?                   | 04e0 ?                   | 2| >04d6 addi a7,a7,1       | 04d2 addi a6,a6,1    ALU | 04ce addi a5,a5,1        | 
-   5840 | 04ec ?                   | 04e4 ?                   | 2| >04da addi a4,a4,1       | 04d6 addi a7,a7,1    ALU | 04d2 addi a6,a6,1        | 
-   5841 | 04f0 ?                   | 04e8 ?                   | 2| >04de addi a5,a5,1       | 04da addi a4,a4,1    ALU | 04d6 addi a7,a7,1        | 
-   5842 | 04f4 ?                   | 04ec ?                   | 2| >04e2 addi a6,a6,1       | 04de addi a5,a5,1    ALU | 04da addi a4,a4,1        | 
-   5843 | 04f8 ?                   | 04f0 ?                   | 2| >04e6 addi a7,a7,1       | 04e2 addi a6,a6,1    ALU | 04de addi a5,a5,1        | 
-   5844 | 04fc ?                   | 04f4 ?                   | 2| >04ea addi a4,a4,1       | 04e6 addi a7,a7,1    ALU | 04e2 addi a6,a6,1        | 
-   5845 | 0500 ?                   | 04f8 ?                   | 2| >04ee addi a5,a5,1       | 04ea addi a4,a4,1    ALU | 04e6 addi a7,a7,1        | 
-   5846 | 0504 ?                   | 04fc ?                   | 2| >04f2 addi a6,a6,1       | 04ee addi a5,a5,1    ALU | 04ea addi a4,a4,1        | 
-   5847 | 0508 ?                   | 0500 ?                   | 2| >04f6 addi a7,a7,1       | 04f2 addi a6,a6,1    ALU | 04ee addi a5,a5,1        | 
-   5848 | 050c ?                   | 0504 ?                   | 2| >04fa addi a4,a4,1       | 04f6 addi a7,a7,1    ALU | 04f2 addi a6,a6,1        | 
-   5849 | 0510 ?                   | 0508 ?                   | 2| >04fe addi a5,a5,1       | 04fa addi a4,a4,1    ALU | 04f6 addi a7,a7,1        | 
-   5850 | 0514 ?                   | 050c ?                   | 2| >0502 addi a6,a6,1       | 04fe addi a5,a5,1    ALU | 04fa addi a4,a4,1        | 
-   5851 | 0518 ?                   | 0510 ?                   | 2| >0506 addi a7,a7,1       | 0502 addi a6,a6,1    ALU | 04fe addi a5,a5,1        | 
-   5852 | 051c ?                   | 0514 ?                   | 2| >050a addi a4,a4,1       | 0506 addi a7,a7,1    ALU | 0502 addi a6,a6,1        | 
-   5853 | 0520 ?                   | 0518 ?                   | 2| >050e addi a5,a5,1       | 050a addi a4,a4,1    ALU | 0506 addi a7,a7,1        | 
-   5854 | 0524 ?                   | 051c ?                   | 2| >0512 addi a6,a6,1       | 050e addi a5,a5,1    ALU | 050a addi a4,a4,1        | 
-   5855 | 0528 ?                   | 0520 ?                   | 2| >0516 addi a7,a7,1       | 0512 addi a6,a6,1    ALU | 050e addi a5,a5,1        | 
-   5856 | 052c ?                   | 0524 ?                   | 2| >051a addi a4,a4,1       | 0516 addi a7,a7,1    ALU | 0512 addi a6,a6,1        | 
-   5857 | 0530 ?                   | 0528 ?                   | 2| >051e addi a5,a5,1       | 051a addi a4,a4,1    ALU | 0516 addi a7,a7,1        | 
-   5858 | 0534 ?                   | 052c ?                   | 2| >0522 addi a6,a6,1       | 051e addi a5,a5,1    ALU | 051a addi a4,a4,1        | 
-   5859 | 0538 ?                   | 0530 ?                   | 2| >0526 addi a7,a7,1       | 0522 addi a6,a6,1    ALU | 051e addi a5,a5,1        | 
-   5860 | 053c ?                   | 0534 ?                   | 2| >052a addi a4,a4,1       | 0526 addi a7,a7,1    ALU | 0522 addi a6,a6,1        | 
-   5861 | 0540 ?                   | 0538 ?                   | 2| >052e addi a5,a5,1       | 052a addi a4,a4,1    ALU | 0526 addi a7,a7,1        | 
-   5862 | 0544 ?                   | 053c ?                   | 2| >0532 addi a6,a6,1       | 052e addi a5,a5,1    ALU | 052a addi a4,a4,1        | 
-   5863 | 0548 ?                   | 0540 ?                   | 2| >0536 addi a7,a7,1       | 0532 addi a6,a6,1    ALU | 052e addi a5,a5,1        | 
-   5864 | 054c csrr t0,mcycle      | 0544 ?                   | 2| >053a addi a4,a4,1       | 0536 addi a7,a7,1    ALU | 0532 addi a6,a6,1        | 
-   5865 | 0550 sub s0,t0,s0        | 0548 ?                   | 2| >053e addi a5,a5,1       | 053a addi a4,a4,1    ALU | 0536 addi a7,a7,1        | 
-   5866 | 0554 csrr s1,mhpmcounter | 054c csrr t0,mcycle      | 3| >0542 addi a6,a6,1       | 053e addi a5,a5,1    ALU | 053a addi a4,a4,1        | 
-   5867 | 0558 sub s1,s1,s3        | 0550 sub s0,t0,s0        | 3| >0546 addi a7,a7,1       | 0542 addi a6,a6,1    ALU | 053e addi a5,a5,1        | 
-   5868 | 055c ret                 | 0554 csrr s1,mhpmcounter | 4| >054a nop                | 0546 addi a7,a7,1    ALU | 0542 addi a6,a6,1        | 
-   5869 | 0560 nop                 | 0558 sub s1,s1,s3        | 4| .054c csrr t0,mcycle     | 054a nop             ALU | 0546 addi a7,a7,1        | ID-stall:CP0/fence
-   5870 |                          | 055c ret                 | 6| .054c csrr t0,mcycle     |                          | 054a nop                 | IP-curflw(RAS/delay) ID-stall:CP0/fence
-   5871 |                          | 055c ret                 | 6| >054c csrr t0,mcycle     |                          |                          | IP-curflw(RAS/delay)
-   5872 | 031c li t6,0             | 055c ret                 | 4| .0550 sub s0,t0,s0       | 054c csrr t0,mcycle  CP0 |                          | IP-curflw(RAS/delay) ID-stall:RAW
-   5873 | 0320 mv a1,s0            |                          | 6| >0550 sub s0,t0,s0       |                          | 054c csrr t0,mcycle      | 
-   5874 | 0324 li a0,1666          | 031c li t6,0             | 4| .0554 csrr s1,mhpmcounte | 0550 sub s0,t0,s0    ALU |                          | ID-stall:CP0/fence
-   5875 |                          | 0320 mv a1,s0            | 6| .0554 csrr s1,mhpmcounte |                          | 0550 sub s0,t0,s0        | ID-stall:CP0/fence
-   5876 |                          | 0320 mv a1,s0            | 6| >0554 csrr s1,mhpmcounte |                          |                          | 
-   5877 | 0324 li a0,1666          | 0320 mv a1,s0            | 4| .0558 sub s1,s1,s3       | 0554 csrr s1,mhpmcou CP0 |                          | ID-stall:RAW,WAW
-   5878 | 0328 jal 21e             |                          | 6| >0558 sub s1,s1,s3       |                          | 0554 csrr s1,mhpmcounter | 
-   5879 | 032c jal 580             | 0324 li a0,1666          | 4| >055c ret                | 0558 sub s1,s1,s3    ALU |                          | 
-   5880 | 0330 jal 580             | 0328 jal 21e             | 4| >031c li t6,0            | 055c ret             BJU | 0558 sub s1,s1,s3        | IP-redirect->021e
-   5881 | 021e addi sp,sp,-16      |                          | 4| >0320 mv a1,s0           | 031c li t6,0         ALU | 055c ret                 | 
-   5882 | 0220 sd ra,0(sp)         |                          | 2| >(flushed) li a0,1666    | 0320 mv a1,s0        ALU | 031c li t6,0             | 
-----------------------------------------------------------------------------------------------------------------------------------------------------------------
+================================================================================================================================================================================================
+    cyc | IF (fetch)               | IP (pred)                |IB| ID                       | EX1                      | RETIRE                   | BACK        | WB              | events
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+   5830 |                          | 04d0 ?                   | 5| .04c0 csrr s3,mhpmcounte |                          | 0318 jal 4c0             |             | w0:ra           | ID-stall:CP0/fence
+   5831 |                          | 04d0 ?                   | 5| >04c0 csrr s3,mhpmcounte |                          |                          |             |                 | 
+   5832 | 04d4 ?                   | 04d0 ?                   | 3| .04c4 csrr s0,mcycle     | 04c0 csrr s3,mhpmcou CP0 |                          |             |                 | ID-stall:CP0/fence
+   5833 | 04d8 ?                   |                          | 5| .04c4 csrr s0,mcycle     |                          | 04c0 csrr s3,mhpmcounter |             | w0:s3           | ID-stall:CP0/fence
+   5834 |                          | 04d4 ?                   | 5| >04c4 csrr s0,mcycle     |                          |                          |             |                 | 
+   5835 | 04d8 ?                   | 04d4 ?                   | 4| >04c8 nop                | 04c4 csrr s0,mcycle  CP0 |                          |             |                 | 
+   5836 | 04dc ?                   |                          | 4| >04ca addi a4,a4,1       | 04c8 nop             ALU | 04c4 csrr s0,mcycle      |             | w0:s0           | 
+   5837 | 04e0 ?                   | 04d8 ?                   | 2| >04ce addi a5,a5,1       | 04ca addi a4,a4,1    ALU | 04c8 nop                 |             | w0:zero         | 
+   5838 | 04e4 ?                   | 04dc ?                   | 2| >04d2 addi a6,a6,1       | 04ce addi a5,a5,1    ALU | 04ca addi a4,a4,1        |             | w0:a4           | 
+   5839 | 04e8 ?                   | 04e0 ?                   | 2| >04d6 addi a7,a7,1       | 04d2 addi a6,a6,1    ALU | 04ce addi a5,a5,1        |             | w0:a5           | 
+   5840 | 04ec ?                   | 04e4 ?                   | 2| >04da addi a4,a4,1       | 04d6 addi a7,a7,1    ALU | 04d2 addi a6,a6,1        |             | w0:a6           | 
+   5841 | 04f0 ?                   | 04e8 ?                   | 2| >04de addi a5,a5,1       | 04da addi a4,a4,1    ALU | 04d6 addi a7,a7,1        |             | w0:a7           | 
+   5842 | 04f4 ?                   | 04ec ?                   | 2| >04e2 addi a6,a6,1       | 04de addi a5,a5,1    ALU | 04da addi a4,a4,1        |             | w0:a4           | 
+   5843 | 04f8 ?                   | 04f0 ?                   | 2| >04e6 addi a7,a7,1       | 04e2 addi a6,a6,1    ALU | 04de addi a5,a5,1        |             | w0:a5           | 
+   5844 | 04fc ?                   | 04f4 ?                   | 2| >04ea addi a4,a4,1       | 04e6 addi a7,a7,1    ALU | 04e2 addi a6,a6,1        |             | w0:a6           | 
+   5845 | 0500 ?                   | 04f8 ?                   | 2| >04ee addi a5,a5,1       | 04ea addi a4,a4,1    ALU | 04e6 addi a7,a7,1        |             | w0:a7           | 
+   5846 | 0504 ?                   | 04fc ?                   | 2| >04f2 addi a6,a6,1       | 04ee addi a5,a5,1    ALU | 04ea addi a4,a4,1        |             | w0:a4           | 
+   5847 | 0508 ?                   | 0500 ?                   | 2| >04f6 addi a7,a7,1       | 04f2 addi a6,a6,1    ALU | 04ee addi a5,a5,1        |             | w0:a5           | 
+   5848 | 050c ?                   | 0504 ?                   | 2| >04fa addi a4,a4,1       | 04f6 addi a7,a7,1    ALU | 04f2 addi a6,a6,1        |             | w0:a6           | 
+   5849 | 0510 ?                   | 0508 ?                   | 2| >04fe addi a5,a5,1       | 04fa addi a4,a4,1    ALU | 04f6 addi a7,a7,1        |             | w0:a7           | 
+   5850 | 0514 ?                   | 050c ?                   | 2| >0502 addi a6,a6,1       | 04fe addi a5,a5,1    ALU | 04fa addi a4,a4,1        |             | w0:a4           | 
+   5851 | 0518 ?                   | 0510 ?                   | 2| >0506 addi a7,a7,1       | 0502 addi a6,a6,1    ALU | 04fe addi a5,a5,1        |             | w0:a5           | 
+   5852 | 051c ?                   | 0514 ?                   | 2| >050a addi a4,a4,1       | 0506 addi a7,a7,1    ALU | 0502 addi a6,a6,1        |             | w0:a6           | 
+   5853 | 0520 ?                   | 0518 ?                   | 2| >050e addi a5,a5,1       | 050a addi a4,a4,1    ALU | 0506 addi a7,a7,1        |             | w0:a7           | 
+   5854 | 0524 ?                   | 051c ?                   | 2| >0512 addi a6,a6,1       | 050e addi a5,a5,1    ALU | 050a addi a4,a4,1        |             | w0:a4           | 
+   5855 | 0528 ?                   | 0520 ?                   | 2| >0516 addi a7,a7,1       | 0512 addi a6,a6,1    ALU | 050e addi a5,a5,1        |             | w0:a5           | 
+   5856 | 052c ?                   | 0524 ?                   | 2| >051a addi a4,a4,1       | 0516 addi a7,a7,1    ALU | 0512 addi a6,a6,1        |             | w0:a6           | 
+   5857 | 0530 ?                   | 0528 ?                   | 2| >051e addi a5,a5,1       | 051a addi a4,a4,1    ALU | 0516 addi a7,a7,1        |             | w0:a7           | 
+   5858 | 0534 ?                   | 052c ?                   | 2| >0522 addi a6,a6,1       | 051e addi a5,a5,1    ALU | 051a addi a4,a4,1        |             | w0:a4           | 
+   5859 | 0538 ?                   | 0530 ?                   | 2| >0526 addi a7,a7,1       | 0522 addi a6,a6,1    ALU | 051e addi a5,a5,1        |             | w0:a5           | 
+   5860 | 053c ?                   | 0534 ?                   | 2| >052a addi a4,a4,1       | 0526 addi a7,a7,1    ALU | 0522 addi a6,a6,1        |             | w0:a6           | 
+   5861 | 0540 ?                   | 0538 ?                   | 2| >052e addi a5,a5,1       | 052a addi a4,a4,1    ALU | 0526 addi a7,a7,1        |             | w0:a7           | 
+   5862 | 0544 ?                   | 053c ?                   | 2| >0532 addi a6,a6,1       | 052e addi a5,a5,1    ALU | 052a addi a4,a4,1        |             | w0:a4           | 
+   5863 | 0548 ?                   | 0540 ?                   | 2| >0536 addi a7,a7,1       | 0532 addi a6,a6,1    ALU | 052e addi a5,a5,1        |             | w0:a5           | 
+   5864 | 054c csrr t0,mcycle      | 0544 ?                   | 2| >053a addi a4,a4,1       | 0536 addi a7,a7,1    ALU | 0532 addi a6,a6,1        |             | w0:a6           | 
+   5865 | 0550 sub s0,t0,s0        | 0548 ?                   | 2| >053e addi a5,a5,1       | 053a addi a4,a4,1    ALU | 0536 addi a7,a7,1        |             | w0:a7           | 
+   5866 | 0554 csrr s1,mhpmcounter | 054c csrr t0,mcycle      | 3| >0542 addi a6,a6,1       | 053e addi a5,a5,1    ALU | 053a addi a4,a4,1        |             | w0:a4           | 
+   5867 | 0558 sub s1,s1,s3        | 0550 sub s0,t0,s0        | 3| >0546 addi a7,a7,1       | 0542 addi a6,a6,1    ALU | 053e addi a5,a5,1        |             | w0:a5           | 
+   5868 | 055c ret                 | 0554 csrr s1,mhpmcounter | 4| >054a nop                | 0546 addi a7,a7,1    ALU | 0542 addi a6,a6,1        |             | w0:a6           | 
+   5869 | 0560 nop                 | 0558 sub s1,s1,s3        | 4| .054c csrr t0,mcycle     | 054a nop             ALU | 0546 addi a7,a7,1        |             | w0:a7           | ID-stall:CP0/fence
+   5870 |                          | 055c ret                 | 6| .054c csrr t0,mcycle     |                          | 054a nop                 |             | w0:zero         | IP-curflw(RAS/delay) ID-stall:CP0/fence
+   5871 |                          | 055c ret                 | 6| >054c csrr t0,mcycle     |                          |                          |             |                 | IP-curflw(RAS/delay)
+   5872 | 031c li t6,0             | 055c ret                 | 4| .0550 sub s0,t0,s0       | 054c csrr t0,mcycle  CP0 |                          |             |                 | IP-curflw(RAS/delay) ID-stall:RAW
+   5873 | 0320 mv a1,s0            |                          | 6| >0550 sub s0,t0,s0       |                          | 054c csrr t0,mcycle      |             | w0:t0           | 
+   5874 | 0324 li a0,1666          | 031c li t6,0             | 4| .0554 csrr s1,mhpmcounte | 0550 sub s0,t0,s0    ALU |                          |             |                 | ID-stall:CP0/fence
+   5875 |                          | 0320 mv a1,s0            | 6| .0554 csrr s1,mhpmcounte |                          | 0550 sub s0,t0,s0        |             | w0:s0           | ID-stall:CP0/fence
+   5876 |                          | 0320 mv a1,s0            | 6| >0554 csrr s1,mhpmcounte |                          |                          |             |                 | 
+   5877 | 0324 li a0,1666          | 0320 mv a1,s0            | 4| .0558 sub s1,s1,s3       | 0554 csrr s1,mhpmcou CP0 |                          |             |                 | ID-stall:RAW,WAW
+   5878 | 0328 jal 21e             |                          | 6| >0558 sub s1,s1,s3       |                          | 0554 csrr s1,mhpmcounter |             | w0:s1           | 
+   5879 | 032c jal 580             | 0324 li a0,1666          | 4| >055c ret                | 0558 sub s1,s1,s3    ALU |                          |             |                 | 
+   5880 | 0330 jal 580             | 0328 jal 21e             | 4| >031c li t6,0            | 055c ret             BJU | 0558 sub s1,s1,s3        |             | w0:s1           | IP-redirect->021e
+   5881 | 021e addi sp,sp,-16      |                          | 4| >0320 mv a1,s0           | 031c li t6,0         ALU | 055c ret                 |             | w0:zero         | 
+   5882 | 0220 sd ra,0(sp)         |                          | 2| >(flushed) li a0,1666    | 0320 mv a1,s0        ALU | 031c li t6,0             |             | w0:t6           | 
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 summary: cycles=53 retired=43 IPC=0.811 | ip_curflw=3, ip_redirect=1, retired=43, stall_CP0/fence=7, stall_RAW=2, stall_WAW=1

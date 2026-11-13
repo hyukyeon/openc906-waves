@@ -1,311 +1,311 @@
 사용: pipeview.py <out/test 디렉토리> [--mark N] [--max-rows K]
 출력: <dir>/pipeview.txt  (mark 구간별 표 + 구간 요약)
 
-================================================================================================================================================================
+================================================================================================================================================================================================
 MARK 1   cycles 3623 .. 3680  (58 cycles)
-================================================================================================================================================================
-    cyc | IF (fetch)               | IP (pred)                |IB| ID                       | EX1                      | RETIRE                   | events
-----------------------------------------------------------------------------------------------------------------------------------------------------------------
-   3623 | 02ec beq s8,t0,2f4       | 02e4 ?                   | 0| >02de li t6,0            | 02de li t6,0         ALU | 02dc addi s3,s3,1        | TRAP
-   3624 | 02f0 j 122               | 02e8 ?                   | 0| >(flushed) beq s11,t0,2e | 02de li t6,0         ALU |                          | IP-redirect->0122 RT-redirect->0140
-   3625 | 0140 j 440               |                          | 0|                          |                          |                          | ID-stall:other
-   3626 |                          |                          | 0|                          |                          |                          | ID-stall:other FLUSH
-   3627 |                          |                          | 0|                          |                          |                          | I$-miss
-   3628 |                          |                          | 0|                          |                          |                          | 
-   3629 |                          |                          | 0|                          |                          |                          | 
-   3630 |                          |                          | 0|                          |                          |                          | 
-   3631 |                          |                          | 0|                          |                          |                          | 
-   3632 |                          |                          | 0|                          |                          |                          | 
-   3633 |                          | 0140 j 440               | 0| >0140 j 440              |                          |                          | IP-redirect->0440
-   3634 |                          |                          | 0|                          | 0140 j 440           BJU |                          | 
-   3635 |                          |                          | 0|                          |                          | 0140 j 440               | 
-   3636 |                          |                          | 0|                          |                          |                          | 
-   3637 |                          |                          | 0|                          |                          |                          | 
-   3638 |                          |                          | 0|                          |                          |                          | 
-   3639 | 0440 csrr s6,tcontrol    |                          | 0|                          |                          |                          | 
-   3640 |                          |                          | 0|                          |                          |                          | 
-   3641 |                          |                          | 0|                          |                          |                          | I$-miss
-   3642 |                          |                          | 0|                          |                          |                          | 
-   3643 |                          |                          | 0|                          |                          |                          | 
-   3644 |                          |                          | 0|                          |                          |                          | 
-   3645 |                          |                          | 0|                          |                          |                          | 
-   3646 |                          |                          | 0|                          |                          |                          | 
-   3647 |                          | 0440 csrr s6,tcontrol    | 0| >0440 csrr s6,tcontrol   |                          |                          | 
-   3648 |                          |                          | 0|                          | 0440 csrr s6,tcontro CP0 |                          | 
-   3649 |                          |                          | 0|                          |                          | 0440 csrr s6,tcontrol    | 
-   3650 |                          |                          | 0|                          |                          |                          | 
-   3651 |                          |                          | 0|                          |                          |                          | 
-   3652 |                          |                          | 0|                          |                          |                          | 
-   3653 | 0444 csrr s8,mcause      |                          | 0|                          |                          |                          | 
-   3654 | 0448 csrr s9,mepc        |                          | 0|                          |                          |                          | 
-   3655 | 044c csrr s10,mtval      | 0444 csrr s8,mcause      | 0| >0444 csrr s8,mcause     |                          |                          | 
-   3656 | 0450 addi s11,s11,1      | 0448 csrr s9,mepc        | 0| .0448 csrr s9,mepc       | 0444 csrr s8,mcause  CP0 |                          | ID-stall:CP0/fence
-   3657 | 0454 ?                   | 044c csrr s10,mtval      | 0| .0448 csrr s9,mepc       |                          | 0444 csrr s8,mcause      | ID-stall:CP0/fence
-   3658 | 0458 ?                   | 0450 addi s11,s11,1      | 2| >0448 csrr s9,mepc       |                          |                          | 
-   3659 | 045c ?                   | 0454 ?                   | 1| .044c csrr s10,mtval     | 0448 csrr s9,mepc    CP0 |                          | ID-stall:CP0/fence
-   3660 | 0460 ?                   | 0458 ?                   | 3| .044c csrr s10,mtval     |                          | 0448 csrr s9,mepc        | ID-stall:CP0/fence
-   3661 |                          | 045c ?                   | 6| >044c csrr s10,mtval     |                          |                          | 
-   3662 |                          | 045c ?                   | 5| >0450 addi s11,s11,1     | 044c csrr s10,mtval  CP0 |                          | 
-   3663 | 0460 ?                   | 045c ?                   | 3| .0452 csrw tdata1,zero   | 0450 addi s11,s11,1  ALU | 044c csrr s10,mtval      | ID-stall:CP0/fence
-   3664 | 0464 ?                   |                          | 5| .0452 csrw tdata1,zero   |                          | 0450 addi s11,s11,1      | ID-stall:CP0/fence
-   3665 |                          | 0460 ?                   | 5| >0452 csrw tdata1,zero   |                          |                          | 
-   3666 | 0464 ?                   | 0460 ?                   | 3| .(flushed) mret          | 0452 csrw tdata1,zer CP0 |                          | ID-stall:CP0/fence
-   3667 | 0468 ?                   |                          | 5| .(flushed) mret          |                          | 0452 csrw tdata1,zero    | ID-stall:CP0/fence RT-redirect->0456
-   3668 | 0456 mret                |                          | 0|                          |                          |                          | 
-   3669 | 0458 ?                   |                          | 0|                          |                          |                          | ID-stall:other FLUSH
-   3670 | 045c ?                   |                          | 0|                          |                          |                          | 
-   3671 | 0460 ?                   | 0458 ?                   | 0| >0456 mret               |                          |                          | 
-   3672 | 0464 ?                   | 045c ?                   | 0| >045a ?                  | 0456 mret            CP0 |                          | 
-   3673 | 0468 ?                   | 0460 ?                   | 1| >02dc addi s3,s3,1       | 045a ?               CP0 | 0456 mret                | RT-redirect->02dc
-   3674 | 02dc addi s3,s3,1        |                          | 0|                          | 02dc addi s3,s3,1    CP0 |                          | 
-   3675 | 02e0 li t0,1             |                          | 0|                          |                          |                          | ID-stall:other
-   3676 |                          | 02dc addi s3,s3,1        | 0|                          |                          |                          | ID-stall:other FLUSH
-   3677 | 02e0 li t0,1             | 02dc addi s3,s3,1        | 0| >02dc addi s3,s3,1       |                          |                          | 
-   3678 | 02e4 ?                   |                          | 0| >02de li t6,0            | 02dc addi s3,s3,1    ALU |                          | 
-   3679 | 02e8 ?                   | 02e0 li t0,1             | 0| >02e0 li t0,1            | 02de li t6,0         ALU | 02dc addi s3,s3,1        | 
-   3680 | 0122 csrr s0,mepc        | 02e4 ?                   | 0| >0356 lw t3,0(s4)        | 02e0 li t0,1         ALU | 02de li t6,0             | BTB-redirect
-----------------------------------------------------------------------------------------------------------------------------------------------------------------
+================================================================================================================================================================================================
+    cyc | IF (fetch)               | IP (pred)                |IB| ID                       | EX1                      | RETIRE                   | BACK        | WB              | events
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+   3623 | 02ec beq s8,t0,2f4       | 02e4 ?                   | 0| >02de li t6,0            | 02de li t6,0         ALU | 02dc addi s3,s3,1        |             |                 | TRAP
+   3624 | 02f0 j 122               | 02e8 ?                   | 0| >(flushed) beq s11,t0,2e | 02de li t6,0         ALU |                          |             |                 | IP-redirect->0122 RT-redirect->0140
+   3625 | 0140 j 440               |                          | 0|                          |                          |                          |             |                 | ID-stall:other
+   3626 |                          |                          | 0|                          |                          |                          |             |                 | ID-stall:other FLUSH
+   3627 |                          |                          | 0|                          |                          |                          |             |                 | I$-miss
+   3628 |                          |                          | 0|                          |                          |                          |             |                 | 
+   3629 |                          |                          | 0|                          |                          |                          |             |                 | 
+   3630 |                          |                          | 0|                          |                          |                          |             |                 | 
+   3631 |                          |                          | 0|                          |                          |                          |             |                 | 
+   3632 |                          |                          | 0|                          |                          |                          |             |                 | 
+   3633 |                          | 0140 j 440               | 0| >0140 j 440              |                          |                          |             |                 | IP-redirect->0440
+   3634 |                          |                          | 0|                          | 0140 j 440           BJU |                          |             |                 | 
+   3635 |                          |                          | 0|                          |                          | 0140 j 440               |             | w0:zero         | 
+   3636 |                          |                          | 0|                          |                          |                          |             |                 | 
+   3637 |                          |                          | 0|                          |                          |                          |             |                 | 
+   3638 |                          |                          | 0|                          |                          |                          |             |                 | 
+   3639 | 0440 csrr s6,tcontrol    |                          | 0|                          |                          |                          |             |                 | 
+   3640 |                          |                          | 0|                          |                          |                          |             |                 | 
+   3641 |                          |                          | 0|                          |                          |                          |             |                 | I$-miss
+   3642 |                          |                          | 0|                          |                          |                          |             |                 | 
+   3643 |                          |                          | 0|                          |                          |                          |             |                 | 
+   3644 |                          |                          | 0|                          |                          |                          |             |                 | 
+   3645 |                          |                          | 0|                          |                          |                          |             |                 | 
+   3646 |                          |                          | 0|                          |                          |                          |             |                 | 
+   3647 |                          | 0440 csrr s6,tcontrol    | 0| >0440 csrr s6,tcontrol   |                          |                          |             |                 | 
+   3648 |                          |                          | 0|                          | 0440 csrr s6,tcontro CP0 |                          |             |                 | 
+   3649 |                          |                          | 0|                          |                          | 0440 csrr s6,tcontrol    |             | w0:s6           | 
+   3650 |                          |                          | 0|                          |                          |                          |             |                 | 
+   3651 |                          |                          | 0|                          |                          |                          |             |                 | 
+   3652 |                          |                          | 0|                          |                          |                          |             |                 | 
+   3653 | 0444 csrr s8,mcause      |                          | 0|                          |                          |                          |             |                 | 
+   3654 | 0448 csrr s9,mepc        |                          | 0|                          |                          |                          |             |                 | 
+   3655 | 044c csrr s10,mtval      | 0444 csrr s8,mcause      | 0| >0444 csrr s8,mcause     |                          |                          |             |                 | 
+   3656 | 0450 addi s11,s11,1      | 0448 csrr s9,mepc        | 0| .0448 csrr s9,mepc       | 0444 csrr s8,mcause  CP0 |                          |             |                 | ID-stall:CP0/fence
+   3657 | 0454 ?                   | 044c csrr s10,mtval      | 0| .0448 csrr s9,mepc       |                          | 0444 csrr s8,mcause      |             | w0:s8           | ID-stall:CP0/fence
+   3658 | 0458 ?                   | 0450 addi s11,s11,1      | 2| >0448 csrr s9,mepc       |                          |                          |             |                 | 
+   3659 | 045c ?                   | 0454 ?                   | 1| .044c csrr s10,mtval     | 0448 csrr s9,mepc    CP0 |                          |             |                 | ID-stall:CP0/fence
+   3660 | 0460 ?                   | 0458 ?                   | 3| .044c csrr s10,mtval     |                          | 0448 csrr s9,mepc        |             | w0:s9           | ID-stall:CP0/fence
+   3661 |                          | 045c ?                   | 6| >044c csrr s10,mtval     |                          |                          |             |                 | 
+   3662 |                          | 045c ?                   | 5| >0450 addi s11,s11,1     | 044c csrr s10,mtval  CP0 |                          |             |                 | 
+   3663 | 0460 ?                   | 045c ?                   | 3| .0452 csrw tdata1,zero   | 0450 addi s11,s11,1  ALU | 044c csrr s10,mtval      |             | w0:s10          | ID-stall:CP0/fence
+   3664 | 0464 ?                   |                          | 5| .0452 csrw tdata1,zero   |                          | 0450 addi s11,s11,1      |             | w0:s11          | ID-stall:CP0/fence
+   3665 |                          | 0460 ?                   | 5| >0452 csrw tdata1,zero   |                          |                          |             |                 | 
+   3666 | 0464 ?                   | 0460 ?                   | 3| .(flushed) mret          | 0452 csrw tdata1,zer CP0 |                          |             |                 | ID-stall:CP0/fence
+   3667 | 0468 ?                   |                          | 5| .(flushed) mret          |                          | 0452 csrw tdata1,zero    |             | w0:zero         | ID-stall:CP0/fence RT-redirect->0456
+   3668 | 0456 mret                |                          | 0|                          |                          |                          |             |                 | 
+   3669 | 0458 ?                   |                          | 0|                          |                          |                          |             |                 | ID-stall:other FLUSH
+   3670 | 045c ?                   |                          | 0|                          |                          |                          |             |                 | 
+   3671 | 0460 ?                   | 0458 ?                   | 0| >0456 mret               |                          |                          |             |                 | 
+   3672 | 0464 ?                   | 045c ?                   | 0| >045a ?                  | 0456 mret            CP0 |                          |             |                 | 
+   3673 | 0468 ?                   | 0460 ?                   | 1| >02dc addi s3,s3,1       | 045a ?               CP0 | 0456 mret                |             |                 | RT-redirect->02dc
+   3674 | 02dc addi s3,s3,1        |                          | 0|                          | 02dc addi s3,s3,1    CP0 |                          |             |                 | 
+   3675 | 02e0 li t0,1             |                          | 0|                          |                          |                          |             |                 | ID-stall:other
+   3676 |                          | 02dc addi s3,s3,1        | 0|                          |                          |                          |             |                 | ID-stall:other FLUSH
+   3677 | 02e0 li t0,1             | 02dc addi s3,s3,1        | 0| >02dc addi s3,s3,1       |                          |                          |             |                 | 
+   3678 | 02e4 ?                   |                          | 0| >02de li t6,0            | 02dc addi s3,s3,1    ALU |                          |             |                 | 
+   3679 | 02e8 ?                   | 02e0 li t0,1             | 0| >02e0 li t0,1            | 02de li t6,0         ALU | 02dc addi s3,s3,1        |             | w0:s3           | 
+   3680 | 0122 csrr s0,mepc        | 02e4 ?                   | 0| >0356 lw t3,0(s4)        | 02e0 li t0,1         ALU | 02de li t6,0             |             | w0:t6           | BTB-redirect
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 summary: cycles=58 retired=11 IPC=0.190 | btb_redirect=1, flush=3, icache_miss=2, ip_redirect=2, retired=11, stall_CP0/fence=8, stall_other=5, trap=1
 
-================================================================================================================================================================
+================================================================================================================================================================================================
 MARK 2   cycles 4439 .. 4613  (175 cycles)
-================================================================================================================================================================
-    cyc | IF (fetch)               | IP (pred)                |IB| ID                       | EX1                      | RETIRE                   | events
-----------------------------------------------------------------------------------------------------------------------------------------------------------------
-   4439 | 036c ?                   | 0364 ?                   | 1| .035a sw t2,0(s4)        | 0356 lw t3,0(s4)     LSU |                          | ID-stall:EX1-busy
-   4440 | 0370 beq t1,t0,378       | 0368 ?                   | 3| .035a sw t2,0(s4)        | 0356 lw t3,0(s4)     LSU |                          | IP-redirect->0122 ID-stall:EX1-busy
-   4441 | 0122 csrr s0,mepc        |                          | 5| .035a sw t2,0(s4)        | 0356 lw t3,0(s4)     LSU |                          | ID-stall:EX1-busy
-   4442 | 0124 ?                   |                          | 5| .035a sw t2,0(s4)        | 0356 lw t3,0(s4)     LSU |                          | ID-stall:EX1-busy
-   4443 | 0128 ?                   |                          | 5| .035a sw t2,0(s4)        | 0356 lw t3,0(s4)     LSU |                          | ID-stall:EX1-busy
-   4444 |                          | 0124 ?                   | 5| .035a sw t2,0(s4)        | 0356 lw t3,0(s4)     LSU |                          | ID-stall:EX1-busy
-   4445 |                          | 0124 ?                   | 5| .035a sw t2,0(s4)        | 0356 lw t3,0(s4)     LSU |                          | ID-stall:EX1-busy
-   4446 |                          | 0124 ?                   | 5| .035a sw t2,0(s4)        | 0356 lw t3,0(s4)     LSU |                          | ID-stall:EX1-busy
-   4447 |                          | 0124 ?                   | 5| .035a sw t2,0(s4)        | 0356 lw t3,0(s4)     LSU |                          | ID-stall:EX1-busy
-   4448 |                          | 0124 ?                   | 5| >035a sw t2,0(s4)        | 035a sw t2,0(s4)     LSU | 0356 lw t3,0(s4)         | DC:LD MISS
-   4449 | 0128 ?                   | 0124 ?                   | 4| .035e li t6,0            | 035a sw t2,0(s4)     ALU |                          | ID-stall:EX1-busy
-   4450 | 012c ?                   |                          | 6| .035e li t6,0            | 035a sw t2,0(s4)     ALU |                          | ID-stall:EX1-busy
-   4451 |                          | 0128 ?                   | 6| .035e li t6,0            | 035a sw t2,0(s4)     ALU |                          | ID-stall:EX1-busy
-   4452 |                          | 0128 ?                   | 6| >035e li t6,0            | 035e li t6,0         ALU | 035a sw t2,0(s4)         | TRAP
-   4453 | 012c ?                   | 0128 ?                   | 4| >(flushed) beq s11,t0,2e | 035e li t6,0         ALU |                          | RT-redirect->0140
-   4454 | 0140 j 440               |                          | 0|                          |                          |                          | ID-stall:other
-   4455 | 0440 csrr s6,tcontrol    |                          | 0|                          |                          |                          | BTB-redirect ID-stall:other
-   4456 | 0444 csrr s8,mcause      | 0140 j 440               | 0| .(flushed) j 440         |                          |                          | ID-stall:other
-   4457 | 0448 csrr s9,mepc        | 0440 csrr s6,tcontrol    | 0| .(flushed) j 440         |                          |                          | ID-stall:other
-   4458 | 044c csrr s10,mtval      | 0444 csrr s8,mcause      | 2| .(flushed) j 440         |                          |                          | ID-stall:other
-   4459 | 0450 addi s11,s11,1      | 0448 csrr s9,mepc        | 4| .(flushed) j 440         |                          |                          | ID-stall:other
-   4460 |                          | 044c csrr s10,mtval      | 6| .(flushed) j 440         |                          |                          | ID-stall:other
-   4461 |                          | 044c csrr s10,mtval      | 6| .(flushed) j 440         |                          |                          | ID-stall:other
-   4462 |                          | 044c csrr s10,mtval      | 6| .(flushed) j 440         |                          |                          | ID-stall:other
-   4463 |                          | 044c csrr s10,mtval      | 6| .(flushed) j 440         |                          |                          | ID-stall:other
-   4464 |                          | 044c csrr s10,mtval      | 6| .(flushed) j 440         |                          |                          | ID-stall:other
-   4465 |                          | 044c csrr s10,mtval      | 6| .(flushed) j 440         |                          |                          | ID-stall:other
-   4466 |                          | 044c csrr s10,mtval      | 6| .(flushed) j 440         |                          |                          | ID-stall:other
-   4467 |                          | 044c csrr s10,mtval      | 6| .(flushed) j 440         |                          |                          | ID-stall:other
-   4468 |                          | 044c csrr s10,mtval      | 6| .(flushed) j 440         |                          |                          | ID-stall:other
-   4469 |                          | 044c csrr s10,mtval      | 6| .(flushed) j 440         |                          |                          | ID-stall:other
-   4470 |                          | 044c csrr s10,mtval      | 6| .(flushed) j 440         |                          |                          | ID-stall:other
-   4471 |                          | 044c csrr s10,mtval      | 6| .(flushed) j 440         |                          |                          | ID-stall:other
-   4472 |                          | 044c csrr s10,mtval      | 6| .(flushed) j 440         |                          |                          | ID-stall:other
-   4473 |                          | 044c csrr s10,mtval      | 6| .(flushed) j 440         |                          |                          | ID-stall:other
-   4474 |                          | 044c csrr s10,mtval      | 6| .(flushed) j 440         |                          |                          | ID-stall:other
-   4475 |                          | 044c csrr s10,mtval      | 6| .(flushed) j 440         |                          |                          | ID-stall:other
-   4476 |                          | 044c csrr s10,mtval      | 6| .(flushed) j 440         |                          |                          | ID-stall:other
-   4477 |                          | 044c csrr s10,mtval      | 6| .(flushed) j 440         |                          |                          | ID-stall:other
-   4478 |                          | 044c csrr s10,mtval      | 6| .(flushed) j 440         |                          |                          | ID-stall:other
-   4479 |                          | 044c csrr s10,mtval      | 6| .(flushed) j 440         |                          |                          | ID-stall:other
-   4480 |                          | 044c csrr s10,mtval      | 6| .(flushed) j 440         |                          |                          | ID-stall:other
-   4481 |                          | 044c csrr s10,mtval      | 6| .(flushed) j 440         |                          |                          | ID-stall:other
-   4482 |                          | 044c csrr s10,mtval      | 6| .(flushed) j 440         |                          |                          | ID-stall:other
-   4483 |                          | 044c csrr s10,mtval      | 6| .(flushed) j 440         |                          |                          | ID-stall:other
-   4484 |                          | 044c csrr s10,mtval      | 6| .(flushed) j 440         |                          |                          | ID-stall:other
-   4485 |                          | 044c csrr s10,mtval      | 6| .(flushed) j 440         |                          |                          | ID-stall:other
-   4486 |                          | 044c csrr s10,mtval      | 6| .(flushed) j 440         |                          |                          | ID-stall:other
-   4487 |                          | 044c csrr s10,mtval      | 6| .(flushed) j 440         |                          |                          | ID-stall:other
-   4488 |                          | 044c csrr s10,mtval      | 6| .(flushed) j 440         |                          |                          | ID-stall:other
-   4489 |                          | 044c csrr s10,mtval      | 6| .(flushed) j 440         |                          |                          | ID-stall:other
-   4490 |                          | 044c csrr s10,mtval      | 6| .(flushed) j 440         |                          |                          | ID-stall:other
-   4491 |                          | 044c csrr s10,mtval      | 6| .(flushed) j 440         |                          |                          | ID-stall:other
-   4492 |                          | 044c csrr s10,mtval      | 6| .(flushed) j 440         |                          |                          | ID-stall:other
-   4493 |                          | 044c csrr s10,mtval      | 6| .(flushed) j 440         |                          |                          | ID-stall:other
-   4494 |                          | 044c csrr s10,mtval      | 6| .(flushed) j 440         |                          |                          | ID-stall:other
-   4495 |                          | 044c csrr s10,mtval      | 6| .(flushed) j 440         |                          |                          | ID-stall:other
-   4496 |                          | 044c csrr s10,mtval      | 6| .(flushed) j 440         |                          |                          | ID-stall:other
-   4497 |                          | 044c csrr s10,mtval      | 6| .(flushed) j 440         |                          |                          | ID-stall:other
-   4498 |                          | 044c csrr s10,mtval      | 6| .(flushed) j 440         |                          |                          | ID-stall:other
-   4499 |                          | 044c csrr s10,mtval      | 6| .(flushed) j 440         |                          |                          | ID-stall:other
-   4500 |                          | 044c csrr s10,mtval      | 6| .(flushed) j 440         |                          |                          | ID-stall:other
-   4501 |                          | 044c csrr s10,mtval      | 6| .(flushed) j 440         |                          |                          | ID-stall:other
-   4502 |                          | 044c csrr s10,mtval      | 6| .(flushed) j 440         |                          |                          | ID-stall:other
-   4503 |                          | 044c csrr s10,mtval      | 6| .(flushed) j 440         |                          |                          | ID-stall:other
-   4504 |                          | 044c csrr s10,mtval      | 6| .(flushed) j 440         |                          |                          | ID-stall:other
-   4505 |                          | 044c csrr s10,mtval      | 6| .(flushed) j 440         |                          |                          | ID-stall:other
-   4506 |                          | 044c csrr s10,mtval      | 6| .(flushed) j 440         |                          |                          | ID-stall:other
-   4507 |                          | 044c csrr s10,mtval      | 6| .(flushed) j 440         |                          |                          | ID-stall:other
-   4508 |                          | 044c csrr s10,mtval      | 6| .(flushed) j 440         |                          |                          | ID-stall:other
-   4509 |                          | 044c csrr s10,mtval      | 6| .(flushed) j 440         |                          |                          | ID-stall:other
-   4510 |                          | 044c csrr s10,mtval      | 6| .(flushed) j 440         |                          |                          | ID-stall:other
-   4511 |                          | 044c csrr s10,mtval      | 6| .(flushed) j 440         |                          |                          | ID-stall:other
-   4512 |                          | 044c csrr s10,mtval      | 6| .(flushed) j 440         |                          |                          | ID-stall:other
-   4513 |                          | 044c csrr s10,mtval      | 6| .(flushed) j 440         |                          |                          | ID-stall:other
-   4514 |                          | 044c csrr s10,mtval      | 6| .(flushed) j 440         |                          |                          | ID-stall:other
-   4515 |                          | 044c csrr s10,mtval      | 6| .(flushed) j 440         |                          |                          | ID-stall:other
-   4516 |                          | 044c csrr s10,mtval      | 6| .(flushed) j 440         |                          |                          | ID-stall:other
-   4517 |                          | 044c csrr s10,mtval      | 6| .(flushed) j 440         |                          |                          | ID-stall:other
-   4518 |                          | 044c csrr s10,mtval      | 6| .(flushed) j 440         |                          |                          | ID-stall:other
-   4519 |                          | 044c csrr s10,mtval      | 6| .(flushed) j 440         |                          |                          | ID-stall:other
-   4520 |                          | 044c csrr s10,mtval      | 6| .(flushed) j 440         |                          |                          | ID-stall:other
-   4521 |                          | 044c csrr s10,mtval      | 6| .(flushed) j 440         |                          |                          | ID-stall:other
-   4522 |                          | 044c csrr s10,mtval      | 6| .(flushed) j 440         |                          |                          | ID-stall:other
-   4523 |                          | 044c csrr s10,mtval      | 6| .(flushed) j 440         |                          |                          | ID-stall:other
-   4524 |                          | 044c csrr s10,mtval      | 6| .(flushed) j 440         |                          |                          | ID-stall:other
-   4525 |                          | 044c csrr s10,mtval      | 6| .(flushed) j 440         |                          |                          | ID-stall:other
-   4526 |                          | 044c csrr s10,mtval      | 6| .(flushed) j 440         |                          |                          | ID-stall:other
-   4527 |                          | 044c csrr s10,mtval      | 6| .(flushed) j 440         |                          |                          | ID-stall:other
-   4528 |                          | 044c csrr s10,mtval      | 6| .(flushed) j 440         |                          |                          | ID-stall:other
-   4529 |                          | 044c csrr s10,mtval      | 6| .(flushed) j 440         |                          |                          | ID-stall:other
-   4530 |                          | 044c csrr s10,mtval      | 6| .(flushed) j 440         |                          |                          | ID-stall:other
-   4531 |                          | 044c csrr s10,mtval      | 6| .(flushed) j 440         |                          |                          | ID-stall:other
-   4532 |                          | 044c csrr s10,mtval      | 6| .(flushed) j 440         |                          |                          | ID-stall:other
-   4533 |                          | 044c csrr s10,mtval      | 6| .(flushed) j 440         |                          |                          | ID-stall:other
-   4534 |                          | 044c csrr s10,mtval      | 6| .(flushed) j 440         |                          |                          | ID-stall:other
-   4535 |                          | 044c csrr s10,mtval      | 6| .(flushed) j 440         |                          |                          | ID-stall:other
-   4536 |                          | 044c csrr s10,mtval      | 6| .(flushed) j 440         |                          |                          | ID-stall:other
-   4537 |                          | 044c csrr s10,mtval      | 6| .(flushed) j 440         |                          |                          | ID-stall:other
-   4538 |                          | 044c csrr s10,mtval      | 6| .(flushed) j 440         |                          |                          | ID-stall:other
-   4539 |                          | 044c csrr s10,mtval      | 6| .(flushed) j 440         |                          |                          | ID-stall:other
-   4540 |                          | 044c csrr s10,mtval      | 6| .(flushed) j 440         |                          |                          | ID-stall:other
-   4541 |                          | 044c csrr s10,mtval      | 6| .(flushed) j 440         |                          |                          | ID-stall:other
-   4542 |                          | 044c csrr s10,mtval      | 6| .(flushed) j 440         |                          |                          | ID-stall:other
-   4543 |                          | 044c csrr s10,mtval      | 6| .(flushed) j 440         |                          |                          | ID-stall:other
-   4544 |                          | 044c csrr s10,mtval      | 6| .(flushed) j 440         |                          |                          | ID-stall:other
-   4545 |                          | 044c csrr s10,mtval      | 6| .(flushed) j 440         |                          |                          | ID-stall:other
-   4546 |                          | 044c csrr s10,mtval      | 6| .(flushed) j 440         |                          |                          | ID-stall:other
-   4547 |                          | 044c csrr s10,mtval      | 6| .(flushed) j 440         |                          |                          | ID-stall:other
-   4548 |                          | 044c csrr s10,mtval      | 6| .(flushed) j 440         |                          |                          | ID-stall:other
-   4549 |                          | 044c csrr s10,mtval      | 6| .(flushed) j 440         |                          |                          | ID-stall:other
-   4550 |                          | 044c csrr s10,mtval      | 6| .(flushed) j 440         |                          |                          | ID-stall:other
-   4551 |                          | 044c csrr s10,mtval      | 6| .(flushed) j 440         |                          |                          | ID-stall:other
-   4552 |                          | 044c csrr s10,mtval      | 6| .(flushed) j 440         |                          |                          | ID-stall:other
-   4553 |                          | 044c csrr s10,mtval      | 6| .(flushed) j 440         |                          |                          | ID-stall:other
-   4554 |                          | 044c csrr s10,mtval      | 6| .(flushed) j 440         |                          |                          | ID-stall:other
-   4555 |                          | 044c csrr s10,mtval      | 6| .(flushed) j 440         |                          |                          | ID-stall:other
-   4556 |                          | 044c csrr s10,mtval      | 6| .(flushed) j 440         |                          |                          | ID-stall:other
-   4557 |                          | 044c csrr s10,mtval      | 6| .(flushed) j 440         |                          |                          | ID-stall:other
-   4558 |                          | 044c csrr s10,mtval      | 6| .(flushed) j 440         |                          |                          | ID-stall:other
-   4559 |                          | 044c csrr s10,mtval      | 6| .(flushed) j 440         |                          |                          | ID-stall:other
-   4560 |                          | 044c csrr s10,mtval      | 6| .(flushed) j 440         |                          |                          | ID-stall:other
-   4561 |                          | 044c csrr s10,mtval      | 6| .(flushed) j 440         |                          |                          | ID-stall:other
-   4562 |                          | 044c csrr s10,mtval      | 6| .(flushed) j 440         |                          |                          | ID-stall:other
-   4563 |                          | 044c csrr s10,mtval      | 6| .(flushed) j 440         |                          |                          | ID-stall:other
-   4564 |                          | 044c csrr s10,mtval      | 6| .(flushed) j 440         |                          |                          | ID-stall:other
-   4565 |                          | 044c csrr s10,mtval      | 6| .(flushed) j 440         |                          |                          | ID-stall:other
-   4566 |                          | 044c csrr s10,mtval      | 6| .(flushed) j 440         |                          |                          | ID-stall:other
-   4567 |                          | 044c csrr s10,mtval      | 6| .(flushed) j 440         |                          |                          | ID-stall:other
-   4568 |                          | 044c csrr s10,mtval      | 6| .(flushed) j 440         |                          |                          | ID-stall:other
-   4569 |                          | 044c csrr s10,mtval      | 6| .(flushed) j 440         |                          |                          | ID-stall:other
-   4570 |                          | 044c csrr s10,mtval      | 6| .(flushed) j 440         |                          |                          | ID-stall:other
-   4571 |                          | 044c csrr s10,mtval      | 6| .(flushed) j 440         |                          |                          | ID-stall:other
-   4572 |                          | 044c csrr s10,mtval      | 6| .(flushed) j 440         |                          |                          | ID-stall:other
-   4573 |                          | 044c csrr s10,mtval      | 6| .(flushed) j 440         |                          |                          | ID-stall:other
-   4574 |                          | 044c csrr s10,mtval      | 6| .(flushed) j 440         |                          |                          | ID-stall:other
-   4575 |                          | 044c csrr s10,mtval      | 6| .(flushed) j 440         |                          |                          | ID-stall:other
-   4576 |                          | 044c csrr s10,mtval      | 6| .(flushed) j 440         |                          |                          | ID-stall:other
-   4577 |                          | 044c csrr s10,mtval      | 6| .(flushed) j 440         |                          |                          | ID-stall:other
-   4578 |                          | 044c csrr s10,mtval      | 6| .(flushed) j 440         |                          |                          | ID-stall:other
-   4579 |                          | 044c csrr s10,mtval      | 6| .(flushed) j 440         |                          |                          | ID-stall:other
-   4580 |                          | 044c csrr s10,mtval      | 6| .(flushed) j 440         |                          |                          | ID-stall:other
-   4581 |                          | 044c csrr s10,mtval      | 6| .(flushed) j 440         |                          |                          | ID-stall:other FLUSH
-   4582 |                          | 044c csrr s10,mtval      | 6| >0140 j 440              |                          |                          | 
-   4583 | 0450 addi s11,s11,1      | 044c csrr s10,mtval      | 4| .0440 csrr s6,tcontrol   | 0140 j 440           BJU |                          | ID-stall:CP0/fence
-   4584 | 0454 ?                   |                          | 6| .0440 csrr s6,tcontrol   |                          | 0140 j 440               | ID-stall:CP0/fence
-   4585 |                          | 0450 addi s11,s11,1      | 6| >0440 csrr s6,tcontrol   |                          |                          | 
-   4586 | 0454 ?                   | 0450 addi s11,s11,1      | 4| .0444 csrr s8,mcause     | 0440 csrr s6,tcontro CP0 |                          | ID-stall:CP0/fence
-   4587 | 0458 ?                   |                          | 5| .0444 csrr s8,mcause     |                          | 0440 csrr s6,tcontrol    | ID-stall:CP0/fence
-   4588 |                          | 0454 ?                   | 5| >0444 csrr s8,mcause     |                          |                          | 
-   4589 | 0458 ?                   | 0454 ?                   | 3| .0448 csrr s9,mepc       | 0444 csrr s8,mcause  CP0 |                          | ID-stall:CP0/fence
-   4590 | 045c ?                   |                          | 5| .0448 csrr s9,mepc       |                          | 0444 csrr s8,mcause      | ID-stall:CP0/fence
-   4591 |                          | 0458 ?                   | 5| >0448 csrr s9,mepc       |                          |                          | 
-   4592 | 045c ?                   | 0458 ?                   | 3| .044c csrr s10,mtval     | 0448 csrr s9,mepc    CP0 |                          | ID-stall:CP0/fence
-   4593 | 0460 ?                   |                          | 6| .044c csrr s10,mtval     |                          | 0448 csrr s9,mepc        | ID-stall:CP0/fence
-   4594 |                          | 045c ?                   | 6| >044c csrr s10,mtval     |                          |                          | 
-   4595 |                          | 045c ?                   | 5| >0450 addi s11,s11,1     | 044c csrr s10,mtval  CP0 |                          | 
-   4596 | 0460 ?                   | 045c ?                   | 3| .0452 csrw tdata1,zero   | 0450 addi s11,s11,1  ALU | 044c csrr s10,mtval      | ID-stall:CP0/fence
-   4597 | 0464 ?                   |                          | 5| .0452 csrw tdata1,zero   |                          | 0450 addi s11,s11,1      | ID-stall:CP0/fence
-   4598 |                          | 0460 ?                   | 5| >0452 csrw tdata1,zero   |                          |                          | 
-   4599 | 0464 ?                   | 0460 ?                   | 3| .(flushed) mret          | 0452 csrw tdata1,zer CP0 |                          | ID-stall:CP0/fence
-   4600 | 0468 ?                   |                          | 5| .(flushed) mret          |                          | 0452 csrw tdata1,zero    | ID-stall:CP0/fence RT-redirect->0456
-   4601 | 0456 mret                |                          | 0|                          |                          |                          | 
-   4602 | 0458 ?                   |                          | 0|                          |                          |                          | ID-stall:other FLUSH
-   4603 | 045c ?                   |                          | 0|                          |                          |                          | 
-   4604 | 0460 ?                   | 0458 ?                   | 0| >0456 mret               |                          |                          | 
-   4605 | 0464 ?                   | 045c ?                   | 0| >045a ?                  | 0456 mret            CP0 |                          | 
-   4606 | 0468 ?                   | 0460 ?                   | 1| >035a sw t2,0(s4)        | 045a ?               CP0 | 0456 mret                | RT-redirect->035a
-   4607 | 035a sw t2,0(s4)         |                          | 0|                          | 035a sw t2,0(s4)     CP0 |                          | 
-   4608 | 035c ?                   |                          | 0|                          |                          |                          | ID-stall:other
-   4609 | 0360 li t0,2             |                          | 0|                          |                          |                          | ID-stall:other FLUSH
-   4610 | 0364 ?                   | 035c ?                   | 0| >035a sw t2,0(s4)        |                          |                          | 
-   4611 | 0368 ?                   | 0360 li t0,2             | 0| >035e li t6,0            | 035a sw t2,0(s4)     LSU |                          | 
-   4612 | 036c ?                   | 0364 ?                   | 0| >0360 li t0,2            | 035e li t6,0         ALU | 035a sw t2,0(s4)         | DC:ST hit
-   4613 | 0370 beq t1,t0,378       | 0368 ?                   | 0| >03bc lw t3,4(s4)        | 0360 li t0,2         ALU | 035e li t6,0             | IP-redirect->0122
-----------------------------------------------------------------------------------------------------------------------------------------------------------------
+================================================================================================================================================================================================
+    cyc | IF (fetch)               | IP (pred)                |IB| ID                       | EX1                      | RETIRE                   | BACK        | WB              | events
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+   4439 | 036c ?                   | 0364 ?                   | 1| .035a sw t2,0(s4)        | 0356 lw t3,0(s4)     LSU |                          |             |                 | ID-stall:EX1-busy LSU-full
+   4440 | 0370 beq t1,t0,378       | 0368 ?                   | 3| .035a sw t2,0(s4)        | 0356 lw t3,0(s4)     LSU |                          |             |                 | IP-redirect->0122 ID-stall:EX1-busy LSU-full
+   4441 | 0122 csrr s0,mepc        |                          | 5| .035a sw t2,0(s4)        | 0356 lw t3,0(s4)     LSU |                          |             |                 | ID-stall:EX1-busy LSU-full
+   4442 | 0124 ?                   |                          | 5| .035a sw t2,0(s4)        | 0356 lw t3,0(s4)     LSU |                          |             |                 | ID-stall:EX1-busy LSU-full
+   4443 | 0128 ?                   |                          | 5| .035a sw t2,0(s4)        | 0356 lw t3,0(s4)     LSU |                          |             |                 | ID-stall:EX1-busy LSU-full
+   4444 |                          | 0124 ?                   | 5| .035a sw t2,0(s4)        | 0356 lw t3,0(s4)     LSU |                          |             |                 | ID-stall:EX1-busy LSU-full
+   4445 |                          | 0124 ?                   | 5| .035a sw t2,0(s4)        | 0356 lw t3,0(s4)     LSU |                          |             |                 | ID-stall:EX1-busy LSU-full
+   4446 |                          | 0124 ?                   | 5| .035a sw t2,0(s4)        | 0356 lw t3,0(s4)     LSU |                          |             |                 | ID-stall:EX1-busy LSU-full
+   4447 |                          | 0124 ?                   | 5| .035a sw t2,0(s4)        | 0356 lw t3,0(s4)     LSU |                          |             |                 | ID-stall:EX1-busy LSU-full
+   4448 |                          | 0124 ?                   | 5| >035a sw t2,0(s4)        | 035a sw t2,0(s4)     LSU | 0356 lw t3,0(s4)         |             |                 | DC:LD MISS
+   4449 | 0128 ?                   | 0124 ?                   | 4| .035e li t6,0            | 035a sw t2,0(s4)     ALU |                          |             |                 | ID-stall:EX1-busy LSU-full
+   4450 | 012c ?                   |                          | 6| .035e li t6,0            | 035a sw t2,0(s4)     ALU |                          |             |                 | ID-stall:EX1-busy LSU-full
+   4451 |                          | 0128 ?                   | 6| .035e li t6,0            | 035a sw t2,0(s4)     ALU |                          |             |                 | ID-stall:EX1-busy LSU-full
+   4452 |                          | 0128 ?                   | 6| >035e li t6,0            | 035e li t6,0         ALU | 035a sw t2,0(s4)         |             |                 | TRAP
+   4453 | 012c ?                   | 0128 ?                   | 4| >(flushed) beq s11,t0,2e | 035e li t6,0         ALU |                          |             |                 | RT-redirect->0140
+   4454 | 0140 j 440               |                          | 0|                          |                          |                          |             |                 | ID-stall:other
+   4455 | 0440 csrr s6,tcontrol    |                          | 0|                          |                          |                          |             |                 | BTB-redirect ID-stall:other
+   4456 | 0444 csrr s8,mcause      | 0140 j 440               | 0| .(flushed) j 440         |                          |                          |             |                 | ID-stall:other
+   4457 | 0448 csrr s9,mepc        | 0440 csrr s6,tcontrol    | 0| .(flushed) j 440         |                          |                          |             |                 | ID-stall:other
+   4458 | 044c csrr s10,mtval      | 0444 csrr s8,mcause      | 2| .(flushed) j 440         |                          |                          |             |                 | ID-stall:other
+   4459 | 0450 addi s11,s11,1      | 0448 csrr s9,mepc        | 4| .(flushed) j 440         |                          |                          |             |                 | ID-stall:other
+   4460 |                          | 044c csrr s10,mtval      | 6| .(flushed) j 440         |                          |                          |             |                 | ID-stall:other
+   4461 |                          | 044c csrr s10,mtval      | 6| .(flushed) j 440         |                          |                          |             |                 | ID-stall:other
+   4462 |                          | 044c csrr s10,mtval      | 6| .(flushed) j 440         |                          |                          |             |                 | ID-stall:other
+   4463 |                          | 044c csrr s10,mtval      | 6| .(flushed) j 440         |                          |                          |             |                 | ID-stall:other
+   4464 |                          | 044c csrr s10,mtval      | 6| .(flushed) j 440         |                          |                          |             |                 | ID-stall:other
+   4465 |                          | 044c csrr s10,mtval      | 6| .(flushed) j 440         |                          |                          |             |                 | ID-stall:other
+   4466 |                          | 044c csrr s10,mtval      | 6| .(flushed) j 440         |                          |                          |             |                 | ID-stall:other
+   4467 |                          | 044c csrr s10,mtval      | 6| .(flushed) j 440         |                          |                          |             |                 | ID-stall:other
+   4468 |                          | 044c csrr s10,mtval      | 6| .(flushed) j 440         |                          |                          |             |                 | ID-stall:other
+   4469 |                          | 044c csrr s10,mtval      | 6| .(flushed) j 440         |                          |                          |             |                 | ID-stall:other
+   4470 |                          | 044c csrr s10,mtval      | 6| .(flushed) j 440         |                          |                          |             |                 | ID-stall:other
+   4471 |                          | 044c csrr s10,mtval      | 6| .(flushed) j 440         |                          |                          |             |                 | ID-stall:other
+   4472 |                          | 044c csrr s10,mtval      | 6| .(flushed) j 440         |                          |                          |             |                 | ID-stall:other
+   4473 |                          | 044c csrr s10,mtval      | 6| .(flushed) j 440         |                          |                          |             |                 | ID-stall:other
+   4474 |                          | 044c csrr s10,mtval      | 6| .(flushed) j 440         |                          |                          |             |                 | ID-stall:other
+   4475 |                          | 044c csrr s10,mtval      | 6| .(flushed) j 440         |                          |                          |             |                 | ID-stall:other
+   4476 |                          | 044c csrr s10,mtval      | 6| .(flushed) j 440         |                          |                          |             |                 | ID-stall:other
+   4477 |                          | 044c csrr s10,mtval      | 6| .(flushed) j 440         |                          |                          |             |                 | ID-stall:other
+   4478 |                          | 044c csrr s10,mtval      | 6| .(flushed) j 440         |                          |                          |             |                 | ID-stall:other
+   4479 |                          | 044c csrr s10,mtval      | 6| .(flushed) j 440         |                          |                          |             |                 | ID-stall:other
+   4480 |                          | 044c csrr s10,mtval      | 6| .(flushed) j 440         |                          |                          |             |                 | ID-stall:other
+   4481 |                          | 044c csrr s10,mtval      | 6| .(flushed) j 440         |                          |                          |             |                 | ID-stall:other
+   4482 |                          | 044c csrr s10,mtval      | 6| .(flushed) j 440         |                          |                          |             |                 | ID-stall:other
+   4483 |                          | 044c csrr s10,mtval      | 6| .(flushed) j 440         |                          |                          |             |                 | ID-stall:other
+   4484 |                          | 044c csrr s10,mtval      | 6| .(flushed) j 440         |                          |                          |             |                 | ID-stall:other
+   4485 |                          | 044c csrr s10,mtval      | 6| .(flushed) j 440         |                          |                          |             |                 | ID-stall:other
+   4486 |                          | 044c csrr s10,mtval      | 6| .(flushed) j 440         |                          |                          |             |                 | ID-stall:other
+   4487 |                          | 044c csrr s10,mtval      | 6| .(flushed) j 440         |                          |                          |             |                 | ID-stall:other
+   4488 |                          | 044c csrr s10,mtval      | 6| .(flushed) j 440         |                          |                          |             |                 | ID-stall:other
+   4489 |                          | 044c csrr s10,mtval      | 6| .(flushed) j 440         |                          |                          |             |                 | ID-stall:other
+   4490 |                          | 044c csrr s10,mtval      | 6| .(flushed) j 440         |                          |                          |             |                 | ID-stall:other
+   4491 |                          | 044c csrr s10,mtval      | 6| .(flushed) j 440         |                          |                          |             |                 | ID-stall:other
+   4492 |                          | 044c csrr s10,mtval      | 6| .(flushed) j 440         |                          |                          |             |                 | ID-stall:other
+   4493 |                          | 044c csrr s10,mtval      | 6| .(flushed) j 440         |                          |                          |             |                 | ID-stall:other
+   4494 |                          | 044c csrr s10,mtval      | 6| .(flushed) j 440         |                          |                          |             |                 | ID-stall:other
+   4495 |                          | 044c csrr s10,mtval      | 6| .(flushed) j 440         |                          |                          |             |                 | ID-stall:other
+   4496 |                          | 044c csrr s10,mtval      | 6| .(flushed) j 440         |                          |                          |             |                 | ID-stall:other
+   4497 |                          | 044c csrr s10,mtval      | 6| .(flushed) j 440         |                          |                          |             |                 | ID-stall:other
+   4498 |                          | 044c csrr s10,mtval      | 6| .(flushed) j 440         |                          |                          |             |                 | ID-stall:other
+   4499 |                          | 044c csrr s10,mtval      | 6| .(flushed) j 440         |                          |                          |             |                 | ID-stall:other
+   4500 |                          | 044c csrr s10,mtval      | 6| .(flushed) j 440         |                          |                          |             |                 | ID-stall:other
+   4501 |                          | 044c csrr s10,mtval      | 6| .(flushed) j 440         |                          |                          |             |                 | ID-stall:other
+   4502 |                          | 044c csrr s10,mtval      | 6| .(flushed) j 440         |                          |                          |             |                 | ID-stall:other
+   4503 |                          | 044c csrr s10,mtval      | 6| .(flushed) j 440         |                          |                          |             |                 | ID-stall:other
+   4504 |                          | 044c csrr s10,mtval      | 6| .(flushed) j 440         |                          |                          |             |                 | ID-stall:other
+   4505 |                          | 044c csrr s10,mtval      | 6| .(flushed) j 440         |                          |                          |             |                 | ID-stall:other
+   4506 |                          | 044c csrr s10,mtval      | 6| .(flushed) j 440         |                          |                          |             |                 | ID-stall:other
+   4507 |                          | 044c csrr s10,mtval      | 6| .(flushed) j 440         |                          |                          |             |                 | ID-stall:other
+   4508 |                          | 044c csrr s10,mtval      | 6| .(flushed) j 440         |                          |                          |             |                 | ID-stall:other
+   4509 |                          | 044c csrr s10,mtval      | 6| .(flushed) j 440         |                          |                          |             |                 | ID-stall:other
+   4510 |                          | 044c csrr s10,mtval      | 6| .(flushed) j 440         |                          |                          |             |                 | ID-stall:other
+   4511 |                          | 044c csrr s10,mtval      | 6| .(flushed) j 440         |                          |                          |             |                 | ID-stall:other
+   4512 |                          | 044c csrr s10,mtval      | 6| .(flushed) j 440         |                          |                          |             |                 | ID-stall:other
+   4513 |                          | 044c csrr s10,mtval      | 6| .(flushed) j 440         |                          |                          |             |                 | ID-stall:other
+   4514 |                          | 044c csrr s10,mtval      | 6| .(flushed) j 440         |                          |                          |             |                 | ID-stall:other
+   4515 |                          | 044c csrr s10,mtval      | 6| .(flushed) j 440         |                          |                          |             |                 | ID-stall:other
+   4516 |                          | 044c csrr s10,mtval      | 6| .(flushed) j 440         |                          |                          |             |                 | ID-stall:other
+   4517 |                          | 044c csrr s10,mtval      | 6| .(flushed) j 440         |                          |                          |             |                 | ID-stall:other
+   4518 |                          | 044c csrr s10,mtval      | 6| .(flushed) j 440         |                          |                          |             |                 | ID-stall:other
+   4519 |                          | 044c csrr s10,mtval      | 6| .(flushed) j 440         |                          |                          |             |                 | ID-stall:other
+   4520 |                          | 044c csrr s10,mtval      | 6| .(flushed) j 440         |                          |                          |             |                 | ID-stall:other
+   4521 |                          | 044c csrr s10,mtval      | 6| .(flushed) j 440         |                          |                          |             |                 | ID-stall:other
+   4522 |                          | 044c csrr s10,mtval      | 6| .(flushed) j 440         |                          |                          |             |                 | ID-stall:other
+   4523 |                          | 044c csrr s10,mtval      | 6| .(flushed) j 440         |                          |                          |             |                 | ID-stall:other
+   4524 |                          | 044c csrr s10,mtval      | 6| .(flushed) j 440         |                          |                          |             |                 | ID-stall:other
+   4525 |                          | 044c csrr s10,mtval      | 6| .(flushed) j 440         |                          |                          |             |                 | ID-stall:other
+   4526 |                          | 044c csrr s10,mtval      | 6| .(flushed) j 440         |                          |                          |             |                 | ID-stall:other
+   4527 |                          | 044c csrr s10,mtval      | 6| .(flushed) j 440         |                          |                          |             |                 | ID-stall:other
+   4528 |                          | 044c csrr s10,mtval      | 6| .(flushed) j 440         |                          |                          |             |                 | ID-stall:other
+   4529 |                          | 044c csrr s10,mtval      | 6| .(flushed) j 440         |                          |                          |             |                 | ID-stall:other
+   4530 |                          | 044c csrr s10,mtval      | 6| .(flushed) j 440         |                          |                          |             |                 | ID-stall:other
+   4531 |                          | 044c csrr s10,mtval      | 6| .(flushed) j 440         |                          |                          |             |                 | ID-stall:other
+   4532 |                          | 044c csrr s10,mtval      | 6| .(flushed) j 440         |                          |                          |             |                 | ID-stall:other
+   4533 |                          | 044c csrr s10,mtval      | 6| .(flushed) j 440         |                          |                          |             |                 | ID-stall:other
+   4534 |                          | 044c csrr s10,mtval      | 6| .(flushed) j 440         |                          |                          |             |                 | ID-stall:other
+   4535 |                          | 044c csrr s10,mtval      | 6| .(flushed) j 440         |                          |                          |             |                 | ID-stall:other
+   4536 |                          | 044c csrr s10,mtval      | 6| .(flushed) j 440         |                          |                          |             |                 | ID-stall:other
+   4537 |                          | 044c csrr s10,mtval      | 6| .(flushed) j 440         |                          |                          |             |                 | ID-stall:other
+   4538 |                          | 044c csrr s10,mtval      | 6| .(flushed) j 440         |                          |                          |             |                 | ID-stall:other
+   4539 |                          | 044c csrr s10,mtval      | 6| .(flushed) j 440         |                          |                          |             |                 | ID-stall:other
+   4540 |                          | 044c csrr s10,mtval      | 6| .(flushed) j 440         |                          |                          |             |                 | ID-stall:other
+   4541 |                          | 044c csrr s10,mtval      | 6| .(flushed) j 440         |                          |                          |             |                 | ID-stall:other
+   4542 |                          | 044c csrr s10,mtval      | 6| .(flushed) j 440         |                          |                          |             |                 | ID-stall:other
+   4543 |                          | 044c csrr s10,mtval      | 6| .(flushed) j 440         |                          |                          |             |                 | ID-stall:other
+   4544 |                          | 044c csrr s10,mtval      | 6| .(flushed) j 440         |                          |                          |             |                 | ID-stall:other
+   4545 |                          | 044c csrr s10,mtval      | 6| .(flushed) j 440         |                          |                          |             |                 | ID-stall:other
+   4546 |                          | 044c csrr s10,mtval      | 6| .(flushed) j 440         |                          |                          |             |                 | ID-stall:other
+   4547 |                          | 044c csrr s10,mtval      | 6| .(flushed) j 440         |                          |                          |             |                 | ID-stall:other
+   4548 |                          | 044c csrr s10,mtval      | 6| .(flushed) j 440         |                          |                          |             |                 | ID-stall:other
+   4549 |                          | 044c csrr s10,mtval      | 6| .(flushed) j 440         |                          |                          |             |                 | ID-stall:other
+   4550 |                          | 044c csrr s10,mtval      | 6| .(flushed) j 440         |                          |                          |             |                 | ID-stall:other
+   4551 |                          | 044c csrr s10,mtval      | 6| .(flushed) j 440         |                          |                          |             |                 | ID-stall:other
+   4552 |                          | 044c csrr s10,mtval      | 6| .(flushed) j 440         |                          |                          |             |                 | ID-stall:other
+   4553 |                          | 044c csrr s10,mtval      | 6| .(flushed) j 440         |                          |                          |             |                 | ID-stall:other
+   4554 |                          | 044c csrr s10,mtval      | 6| .(flushed) j 440         |                          |                          |             |                 | ID-stall:other
+   4555 |                          | 044c csrr s10,mtval      | 6| .(flushed) j 440         |                          |                          |             |                 | ID-stall:other
+   4556 |                          | 044c csrr s10,mtval      | 6| .(flushed) j 440         |                          |                          |             |                 | ID-stall:other
+   4557 |                          | 044c csrr s10,mtval      | 6| .(flushed) j 440         |                          |                          |             |                 | ID-stall:other
+   4558 |                          | 044c csrr s10,mtval      | 6| .(flushed) j 440         |                          |                          |             |                 | ID-stall:other
+   4559 |                          | 044c csrr s10,mtval      | 6| .(flushed) j 440         |                          |                          |             |                 | ID-stall:other
+   4560 |                          | 044c csrr s10,mtval      | 6| .(flushed) j 440         |                          |                          |             |                 | ID-stall:other
+   4561 |                          | 044c csrr s10,mtval      | 6| .(flushed) j 440         |                          |                          |             |                 | ID-stall:other
+   4562 |                          | 044c csrr s10,mtval      | 6| .(flushed) j 440         |                          |                          |             |                 | ID-stall:other
+   4563 |                          | 044c csrr s10,mtval      | 6| .(flushed) j 440         |                          |                          |             |                 | ID-stall:other
+   4564 |                          | 044c csrr s10,mtval      | 6| .(flushed) j 440         |                          |                          |             |                 | ID-stall:other
+   4565 |                          | 044c csrr s10,mtval      | 6| .(flushed) j 440         |                          |                          |             |                 | ID-stall:other
+   4566 |                          | 044c csrr s10,mtval      | 6| .(flushed) j 440         |                          |                          |             |                 | ID-stall:other
+   4567 |                          | 044c csrr s10,mtval      | 6| .(flushed) j 440         |                          |                          |             |                 | ID-stall:other
+   4568 |                          | 044c csrr s10,mtval      | 6| .(flushed) j 440         |                          |                          |             |                 | ID-stall:other
+   4569 |                          | 044c csrr s10,mtval      | 6| .(flushed) j 440         |                          |                          |             |                 | ID-stall:other
+   4570 |                          | 044c csrr s10,mtval      | 6| .(flushed) j 440         |                          |                          |             |                 | ID-stall:other
+   4571 |                          | 044c csrr s10,mtval      | 6| .(flushed) j 440         |                          |                          |             |                 | ID-stall:other
+   4572 |                          | 044c csrr s10,mtval      | 6| .(flushed) j 440         |                          |                          |             |                 | ID-stall:other
+   4573 |                          | 044c csrr s10,mtval      | 6| .(flushed) j 440         |                          |                          |             |                 | ID-stall:other
+   4574 |                          | 044c csrr s10,mtval      | 6| .(flushed) j 440         |                          |                          |             | w1:t3           | ID-stall:other
+   4575 |                          | 044c csrr s10,mtval      | 6| .(flushed) j 440         |                          |                          |             |                 | ID-stall:other
+   4576 |                          | 044c csrr s10,mtval      | 6| .(flushed) j 440         |                          |                          |             |                 | ID-stall:other
+   4577 |                          | 044c csrr s10,mtval      | 6| .(flushed) j 440         |                          |                          |             |                 | ID-stall:other
+   4578 |                          | 044c csrr s10,mtval      | 6| .(flushed) j 440         |                          |                          |             |                 | ID-stall:other
+   4579 |                          | 044c csrr s10,mtval      | 6| .(flushed) j 440         |                          |                          |             |                 | ID-stall:other
+   4580 |                          | 044c csrr s10,mtval      | 6| .(flushed) j 440         |                          |                          |             |                 | ID-stall:other
+   4581 |                          | 044c csrr s10,mtval      | 6| .(flushed) j 440         |                          |                          |             |                 | ID-stall:other FLUSH
+   4582 |                          | 044c csrr s10,mtval      | 6| >0140 j 440              |                          |                          |             |                 | 
+   4583 | 0450 addi s11,s11,1      | 044c csrr s10,mtval      | 4| .0440 csrr s6,tcontrol   | 0140 j 440           BJU |                          |             |                 | ID-stall:CP0/fence
+   4584 | 0454 ?                   |                          | 6| .0440 csrr s6,tcontrol   |                          | 0140 j 440               |             | w0:zero         | ID-stall:CP0/fence
+   4585 |                          | 0450 addi s11,s11,1      | 6| >0440 csrr s6,tcontrol   |                          |                          |             |                 | 
+   4586 | 0454 ?                   | 0450 addi s11,s11,1      | 4| .0444 csrr s8,mcause     | 0440 csrr s6,tcontro CP0 |                          |             |                 | ID-stall:CP0/fence
+   4587 | 0458 ?                   |                          | 5| .0444 csrr s8,mcause     |                          | 0440 csrr s6,tcontrol    |             | w0:s6           | ID-stall:CP0/fence
+   4588 |                          | 0454 ?                   | 5| >0444 csrr s8,mcause     |                          |                          |             |                 | 
+   4589 | 0458 ?                   | 0454 ?                   | 3| .0448 csrr s9,mepc       | 0444 csrr s8,mcause  CP0 |                          |             |                 | ID-stall:CP0/fence
+   4590 | 045c ?                   |                          | 5| .0448 csrr s9,mepc       |                          | 0444 csrr s8,mcause      |             | w0:s8           | ID-stall:CP0/fence
+   4591 |                          | 0458 ?                   | 5| >0448 csrr s9,mepc       |                          |                          |             |                 | 
+   4592 | 045c ?                   | 0458 ?                   | 3| .044c csrr s10,mtval     | 0448 csrr s9,mepc    CP0 |                          |             |                 | ID-stall:CP0/fence
+   4593 | 0460 ?                   |                          | 6| .044c csrr s10,mtval     |                          | 0448 csrr s9,mepc        |             | w0:s9           | ID-stall:CP0/fence
+   4594 |                          | 045c ?                   | 6| >044c csrr s10,mtval     |                          |                          |             |                 | 
+   4595 |                          | 045c ?                   | 5| >0450 addi s11,s11,1     | 044c csrr s10,mtval  CP0 |                          |             |                 | 
+   4596 | 0460 ?                   | 045c ?                   | 3| .0452 csrw tdata1,zero   | 0450 addi s11,s11,1  ALU | 044c csrr s10,mtval      |             | w0:s10          | ID-stall:CP0/fence
+   4597 | 0464 ?                   |                          | 5| .0452 csrw tdata1,zero   |                          | 0450 addi s11,s11,1      |             | w0:s11          | ID-stall:CP0/fence
+   4598 |                          | 0460 ?                   | 5| >0452 csrw tdata1,zero   |                          |                          |             |                 | 
+   4599 | 0464 ?                   | 0460 ?                   | 3| .(flushed) mret          | 0452 csrw tdata1,zer CP0 |                          |             |                 | ID-stall:CP0/fence
+   4600 | 0468 ?                   |                          | 5| .(flushed) mret          |                          | 0452 csrw tdata1,zero    |             | w0:zero         | ID-stall:CP0/fence RT-redirect->0456
+   4601 | 0456 mret                |                          | 0|                          |                          |                          |             |                 | 
+   4602 | 0458 ?                   |                          | 0|                          |                          |                          |             |                 | ID-stall:other FLUSH
+   4603 | 045c ?                   |                          | 0|                          |                          |                          |             |                 | 
+   4604 | 0460 ?                   | 0458 ?                   | 0| >0456 mret               |                          |                          |             |                 | 
+   4605 | 0464 ?                   | 045c ?                   | 0| >045a ?                  | 0456 mret            CP0 |                          |             |                 | 
+   4606 | 0468 ?                   | 0460 ?                   | 1| >035a sw t2,0(s4)        | 045a ?               CP0 | 0456 mret                |             |                 | RT-redirect->035a
+   4607 | 035a sw t2,0(s4)         |                          | 0|                          | 035a sw t2,0(s4)     CP0 |                          |             |                 | 
+   4608 | 035c ?                   |                          | 0|                          |                          |                          |             |                 | ID-stall:other
+   4609 | 0360 li t0,2             |                          | 0|                          |                          |                          |             |                 | ID-stall:other FLUSH
+   4610 | 0364 ?                   | 035c ?                   | 0| >035a sw t2,0(s4)        |                          |                          |             |                 | 
+   4611 | 0368 ?                   | 0360 li t0,2             | 0| >035e li t6,0            | 035a sw t2,0(s4)     LSU |                          |             |                 | 
+   4612 | 036c ?                   | 0364 ?                   | 0| >0360 li t0,2            | 035e li t6,0         ALU | 035a sw t2,0(s4)         |             |                 | DC:ST hit
+   4613 | 0370 beq t1,t0,378       | 0368 ?                   | 0| >03bc lw t3,4(s4)        | 0360 li t0,2         ALU | 035e li t6,0             |             | w0:t6           | IP-redirect->0122
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 summary: cycles=175 retired=12 IPC=0.069 | btb_redirect=1, dc_miss=1, flush=3, ip_redirect=2, retired=12, stall_CP0/fence=12, stall_EX1-busy=12, stall_other=131, trap=1
 
-================================================================================================================================================================
+================================================================================================================================================================================================
 MARK 3   cycles 4903 .. 4944  (42 cycles)
-================================================================================================================================================================
-    cyc | IF (fetch)               | IP (pred)                |IB| ID                       | EX1                      | RETIRE                   | events
-----------------------------------------------------------------------------------------------------------------------------------------------------------------
-   4903 | 03cc j 122               | 03c4 li t6,0             | 0| .03c0 lw t3,0(s4)        | 03bc lw t3,4(s4)     LSU |                          | ID-stall:EX1-busy
-   4904 | 03d0 sub t1,s10,s4       | 03c8 beq s11,t0,3d0      | 1| .03c0 lw t3,0(s4)        | 03bc lw t3,4(s4)     LSU |                          | ID-stall:EX1-busy
-   4905 | 03d4 li t0,0             | 03cc j 122               | 3| >03c0 lw t3,0(s4)        | 03c0 lw t3,0(s4)     LSU | 03bc lw t3,4(s4)         | IP-redirect->0122 DC:LD hit
-   4906 | 0122 csrr s0,mepc        |                          | 4| .03c4 li t6,0            | 03c0 lw t3,0(s4)     ALU |                          | ID-stall:EX1-busy
-   4907 | 0124 ?                   |                          | 4| .03c4 li t6,0            | 03c0 lw t3,0(s4)     ALU |                          | ID-stall:EX1-busy
-   4908 | 0128 ?                   |                          | 4| .03c4 li t6,0            | 03c0 lw t3,0(s4)     ALU |                          | ID-stall:EX1-busy
-   4909 | 012c ?                   | 0124 ?                   | 4| >03c4 li t6,0            | 03c4 li t6,0         ALU | 03c0 lw t3,0(s4)         | TRAP
-   4910 | 0130 ?                   | 0128 ?                   | 4| >(flushed) beq s11,t0,2e | 03c4 li t6,0         ALU |                          | RT-redirect->0140
-   4911 | 0140 j 440               |                          | 0|                          |                          |                          | ID-stall:other
-   4912 | 0144 csrr s0,mcause      |                          | 0|                          |                          |                          | ID-stall:other FLUSH
-   4913 | 0148 csrr s1,mepc        | 0140 j 440               | 0| >0140 j 440              |                          |                          | IP-redirect->0440
-   4914 | 0440 csrr s6,tcontrol    |                          | 0|                          | 0140 j 440           BJU |                          | 
-   4915 | 0444 csrr s8,mcause      |                          | 0|                          |                          | 0140 j 440               | 
-   4916 | 0448 csrr s9,mepc        | 0440 csrr s6,tcontrol    | 0| >0440 csrr s6,tcontrol   |                          |                          | 
-   4917 | 044c csrr s10,mtval      | 0444 csrr s8,mcause      | 0| .0444 csrr s8,mcause     | 0440 csrr s6,tcontro CP0 |                          | ID-stall:CP0/fence
-   4918 | 0450 addi s11,s11,1      | 0448 csrr s9,mepc        | 0| .0444 csrr s8,mcause     |                          | 0440 csrr s6,tcontrol    | ID-stall:CP0/fence
-   4919 | 0454 ?                   | 044c csrr s10,mtval      | 2| >0444 csrr s8,mcause     |                          |                          | 
-   4920 | 0458 ?                   | 0450 addi s11,s11,1      | 2| .0448 csrr s9,mepc       | 0444 csrr s8,mcause  CP0 |                          | ID-stall:CP0/fence
-   4921 | 045c ?                   | 0454 ?                   | 3| .0448 csrr s9,mepc       |                          | 0444 csrr s8,mcause      | ID-stall:CP0/fence
-   4922 |                          | 0458 ?                   | 5| >0448 csrr s9,mepc       |                          |                          | 
-   4923 | 045c ?                   | 0458 ?                   | 3| .044c csrr s10,mtval     | 0448 csrr s9,mepc    CP0 |                          | ID-stall:CP0/fence
-   4924 | 0460 ?                   |                          | 6| .044c csrr s10,mtval     |                          | 0448 csrr s9,mepc        | ID-stall:CP0/fence
-   4925 |                          | 045c ?                   | 6| >044c csrr s10,mtval     |                          |                          | 
-   4926 |                          | 045c ?                   | 5| >0450 addi s11,s11,1     | 044c csrr s10,mtval  CP0 |                          | 
-   4927 | 0460 ?                   | 045c ?                   | 3| .0452 csrw tdata1,zero   | 0450 addi s11,s11,1  ALU | 044c csrr s10,mtval      | ID-stall:CP0/fence
-   4928 | 0464 ?                   |                          | 5| .0452 csrw tdata1,zero   |                          | 0450 addi s11,s11,1      | ID-stall:CP0/fence
-   4929 |                          | 0460 ?                   | 5| >0452 csrw tdata1,zero   |                          |                          | 
-   4930 | 0464 ?                   | 0460 ?                   | 3| .(flushed) mret          | 0452 csrw tdata1,zer CP0 |                          | ID-stall:CP0/fence
-   4931 | 0468 ?                   |                          | 5| .(flushed) mret          |                          | 0452 csrw tdata1,zero    | ID-stall:CP0/fence RT-redirect->0456
-   4932 | 0456 mret                |                          | 0|                          |                          |                          | 
-   4933 | 0458 ?                   |                          | 0|                          |                          |                          | ID-stall:other FLUSH
-   4934 | 045c ?                   |                          | 0|                          |                          |                          | 
-   4935 | 0460 ?                   | 0458 ?                   | 0| >0456 mret               |                          |                          | 
-   4936 | 0464 ?                   | 045c ?                   | 0| >045a ?                  | 0456 mret            CP0 |                          | 
-   4937 | 0468 ?                   | 0460 ?                   | 1| >03c0 lw t3,0(s4)        | 045a ?               CP0 | 0456 mret                | RT-redirect->03c0
-   4938 | 03c0 lw t3,0(s4)         |                          | 0|                          | 03c0 lw t3,0(s4)     CP0 |                          | 
-   4939 | 03c4 li t6,0             |                          | 0|                          |                          |                          | ID-stall:other
-   4940 | 03c8 beq s11,t0,3d0      | 03c0 lw t3,0(s4)         | 0| .(flushed) lw t3,0(s4)   |                          |                          | ID-stall:other FLUSH
-   4941 | 03cc j 122               | 03c4 li t6,0             | 0| >03c0 lw t3,0(s4)        |                          |                          | 
-   4942 | 03d0 sub t1,s10,s4       | 03c8 beq s11,t0,3d0      | 1| >03c4 li t6,0            | 03c0 lw t3,0(s4)     LSU |                          | 
-   4943 | 03d4 li t0,0             | 03cc j 122               | 2| >03c6 li t0,3            | 03c4 li t6,0         ALU | 03c0 lw t3,0(s4)         | IP-redirect->0122 DC:LD hit
-   4944 | 0122 csrr s0,mepc        |                          | 2| >0402 li t6,0            | 03c6 li t0,3         ALU | 03c4 li t6,0             | 
-----------------------------------------------------------------------------------------------------------------------------------------------------------------
-summary: cycles=42 retired=12 IPC=0.286 | flush=3, ip_redirect=3, retired=12, stall_CP0/fence=10, stall_EX1-busy=5, stall_other=5, trap=1
+================================================================================================================================================================================================
+    cyc | IF (fetch)               | IP (pred)                |IB| ID                       | EX1                      | RETIRE                   | BACK        | WB              | events
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+   4903 | 03cc j 122               | 03c4 li t6,0             | 0| .03c0 lw t3,0(s4)        | 03bc lw t3,4(s4)     LSU |                          |             |                 | ID-stall:EX1-busy LSU-full
+   4904 | 03d0 sub t1,s10,s4       | 03c8 beq s11,t0,3d0      | 1| .03c0 lw t3,0(s4)        | 03bc lw t3,4(s4)     LSU |                          |             |                 | ID-stall:EX1-busy LSU-full
+   4905 | 03d4 li t0,0             | 03cc j 122               | 3| >03c0 lw t3,0(s4)        | 03c0 lw t3,0(s4)     LSU | 03bc lw t3,4(s4)         |             |                 | IP-redirect->0122 DC:LD hit
+   4906 | 0122 csrr s0,mepc        |                          | 4| .03c4 li t6,0            | 03c0 lw t3,0(s4)     ALU |                          |             | w1:t3           | ID-stall:EX1-busy LSU-full
+   4907 | 0124 ?                   |                          | 4| .03c4 li t6,0            | 03c0 lw t3,0(s4)     ALU |                          |             |                 | ID-stall:EX1-busy LSU-full
+   4908 | 0128 ?                   |                          | 4| .03c4 li t6,0            | 03c0 lw t3,0(s4)     ALU |                          |             |                 | ID-stall:EX1-busy LSU-full
+   4909 | 012c ?                   | 0124 ?                   | 4| >03c4 li t6,0            | 03c4 li t6,0         ALU | 03c0 lw t3,0(s4)         |             |                 | TRAP
+   4910 | 0130 ?                   | 0128 ?                   | 4| >(flushed) beq s11,t0,2e | 03c4 li t6,0         ALU |                          |             |                 | RT-redirect->0140
+   4911 | 0140 j 440               |                          | 0|                          |                          |                          |             |                 | ID-stall:other
+   4912 | 0144 csrr s0,mcause      |                          | 0|                          |                          |                          |             |                 | ID-stall:other FLUSH
+   4913 | 0148 csrr s1,mepc        | 0140 j 440               | 0| >0140 j 440              |                          |                          |             |                 | IP-redirect->0440
+   4914 | 0440 csrr s6,tcontrol    |                          | 0|                          | 0140 j 440           BJU |                          |             |                 | 
+   4915 | 0444 csrr s8,mcause      |                          | 0|                          |                          | 0140 j 440               |             | w0:zero         | 
+   4916 | 0448 csrr s9,mepc        | 0440 csrr s6,tcontrol    | 0| >0440 csrr s6,tcontrol   |                          |                          |             |                 | 
+   4917 | 044c csrr s10,mtval      | 0444 csrr s8,mcause      | 0| .0444 csrr s8,mcause     | 0440 csrr s6,tcontro CP0 |                          |             |                 | ID-stall:CP0/fence
+   4918 | 0450 addi s11,s11,1      | 0448 csrr s9,mepc        | 0| .0444 csrr s8,mcause     |                          | 0440 csrr s6,tcontrol    |             | w0:s6           | ID-stall:CP0/fence
+   4919 | 0454 ?                   | 044c csrr s10,mtval      | 2| >0444 csrr s8,mcause     |                          |                          |             |                 | 
+   4920 | 0458 ?                   | 0450 addi s11,s11,1      | 2| .0448 csrr s9,mepc       | 0444 csrr s8,mcause  CP0 |                          |             |                 | ID-stall:CP0/fence
+   4921 | 045c ?                   | 0454 ?                   | 3| .0448 csrr s9,mepc       |                          | 0444 csrr s8,mcause      |             | w0:s8           | ID-stall:CP0/fence
+   4922 |                          | 0458 ?                   | 5| >0448 csrr s9,mepc       |                          |                          |             |                 | 
+   4923 | 045c ?                   | 0458 ?                   | 3| .044c csrr s10,mtval     | 0448 csrr s9,mepc    CP0 |                          |             |                 | ID-stall:CP0/fence
+   4924 | 0460 ?                   |                          | 6| .044c csrr s10,mtval     |                          | 0448 csrr s9,mepc        |             | w0:s9           | ID-stall:CP0/fence
+   4925 |                          | 045c ?                   | 6| >044c csrr s10,mtval     |                          |                          |             |                 | 
+   4926 |                          | 045c ?                   | 5| >0450 addi s11,s11,1     | 044c csrr s10,mtval  CP0 |                          |             |                 | 
+   4927 | 0460 ?                   | 045c ?                   | 3| .0452 csrw tdata1,zero   | 0450 addi s11,s11,1  ALU | 044c csrr s10,mtval      |             | w0:s10          | ID-stall:CP0/fence
+   4928 | 0464 ?                   |                          | 5| .0452 csrw tdata1,zero   |                          | 0450 addi s11,s11,1      |             | w0:s11          | ID-stall:CP0/fence
+   4929 |                          | 0460 ?                   | 5| >0452 csrw tdata1,zero   |                          |                          |             |                 | 
+   4930 | 0464 ?                   | 0460 ?                   | 3| .(flushed) mret          | 0452 csrw tdata1,zer CP0 |                          |             |                 | ID-stall:CP0/fence
+   4931 | 0468 ?                   |                          | 5| .(flushed) mret          |                          | 0452 csrw tdata1,zero    |             | w0:zero         | ID-stall:CP0/fence RT-redirect->0456
+   4932 | 0456 mret                |                          | 0|                          |                          |                          |             |                 | 
+   4933 | 0458 ?                   |                          | 0|                          |                          |                          |             |                 | ID-stall:other FLUSH
+   4934 | 045c ?                   |                          | 0|                          |                          |                          |             |                 | 
+   4935 | 0460 ?                   | 0458 ?                   | 0| >0456 mret               |                          |                          |             |                 | 
+   4936 | 0464 ?                   | 045c ?                   | 0| >045a ?                  | 0456 mret            CP0 |                          |             |                 | 
+   4937 | 0468 ?                   | 0460 ?                   | 1| >03c0 lw t3,0(s4)        | 045a ?               CP0 | 0456 mret                |             |                 | RT-redirect->03c0
+   4938 | 03c0 lw t3,0(s4)         |                          | 0|                          | 03c0 lw t3,0(s4)     CP0 |                          |             |                 | 
+   4939 | 03c4 li t6,0             |                          | 0|                          |                          |                          |             |                 | ID-stall:other
+   4940 | 03c8 beq s11,t0,3d0      | 03c0 lw t3,0(s4)         | 0| .(flushed) lw t3,0(s4)   |                          |                          |             |                 | ID-stall:other FLUSH
+   4941 | 03cc j 122               | 03c4 li t6,0             | 0| >03c0 lw t3,0(s4)        |                          |                          |             |                 | 
+   4942 | 03d0 sub t1,s10,s4       | 03c8 beq s11,t0,3d0      | 1| >03c4 li t6,0            | 03c0 lw t3,0(s4)     LSU |                          |             |                 | 
+   4943 | 03d4 li t0,0             | 03cc j 122               | 2| >03c6 li t0,3            | 03c4 li t6,0         ALU | 03c0 lw t3,0(s4)         |             |                 | IP-redirect->0122 DC:LD hit
+   4944 | 0122 csrr s0,mepc        |                          | 2| >0402 li t6,0            | 03c6 li t0,3         ALU | 03c4 li t6,0             |             | w0:t6 w1:t3     | 
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+summary: cycles=42 retired=12 IPC=0.286 | flush=3, ip_redirect=3, retired=12, stall_CP0/fence=10, stall_EX1-busy=5, stall_other=5, trap=1, wb_dual=1
 
-================================================================================================================================================================
+================================================================================================================================================================================================
 MARK 4   cycles 4997 .. 4998  (2 cycles)
-================================================================================================================================================================
-    cyc | IF (fetch)               | IP (pred)                |IB| ID                       | EX1                      | RETIRE                   | events
-----------------------------------------------------------------------------------------------------------------------------------------------------------------
-   4997 | 040c ?                   | 0404 li t0,3             | 0| >0404 li t0,3            | 0402 li t6,0         ALU | 0400 addi s3,s3,1        | 
-   4998 | 0410 ?                   | 0408 ?                   | 0| >(flushed) beq s11,t0,2e | 0404 li t0,3         ALU | 0402 li t6,0             | 
-----------------------------------------------------------------------------------------------------------------------------------------------------------------
+================================================================================================================================================================================================
+    cyc | IF (fetch)               | IP (pred)                |IB| ID                       | EX1                      | RETIRE                   | BACK        | WB              | events
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+   4997 | 040c ?                   | 0404 li t0,3             | 0| >0404 li t0,3            | 0402 li t6,0         ALU | 0400 addi s3,s3,1        |             | w0:s3           | 
+   4998 | 0410 ?                   | 0408 ?                   | 0| >(flushed) beq s11,t0,2e | 0404 li t0,3         ALU | 0402 li t6,0             |             | w0:t6           | 
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 summary: cycles=2 retired=2 IPC=1.000 | retired=2

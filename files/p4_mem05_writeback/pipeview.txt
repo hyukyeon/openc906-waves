@@ -1,431 +1,431 @@
 사용: pipeview.py <out/test 디렉토리> [--mark N] [--max-rows K]
 출력: <dir>/pipeview.txt  (mark 구간별 표 + 구간 요약)
 
-================================================================================================================================================================
+================================================================================================================================================================================================
 MARK 1   cycles 2661 .. 2744  (84 cycles)
-================================================================================================================================================================
-    cyc | IF (fetch)               | IP (pred)                |IB| ID                       | EX1                      | RETIRE                   | events
-----------------------------------------------------------------------------------------------------------------------------------------------------------------
-   2661 |                          | 027c add t3,s1,s2        | 4| >0270 csrr s0,mcycle     |                          |                          | 
-   2662 |                          |                          | 4| >0274 li t2,160          | 0270 csrr s0,mcycle  CP0 |                          | I$-miss
-   2663 |                          |                          | 2| >0278 sd t2,8(s1)        | 0274 li t2,160       ALU | 0270 csrr s0,mcycle      | 
-   2664 |                          |                          | 0| >0278 sd t2,8(s1)        | 0278 sd t2,8(s1)     LSU | 0274 li t2,160           | 
-   2665 |                          |                          | 0|                          | 0278 sd t2,8(s1)     ALU |                          | ID-stall:EX1-busy
-   2666 |                          |                          | 0|                          | 0278 sd t2,8(s1)     ALU |                          | ID-stall:EX1-busy
-   2667 |                          |                          | 0|                          | 0278 sd t2,8(s1)     ALU |                          | ID-stall:EX1-busy
-   2668 |                          | 0280 li t2,161           | 0| .0280 li t2,161          | 0278 sd t2,8(s1)     ALU |                          | ID-stall:EX1-busy
-   2669 |                          |                          | 0| .0280 li t2,161          | 0278 sd t2,8(s1)     ALU |                          | ID-stall:EX1-busy
-   2670 |                          |                          | 0| .0280 li t2,161          | 0278 sd t2,8(s1)     ALU |                          | ID-stall:EX1-busy
-   2671 |                          |                          | 0| .0280 li t2,161          | 0278 sd t2,8(s1)     ALU |                          | ID-stall:EX1-busy
-   2672 |                          |                          | 0| .0280 li t2,161          | 0278 sd t2,8(s1)     ALU |                          | ID-stall:EX1-busy
-   2673 |                          |                          | 0| .0280 li t2,161          | 0278 sd t2,8(s1)     ALU |                          | ID-stall:EX1-busy
-   2674 | 0284 sd t2,8(t3)         |                          | 0| .0280 li t2,161          | 0278 sd t2,8(s1)     ALU |                          | ID-stall:EX1-busy
-   2675 | 0288 add t3,t3,s2        |                          | 0| >0280 li t2,161          | 027c add t3,s1,s2    ALU | 0278 sd t2,8(s1)         | DC:ST MISS
-   2676 | 028c ?                   | 0284 sd t2,8(t3)         | 0| >0284 sd t2,8(t3)        | 0280 li t2,161       ALU | 027c add t3,s1,s2        | 
-   2677 | 0290 ?                   | 0288 add t3,t3,s2        | 0| >0284 sd t2,8(t3)        | 0284 sd t2,8(t3)     LSU | 0280 li t2,161           | 
-   2678 | 0294 li t2,163           | 028c ?                   | 0| .028a li t2,162          | 0284 sd t2,8(t3)     ALU |                          | ID-stall:EX1-busy
-   2679 | 0298 sd t2,8(t3)         | 0290 ?                   | 0| .028a li t2,162          | 0284 sd t2,8(t3)     ALU |                          | ID-stall:EX1-busy
-   2680 | 029c fence               | 0294 li t2,163           | 3| .028a li t2,162          | 0284 sd t2,8(t3)     ALU |                          | ID-stall:EX1-busy
-   2681 |                          | 0298 sd t2,8(t3)         | 5| .028a li t2,162          | 0284 sd t2,8(t3)     ALU |                          | ID-stall:EX1-busy
-   2682 |                          | 0298 sd t2,8(t3)         | 5| .028a li t2,162          | 0284 sd t2,8(t3)     ALU |                          | ID-stall:EX1-busy
-   2683 |                          | 0298 sd t2,8(t3)         | 5| .028a li t2,162          | 0284 sd t2,8(t3)     ALU |                          | ID-stall:EX1-busy
-   2684 |                          | 0298 sd t2,8(t3)         | 5| .028a li t2,162          | 0284 sd t2,8(t3)     ALU |                          | ID-stall:EX1-busy
-   2685 |                          | 0298 sd t2,8(t3)         | 5| .028a li t2,162          | 0284 sd t2,8(t3)     ALU |                          | ID-stall:EX1-busy
-   2686 |                          | 0298 sd t2,8(t3)         | 5| .028a li t2,162          | 0284 sd t2,8(t3)     ALU |                          | ID-stall:EX1-busy
-   2687 |                          | 0298 sd t2,8(t3)         | 5| .028a li t2,162          | 0284 sd t2,8(t3)     ALU |                          | ID-stall:EX1-busy
-   2688 |                          | 0298 sd t2,8(t3)         | 5| >028a li t2,162          | 0288 add t3,t3,s2    ALU | 0284 sd t2,8(t3)         | DC:ST MISS
-   2689 | 029c fence               | 0298 sd t2,8(t3)         | 3| >028e sd t2,8(t3)        | 028a li t2,162       ALU | 0288 add t3,t3,s2        | 
-   2690 | 02a0 csrr t0,mcycle      |                          | 4| >028e sd t2,8(t3)        | 028e sd t2,8(t3)     LSU | 028a li t2,162           | 
-   2691 | 02a4 sub s0,t0,s0        | 029c fence               | 2| .0294 li t2,163          | 028e sd t2,8(t3)     ALU |                          | ID-stall:EX1-busy
-   2692 | 02a8 li t6,0             | 02a0 csrr t0,mcycle      | 4| .0294 li t2,163          | 028e sd t2,8(t3)     ALU |                          | ID-stall:EX1-busy
-   2693 |                          | 02a4 sub s0,t0,s0        | 6| .0294 li t2,163          | 028e sd t2,8(t3)     ALU |                          | ID-stall:EX1-busy
-   2694 |                          | 02a4 sub s0,t0,s0        | 6| .0294 li t2,163          | 028e sd t2,8(t3)     ALU |                          | ID-stall:EX1-busy DC:ST MISS
-   2695 |                          | 02a4 sub s0,t0,s0        | 6| .0294 li t2,163          | 028e sd t2,8(t3)     ALU |                          | ID-stall:EX1-busy
-   2696 |                          | 02a4 sub s0,t0,s0        | 6| .0294 li t2,163          | 028e sd t2,8(t3)     ALU |                          | ID-stall:EX1-busy DC:ST MISS
-   2697 |                          | 02a4 sub s0,t0,s0        | 6| .0294 li t2,163          | 028e sd t2,8(t3)     ALU |                          | ID-stall:EX1-busy
-   2698 |                          | 02a4 sub s0,t0,s0        | 6| .0294 li t2,163          | 028e sd t2,8(t3)     ALU |                          | ID-stall:EX1-busy
-   2699 |                          | 02a4 sub s0,t0,s0        | 6| .0294 li t2,163          | 028e sd t2,8(t3)     ALU |                          | ID-stall:EX1-busy
-   2700 |                          | 02a4 sub s0,t0,s0        | 6| >0294 li t2,163          | 0292 add t3,t3,s2    ALU | 028e sd t2,8(t3)         | DC:ST MISS
-   2701 | 02a8 li t6,0             | 02a4 sub s0,t0,s0        | 4| >0298 sd t2,8(t3)        | 0294 li t2,163       ALU | 0292 add t3,t3,s2        | 
-   2702 | 02ac li a0,1000          |                          | 4| >0298 sd t2,8(t3)        | 0298 sd t2,8(t3)     LSU | 0294 li t2,163           | 
-   2703 | 02b0 jal 21e             | 02a8 li t6,0             | 2| .02a0 csrr t0,mcycle     | 0298 sd t2,8(t3)     CP0 |                          | ID-stall:EX1-busy,CP0/fence
-   2704 | 02b4 slli t3,s2,0x2      | 02ac li a0,1000          | 4| .02a0 csrr t0,mcycle     | 0298 sd t2,8(t3)     CP0 |                          | ID-stall:EX1-busy,CP0/fence
-   2705 |                          | 02b0 jal 21e             | 6| .02a0 csrr t0,mcycle     | 0298 sd t2,8(t3)     CP0 |                          | IP-redirect->021e ID-stall:EX1-busy,CP0/fence
-   2706 |                          | 02b0 jal 21e             | 6| .02a0 csrr t0,mcycle     | 0298 sd t2,8(t3)     CP0 |                          | IP-redirect->021e ID-stall:EX1-busy,CP0/fence
-   2707 |                          | 02b0 jal 21e             | 6| .02a0 csrr t0,mcycle     | 0298 sd t2,8(t3)     CP0 |                          | IP-redirect->021e ID-stall:EX1-busy,CP0/fence
-   2708 |                          | 02b0 jal 21e             | 6| .02a0 csrr t0,mcycle     | 0298 sd t2,8(t3)     CP0 |                          | IP-redirect->021e ID-stall:EX1-busy,CP0/fence
-   2709 |                          | 02b0 jal 21e             | 6| .02a0 csrr t0,mcycle     | 0298 sd t2,8(t3)     CP0 |                          | IP-redirect->021e ID-stall:EX1-busy,CP0/fence
-   2710 |                          | 02b0 jal 21e             | 6| .02a0 csrr t0,mcycle     | 0298 sd t2,8(t3)     CP0 |                          | IP-redirect->021e ID-stall:EX1-busy,CP0/fence
-   2711 |                          | 02b0 jal 21e             | 6| .02a0 csrr t0,mcycle     | 0298 sd t2,8(t3)     CP0 |                          | IP-redirect->021e ID-stall:EX1-busy,CP0/fence
-   2712 |                          | 02b0 jal 21e             | 6| .02a0 csrr t0,mcycle     | 0298 sd t2,8(t3)     CP0 |                          | IP-redirect->021e ID-stall:EX1-busy,CP0/fence
-   2713 |                          | 02b0 jal 21e             | 6| .02a0 csrr t0,mcycle     | 0298 sd t2,8(t3)     CP0 |                          | IP-redirect->021e ID-stall:EX1-busy,CP0/fence
-   2714 |                          | 02b0 jal 21e             | 6| .02a0 csrr t0,mcycle     | 0298 sd t2,8(t3)     CP0 |                          | IP-redirect->021e ID-stall:EX1-busy,CP0/fence
-   2715 |                          | 02b0 jal 21e             | 6| .02a0 csrr t0,mcycle     | 0298 sd t2,8(t3)     CP0 |                          | IP-redirect->021e ID-stall:EX1-busy,CP0/fence DC:ST MISS
-   2716 |                          | 02b0 jal 21e             | 6| .02a0 csrr t0,mcycle     | 0298 sd t2,8(t3)     CP0 |                          | IP-redirect->021e ID-stall:EX1-busy,CP0/fence
-   2717 |                          | 02b0 jal 21e             | 6| .02a0 csrr t0,mcycle     | 0298 sd t2,8(t3)     CP0 |                          | IP-redirect->021e ID-stall:EX1-busy,CP0/fence DC:ST MISS
-   2718 |                          | 02b0 jal 21e             | 6| .02a0 csrr t0,mcycle     | 029c fence           CP0 | 0298 sd t2,8(t3)         | IP-redirect->021e ID-stall:EX1-busy,CP0/fence DC:ST MISS
-   2719 |                          | 02b0 jal 21e             | 6| .02a0 csrr t0,mcycle     | 029c fence           CP0 |                          | IP-redirect->021e ID-stall:EX1-busy,CP0/fence
-   2720 |                          | 02b0 jal 21e             | 6| .02a0 csrr t0,mcycle     | 029c fence           CP0 |                          | IP-redirect->021e ID-stall:EX1-busy,CP0/fence
-   2721 |                          | 02b0 jal 21e             | 6| .02a0 csrr t0,mcycle     | 029c fence           CP0 |                          | IP-redirect->021e ID-stall:EX1-busy,CP0/fence
-   2722 |                          | 02b0 jal 21e             | 6| .02a0 csrr t0,mcycle     | 029c fence           CP0 |                          | IP-redirect->021e ID-stall:EX1-busy,CP0/fence
-   2723 |                          | 02b0 jal 21e             | 6| .02a0 csrr t0,mcycle     | 029c fence           CP0 |                          | IP-redirect->021e ID-stall:EX1-busy,CP0/fence
-   2724 |                          | 02b0 jal 21e             | 6| .02a0 csrr t0,mcycle     | 029c fence           CP0 |                          | IP-redirect->021e ID-stall:EX1-busy,CP0/fence
-   2725 |                          | 02b0 jal 21e             | 6| .02a0 csrr t0,mcycle     | 029c fence           CP0 |                          | IP-redirect->021e ID-stall:EX1-busy,CP0/fence
-   2726 |                          | 02b0 jal 21e             | 6| .02a0 csrr t0,mcycle     | 029c fence           CP0 |                          | IP-redirect->021e ID-stall:EX1-busy,CP0/fence
-   2727 |                          | 02b0 jal 21e             | 6| .02a0 csrr t0,mcycle     | 029c fence           CP0 |                          | IP-redirect->021e ID-stall:EX1-busy,CP0/fence
-   2728 |                          | 02b0 jal 21e             | 6| .02a0 csrr t0,mcycle     | 029c fence           CP0 |                          | IP-redirect->021e ID-stall:EX1-busy,CP0/fence
-   2729 |                          | 02b0 jal 21e             | 6| .02a0 csrr t0,mcycle     | 029c fence           CP0 |                          | IP-redirect->021e ID-stall:EX1-busy,CP0/fence
-   2730 |                          | 02b0 jal 21e             | 6| .02a0 csrr t0,mcycle     | 029c fence           CP0 |                          | IP-redirect->021e ID-stall:EX1-busy,CP0/fence
-   2731 |                          | 02b0 jal 21e             | 6| .02a0 csrr t0,mcycle     | 029c fence           CP0 |                          | IP-redirect->021e ID-stall:EX1-busy,CP0/fence
-   2732 |                          | 02b0 jal 21e             | 6| .02a0 csrr t0,mcycle     | 029c fence           CP0 |                          | IP-redirect->021e ID-stall:EX1-busy,CP0/fence
-   2733 |                          | 02b0 jal 21e             | 6| .02a0 csrr t0,mcycle     | 029c fence           CP0 |                          | IP-redirect->021e ID-stall:EX1-busy,CP0/fence
-   2734 |                          | 02b0 jal 21e             | 6| .02a0 csrr t0,mcycle     | 029c fence           CP0 |                          | IP-redirect->021e ID-stall:EX1-busy,CP0/fence
-   2735 |                          | 02b0 jal 21e             | 6| .02a0 csrr t0,mcycle     | 029c fence           CP0 |                          | IP-redirect->021e ID-stall:EX1-busy,CP0/fence
-   2736 |                          | 02b0 jal 21e             | 6| .02a0 csrr t0,mcycle     | 029c fence           CP0 |                          | IP-redirect->021e ID-stall:EX1-busy,CP0/fence DC:ST MISS
-   2737 |                          | 02b0 jal 21e             | 6| .02a0 csrr t0,mcycle     | 029c fence           CP0 |                          | IP-redirect->021e ID-stall:CP0/fence
-   2738 |                          | 02b0 jal 21e             | 6| .02a0 csrr t0,mcycle     |                          | 029c fence               | IP-redirect->021e ID-stall:CP0/fence DC:ST MISS
-   2739 |                          | 02b0 jal 21e             | 6| >02a0 csrr t0,mcycle     |                          |                          | IP-redirect->021e
-   2740 | 021e addi sp,sp,-16      | 02b0 jal 21e             | 4| .02a4 sub s0,t0,s0       | 02a0 csrr t0,mcycle  CP0 |                          | IP-redirect->021e ID-stall:RAW
-   2741 | 021e addi sp,sp,-16      |                          | 6| >02a4 sub s0,t0,s0       |                          | 02a0 csrr t0,mcycle      | 
-   2742 |                          |                          | 5| >02a8 li t6,0            | 02a4 sub s0,t0,s0    ALU |                          | 
-   2743 |                          |                          | 4| >02aa mv a1,s0           | 02a8 li t6,0         ALU | 02a4 sub s0,t0,s0        | I$-miss
-   2744 |                          |                          | 2| >02be csrr s0,mcycle     | 02aa mv a1,s0        ALU | 02a8 li t6,0             | 
-----------------------------------------------------------------------------------------------------------------------------------------------------------------
+================================================================================================================================================================================================
+    cyc | IF (fetch)               | IP (pred)                |IB| ID                       | EX1                      | RETIRE                   | BACK        | WB              | events
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+   2661 |                          | 027c add t3,s1,s2        | 4| >0270 csrr s0,mcycle     |                          |                          |             |                 | 
+   2662 |                          |                          | 4| >0274 li t2,160          | 0270 csrr s0,mcycle  CP0 |                          |             |                 | I$-miss
+   2663 |                          |                          | 2| >0278 sd t2,8(s1)        | 0274 li t2,160       ALU | 0270 csrr s0,mcycle      |             | w0:s0           | 
+   2664 |                          |                          | 0| >0278 sd t2,8(s1)        | 0278 sd t2,8(s1)     LSU | 0274 li t2,160           |             | w0:t2           | 
+   2665 |                          |                          | 0|                          | 0278 sd t2,8(s1)     ALU |                          |             |                 | ID-stall:EX1-busy LSU-full
+   2666 |                          |                          | 0|                          | 0278 sd t2,8(s1)     ALU |                          |             |                 | ID-stall:EX1-busy LSU-full
+   2667 |                          |                          | 0|                          | 0278 sd t2,8(s1)     ALU |                          |             |                 | ID-stall:EX1-busy LSU-full
+   2668 |                          | 0280 li t2,161           | 0| .0280 li t2,161          | 0278 sd t2,8(s1)     ALU |                          |             |                 | ID-stall:EX1-busy LSU-full
+   2669 |                          |                          | 0| .0280 li t2,161          | 0278 sd t2,8(s1)     ALU |                          |             |                 | ID-stall:EX1-busy LSU-full
+   2670 |                          |                          | 0| .0280 li t2,161          | 0278 sd t2,8(s1)     ALU |                          |             |                 | ID-stall:EX1-busy LSU-full
+   2671 |                          |                          | 0| .0280 li t2,161          | 0278 sd t2,8(s1)     ALU |                          |             |                 | ID-stall:EX1-busy LSU-full
+   2672 |                          |                          | 0| .0280 li t2,161          | 0278 sd t2,8(s1)     ALU |                          |             |                 | ID-stall:EX1-busy LSU-full
+   2673 |                          |                          | 0| .0280 li t2,161          | 0278 sd t2,8(s1)     ALU |                          |             |                 | ID-stall:EX1-busy LSU-full
+   2674 | 0284 sd t2,8(t3)         |                          | 0| .0280 li t2,161          | 0278 sd t2,8(s1)     ALU |                          |             |                 | ID-stall:EX1-busy LSU-full
+   2675 | 0288 add t3,t3,s2        |                          | 0| >0280 li t2,161          | 027c add t3,s1,s2    ALU | 0278 sd t2,8(s1)         |             |                 | DC:ST MISS
+   2676 | 028c ?                   | 0284 sd t2,8(t3)         | 0| >0284 sd t2,8(t3)        | 0280 li t2,161       ALU | 027c add t3,s1,s2        |             | w0:t3           | 
+   2677 | 0290 ?                   | 0288 add t3,t3,s2        | 0| >0284 sd t2,8(t3)        | 0284 sd t2,8(t3)     LSU | 0280 li t2,161           |             | w0:t2           | 
+   2678 | 0294 li t2,163           | 028c ?                   | 0| .028a li t2,162          | 0284 sd t2,8(t3)     ALU |                          |             |                 | ID-stall:EX1-busy LSU-full
+   2679 | 0298 sd t2,8(t3)         | 0290 ?                   | 0| .028a li t2,162          | 0284 sd t2,8(t3)     ALU |                          |             |                 | ID-stall:EX1-busy LSU-full
+   2680 | 029c fence               | 0294 li t2,163           | 3| .028a li t2,162          | 0284 sd t2,8(t3)     ALU |                          |             |                 | ID-stall:EX1-busy LSU-full
+   2681 |                          | 0298 sd t2,8(t3)         | 5| .028a li t2,162          | 0284 sd t2,8(t3)     ALU |                          |             |                 | ID-stall:EX1-busy LSU-full
+   2682 |                          | 0298 sd t2,8(t3)         | 5| .028a li t2,162          | 0284 sd t2,8(t3)     ALU |                          |             |                 | ID-stall:EX1-busy LSU-full
+   2683 |                          | 0298 sd t2,8(t3)         | 5| .028a li t2,162          | 0284 sd t2,8(t3)     ALU |                          |             |                 | ID-stall:EX1-busy LSU-full
+   2684 |                          | 0298 sd t2,8(t3)         | 5| .028a li t2,162          | 0284 sd t2,8(t3)     ALU |                          |             |                 | ID-stall:EX1-busy LSU-full
+   2685 |                          | 0298 sd t2,8(t3)         | 5| .028a li t2,162          | 0284 sd t2,8(t3)     ALU |                          |             |                 | ID-stall:EX1-busy LSU-full
+   2686 |                          | 0298 sd t2,8(t3)         | 5| .028a li t2,162          | 0284 sd t2,8(t3)     ALU |                          |             |                 | ID-stall:EX1-busy LSU-full
+   2687 |                          | 0298 sd t2,8(t3)         | 5| .028a li t2,162          | 0284 sd t2,8(t3)     ALU |                          |             |                 | ID-stall:EX1-busy LSU-full
+   2688 |                          | 0298 sd t2,8(t3)         | 5| >028a li t2,162          | 0288 add t3,t3,s2    ALU | 0284 sd t2,8(t3)         |             |                 | DC:ST MISS
+   2689 | 029c fence               | 0298 sd t2,8(t3)         | 3| >028e sd t2,8(t3)        | 028a li t2,162       ALU | 0288 add t3,t3,s2        |             | w0:t3           | 
+   2690 | 02a0 csrr t0,mcycle      |                          | 4| >028e sd t2,8(t3)        | 028e sd t2,8(t3)     LSU | 028a li t2,162           |             | w0:t2           | 
+   2691 | 02a4 sub s0,t0,s0        | 029c fence               | 2| .0294 li t2,163          | 028e sd t2,8(t3)     ALU |                          |             |                 | ID-stall:EX1-busy LSU-full
+   2692 | 02a8 li t6,0             | 02a0 csrr t0,mcycle      | 4| .0294 li t2,163          | 028e sd t2,8(t3)     ALU |                          |             |                 | ID-stall:EX1-busy LSU-full
+   2693 |                          | 02a4 sub s0,t0,s0        | 6| .0294 li t2,163          | 028e sd t2,8(t3)     ALU |                          |             |                 | ID-stall:EX1-busy LSU-full
+   2694 |                          | 02a4 sub s0,t0,s0        | 6| .0294 li t2,163          | 028e sd t2,8(t3)     ALU |                          |             |                 | ID-stall:EX1-busy DC:ST MISS LSU-full
+   2695 |                          | 02a4 sub s0,t0,s0        | 6| .0294 li t2,163          | 028e sd t2,8(t3)     ALU |                          |             |                 | ID-stall:EX1-busy LSU-full
+   2696 |                          | 02a4 sub s0,t0,s0        | 6| .0294 li t2,163          | 028e sd t2,8(t3)     ALU |                          |             |                 | ID-stall:EX1-busy DC:ST MISS LSU-full
+   2697 |                          | 02a4 sub s0,t0,s0        | 6| .0294 li t2,163          | 028e sd t2,8(t3)     ALU |                          |             |                 | ID-stall:EX1-busy LSU-full
+   2698 |                          | 02a4 sub s0,t0,s0        | 6| .0294 li t2,163          | 028e sd t2,8(t3)     ALU |                          |             |                 | ID-stall:EX1-busy LSU-full
+   2699 |                          | 02a4 sub s0,t0,s0        | 6| .0294 li t2,163          | 028e sd t2,8(t3)     ALU |                          |             |                 | ID-stall:EX1-busy LSU-full
+   2700 |                          | 02a4 sub s0,t0,s0        | 6| >0294 li t2,163          | 0292 add t3,t3,s2    ALU | 028e sd t2,8(t3)         |             |                 | DC:ST MISS
+   2701 | 02a8 li t6,0             | 02a4 sub s0,t0,s0        | 4| >0298 sd t2,8(t3)        | 0294 li t2,163       ALU | 0292 add t3,t3,s2        |             | w0:t3           | 
+   2702 | 02ac li a0,1000          |                          | 4| >0298 sd t2,8(t3)        | 0298 sd t2,8(t3)     LSU | 0294 li t2,163           |             | w0:t2           | 
+   2703 | 02b0 jal 21e             | 02a8 li t6,0             | 2| .02a0 csrr t0,mcycle     | 0298 sd t2,8(t3)     CP0 |                          |             |                 | ID-stall:EX1-busy,CP0/fence LSU-full
+   2704 | 02b4 slli t3,s2,0x2      | 02ac li a0,1000          | 4| .02a0 csrr t0,mcycle     | 0298 sd t2,8(t3)     CP0 |                          |             |                 | ID-stall:EX1-busy,CP0/fence LSU-full
+   2705 |                          | 02b0 jal 21e             | 6| .02a0 csrr t0,mcycle     | 0298 sd t2,8(t3)     CP0 |                          |             |                 | IP-redirect->021e ID-stall:EX1-busy,CP0/fence LSU-full
+   2706 |                          | 02b0 jal 21e             | 6| .02a0 csrr t0,mcycle     | 0298 sd t2,8(t3)     CP0 |                          |             |                 | IP-redirect->021e ID-stall:EX1-busy,CP0/fence LSU-full
+   2707 |                          | 02b0 jal 21e             | 6| .02a0 csrr t0,mcycle     | 0298 sd t2,8(t3)     CP0 |                          |             |                 | IP-redirect->021e ID-stall:EX1-busy,CP0/fence LSU-full
+   2708 |                          | 02b0 jal 21e             | 6| .02a0 csrr t0,mcycle     | 0298 sd t2,8(t3)     CP0 |                          |             |                 | IP-redirect->021e ID-stall:EX1-busy,CP0/fence LSU-full
+   2709 |                          | 02b0 jal 21e             | 6| .02a0 csrr t0,mcycle     | 0298 sd t2,8(t3)     CP0 |                          |             |                 | IP-redirect->021e ID-stall:EX1-busy,CP0/fence LSU-full
+   2710 |                          | 02b0 jal 21e             | 6| .02a0 csrr t0,mcycle     | 0298 sd t2,8(t3)     CP0 |                          |             |                 | IP-redirect->021e ID-stall:EX1-busy,CP0/fence LSU-full
+   2711 |                          | 02b0 jal 21e             | 6| .02a0 csrr t0,mcycle     | 0298 sd t2,8(t3)     CP0 |                          |             |                 | IP-redirect->021e ID-stall:EX1-busy,CP0/fence LSU-full
+   2712 |                          | 02b0 jal 21e             | 6| .02a0 csrr t0,mcycle     | 0298 sd t2,8(t3)     CP0 |                          |             |                 | IP-redirect->021e ID-stall:EX1-busy,CP0/fence LSU-full
+   2713 |                          | 02b0 jal 21e             | 6| .02a0 csrr t0,mcycle     | 0298 sd t2,8(t3)     CP0 |                          |             |                 | IP-redirect->021e ID-stall:EX1-busy,CP0/fence LSU-full
+   2714 |                          | 02b0 jal 21e             | 6| .02a0 csrr t0,mcycle     | 0298 sd t2,8(t3)     CP0 |                          |             |                 | IP-redirect->021e ID-stall:EX1-busy,CP0/fence LSU-full
+   2715 |                          | 02b0 jal 21e             | 6| .02a0 csrr t0,mcycle     | 0298 sd t2,8(t3)     CP0 |                          |             |                 | IP-redirect->021e ID-stall:EX1-busy,CP0/fence DC:ST MISS LSU-full
+   2716 |                          | 02b0 jal 21e             | 6| .02a0 csrr t0,mcycle     | 0298 sd t2,8(t3)     CP0 |                          |             |                 | IP-redirect->021e ID-stall:EX1-busy,CP0/fence LSU-full
+   2717 |                          | 02b0 jal 21e             | 6| .02a0 csrr t0,mcycle     | 0298 sd t2,8(t3)     CP0 |                          |             |                 | IP-redirect->021e ID-stall:EX1-busy,CP0/fence DC:ST MISS LSU-full
+   2718 |                          | 02b0 jal 21e             | 6| .02a0 csrr t0,mcycle     | 029c fence           CP0 | 0298 sd t2,8(t3)         |             |                 | IP-redirect->021e ID-stall:EX1-busy,CP0/fence DC:ST MISS
+   2719 |                          | 02b0 jal 21e             | 6| .02a0 csrr t0,mcycle     | 029c fence           CP0 |                          |             |                 | IP-redirect->021e ID-stall:EX1-busy,CP0/fence
+   2720 |                          | 02b0 jal 21e             | 6| .02a0 csrr t0,mcycle     | 029c fence           CP0 |                          |             |                 | IP-redirect->021e ID-stall:EX1-busy,CP0/fence
+   2721 |                          | 02b0 jal 21e             | 6| .02a0 csrr t0,mcycle     | 029c fence           CP0 |                          |             |                 | IP-redirect->021e ID-stall:EX1-busy,CP0/fence
+   2722 |                          | 02b0 jal 21e             | 6| .02a0 csrr t0,mcycle     | 029c fence           CP0 |                          |             |                 | IP-redirect->021e ID-stall:EX1-busy,CP0/fence
+   2723 |                          | 02b0 jal 21e             | 6| .02a0 csrr t0,mcycle     | 029c fence           CP0 |                          |             |                 | IP-redirect->021e ID-stall:EX1-busy,CP0/fence
+   2724 |                          | 02b0 jal 21e             | 6| .02a0 csrr t0,mcycle     | 029c fence           CP0 |                          |             |                 | IP-redirect->021e ID-stall:EX1-busy,CP0/fence
+   2725 |                          | 02b0 jal 21e             | 6| .02a0 csrr t0,mcycle     | 029c fence           CP0 |                          |             |                 | IP-redirect->021e ID-stall:EX1-busy,CP0/fence
+   2726 |                          | 02b0 jal 21e             | 6| .02a0 csrr t0,mcycle     | 029c fence           CP0 |                          |             |                 | IP-redirect->021e ID-stall:EX1-busy,CP0/fence
+   2727 |                          | 02b0 jal 21e             | 6| .02a0 csrr t0,mcycle     | 029c fence           CP0 |                          |             |                 | IP-redirect->021e ID-stall:EX1-busy,CP0/fence
+   2728 |                          | 02b0 jal 21e             | 6| .02a0 csrr t0,mcycle     | 029c fence           CP0 |                          |             |                 | IP-redirect->021e ID-stall:EX1-busy,CP0/fence
+   2729 |                          | 02b0 jal 21e             | 6| .02a0 csrr t0,mcycle     | 029c fence           CP0 |                          |             |                 | IP-redirect->021e ID-stall:EX1-busy,CP0/fence
+   2730 |                          | 02b0 jal 21e             | 6| .02a0 csrr t0,mcycle     | 029c fence           CP0 |                          |             |                 | IP-redirect->021e ID-stall:EX1-busy,CP0/fence
+   2731 |                          | 02b0 jal 21e             | 6| .02a0 csrr t0,mcycle     | 029c fence           CP0 |                          |             |                 | IP-redirect->021e ID-stall:EX1-busy,CP0/fence
+   2732 |                          | 02b0 jal 21e             | 6| .02a0 csrr t0,mcycle     | 029c fence           CP0 |                          |             |                 | IP-redirect->021e ID-stall:EX1-busy,CP0/fence
+   2733 |                          | 02b0 jal 21e             | 6| .02a0 csrr t0,mcycle     | 029c fence           CP0 |                          |             |                 | IP-redirect->021e ID-stall:EX1-busy,CP0/fence
+   2734 |                          | 02b0 jal 21e             | 6| .02a0 csrr t0,mcycle     | 029c fence           CP0 |                          |             |                 | IP-redirect->021e ID-stall:EX1-busy,CP0/fence
+   2735 |                          | 02b0 jal 21e             | 6| .02a0 csrr t0,mcycle     | 029c fence           CP0 |                          |             |                 | IP-redirect->021e ID-stall:EX1-busy,CP0/fence
+   2736 |                          | 02b0 jal 21e             | 6| .02a0 csrr t0,mcycle     | 029c fence           CP0 |                          |             |                 | IP-redirect->021e ID-stall:EX1-busy,CP0/fence DC:ST MISS
+   2737 |                          | 02b0 jal 21e             | 6| .02a0 csrr t0,mcycle     | 029c fence           CP0 |                          |             |                 | IP-redirect->021e ID-stall:CP0/fence
+   2738 |                          | 02b0 jal 21e             | 6| .02a0 csrr t0,mcycle     |                          | 029c fence               |             |                 | IP-redirect->021e ID-stall:CP0/fence DC:ST MISS
+   2739 |                          | 02b0 jal 21e             | 6| >02a0 csrr t0,mcycle     |                          |                          |             |                 | IP-redirect->021e
+   2740 | 021e addi sp,sp,-16      | 02b0 jal 21e             | 4| .02a4 sub s0,t0,s0       | 02a0 csrr t0,mcycle  CP0 |                          |             |                 | IP-redirect->021e ID-stall:RAW
+   2741 | 021e addi sp,sp,-16      |                          | 6| >02a4 sub s0,t0,s0       |                          | 02a0 csrr t0,mcycle      |             | w0:t0           | 
+   2742 |                          |                          | 5| >02a8 li t6,0            | 02a4 sub s0,t0,s0    ALU |                          |             |                 | 
+   2743 |                          |                          | 4| >02aa mv a1,s0           | 02a8 li t6,0         ALU | 02a4 sub s0,t0,s0        |             | w0:s0           | I$-miss
+   2744 |                          |                          | 2| >02be csrr s0,mcycle     | 02aa mv a1,s0        ALU | 02a8 li t6,0             |             | w0:t6           | 
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 summary: cycles=84 retired=16 IPC=0.190 | dc_miss=10, icache_miss=2, ip_redirect=36, retired=16, stall_CP0/fence=36, stall_EX1-busy=63, stall_RAW=1
 
-================================================================================================================================================================
+================================================================================================================================================================================================
 MARK 2   cycles 3533 .. 3787  (255 cycles)
-================================================================================================================================================================
-    cyc | IF (fetch)               | IP (pred)                |IB| ID                       | EX1                      | RETIRE                   | events
-----------------------------------------------------------------------------------------------------------------------------------------------------------------
-   3533 |                          |                          | 0|                          |                          |                          | 
-   3534 |                          |                          | 0|                          |                          |                          | 
-   3535 |                          |                          | 0|                          |                          |                          | 
-   3536 |                          | 02c0 ?                   | 0| >02be csrr s0,mcycle     |                          |                          | 
-   3537 |                          |                          | 0|                          | 02be csrr s0,mcycle  CP0 |                          | 
-   3538 |                          |                          | 0|                          |                          | 02be csrr s0,mcycle      | 
-   3539 |                          |                          | 0|                          |                          |                          | 
-   3540 |                          |                          | 0|                          |                          |                          | 
-   3541 |                          |                          | 0|                          |                          |                          | 
-   3542 | 02c4 ?                   |                          | 0|                          |                          |                          | 
-   3543 | 02c8 csrr t0,mcycle      |                          | 0|                          |                          |                          | 
-   3544 | 02cc sub s0,t0,s0        | 02c4 ?                   | 0| >02c2 ld t1,0(s3)        |                          |                          | 
-   3545 | 02d0 li t6,0             | 02c8 csrr t0,mcycle      | 0| .02c6 mv t1,t1           | 02c2 ld t1,0(s3)     LSU |                          | ID-stall:RAW,WAW
-   3546 | 02d4 li a0,1026          | 02cc sub s0,t0,s0        | 2| .02c6 mv t1,t1           |                          |                          | ID-stall:RAW,WAW
-   3547 | 02d8 jal 21e             | 02d0 li t6,0             | 4| .02c6 mv t1,t1           |                          |                          | ID-stall:RAW,WAW
-   3548 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          | ID-stall:RAW,WAW
-   3549 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          | ID-stall:RAW,WAW
-   3550 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          | ID-stall:RAW,WAW
-   3551 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          | ID-stall:RAW,WAW
-   3552 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          | ID-stall:RAW,WAW
-   3553 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          | ID-stall:RAW,WAW
-   3554 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          | ID-stall:RAW,WAW
-   3555 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          | 02c2 ld t1,0(s3)         | ID-stall:RAW,WAW DC:LD MISS
-   3556 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          | ID-stall:RAW,WAW
-   3557 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          | ID-stall:RAW,WAW
-   3558 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          | ID-stall:RAW,WAW
-   3559 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          | ID-stall:RAW,WAW
-   3560 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          | ID-stall:RAW,WAW
-   3561 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          | ID-stall:RAW,WAW
-   3562 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          | ID-stall:RAW,WAW
-   3563 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          | ID-stall:RAW,WAW
-   3564 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          | ID-stall:RAW,WAW
-   3565 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          | ID-stall:RAW,WAW
-   3566 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          | ID-stall:RAW,WAW
-   3567 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          | ID-stall:RAW,WAW
-   3568 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          | ID-stall:RAW,WAW
-   3569 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          | ID-stall:RAW,WAW
-   3570 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          | ID-stall:RAW,WAW
-   3571 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          | ID-stall:RAW,WAW
-   3572 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          | ID-stall:RAW,WAW
-   3573 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          | ID-stall:RAW,WAW
-   3574 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          | ID-stall:RAW,WAW
-   3575 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          | ID-stall:RAW,WAW
-   3576 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          | ID-stall:RAW,WAW
-   3577 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          | ID-stall:RAW,WAW
-   3578 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          | ID-stall:RAW,WAW
-   3579 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          | ID-stall:RAW,WAW
-   3580 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          | ID-stall:RAW,WAW
-   3581 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          | ID-stall:RAW,WAW
-   3582 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          | ID-stall:RAW,WAW
-   3583 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          | ID-stall:RAW,WAW
-   3584 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          | ID-stall:RAW,WAW
-   3585 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          | ID-stall:RAW,WAW
-   3586 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          | ID-stall:RAW,WAW
-   3587 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          | ID-stall:RAW,WAW
-   3588 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          | ID-stall:RAW,WAW
-   3589 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          | ID-stall:RAW,WAW
-   3590 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          | ID-stall:RAW,WAW
-   3591 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          | ID-stall:RAW,WAW
-   3592 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          | ID-stall:RAW,WAW
-   3593 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          | ID-stall:RAW,WAW
-   3594 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          | ID-stall:RAW,WAW
-   3595 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          | ID-stall:RAW,WAW
-   3596 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          | ID-stall:RAW,WAW
-   3597 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          | ID-stall:RAW,WAW
-   3598 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          | ID-stall:RAW,WAW
-   3599 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          | ID-stall:RAW,WAW
-   3600 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          | ID-stall:RAW,WAW
-   3601 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          | ID-stall:RAW,WAW
-   3602 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          | ID-stall:RAW,WAW
-   3603 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          | ID-stall:RAW,WAW
-   3604 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          | ID-stall:RAW,WAW
-   3605 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          | ID-stall:RAW,WAW
-   3606 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          | ID-stall:RAW,WAW
-   3607 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          | ID-stall:RAW,WAW
-   3608 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          | ID-stall:RAW,WAW
-   3609 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          | ID-stall:RAW,WAW
-   3610 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          | ID-stall:RAW,WAW
-   3611 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          | ID-stall:RAW,WAW
-   3612 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          | ID-stall:RAW,WAW
-   3613 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          | ID-stall:RAW,WAW
-   3614 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          | ID-stall:RAW,WAW
-   3615 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          | ID-stall:RAW,WAW
-   3616 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          | ID-stall:RAW,WAW
-   3617 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          | ID-stall:RAW,WAW
-   3618 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          | ID-stall:RAW,WAW
-   3619 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          | ID-stall:RAW,WAW
-   3620 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          | ID-stall:RAW,WAW
-   3621 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          | ID-stall:RAW,WAW
-   3622 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          | ID-stall:RAW,WAW
-   3623 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          | ID-stall:RAW,WAW
-   3624 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          | ID-stall:RAW,WAW
-   3625 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          | ID-stall:RAW,WAW
-   3626 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          | ID-stall:RAW,WAW
-   3627 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          | ID-stall:RAW,WAW
-   3628 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          | ID-stall:RAW,WAW
-   3629 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          | ID-stall:RAW,WAW
-   3630 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          | ID-stall:RAW,WAW
-   3631 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          | ID-stall:RAW,WAW
-   3632 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          | ID-stall:RAW,WAW
-   3633 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          | ID-stall:RAW,WAW
-   3634 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          | ID-stall:RAW,WAW
-   3635 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          | ID-stall:RAW,WAW
-   3636 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          | ID-stall:RAW,WAW
-   3637 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          | ID-stall:RAW,WAW
-   3638 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          | ID-stall:RAW,WAW
-   3639 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          | ID-stall:RAW,WAW
-   3640 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          | ID-stall:RAW,WAW
-   3641 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          | ID-stall:RAW,WAW
-   3642 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          | ID-stall:RAW,WAW
-   3643 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          | ID-stall:RAW,WAW
-   3644 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          | ID-stall:RAW,WAW
-   3645 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          | ID-stall:RAW,WAW
-   3646 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          | ID-stall:RAW,WAW
-   3647 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          | ID-stall:RAW,WAW
-   3648 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          | ID-stall:RAW,WAW
-   3649 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          | ID-stall:RAW,WAW
-   3650 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          | ID-stall:RAW,WAW
-   3651 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          | ID-stall:RAW,WAW
-   3652 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          | ID-stall:RAW,WAW
-   3653 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          | ID-stall:RAW,WAW
-   3654 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          | ID-stall:RAW,WAW
-   3655 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          | ID-stall:RAW,WAW
-   3656 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          | ID-stall:RAW,WAW
-   3657 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          | ID-stall:RAW,WAW
-   3658 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          | ID-stall:RAW,WAW
-   3659 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          | ID-stall:RAW,WAW
-   3660 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          | ID-stall:RAW,WAW
-   3661 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          | ID-stall:RAW,WAW
-   3662 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          | ID-stall:RAW,WAW
-   3663 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          | ID-stall:RAW,WAW
-   3664 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          | ID-stall:RAW,WAW
-   3665 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          | ID-stall:RAW,WAW
-   3666 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          | ID-stall:RAW,WAW
-   3667 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          | ID-stall:RAW,WAW
-   3668 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          | ID-stall:RAW,WAW
-   3669 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          | ID-stall:RAW,WAW
-   3670 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          | ID-stall:RAW,WAW
-   3671 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          | ID-stall:RAW,WAW
-   3672 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          | ID-stall:RAW,WAW
-   3673 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          | ID-stall:RAW,WAW
-   3674 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          | ID-stall:RAW,WAW
-   3675 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          | ID-stall:RAW,WAW
-   3676 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          | ID-stall:RAW,WAW
-   3677 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          | ID-stall:RAW,WAW
-   3678 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          | ID-stall:RAW,WAW
-   3679 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          | ID-stall:RAW,WAW
-   3680 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          | ID-stall:RAW,WAW
-   3681 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          | ID-stall:RAW,WAW
-   3682 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          | ID-stall:RAW,WAW
-   3683 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          | ID-stall:RAW,WAW
-   3684 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          | ID-stall:RAW,WAW
-   3685 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          | ID-stall:RAW,WAW
-   3686 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          | ID-stall:RAW,WAW
-   3687 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          | ID-stall:RAW,WAW
-   3688 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          | ID-stall:RAW,WAW
-   3689 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          | ID-stall:RAW,WAW
-   3690 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          | ID-stall:RAW,WAW
-   3691 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          | ID-stall:RAW,WAW
-   3692 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          | ID-stall:RAW,WAW
-   3693 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          | ID-stall:RAW,WAW
-   3694 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          | ID-stall:RAW,WAW
-   3695 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          | ID-stall:RAW,WAW
-   3696 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          | ID-stall:RAW,WAW
-   3697 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          | ID-stall:RAW,WAW
-   3698 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          | ID-stall:RAW,WAW
-   3699 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          | ID-stall:RAW,WAW
-   3700 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          | ID-stall:RAW,WAW
-   3701 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          | ID-stall:RAW,WAW
-   3702 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          | ID-stall:RAW,WAW
-   3703 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          | ID-stall:RAW,WAW
-   3704 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          | ID-stall:RAW,WAW
-   3705 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          | ID-stall:RAW,WAW
-   3706 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          | ID-stall:RAW,WAW
-   3707 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          | ID-stall:RAW,WAW
-   3708 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          | ID-stall:RAW,WAW
-   3709 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          | ID-stall:RAW,WAW
-   3710 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          | ID-stall:RAW,WAW
-   3711 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          | ID-stall:RAW,WAW
-   3712 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          | ID-stall:RAW,WAW
-   3713 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          | ID-stall:RAW,WAW
-   3714 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          | ID-stall:RAW,WAW
-   3715 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          | ID-stall:RAW,WAW
-   3716 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          | ID-stall:RAW,WAW
-   3717 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          | ID-stall:RAW,WAW
-   3718 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          | ID-stall:RAW,WAW
-   3719 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          | ID-stall:RAW,WAW
-   3720 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          | ID-stall:RAW,WAW
-   3721 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          | ID-stall:RAW,WAW
-   3722 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          | ID-stall:RAW,WAW
-   3723 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          | ID-stall:RAW,WAW
-   3724 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          | ID-stall:RAW,WAW
-   3725 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          | ID-stall:RAW,WAW
-   3726 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          | ID-stall:RAW,WAW
-   3727 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          | ID-stall:RAW,WAW
-   3728 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          | ID-stall:RAW,WAW
-   3729 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          | ID-stall:RAW,WAW
-   3730 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          | ID-stall:RAW,WAW
-   3731 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          | ID-stall:RAW,WAW
-   3732 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          | ID-stall:RAW,WAW
-   3733 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          | ID-stall:RAW,WAW
-   3734 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          | ID-stall:RAW,WAW
-   3735 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          | ID-stall:RAW,WAW
-   3736 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          | ID-stall:RAW,WAW
-   3737 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          | ID-stall:RAW,WAW
-   3738 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          | ID-stall:RAW,WAW
-   3739 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          | ID-stall:RAW,WAW
-   3740 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          | ID-stall:RAW,WAW
-   3741 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          | ID-stall:RAW,WAW
-   3742 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          | ID-stall:RAW,WAW
-   3743 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          | ID-stall:RAW,WAW
-   3744 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          | ID-stall:RAW,WAW
-   3745 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          | ID-stall:RAW,WAW
-   3746 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          | ID-stall:RAW,WAW
-   3747 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          | ID-stall:RAW,WAW
-   3748 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          | ID-stall:RAW,WAW
-   3749 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          | ID-stall:RAW,WAW
-   3750 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          | ID-stall:RAW,WAW
-   3751 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          | ID-stall:RAW,WAW
-   3752 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          | ID-stall:RAW,WAW
-   3753 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          | ID-stall:RAW,WAW
-   3754 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          | ID-stall:RAW,WAW
-   3755 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          | ID-stall:RAW,WAW
-   3756 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          | ID-stall:RAW,WAW
-   3757 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          | ID-stall:RAW,WAW
-   3758 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          | ID-stall:RAW,WAW
-   3759 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          | ID-stall:RAW,WAW
-   3760 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          | ID-stall:RAW,WAW
-   3761 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          | ID-stall:RAW,WAW
-   3762 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          | ID-stall:RAW,WAW
-   3763 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          | ID-stall:RAW,WAW
-   3764 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          | ID-stall:RAW,WAW
-   3765 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          | ID-stall:RAW,WAW
-   3766 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          | ID-stall:RAW,WAW
-   3767 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          | ID-stall:RAW,WAW
-   3768 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          | ID-stall:RAW,WAW
-   3769 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          | ID-stall:RAW,WAW
-   3770 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          | ID-stall:RAW,WAW
-   3771 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          | ID-stall:RAW,WAW
-   3772 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          | ID-stall:RAW,WAW
-   3773 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          | ID-stall:RAW,WAW
-   3774 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          | ID-stall:RAW,WAW
-   3775 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          | ID-stall:WAW
-   3776 |                          | 02d4 li a0,1026          | 6| >02c6 mv t1,t1           |                          |                          | 
-   3777 | 02d8 jal 21e             | 02d4 li a0,1026          | 4| .02c8 csrr t0,mcycle     | 02c6 mv t1,t1        ALU |                          | ID-stall:CP0/fence
-   3778 | 02dc lui s4,0x10         |                          | 6| .02c8 csrr t0,mcycle     |                          | 02c6 mv t1,t1            | ID-stall:CP0/fence
-   3779 |                          | 02d8 jal 21e             | 6| .02c8 csrr t0,mcycle     |                          |                          | IP-redirect->021e ID-stall:CP0/fence
-   3780 |                          | 02d8 jal 21e             | 6| .02c8 csrr t0,mcycle     |                          |                          | IP-redirect->021e ID-stall:CP0/fence
-   3781 |                          | 02d8 jal 21e             | 6| .02c8 csrr t0,mcycle     |                          |                          | IP-redirect->021e ID-stall:CP0/fence
-   3782 |                          | 02d8 jal 21e             | 6| >02c8 csrr t0,mcycle     |                          |                          | IP-redirect->021e
-   3783 | 021e addi sp,sp,-16      | 02d8 jal 21e             | 4| .02cc sub s0,t0,s0       | 02c8 csrr t0,mcycle  CP0 |                          | IP-redirect->021e ID-stall:RAW
-   3784 | 021e addi sp,sp,-16      |                          | 6| >02cc sub s0,t0,s0       |                          | 02c8 csrr t0,mcycle      | 
-   3785 | 0220 sd ra,0(sp)         |                          | 5| >02d0 li t6,0            | 02cc sub s0,t0,s0    ALU |                          | 
-   3786 | 0224 mv a3,a0            | 021e addi sp,sp,-16      | 4| >02d2 mv a1,s0           | 02d0 li t6,0         ALU | 02cc sub s0,t0,s0        | 
-   3787 | 0228 ?                   | 0220 sd ra,0(sp)         | 3| >0306 csrr s0,mcycle     | 02d2 mv a1,s0        ALU | 02d0 li t6,0             | 
-----------------------------------------------------------------------------------------------------------------------------------------------------------------
+================================================================================================================================================================================================
+    cyc | IF (fetch)               | IP (pred)                |IB| ID                       | EX1                      | RETIRE                   | BACK        | WB              | events
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+   3533 |                          |                          | 0|                          |                          |                          |             |                 | 
+   3534 |                          |                          | 0|                          |                          |                          |             |                 | 
+   3535 |                          |                          | 0|                          |                          |                          |             |                 | 
+   3536 |                          | 02c0 ?                   | 0| >02be csrr s0,mcycle     |                          |                          |             |                 | 
+   3537 |                          |                          | 0|                          | 02be csrr s0,mcycle  CP0 |                          |             |                 | 
+   3538 |                          |                          | 0|                          |                          | 02be csrr s0,mcycle      |             | w0:s0           | 
+   3539 |                          |                          | 0|                          |                          |                          |             |                 | 
+   3540 |                          |                          | 0|                          |                          |                          |             |                 | 
+   3541 |                          |                          | 0|                          |                          |                          |             |                 | 
+   3542 | 02c4 ?                   |                          | 0|                          |                          |                          |             |                 | 
+   3543 | 02c8 csrr t0,mcycle      |                          | 0|                          |                          |                          |             |                 | 
+   3544 | 02cc sub s0,t0,s0        | 02c4 ?                   | 0| >02c2 ld t1,0(s3)        |                          |                          |             |                 | 
+   3545 | 02d0 li t6,0             | 02c8 csrr t0,mcycle      | 0| .02c6 mv t1,t1           | 02c2 ld t1,0(s3)     LSU |                          |             |                 | ID-stall:RAW,WAW
+   3546 | 02d4 li a0,1026          | 02cc sub s0,t0,s0        | 2| .02c6 mv t1,t1           |                          |                          |             |                 | ID-stall:RAW,WAW LSU-full
+   3547 | 02d8 jal 21e             | 02d0 li t6,0             | 4| .02c6 mv t1,t1           |                          |                          |             |                 | ID-stall:RAW,WAW LSU-full
+   3548 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          |             |                 | ID-stall:RAW,WAW LSU-full
+   3549 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          |             |                 | ID-stall:RAW,WAW LSU-full
+   3550 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          |             |                 | ID-stall:RAW,WAW LSU-full
+   3551 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          |             |                 | ID-stall:RAW,WAW LSU-full
+   3552 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          |             |                 | ID-stall:RAW,WAW LSU-full
+   3553 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          |             |                 | ID-stall:RAW,WAW LSU-full
+   3554 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          |             |                 | ID-stall:RAW,WAW LSU-full
+   3555 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          | 02c2 ld t1,0(s3)         |             |                 | ID-stall:RAW,WAW DC:LD MISS
+   3556 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          |             |                 | ID-stall:RAW,WAW
+   3557 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          |             |                 | ID-stall:RAW,WAW
+   3558 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          |             |                 | ID-stall:RAW,WAW
+   3559 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          |             |                 | ID-stall:RAW,WAW
+   3560 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          |             |                 | ID-stall:RAW,WAW
+   3561 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          |             |                 | ID-stall:RAW,WAW
+   3562 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          |             |                 | ID-stall:RAW,WAW
+   3563 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          |             |                 | ID-stall:RAW,WAW
+   3564 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          |             |                 | ID-stall:RAW,WAW
+   3565 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          |             |                 | ID-stall:RAW,WAW
+   3566 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          |             |                 | ID-stall:RAW,WAW
+   3567 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          |             |                 | ID-stall:RAW,WAW
+   3568 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          |             |                 | ID-stall:RAW,WAW
+   3569 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          |             |                 | ID-stall:RAW,WAW
+   3570 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          |             |                 | ID-stall:RAW,WAW
+   3571 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          |             |                 | ID-stall:RAW,WAW
+   3572 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          |             |                 | ID-stall:RAW,WAW
+   3573 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          |             |                 | ID-stall:RAW,WAW
+   3574 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          |             |                 | ID-stall:RAW,WAW
+   3575 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          |             |                 | ID-stall:RAW,WAW
+   3576 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          |             |                 | ID-stall:RAW,WAW
+   3577 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          |             |                 | ID-stall:RAW,WAW
+   3578 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          |             |                 | ID-stall:RAW,WAW
+   3579 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          |             |                 | ID-stall:RAW,WAW
+   3580 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          |             |                 | ID-stall:RAW,WAW
+   3581 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          |             |                 | ID-stall:RAW,WAW
+   3582 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          |             |                 | ID-stall:RAW,WAW
+   3583 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          |             |                 | ID-stall:RAW,WAW
+   3584 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          |             |                 | ID-stall:RAW,WAW
+   3585 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          |             |                 | ID-stall:RAW,WAW
+   3586 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          |             |                 | ID-stall:RAW,WAW
+   3587 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          |             |                 | ID-stall:RAW,WAW
+   3588 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          |             |                 | ID-stall:RAW,WAW
+   3589 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          |             |                 | ID-stall:RAW,WAW
+   3590 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          |             |                 | ID-stall:RAW,WAW
+   3591 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          |             |                 | ID-stall:RAW,WAW
+   3592 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          |             |                 | ID-stall:RAW,WAW
+   3593 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          |             |                 | ID-stall:RAW,WAW
+   3594 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          |             |                 | ID-stall:RAW,WAW
+   3595 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          |             |                 | ID-stall:RAW,WAW
+   3596 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          |             |                 | ID-stall:RAW,WAW
+   3597 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          |             |                 | ID-stall:RAW,WAW
+   3598 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          |             |                 | ID-stall:RAW,WAW
+   3599 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          |             |                 | ID-stall:RAW,WAW
+   3600 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          |             |                 | ID-stall:RAW,WAW
+   3601 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          |             |                 | ID-stall:RAW,WAW
+   3602 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          |             |                 | ID-stall:RAW,WAW
+   3603 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          |             |                 | ID-stall:RAW,WAW
+   3604 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          |             |                 | ID-stall:RAW,WAW
+   3605 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          |             |                 | ID-stall:RAW,WAW
+   3606 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          |             |                 | ID-stall:RAW,WAW
+   3607 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          |             |                 | ID-stall:RAW,WAW
+   3608 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          |             |                 | ID-stall:RAW,WAW
+   3609 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          |             |                 | ID-stall:RAW,WAW
+   3610 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          |             |                 | ID-stall:RAW,WAW
+   3611 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          |             |                 | ID-stall:RAW,WAW
+   3612 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          |             |                 | ID-stall:RAW,WAW
+   3613 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          |             |                 | ID-stall:RAW,WAW
+   3614 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          |             |                 | ID-stall:RAW,WAW
+   3615 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          |             |                 | ID-stall:RAW,WAW
+   3616 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          |             |                 | ID-stall:RAW,WAW
+   3617 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          |             |                 | ID-stall:RAW,WAW
+   3618 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          |             |                 | ID-stall:RAW,WAW
+   3619 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          |             |                 | ID-stall:RAW,WAW
+   3620 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          |             |                 | ID-stall:RAW,WAW
+   3621 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          |             |                 | ID-stall:RAW,WAW
+   3622 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          |             |                 | ID-stall:RAW,WAW
+   3623 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          |             |                 | ID-stall:RAW,WAW
+   3624 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          |             |                 | ID-stall:RAW,WAW
+   3625 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          |             |                 | ID-stall:RAW,WAW
+   3626 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          |             |                 | ID-stall:RAW,WAW
+   3627 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          |             |                 | ID-stall:RAW,WAW
+   3628 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          |             |                 | ID-stall:RAW,WAW
+   3629 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          |             |                 | ID-stall:RAW,WAW
+   3630 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          |             |                 | ID-stall:RAW,WAW
+   3631 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          |             |                 | ID-stall:RAW,WAW
+   3632 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          |             |                 | ID-stall:RAW,WAW
+   3633 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          |             |                 | ID-stall:RAW,WAW
+   3634 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          |             |                 | ID-stall:RAW,WAW
+   3635 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          |             |                 | ID-stall:RAW,WAW
+   3636 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          |             |                 | ID-stall:RAW,WAW
+   3637 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          |             |                 | ID-stall:RAW,WAW
+   3638 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          |             |                 | ID-stall:RAW,WAW
+   3639 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          |             |                 | ID-stall:RAW,WAW
+   3640 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          |             |                 | ID-stall:RAW,WAW
+   3641 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          |             |                 | ID-stall:RAW,WAW
+   3642 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          |             |                 | ID-stall:RAW,WAW
+   3643 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          |             |                 | ID-stall:RAW,WAW
+   3644 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          |             |                 | ID-stall:RAW,WAW
+   3645 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          |             |                 | ID-stall:RAW,WAW
+   3646 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          |             |                 | ID-stall:RAW,WAW
+   3647 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          |             |                 | ID-stall:RAW,WAW
+   3648 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          |             |                 | ID-stall:RAW,WAW
+   3649 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          |             |                 | ID-stall:RAW,WAW
+   3650 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          |             |                 | ID-stall:RAW,WAW
+   3651 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          |             |                 | ID-stall:RAW,WAW
+   3652 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          |             |                 | ID-stall:RAW,WAW
+   3653 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          |             |                 | ID-stall:RAW,WAW
+   3654 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          |             |                 | ID-stall:RAW,WAW
+   3655 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          |             |                 | ID-stall:RAW,WAW
+   3656 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          |             |                 | ID-stall:RAW,WAW
+   3657 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          |             |                 | ID-stall:RAW,WAW
+   3658 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          |             |                 | ID-stall:RAW,WAW
+   3659 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          |             |                 | ID-stall:RAW,WAW
+   3660 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          |             |                 | ID-stall:RAW,WAW
+   3661 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          |             |                 | ID-stall:RAW,WAW
+   3662 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          |             |                 | ID-stall:RAW,WAW
+   3663 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          |             |                 | ID-stall:RAW,WAW
+   3664 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          |             |                 | ID-stall:RAW,WAW
+   3665 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          |             |                 | ID-stall:RAW,WAW
+   3666 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          |             |                 | ID-stall:RAW,WAW
+   3667 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          |             |                 | ID-stall:RAW,WAW
+   3668 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          |             |                 | ID-stall:RAW,WAW
+   3669 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          |             |                 | ID-stall:RAW,WAW
+   3670 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          |             |                 | ID-stall:RAW,WAW
+   3671 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          |             |                 | ID-stall:RAW,WAW
+   3672 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          |             |                 | ID-stall:RAW,WAW
+   3673 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          |             |                 | ID-stall:RAW,WAW
+   3674 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          |             |                 | ID-stall:RAW,WAW
+   3675 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          |             |                 | ID-stall:RAW,WAW
+   3676 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          |             |                 | ID-stall:RAW,WAW
+   3677 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          |             |                 | ID-stall:RAW,WAW
+   3678 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          |             |                 | ID-stall:RAW,WAW
+   3679 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          |             |                 | ID-stall:RAW,WAW
+   3680 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          |             |                 | ID-stall:RAW,WAW
+   3681 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          |             |                 | ID-stall:RAW,WAW
+   3682 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          |             |                 | ID-stall:RAW,WAW
+   3683 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          |             |                 | ID-stall:RAW,WAW
+   3684 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          |             |                 | ID-stall:RAW,WAW
+   3685 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          |             |                 | ID-stall:RAW,WAW
+   3686 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          |             |                 | ID-stall:RAW,WAW
+   3687 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          |             |                 | ID-stall:RAW,WAW
+   3688 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          |             |                 | ID-stall:RAW,WAW
+   3689 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          |             |                 | ID-stall:RAW,WAW
+   3690 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          |             |                 | ID-stall:RAW,WAW
+   3691 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          |             |                 | ID-stall:RAW,WAW
+   3692 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          |             |                 | ID-stall:RAW,WAW
+   3693 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          |             |                 | ID-stall:RAW,WAW
+   3694 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          |             |                 | ID-stall:RAW,WAW
+   3695 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          |             |                 | ID-stall:RAW,WAW
+   3696 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          |             |                 | ID-stall:RAW,WAW
+   3697 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          |             |                 | ID-stall:RAW,WAW
+   3698 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          |             |                 | ID-stall:RAW,WAW
+   3699 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          |             |                 | ID-stall:RAW,WAW
+   3700 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          |             |                 | ID-stall:RAW,WAW
+   3701 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          |             |                 | ID-stall:RAW,WAW
+   3702 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          |             |                 | ID-stall:RAW,WAW
+   3703 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          |             |                 | ID-stall:RAW,WAW
+   3704 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          |             |                 | ID-stall:RAW,WAW
+   3705 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          |             |                 | ID-stall:RAW,WAW
+   3706 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          |             |                 | ID-stall:RAW,WAW
+   3707 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          |             |                 | ID-stall:RAW,WAW
+   3708 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          |             |                 | ID-stall:RAW,WAW
+   3709 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          |             |                 | ID-stall:RAW,WAW
+   3710 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          |             |                 | ID-stall:RAW,WAW
+   3711 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          |             |                 | ID-stall:RAW,WAW
+   3712 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          |             |                 | ID-stall:RAW,WAW
+   3713 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          |             |                 | ID-stall:RAW,WAW
+   3714 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          |             |                 | ID-stall:RAW,WAW
+   3715 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          |             |                 | ID-stall:RAW,WAW
+   3716 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          |             |                 | ID-stall:RAW,WAW
+   3717 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          |             |                 | ID-stall:RAW,WAW
+   3718 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          |             |                 | ID-stall:RAW,WAW
+   3719 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          |             |                 | ID-stall:RAW,WAW
+   3720 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          |             |                 | ID-stall:RAW,WAW
+   3721 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          |             |                 | ID-stall:RAW,WAW
+   3722 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          |             |                 | ID-stall:RAW,WAW
+   3723 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          |             |                 | ID-stall:RAW,WAW
+   3724 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          |             |                 | ID-stall:RAW,WAW
+   3725 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          |             |                 | ID-stall:RAW,WAW
+   3726 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          |             |                 | ID-stall:RAW,WAW
+   3727 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          |             |                 | ID-stall:RAW,WAW
+   3728 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          |             |                 | ID-stall:RAW,WAW
+   3729 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          |             |                 | ID-stall:RAW,WAW
+   3730 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          |             |                 | ID-stall:RAW,WAW
+   3731 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          |             |                 | ID-stall:RAW,WAW
+   3732 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          |             |                 | ID-stall:RAW,WAW
+   3733 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          |             |                 | ID-stall:RAW,WAW
+   3734 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          |             |                 | ID-stall:RAW,WAW
+   3735 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          |             |                 | ID-stall:RAW,WAW
+   3736 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          |             |                 | ID-stall:RAW,WAW
+   3737 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          |             |                 | ID-stall:RAW,WAW
+   3738 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          |             |                 | ID-stall:RAW,WAW
+   3739 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          |             |                 | ID-stall:RAW,WAW
+   3740 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          |             |                 | ID-stall:RAW,WAW
+   3741 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          |             |                 | ID-stall:RAW,WAW
+   3742 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          |             |                 | ID-stall:RAW,WAW
+   3743 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          |             |                 | ID-stall:RAW,WAW
+   3744 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          |             |                 | ID-stall:RAW,WAW
+   3745 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          |             |                 | ID-stall:RAW,WAW
+   3746 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          |             |                 | ID-stall:RAW,WAW
+   3747 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          |             |                 | ID-stall:RAW,WAW
+   3748 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          |             |                 | ID-stall:RAW,WAW
+   3749 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          |             |                 | ID-stall:RAW,WAW
+   3750 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          |             |                 | ID-stall:RAW,WAW
+   3751 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          |             |                 | ID-stall:RAW,WAW
+   3752 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          |             |                 | ID-stall:RAW,WAW
+   3753 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          |             |                 | ID-stall:RAW,WAW
+   3754 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          |             |                 | ID-stall:RAW,WAW
+   3755 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          |             |                 | ID-stall:RAW,WAW
+   3756 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          |             |                 | ID-stall:RAW,WAW
+   3757 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          |             |                 | ID-stall:RAW,WAW
+   3758 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          |             |                 | ID-stall:RAW,WAW
+   3759 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          |             |                 | ID-stall:RAW,WAW
+   3760 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          |             |                 | ID-stall:RAW,WAW
+   3761 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          |             |                 | ID-stall:RAW,WAW
+   3762 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          |             |                 | ID-stall:RAW,WAW
+   3763 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          |             |                 | ID-stall:RAW,WAW
+   3764 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          |             |                 | ID-stall:RAW,WAW
+   3765 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          |             |                 | ID-stall:RAW,WAW
+   3766 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          |             |                 | ID-stall:RAW,WAW
+   3767 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          |             |                 | ID-stall:RAW,WAW
+   3768 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          |             |                 | ID-stall:RAW,WAW
+   3769 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          |             |                 | ID-stall:RAW,WAW
+   3770 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          |             |                 | ID-stall:RAW,WAW
+   3771 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          |             |                 | ID-stall:RAW,WAW
+   3772 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          |             |                 | ID-stall:RAW,WAW
+   3773 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          |             |                 | ID-stall:RAW,WAW
+   3774 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          |             |                 | ID-stall:RAW,WAW
+   3775 |                          | 02d4 li a0,1026          | 6| .02c6 mv t1,t1           |                          |                          |             |                 | ID-stall:WAW
+   3776 |                          | 02d4 li a0,1026          | 6| >02c6 mv t1,t1           |                          |                          |             | w1:t1           | 
+   3777 | 02d8 jal 21e             | 02d4 li a0,1026          | 4| .02c8 csrr t0,mcycle     | 02c6 mv t1,t1        ALU |                          |             |                 | ID-stall:CP0/fence
+   3778 | 02dc lui s4,0x10         |                          | 6| .02c8 csrr t0,mcycle     |                          | 02c6 mv t1,t1            |             | w0:t1           | ID-stall:CP0/fence
+   3779 |                          | 02d8 jal 21e             | 6| .02c8 csrr t0,mcycle     |                          |                          |             |                 | IP-redirect->021e ID-stall:CP0/fence
+   3780 |                          | 02d8 jal 21e             | 6| .02c8 csrr t0,mcycle     |                          |                          |             |                 | IP-redirect->021e ID-stall:CP0/fence
+   3781 |                          | 02d8 jal 21e             | 6| .02c8 csrr t0,mcycle     |                          |                          |             |                 | IP-redirect->021e ID-stall:CP0/fence
+   3782 |                          | 02d8 jal 21e             | 6| >02c8 csrr t0,mcycle     |                          |                          |             |                 | IP-redirect->021e
+   3783 | 021e addi sp,sp,-16      | 02d8 jal 21e             | 4| .02cc sub s0,t0,s0       | 02c8 csrr t0,mcycle  CP0 |                          |             |                 | IP-redirect->021e ID-stall:RAW
+   3784 | 021e addi sp,sp,-16      |                          | 6| >02cc sub s0,t0,s0       |                          | 02c8 csrr t0,mcycle      |             | w0:t0           | 
+   3785 | 0220 sd ra,0(sp)         |                          | 5| >02d0 li t6,0            | 02cc sub s0,t0,s0    ALU |                          |             |                 | 
+   3786 | 0224 mv a3,a0            | 021e addi sp,sp,-16      | 4| >02d2 mv a1,s0           | 02d0 li t6,0         ALU | 02cc sub s0,t0,s0        |             | w0:s0           | 
+   3787 | 0228 ?                   | 0220 sd ra,0(sp)         | 3| >0306 csrr s0,mcycle     | 02d2 mv a1,s0        ALU | 02d0 li t6,0             |             | w0:t6           | 
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 summary: cycles=255 retired=6 IPC=0.024 | dc_miss=1, ip_redirect=5, retired=6, stall_CP0/fence=5, stall_RAW=231, stall_WAW=231
 
-================================================================================================================================================================
+================================================================================================================================================================================================
 MARK 3   cycles 4548 .. 4574  (27 cycles)
-================================================================================================================================================================
-    cyc | IF (fetch)               | IP (pred)                |IB| ID                       | EX1                      | RETIRE                   | events
-----------------------------------------------------------------------------------------------------------------------------------------------------------------
-   4548 |                          | 0314 sub s0,t0,s0        | 5| >0306 csrr s0,mcycle     |                          |                          | 
-   4549 | 0318 li t6,0             | 0314 sub s0,t0,s0        | 3| >030a ld t1,0(s5)        | 0306 csrr s0,mcycle  CP0 |                          | 
-   4550 | 031c li a0,1053          |                          | 4| .030e mv t1,t1           | 030a ld t1,0(s5)     LSU | 0306 csrr s0,mcycle      | ID-stall:RAW,WAW
-   4551 | 0320 jal 21e             | 0318 li t6,0             | 4| .030e mv t1,t1           |                          | 030a ld t1,0(s5)         | ID-stall:RAW,WAW DC:LD MISS
-   4552 |                          | 031c li a0,1053          | 6| .030e mv t1,t1           |                          |                          | ID-stall:RAW,WAW
-   4553 |                          | 031c li a0,1053          | 6| .030e mv t1,t1           |                          |                          | ID-stall:RAW,WAW
-   4554 |                          | 031c li a0,1053          | 6| .030e mv t1,t1           |                          |                          | ID-stall:RAW,WAW
-   4555 |                          | 031c li a0,1053          | 6| .030e mv t1,t1           |                          |                          | ID-stall:RAW,WAW
-   4556 |                          | 031c li a0,1053          | 6| .030e mv t1,t1           |                          |                          | ID-stall:RAW,WAW
-   4557 |                          | 031c li a0,1053          | 6| .030e mv t1,t1           |                          |                          | ID-stall:RAW,WAW
-   4558 |                          | 031c li a0,1053          | 6| .030e mv t1,t1           |                          |                          | ID-stall:RAW,WAW
-   4559 |                          | 031c li a0,1053          | 6| .030e mv t1,t1           |                          |                          | ID-stall:RAW,WAW
-   4560 |                          | 031c li a0,1053          | 6| .030e mv t1,t1           |                          |                          | ID-stall:RAW,WAW
-   4561 |                          | 031c li a0,1053          | 6| .030e mv t1,t1           |                          |                          | ID-stall:RAW,WAW
-   4562 |                          | 031c li a0,1053          | 6| .030e mv t1,t1           |                          |                          | ID-stall:WAW
-   4563 |                          | 031c li a0,1053          | 6| >030e mv t1,t1           |                          |                          | 
-   4564 | 0320 jal 21e             | 031c li a0,1053          | 4| .0310 csrr t0,mcycle     | 030e mv t1,t1        ALU |                          | ID-stall:CP0/fence
-   4565 | 0324 add s6,s1,s2        |                          | 6| .0310 csrr t0,mcycle     |                          | 030e mv t1,t1            | ID-stall:CP0/fence
-   4566 |                          | 0320 jal 21e             | 6| .0310 csrr t0,mcycle     |                          |                          | IP-redirect->021e ID-stall:CP0/fence
-   4567 |                          | 0320 jal 21e             | 6| .0310 csrr t0,mcycle     |                          |                          | IP-redirect->021e ID-stall:CP0/fence
-   4568 |                          | 0320 jal 21e             | 6| .0310 csrr t0,mcycle     |                          |                          | IP-redirect->021e ID-stall:CP0/fence
-   4569 |                          | 0320 jal 21e             | 6| >0310 csrr t0,mcycle     |                          |                          | IP-redirect->021e
-   4570 | 021e addi sp,sp,-16      | 0320 jal 21e             | 4| .0314 sub s0,t0,s0       | 0310 csrr t0,mcycle  CP0 |                          | IP-redirect->021e ID-stall:RAW
-   4571 | 021e addi sp,sp,-16      |                          | 6| >0314 sub s0,t0,s0       |                          | 0310 csrr t0,mcycle      | 
-   4572 | 0220 sd ra,0(sp)         |                          | 5| >0318 li t6,0            | 0314 sub s0,t0,s0    ALU |                          | 
-   4573 | 0224 mv a3,a0            | 021e addi sp,sp,-16      | 4| >031a mv a1,s0           | 0318 li t6,0         ALU | 0314 sub s0,t0,s0        | 
-   4574 | 0228 ?                   | 0220 sd ra,0(sp)         | 3| >032a csrr s0,mcycle     | 031a mv a1,s0        ALU | 0318 li t6,0             | 
-----------------------------------------------------------------------------------------------------------------------------------------------------------------
+================================================================================================================================================================================================
+    cyc | IF (fetch)               | IP (pred)                |IB| ID                       | EX1                      | RETIRE                   | BACK        | WB              | events
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+   4548 |                          | 0314 sub s0,t0,s0        | 5| >0306 csrr s0,mcycle     |                          |                          |             |                 | 
+   4549 | 0318 li t6,0             | 0314 sub s0,t0,s0        | 3| >030a ld t1,0(s5)        | 0306 csrr s0,mcycle  CP0 |                          |             |                 | 
+   4550 | 031c li a0,1053          |                          | 4| .030e mv t1,t1           | 030a ld t1,0(s5)     LSU | 0306 csrr s0,mcycle      |             | w0:s0           | ID-stall:RAW,WAW
+   4551 | 0320 jal 21e             | 0318 li t6,0             | 4| .030e mv t1,t1           |                          | 030a ld t1,0(s5)         |             |                 | ID-stall:RAW,WAW DC:LD MISS
+   4552 |                          | 031c li a0,1053          | 6| .030e mv t1,t1           |                          |                          |             |                 | ID-stall:RAW,WAW
+   4553 |                          | 031c li a0,1053          | 6| .030e mv t1,t1           |                          |                          |             |                 | ID-stall:RAW,WAW
+   4554 |                          | 031c li a0,1053          | 6| .030e mv t1,t1           |                          |                          |             |                 | ID-stall:RAW,WAW
+   4555 |                          | 031c li a0,1053          | 6| .030e mv t1,t1           |                          |                          |             |                 | ID-stall:RAW,WAW
+   4556 |                          | 031c li a0,1053          | 6| .030e mv t1,t1           |                          |                          |             |                 | ID-stall:RAW,WAW
+   4557 |                          | 031c li a0,1053          | 6| .030e mv t1,t1           |                          |                          |             |                 | ID-stall:RAW,WAW
+   4558 |                          | 031c li a0,1053          | 6| .030e mv t1,t1           |                          |                          |             |                 | ID-stall:RAW,WAW
+   4559 |                          | 031c li a0,1053          | 6| .030e mv t1,t1           |                          |                          |             |                 | ID-stall:RAW,WAW
+   4560 |                          | 031c li a0,1053          | 6| .030e mv t1,t1           |                          |                          |             |                 | ID-stall:RAW,WAW
+   4561 |                          | 031c li a0,1053          | 6| .030e mv t1,t1           |                          |                          |             |                 | ID-stall:RAW,WAW
+   4562 |                          | 031c li a0,1053          | 6| .030e mv t1,t1           |                          |                          |             |                 | ID-stall:WAW
+   4563 |                          | 031c li a0,1053          | 6| >030e mv t1,t1           |                          |                          |             | w1:t1           | 
+   4564 | 0320 jal 21e             | 031c li a0,1053          | 4| .0310 csrr t0,mcycle     | 030e mv t1,t1        ALU |                          |             |                 | ID-stall:CP0/fence
+   4565 | 0324 add s6,s1,s2        |                          | 6| .0310 csrr t0,mcycle     |                          | 030e mv t1,t1            |             | w0:t1           | ID-stall:CP0/fence
+   4566 |                          | 0320 jal 21e             | 6| .0310 csrr t0,mcycle     |                          |                          |             |                 | IP-redirect->021e ID-stall:CP0/fence
+   4567 |                          | 0320 jal 21e             | 6| .0310 csrr t0,mcycle     |                          |                          |             |                 | IP-redirect->021e ID-stall:CP0/fence
+   4568 |                          | 0320 jal 21e             | 6| .0310 csrr t0,mcycle     |                          |                          |             |                 | IP-redirect->021e ID-stall:CP0/fence
+   4569 |                          | 0320 jal 21e             | 6| >0310 csrr t0,mcycle     |                          |                          |             |                 | IP-redirect->021e
+   4570 | 021e addi sp,sp,-16      | 0320 jal 21e             | 4| .0314 sub s0,t0,s0       | 0310 csrr t0,mcycle  CP0 |                          |             |                 | IP-redirect->021e ID-stall:RAW
+   4571 | 021e addi sp,sp,-16      |                          | 6| >0314 sub s0,t0,s0       |                          | 0310 csrr t0,mcycle      |             | w0:t0           | 
+   4572 | 0220 sd ra,0(sp)         |                          | 5| >0318 li t6,0            | 0314 sub s0,t0,s0    ALU |                          |             |                 | 
+   4573 | 0224 mv a3,a0            | 021e addi sp,sp,-16      | 4| >031a mv a1,s0           | 0318 li t6,0         ALU | 0314 sub s0,t0,s0        |             | w0:s0           | 
+   4574 | 0228 ?                   | 0220 sd ra,0(sp)         | 3| >032a csrr s0,mcycle     | 031a mv a1,s0        ALU | 0318 li t6,0             |             | w0:t6           | 
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 summary: cycles=27 retired=6 IPC=0.222 | dc_miss=1, ip_redirect=5, retired=6, stall_CP0/fence=5, stall_RAW=13, stall_WAW=13
 
-================================================================================================================================================================
+================================================================================================================================================================================================
 MARK 4   cycles 5027 .. 5057  (31 cycles)
-================================================================================================================================================================
-    cyc | IF (fetch)               | IP (pred)                |IB| ID                       | EX1                      | RETIRE                   | events
-----------------------------------------------------------------------------------------------------------------------------------------------------------------
-   5027 | 0340 mv a1,s0            | 0338 ?                   | 4| >032a csrr s0,mcycle     |                          |                          | 
-   5028 |                          | 033c ?                   | 4| >032e th.dcache.cva s6   | 032a csrr s0,mcycle  CP0 |                          | 
-   5029 |                          | 033c ?                   | 2| .0332 th.sync            | 032e th.dcache.cva s LSU | 032a csrr s0,mcycle      | ID-stall:CP0/fence I$-miss
-   5030 |                          |                          | 5| .0332 th.sync            |                          | 032e th.dcache.cva s6    | ID-stall:CP0/fence DC:LS hit
-   5031 |                          |                          | 5| >0332 th.sync            |                          |                          | 
-   5032 |                          |                          | 3| .0336 csrr t0,mcycle     | 0332 th.sync         CP0 |                          | ID-stall:EX1-busy,CP0/fence
-   5033 |                          |                          | 3| .0336 csrr t0,mcycle     | 0332 th.sync         CP0 |                          | ID-stall:EX1-busy,CP0/fence
-   5034 |                          |                          | 3| .0336 csrr t0,mcycle     | 0332 th.sync         CP0 |                          | ID-stall:EX1-busy,CP0/fence
-   5035 |                          | 0340 mv a1,s0            | 3| .0336 csrr t0,mcycle     | 0332 th.sync         CP0 |                          | ID-stall:EX1-busy,CP0/fence
-   5036 |                          |                          | 4| .0336 csrr t0,mcycle     | 0332 th.sync         CP0 |                          | ID-stall:EX1-busy,CP0/fence
-   5037 |                          |                          | 4| .0336 csrr t0,mcycle     | 0332 th.sync         CP0 |                          | ID-stall:EX1-busy,CP0/fence
-   5038 |                          |                          | 4| .0336 csrr t0,mcycle     | 0332 th.sync         CP0 |                          | ID-stall:EX1-busy,CP0/fence
-   5039 |                          |                          | 4| .0336 csrr t0,mcycle     | 0332 th.sync         CP0 |                          | ID-stall:EX1-busy,CP0/fence
-   5040 |                          |                          | 4| .0336 csrr t0,mcycle     | 0332 th.sync         CP0 |                          | ID-stall:EX1-busy,CP0/fence
-   5041 | 0344 ?                   |                          | 4| .0336 csrr t0,mcycle     | 0332 th.sync         CP0 |                          | ID-stall:EX1-busy,CP0/fence
-   5042 | 0348 ?                   |                          | 4| .0336 csrr t0,mcycle     | 0332 th.sync         CP0 |                          | ID-stall:EX1-busy,CP0/fence
-   5043 | 034c ?                   | 0344 ?                   | 4| .0336 csrr t0,mcycle     | 0332 th.sync         CP0 |                          | ID-stall:EX1-busy,CP0/fence
-   5044 |                          | 0348 ?                   | 6| .0336 csrr t0,mcycle     | 0332 th.sync         CP0 |                          | IP-redirect->021e ID-stall:EX1-busy,CP0/fence
-   5045 |                          | 0348 ?                   | 6| .0336 csrr t0,mcycle     | 0332 th.sync         CP0 |                          | IP-redirect->021e ID-stall:EX1-busy,CP0/fence
-   5046 |                          | 0348 ?                   | 6| .0336 csrr t0,mcycle     | 0332 th.sync         CP0 |                          | IP-redirect->021e ID-stall:EX1-busy,CP0/fence
-   5047 |                          | 0348 ?                   | 6| .0336 csrr t0,mcycle     | 0332 th.sync         CP0 |                          | IP-redirect->021e ID-stall:EX1-busy,CP0/fence
-   5048 |                          | 0348 ?                   | 6| .0336 csrr t0,mcycle     | 0332 th.sync         CP0 |                          | IP-redirect->021e ID-stall:EX1-busy,CP0/fence
-   5049 |                          | 0348 ?                   | 6| .0336 csrr t0,mcycle     | 0332 th.sync         CP0 |                          | IP-redirect->021e ID-stall:EX1-busy,CP0/fence
-   5050 |                          | 0348 ?                   | 6| .0336 csrr t0,mcycle     | 0332 th.sync         CP0 |                          | IP-redirect->021e ID-stall:CP0/fence
-   5051 |                          | 0348 ?                   | 6| .0336 csrr t0,mcycle     |                          | 0332 th.sync             | IP-redirect->021e ID-stall:CP0/fence
-   5052 |                          | 0348 ?                   | 6| >0336 csrr t0,mcycle     |                          |                          | IP-redirect->021e
-   5053 | 021e addi sp,sp,-16      | 0348 ?                   | 4| .033a sub s0,t0,s0       | 0336 csrr t0,mcycle  CP0 |                          | IP-redirect->021e ID-stall:RAW
-   5054 | 021e addi sp,sp,-16      |                          | 6| >033a sub s0,t0,s0       |                          | 0336 csrr t0,mcycle      | 
-   5055 | 0220 sd ra,0(sp)         |                          | 5| >033e li t6,0            | 033a sub s0,t0,s0    ALU |                          | 
-   5056 | 0224 mv a3,a0            | 021e addi sp,sp,-16      | 4| >0340 mv a1,s0           | 033e li t6,0         ALU | 033a sub s0,t0,s0        | 
-   5057 | 0228 ?                   | 0220 sd ra,0(sp)         | 3| >(flushed) li a0,1080    | 0340 mv a1,s0        ALU | 033e li t6,0             | 
-----------------------------------------------------------------------------------------------------------------------------------------------------------------
+================================================================================================================================================================================================
+    cyc | IF (fetch)               | IP (pred)                |IB| ID                       | EX1                      | RETIRE                   | BACK        | WB              | events
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+   5027 | 0340 mv a1,s0            | 0338 ?                   | 4| >032a csrr s0,mcycle     |                          |                          |             |                 | 
+   5028 |                          | 033c ?                   | 4| >032e th.dcache.cva s6   | 032a csrr s0,mcycle  CP0 |                          |             |                 | 
+   5029 |                          | 033c ?                   | 2| .0332 th.sync            | 032e th.dcache.cva s LSU | 032a csrr s0,mcycle      |             | w0:s0           | ID-stall:CP0/fence I$-miss
+   5030 |                          |                          | 5| .0332 th.sync            |                          | 032e th.dcache.cva s6    |             |                 | ID-stall:CP0/fence DC:LS hit
+   5031 |                          |                          | 5| >0332 th.sync            |                          |                          |             |                 | 
+   5032 |                          |                          | 3| .0336 csrr t0,mcycle     | 0332 th.sync         CP0 |                          |             |                 | ID-stall:EX1-busy,CP0/fence
+   5033 |                          |                          | 3| .0336 csrr t0,mcycle     | 0332 th.sync         CP0 |                          |             |                 | ID-stall:EX1-busy,CP0/fence
+   5034 |                          |                          | 3| .0336 csrr t0,mcycle     | 0332 th.sync         CP0 |                          |             |                 | ID-stall:EX1-busy,CP0/fence
+   5035 |                          | 0340 mv a1,s0            | 3| .0336 csrr t0,mcycle     | 0332 th.sync         CP0 |                          |             |                 | ID-stall:EX1-busy,CP0/fence
+   5036 |                          |                          | 4| .0336 csrr t0,mcycle     | 0332 th.sync         CP0 |                          |             |                 | ID-stall:EX1-busy,CP0/fence
+   5037 |                          |                          | 4| .0336 csrr t0,mcycle     | 0332 th.sync         CP0 |                          |             |                 | ID-stall:EX1-busy,CP0/fence
+   5038 |                          |                          | 4| .0336 csrr t0,mcycle     | 0332 th.sync         CP0 |                          |             |                 | ID-stall:EX1-busy,CP0/fence
+   5039 |                          |                          | 4| .0336 csrr t0,mcycle     | 0332 th.sync         CP0 |                          |             |                 | ID-stall:EX1-busy,CP0/fence
+   5040 |                          |                          | 4| .0336 csrr t0,mcycle     | 0332 th.sync         CP0 |                          |             |                 | ID-stall:EX1-busy,CP0/fence
+   5041 | 0344 ?                   |                          | 4| .0336 csrr t0,mcycle     | 0332 th.sync         CP0 |                          |             |                 | ID-stall:EX1-busy,CP0/fence
+   5042 | 0348 ?                   |                          | 4| .0336 csrr t0,mcycle     | 0332 th.sync         CP0 |                          |             |                 | ID-stall:EX1-busy,CP0/fence
+   5043 | 034c ?                   | 0344 ?                   | 4| .0336 csrr t0,mcycle     | 0332 th.sync         CP0 |                          |             |                 | ID-stall:EX1-busy,CP0/fence
+   5044 |                          | 0348 ?                   | 6| .0336 csrr t0,mcycle     | 0332 th.sync         CP0 |                          |             |                 | IP-redirect->021e ID-stall:EX1-busy,CP0/fence
+   5045 |                          | 0348 ?                   | 6| .0336 csrr t0,mcycle     | 0332 th.sync         CP0 |                          |             |                 | IP-redirect->021e ID-stall:EX1-busy,CP0/fence
+   5046 |                          | 0348 ?                   | 6| .0336 csrr t0,mcycle     | 0332 th.sync         CP0 |                          |             |                 | IP-redirect->021e ID-stall:EX1-busy,CP0/fence
+   5047 |                          | 0348 ?                   | 6| .0336 csrr t0,mcycle     | 0332 th.sync         CP0 |                          |             |                 | IP-redirect->021e ID-stall:EX1-busy,CP0/fence
+   5048 |                          | 0348 ?                   | 6| .0336 csrr t0,mcycle     | 0332 th.sync         CP0 |                          |             |                 | IP-redirect->021e ID-stall:EX1-busy,CP0/fence
+   5049 |                          | 0348 ?                   | 6| .0336 csrr t0,mcycle     | 0332 th.sync         CP0 |                          |             |                 | IP-redirect->021e ID-stall:EX1-busy,CP0/fence
+   5050 |                          | 0348 ?                   | 6| .0336 csrr t0,mcycle     | 0332 th.sync         CP0 |                          |             |                 | IP-redirect->021e ID-stall:CP0/fence
+   5051 |                          | 0348 ?                   | 6| .0336 csrr t0,mcycle     |                          | 0332 th.sync             |             |                 | IP-redirect->021e ID-stall:CP0/fence
+   5052 |                          | 0348 ?                   | 6| >0336 csrr t0,mcycle     |                          |                          |             |                 | IP-redirect->021e
+   5053 | 021e addi sp,sp,-16      | 0348 ?                   | 4| .033a sub s0,t0,s0       | 0336 csrr t0,mcycle  CP0 |                          |             |                 | IP-redirect->021e ID-stall:RAW
+   5054 | 021e addi sp,sp,-16      |                          | 6| >033a sub s0,t0,s0       |                          | 0336 csrr t0,mcycle      |             | w0:t0           | 
+   5055 | 0220 sd ra,0(sp)         |                          | 5| >033e li t6,0            | 033a sub s0,t0,s0    ALU |                          |             |                 | 
+   5056 | 0224 mv a3,a0            | 021e addi sp,sp,-16      | 4| >0340 mv a1,s0           | 033e li t6,0         ALU | 033a sub s0,t0,s0        |             | w0:s0           | 
+   5057 | 0228 ?                   | 0220 sd ra,0(sp)         | 3| >(flushed) li a0,1080    | 0340 mv a1,s0        ALU | 033e li t6,0             |             | w0:t6           | 
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 summary: cycles=31 retired=6 IPC=0.194 | icache_miss=1, ip_redirect=10, retired=6, stall_CP0/fence=22, stall_EX1-busy=18, stall_RAW=1
